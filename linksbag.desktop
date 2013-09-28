@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=linksbag
+Icon=icon-launcher-default
+Exec=invoker --type=silica-qt5 -s /usr/bin/linksbag
+Comment=Sailfish UI application
+
+

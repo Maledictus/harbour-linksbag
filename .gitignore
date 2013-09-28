@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+moc/*
+obj/*
+Makefile
+*.user
+*.list
+linksbag

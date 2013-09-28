@@ -1,0 +1,28 @@
+Name: linksbag
+Summary: SailfishOS GetPocket.com client
+Version: 0.1
+Release: 1
+Group: Qt/Qt
+License: LICENSE
+Sources:
+- '%{name}-%{version}.tar.bz2'
+Description: |
+  Short description of my SailfishOS Application
+Configure: none
+Builder: qtc5
+PkgConfigBR:
+- qdeclarative5-boostable
+- Qt5Core
+- Qt5Qml
+- Qt5Quick
+Requires:
+- sailfishsilica-qt5
+- mapplauncherd-booster-silica-qt5
+Files:
+- /opt/sdk/share/applications
+- /opt/sdk/share/linksbag
+- /opt/sdk/bin
+- /usr/share/applications
+- /usr/share/linksbag
+- /usr/bin
+- 
