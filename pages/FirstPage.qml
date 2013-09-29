@@ -10,14 +10,14 @@ Page
 		id: listView
 		anchors.fill: parent
 		model: pocketModel
-        header: SearchField {
-            width: parent.width
-            placeholderText: "Search"
+		header: SearchField {
+			width: parent.width
+			placeholderText: "Search"
 
-            onTextChanged: {
-               pocketModel.handleSearchTextChanged (text);
-            }
-        }
+			onTextChanged: {
+			   pocketModel.handleSearchTextChanged (text);
+			}
+		}
 
 		PullDownMenu
 		{
@@ -44,20 +44,36 @@ Page
 		delegate: BackgroundItem
 		{
 			width: listView.width
-			Label
-			{
-				id: title
-				text: entryTitle
-				elide: Text.ElideRight
-                color: parent.down ? Theme.highlightColor : Theme.primaryColor
-				anchors.verticalCenter: parent.verticalCenter
-                x: Theme.paddingLarge
-                font.bold: false
 
-                width: parent.width - Theme.paddingLarge
+			Column
+			{
+				Label
+				{
+					id: title
+					text: entryTitle
+					elide: Text.ElideRight
+					color: parent.down ? Theme.highlightColor : Theme.primaryColor
+					font.bold: false
+					font.family: Theme.fontFamilyHeading
+					font.pixelSize:  Theme.fontSizeMedium
+				}
+				Label
+				{
+					id: tags
+					text: entryTags
+					elide: Text.ElideRight
+					color: parent.down ? Theme.highlightColor : Theme.primaryColor
+					font.italic: true
+					font.family: Theme.fontFamily
+					font.pointSize: Theme.fontSizeExtraSmall
+				}
+				width: parent.width - Theme.paddingSmall
+				x: Theme.paddingSmall
 			}
-			onClicked: pageStack.push (Qt.resolvedUrl ("LinkView.qml"),
-                    { "itemId" : entryId })
+
+			onClicked:
+				pageStack.push (Qt.resolvedUrl ("LinkView.qml"),
+					{ "itemId" : entryId })
 		}
 		VerticalScrollDecorator {}
 	}

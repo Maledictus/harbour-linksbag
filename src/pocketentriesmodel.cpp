@@ -32,6 +32,7 @@ namespace LinksBag
 			entry.AddTime_ = item->data (AddTime).toDateTime ();
 			entry.Favorite_ = item->data (Favorite).toBool ();
 			entry.Read_ = item->data (Read).toBool ();
+            entry.Tags_ = item->data (Tags).toStringList ();
 
 			entries << entry;
 		}
@@ -52,7 +53,6 @@ namespace LinksBag
 	{
 		QSettings settings;
 		QByteArray data = settings.value ("Entries").toByteArray ();
-
 		quint8 version = 0;
 		QDataStream in (data);
 		in >> version;
@@ -66,22 +66,20 @@ namespace LinksBag
 		}
 
 		QList<PocketEntry> entries;
-		in >> entries;
+        in >> entries;
 
 		handleGotEntries (entries);
 	}
 
 	bool PocketEntriesModel::IsRead (qint64 id) const
 	{
-        qDebug () << Q_FUNC_INFO << id << Id2Item_.contains (id) << Id2Item_ [id]->data (Read).toBool ();
-		return Id2Item_.contains (id) ?
+        return Id2Item_.contains (id) ?
 			Id2Item_ [id]->data (Read).toBool () :
 			false;
 	}
 
 	bool PocketEntriesModel::IsFavorite (qint64 id) const
 	{
-        qDebug () << Q_FUNC_INFO << id << Id2Item_.contains (id) << Id2Item_ [id]->data (Favorite).toBool ();
 		return Id2Item_.contains (id) ?
 			Id2Item_ [id]->data (Favorite).toBool () :
 			false;
@@ -98,8 +96,8 @@ namespace LinksBag
 	{
 		return Id2Item_.contains (id) ?
 			Id2Item_ [id]->data (Title).toString () :
-			QString ();
-	}
+                    QString ();
+    }
 
 	void PocketEntriesModel::handleGotEntries (const QList<PocketEntry>& entries)
 	{
@@ -116,12 +114,13 @@ namespace LinksBag
 			else
 			{
 				QStandardItem *item = new QStandardItem;
-				item->setData (entry.Id_, Id);
-				item->setData (entry.Title_, Title);
-				item->setData (entry.Url_, Url);
-				item->setData (entry.AddTime_, AddTime);
-				item->setData (entry.Favorite_, Favorite);
-				item->setData (entry.Read_, Read);
+                item->setData (entry.Id_,PocketEntriesModel::Id);
+                item->setData (entry.Title_,PocketEntriesModel::Title);
+                item->setData (entry.Url_, PocketEntriesModel::Url);
+                item->setData (entry.AddTime_, PocketEntriesModel::AddTime);
+                item->setData (entry.Favorite_, PocketEntriesModel::Favorite);
+                item->setData (entry.Read_, PocketEntriesModel::Read);
+                item->setData (entry.Tags_.join (','), PocketEntriesModel::Tags);
 
 				Id2Item_ [entry.Id_] = item;
 				appendRow (item);
@@ -146,9 +145,5 @@ namespace LinksBag
             return;
         bool read = Id2Item_ [id]->data (Read).toBool ();
         Id2Item_ [id]->setData (!read, Read);
-    }
-
-    void PocketEntriesModel::handleSearchTextChanged (const QString& text)
-    {
     }
 }

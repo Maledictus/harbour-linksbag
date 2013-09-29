@@ -68,11 +68,11 @@ namespace LinksBag
 		payload ["access_token"] = AccessToken_;
 		payload ["state"] = "all";
 		payload ["sort"] = "newest";
-		payload ["detailType"] = "simple";
+        payload ["detailType"] = "complete";
 
-        QSettings settings;
-        if (settings.contains ("LastSyncDate"))
-            payload ["since"] = settings.value ("LastSyncDate");
+//        QSettings settings;
+//        if (settings.contains ("LastSyncDate"))
+//            payload ["since"] = settings.value ("LastSyncDate");
 
         QJsonDocument doc = QJsonDocument::fromVariant (payload);
         QNetworkRequest request (QUrl ("https://getpocket.com/v3/get"));
@@ -86,6 +86,7 @@ namespace LinksBag
 				SLOT (handleGotItems ()));
 	}
 
+    //TODO doesn't work
 	void GetPocketManager::setRead (qint64 id, bool read)
 	{
 		QVariantMap map;
@@ -103,7 +104,6 @@ namespace LinksBag
         QString requestTokenUrlStr ("https://getpocket.com/v3/send?");
 
         QUrl url (requestTokenUrlStr + payload);
-        qDebug () << url;
         QNetworkRequest request (url);
         QNetworkReply *reply = NetworkManager_->get (request);
         Reply2ReadId_ [reply] = id;
@@ -138,8 +138,13 @@ namespace LinksBag
 		connect (reply,
 				SIGNAL (finished ()),
 				this,
-				SLOT (handleSetFavoriteFinished ()));
-	}
+                 SLOT (handleSetFavoriteFinished ()));
+    }
+
+    void GetPocketManager::deleteItem (qint64 id)
+    {
+
+    }
 
 	void GetPocketManager::requestAccessToken ()
 	{
@@ -213,37 +218,46 @@ namespace LinksBag
 
         QJsonParseError error;
         QJsonDocument doc = QJsonDocument::fromJson (reply->readAll (), &error);
-        QVariantMap map = doc.toVariant ().toMap ();
         if (doc.isNull ())
 		{
             qCritical () << "Something went wrong:" << error.errorString ();
 			return;
 		}
+        const auto& object = doc.object ();
+        if (object.isEmpty ())
+            return;
 
 		QList<PocketEntry> entries;
-		for (const auto& itemVar : map ["list"].toMap ())
+        for (const auto& item : object.value ("list").toObject ())
 		{
-			QVariantMap item = itemVar.toMap ();
+            const QJsonObject itemObject = item.toObject ();
+            if (itemObject.isEmpty ())
+                continue;
 
-			PocketEntry entry;
-			entry.Id_ = item.value ("item_id").toLongLong ();
-			entry.Title_ = item.value ("given_title").toString ();
+            PocketEntry entry;
+            entry.Id_ = itemObject.value ("item_id").toVariant ().toLongLong ();
+            entry.Title_ = itemObject.value ("given_title").toString ();
 
 			if (entry.Title_.isEmpty ())
-				entry.Title_ = item.value ("resolved_title").toString ();
-			entry.Url_ = QUrl (item.value ("resolved_url").toString ());
-			entry.AddTime_ = QDateTime::fromTime_t (item.value ("time_added")
-					.toLongLong ());
-			entry.Favorite_ = item.value ("favorite").toBool ();
-			entry.Read_ = item.value ("time_read").toInt () != 0;
+                entry.Title_ = itemObject.value ("resolved_title").toString ();
+            entry.Url_ = QUrl (itemObject.value ("resolved_url").toString ());
+            entry.AddTime_ = QDateTime::fromTime_t (itemObject.value ("time_added")
+                    .toVariant ().toLongLong ());
+            entry.Favorite_ = itemObject.value ("favorite").toBool ();
+            entry.Read_ = itemObject.value ("time_read").toDouble () != 0;
+            for (const auto& tag : itemObject.value ("tags").toObject ())
+            {
+                const auto& tagObject = tag.toObject ();
+                entry.Tags_ << tagObject.value ("tag").toString ();
+            }
 
 			if (!entry.IsEmpty ())
 				entries << entry;
 		}
 
 		emit gotEntries (entries);
-        QSettings settings;
-        settings.setValue ("LastSyncDate", map ["since"].toLongLong () + 1);
+//        QSettings settings;
+//        settings.setValue ("LastSyncDate", map ["since"].toLongLong () + 1);
 	}
 
 	void GetPocketManager::handleSetReadFinished ()
@@ -284,13 +298,14 @@ namespace LinksBag
 
 	QDataStream& operator<< (QDataStream& out, const PocketEntry& entry)
 	{
-		out << static_cast<qint8> (1)
+        out << static_cast<qint8> (2)
 				<< entry.Id_
 				<< entry.Title_
 				<< entry.Url_
 				<< entry.AddTime_
 				<< entry.Favorite_
-				<< entry.Read_;
+                << entry.Read_
+                << entry.Tags_;
 		return out;
 	}
 
@@ -298,13 +313,15 @@ namespace LinksBag
 	{
 		qint8 version = 0;
 		in >> version;
-		if (version > 0)
+        if (version > 0)
 			in >> entry.Id_
 					>> entry.Title_
 					>> entry.Url_
 					>> entry.AddTime_
 					>> entry.Favorite_
 					>> entry.Read_;
+        if (version == 2)
+            in >> entry.Tags_;
 
 		return in;
 	}

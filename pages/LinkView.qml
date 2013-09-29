@@ -8,10 +8,18 @@ Page
 
     property int itemId;
 
+    IconButton
+    {
+        id: deleteButton
+        anchors.right: page.right
+        icon.source: "image://Theme/icon-l-delete"
+        onClicked: pocketManager.deleteItem (itemId);
+    }
+
 	IconButton
 	{
 		id: readButton
-		anchors.right: page.right
+        anchors.right: deleteButton.left
 		icon.source: pocketModel.IsRead (itemId) ?
             "image://Theme/icon-m-certificates":
             "image://Theme/icon-m-mail";

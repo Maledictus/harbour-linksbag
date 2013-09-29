@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QDateTime>
+#include <QStringList>
 #include <QUrl>
 
 class QNetworkAccessManager;
@@ -17,6 +18,7 @@ namespace LinksBag
 		QDateTime AddTime_;
 		bool Favorite_;
 		bool Read_;
+        QStringList Tags_;
 
 		PocketEntry ()
 		: Id_ (-1)
@@ -62,6 +64,7 @@ namespace LinksBag
 		void refresh ();
 		void setRead (qint64 id, bool read);
 		void setFavorite (qint64 id, bool favorite);
+        void deleteItem (qint64 id);
 
 	private slots:
 		void requestAccessToken ();

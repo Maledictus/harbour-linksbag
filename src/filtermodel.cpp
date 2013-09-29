@@ -16,7 +16,7 @@ namespace LinksBag
         return sourceModel ()->data (index, PocketEntriesModel::Title).toString ().contains (filterRegExp ());
     }
 
-    QHash<int, QByteArray> FilterModel::roleNames() const
+    QHash<int, QByteArray> FilterModel::roleNames () const
     {
         QHash<int, QByteArray> roleNames;
         roleNames [PocketEntriesModel::Id] = "entryId";
@@ -25,6 +25,7 @@ namespace LinksBag
         roleNames [PocketEntriesModel::AddTime] = "entryAddTime";
         roleNames [PocketEntriesModel::Favorite] = "entryFavorite";
         roleNames [PocketEntriesModel::Read] = "entryRead";
+        roleNames [PocketEntriesModel::Tags] = "entryTags";
         return roleNames;
     }
 

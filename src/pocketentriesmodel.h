@@ -20,17 +20,18 @@ namespace LinksBag
             Url,
             AddTime,
             Favorite,
-            Read
+            Read,
+            Tags
         };
 
         explicit PocketEntriesModel (QObject *parent = 0);
 
         void RestoreItems ();
 
-		Q_INVOKABLE bool IsRead (qint64 id) const;
-		Q_INVOKABLE bool IsFavorite (qint64 id) const;
-		Q_INVOKABLE QUrl GetUrl (qint64 id) const;
-		Q_INVOKABLE QString GetTitle (qint64 id) const;
+        bool IsRead (qint64 id) const;
+        bool IsFavorite (qint64 id) const;
+        QUrl GetUrl (qint64 id) const;
+        QString GetTitle (qint64 id) const;
 
 	private:
 		void UpdateItem (const PocketEntry& entry);
@@ -40,7 +41,6 @@ namespace LinksBag
 		void handleGotEntries (const QList<PocketEntry>& entries);
         void handleFavoriteStateChanged (qint64 id);
         void handleReadStateChanged (qint64 id);
-        void handleSearchTextChanged (const QString& text);
 
 	signals:
 		void readStateChanged ();
