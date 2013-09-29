@@ -67,7 +67,6 @@ namespace LinksBag
 		payload ["consumer_key"] = ConsumerKey_;
 		payload ["access_token"] = AccessToken_;
 		payload ["state"] = "all";
-		payload ["sort"] = "newest";
         payload ["detailType"] = "complete";
 
 //        QSettings settings;
