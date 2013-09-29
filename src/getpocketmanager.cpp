@@ -259,10 +259,10 @@ namespace LinksBag
 
             PocketEntry entry;
             entry.Id_ = itemObject.value ("item_id").toVariant ().toLongLong ();
-            entry.Title_ = itemObject.value ("given_title").toString ();
+            entry.Title_ = itemObject.value ("resolved_title").toString ();
 
 			if (entry.Title_.isEmpty ())
-                entry.Title_ = itemObject.value ("resolved_title").toString ();
+                entry.Title_ = itemObject.value ("given_title").toString ();
             entry.Url_ = QUrl (itemObject.value ("resolved_url").toString ());
             entry.AddTime_ = QDateTime::fromTime_t (itemObject.value ("time_added")
                     .toVariant ().toLongLong ());
