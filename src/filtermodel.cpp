@@ -13,7 +13,19 @@ namespace LinksBag
     bool FilterModel::filterAcceptsRow (int sourceRow, const QModelIndex& sourceParent) const
     {
         const QModelIndex& index = sourceModel ()->index (sourceRow, 0, sourceParent);
-        return sourceModel ()->data (index, PocketEntriesModel::Title).toString ().contains (filterRegExp ());
+        const auto& tags = sourceModel ()->data (index, PocketEntriesModel::Tags).toStringList ();
+        const auto& title = sourceModel ()->data (index, PocketEntriesModel::Title).toString ();
+        bool contains = title.contains (filterRegExp ());
+
+        if (!contains)
+            for (const auto& tag : tags)
+                if (tag.contains (filterRegExp ()))
+                {
+                    contains = true;
+                    break;
+                }
+
+        return contains;
     }
 
     QHash<int, QByteArray> FilterModel::roleNames () const
