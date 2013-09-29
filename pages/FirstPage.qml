@@ -65,7 +65,7 @@ Page
 					color: parent.down ? Theme.highlightColor : Theme.primaryColor
 					font.italic: true
 					font.family: Theme.fontFamily
-					font.pointSize: Theme.fontSizeExtraSmall
+					font.pixelSize: Theme.fontSizeTiny
 				}
 				width: parent.width - Theme.paddingSmall
 				x: Theme.paddingSmall
