@@ -59,6 +59,11 @@ namespace LinksBag
         static_cast<PocketEntriesModel*> (sourceModel ())->handleReadStateChanged (id);
     }
 
+    void FilterModel::handleItemDeleted (qint64 id)
+    {
+        static_cast<PocketEntriesModel*> (sourceModel ())->handleItemDeleted (id);
+    }
+
     void FilterModel::handleSearchTextChanged (const QString& text)
     {
         setFilterFixedString (text);

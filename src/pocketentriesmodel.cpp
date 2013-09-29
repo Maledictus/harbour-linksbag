@@ -146,4 +146,12 @@ namespace LinksBag
         bool read = Id2Item_ [id]->data (Read).toBool ();
         Id2Item_ [id]->setData (!read, Read);
     }
+
+    void PocketEntriesModel::handleItemDeleted (qint64 id)
+    {
+        if (!Id2Item_.contains (id))
+            return;
+        auto item = Id2Item_.take (id);
+        removeRow (item->index ().row (), QModelIndex ());
+    }
 }

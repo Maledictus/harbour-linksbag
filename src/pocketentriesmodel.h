@@ -41,6 +41,7 @@ namespace LinksBag
 		void handleGotEntries (const QList<PocketEntry>& entries);
         void handleFavoriteStateChanged (qint64 id);
         void handleReadStateChanged (qint64 id);
+        void handleItemDeleted (qint64 id);
 
 	signals:
 		void readStateChanged ();

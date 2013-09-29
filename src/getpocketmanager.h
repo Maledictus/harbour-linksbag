@@ -51,6 +51,7 @@ namespace LinksBag
 		bool Authorized_;
         QHash<QNetworkReply*, qint64> Reply2FavoriteId_;
         QHash<QNetworkReply*, qint64> Reply2ReadId_;
+        QHash<QNetworkReply*, qint64> Reply2DeleteItemId_;
 
 	public:
 		explicit GetPocketManager (QObject *parent = 0);
@@ -74,6 +75,7 @@ namespace LinksBag
 		void handleGotItems ();
 		void handleSetReadFinished ();
 		void handleSetFavoriteFinished ();
+        void handleDeleteItemFinished ();
 
 	signals:
 		void authorizeStateChanged ();
@@ -82,6 +84,7 @@ namespace LinksBag
         void gotEntries (const QList<PocketEntry>& entries);
         void favoriteStateChanged (qint64 id);
         void readStateChanged (qint64 id);
+        void itemDeleted (qint64 id);
 	};
 
 	QDataStream& operator<< (QDataStream& out, const PocketEntry& entry);

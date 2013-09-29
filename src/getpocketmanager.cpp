@@ -138,12 +138,35 @@ namespace LinksBag
 		connect (reply,
 				SIGNAL (finished ()),
 				this,
-                 SLOT (handleSetFavoriteFinished ()));
+                SLOT (handleSetFavoriteFinished ()));
     }
 
     void GetPocketManager::deleteItem (qint64 id)
     {
+        QVariantList list;
+        QVariantMap map;
+        map ["action"] = "delete";
+        map ["item_id"] = id;
+        list << map;
 
+        QJsonDocument doc = QJsonDocument::fromVariant (list);
+        QByteArray payload = QString ("&consumer_key=%1&access_token=%2")
+                .arg (ConsumerKey_)
+                .arg (AccessToken_).toUtf8 ();
+
+        QString str = QString::fromUtf8 (doc.toJson (QJsonDocument::Compact));
+        str.remove (' ');
+        payload = "actions=" + QUrl::toPercentEncoding (str) + payload;
+        QString requestTokenUrlStr ("https://getpocket.com/v3/send?");
+
+        QUrl url (requestTokenUrlStr + payload);
+        QNetworkRequest request (url);
+        QNetworkReply *reply = NetworkManager_->get (request);
+        Reply2DeleteItemId_ [reply] = id;
+        connect (reply,
+                SIGNAL (finished ()),
+                this,
+                SLOT (handleDeleteItemFinished ()));
     }
 
 	void GetPocketManager::requestAccessToken ()
@@ -294,7 +317,25 @@ namespace LinksBag
                 object.value ("status").toVariant ().toInt () == 1)
             emit favoriteStateChanged (Reply2FavoriteId_.take (reply));
 
-	}
+    }
+
+    void GetPocketManager::handleDeleteItemFinished ()
+    {
+        QNetworkReply *reply = qobject_cast<QNetworkReply*> (sender ());
+        if (!reply)
+            return;
+        const auto& content = reply->readAll ();
+        reply->deleteLater ();
+
+        QJsonDocument doc = QJsonDocument::fromJson (content);
+        const auto& object = doc.object ();
+        if (object.isEmpty ())
+            return;
+
+        if (object.value ("action_results").toArray ().at (0).toBool () &&
+                object.value ("status").toVariant ().toInt () == 1)
+            emit itemDeleted (Reply2DeleteItemId_.take (reply));
+    }
 
 	QDataStream& operator<< (QDataStream& out, const PocketEntry& entry)
 	{

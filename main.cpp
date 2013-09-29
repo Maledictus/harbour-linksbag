@@ -35,6 +35,10 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
             SIGNAL (readStateChanged (qint64)),
             pocketModel,
             SLOT (handleReadStateChanged (qint64)));
+    QObject::connect (pocketManager,
+            SIGNAL (itemDeleted (qint64)),
+            pocketModel,
+            SLOT (handleItemDeleted (qint64)));
 
 	view->rootContext ()->setContextProperty ("pocketManager",
 			pocketManager);

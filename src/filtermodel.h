@@ -24,6 +24,7 @@ namespace LinksBag
     public slots:
         void handleFavoriteStateChanged (qint64 id);
         void handleReadStateChanged (qint64 id);
+        void handleItemDeleted (qint64 id);
         void handleSearchTextChanged (const QString& text);
     };
 }
