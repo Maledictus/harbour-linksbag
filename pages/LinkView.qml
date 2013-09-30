@@ -6,58 +6,57 @@ Page
 {
 	id: page
 
-    property int itemId;
+	property int itemId;
 
-    IconButton
-    {
-        id: deleteButton
-        anchors.right: page.right
-        icon.source: "image://Theme/icon-l-delete"
-        onClicked: pocketManager.deleteItem (itemId);
-    }
+	RemorsePopup { id: remorse }
 
-	IconButton
-	{
-		id: readButton
-        anchors.right: deleteButton.left
-		icon.source: pocketModel.IsRead (itemId) ?
-            "image://Theme/icon-m-certificates":
-            "image://Theme/icon-m-mail";
-		onClicked:
-			pocketManager.setRead (itemId, !pocketModel.IsRead (itemId));
-	}
-
-	IconButton
-	{
-		id: favoriteButton
-		icon.source: pocketModel.IsFavorite (itemId) ?
-            "image://Theme/icon-m-favorite-selected":
-            "image://Theme/icon-m-favorite";
-		anchors.right: readButton.left
-
-		onClicked:
-			pocketManager.setFavorite (itemId, !pocketModel.IsFavorite (itemId))
-	}
 
 	SilicaFlickable
 	{
-		clip: true
-		anchors.top: readButton.bottom
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left;
-		anchors.right: parent.right
-		contentWidth: view.width
-		contentHeight: view.height
+		anchors.fill: parent
+
+		PullDownMenu
+		{
+			MenuItem
+			{
+				text: "Delete";
+				onClicked: remorse.execute ("Deleting", function () { pocketManager.deleteItem (itemId) })
+			}
+
+			MenuItem
+			{
+				id: readItem
+				text: pocketModel.IsRead (itemId) ? "Set unread" : "Set read";
+				onClicked: pocketManager.setRead (itemId, !pocketModel.IsRead (itemId));
+			}
+
+			MenuItem
+			{
+				id: favoriteItem
+				text: pocketModel.IsFavorite (itemId) ? "Set unfavorite" : "Set favorite";
+				onClicked: pocketManager.setFavorite (itemId, !pocketModel.IsFavorite (itemId))
+			}
+		}
 
 		WebView
 		{
 			id: view
 			url: pocketModel.GetUrl (itemId);
-            height: page.height
-            width: page.width
+			height: page.height
+			width: page.width
 		}
 
 		VerticalScrollDecorator {}
 		HorizontalScrollDecorator {}
+	}
+
+	Connections
+	{
+		target: pocketModel
+		onItemUpdated:
+		{
+			readItem.text = pocketModel.IsRead (itemId) ? "Set unread" : "Set read";
+			favoriteItem.text = pocketModel.IsFavorite (itemId) ? "Set unfavorite" : "Set favorite";
+		}
 	}
 }
