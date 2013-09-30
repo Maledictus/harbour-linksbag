@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import org.LinksBag 1.0
 
 Page
 {
@@ -23,14 +24,11 @@ Page
 		{
 			MenuItem
 			{
-				text: pocketManager.authorized ?
-					"GetPocket: " + pocketManager.login :
-					"Authorize";
+				text: "Authorize";
+				visible: !pocketManager.authorized
 				onClicked:
-				{
 					if (!pocketManager.authorized)
 						pocketManager.authorize ();
-				}
 			}
 
 			MenuItem
@@ -38,6 +36,27 @@ Page
 				text: "Refresh";
 				visible: pocketManager.authorized
 				onClicked: pocketManager.refresh ();
+			}
+
+			MenuItem
+			{
+				text: "All";
+				visible: pocketManager.authorized
+				onClicked: pocketModel.filter (LinksBag.All);
+			}
+
+			MenuItem
+			{
+				text: "Favorite";
+				visible: pocketManager.authorized
+				onClicked: pocketModel.filter (LinksBag.Favorite)
+			}
+
+			MenuItem
+			{
+				text: "Archive";
+				visible: pocketManager.authorized
+				onClicked: pocketModel.filter (LinksBag.Archive)
 			}
 		}
 

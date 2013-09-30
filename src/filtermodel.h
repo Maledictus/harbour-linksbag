@@ -5,9 +5,18 @@
 
 namespace LinksBag
 {
+    enum FilterType
+    {
+        All,
+        Archive,
+        Favorite
+    };
+
     class FilterModel : public QSortFilterProxyModel
     {
         Q_OBJECT
+
+        FilterType FilterType_;
     public:
         explicit FilterModel (QObject *parent = 0);
         bool filterAcceptsRow (int sourceRow, const QModelIndex& sourceParent) const;
@@ -26,5 +35,9 @@ namespace LinksBag
         void handleReadStateChanged (qint64 id);
         void handleItemDeleted (qint64 id);
         void handleSearchTextChanged (const QString& text);
+        void filter (int type);
+        void invalidateFilterSlot ();
+    signals:
+        void itemUpdated ();
     };
 }

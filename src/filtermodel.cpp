@@ -1,10 +1,13 @@
 #include "filtermodel.h"
+#include <QTimer>
+#include <QtDebug>
 #include "pocketentriesmodel.h"
 
 namespace LinksBag
 {
     FilterModel::FilterModel (QObject *parent)
     : QSortFilterProxyModel (parent)
+    , FilterType_ (All)
     {
         setDynamicSortFilter (true);
         setFilterCaseSensitivity (Qt::CaseInsensitive);
@@ -15,16 +18,32 @@ namespace LinksBag
         const QModelIndex& index = sourceModel ()->index (sourceRow, 0, sourceParent);
         const auto& tags = sourceModel ()->data (index, PocketEntriesModel::Tags).toStringList ();
         const auto& title = sourceModel ()->data (index, PocketEntriesModel::Title).toString ();
+        const bool archive = sourceModel ()->data (index, PocketEntriesModel::Read).toBool ();
+        const bool favorite = sourceModel ()->data (index, PocketEntriesModel::Favorite).toBool ();
+        switch (FilterType_)
+        {
+        case Archive:
+            if (!archive)
+                return false;
+            break;
+        case Favorite:
+            if (!favorite)
+                return false;
+            break;
+        default:
+            break;
+        };
+
         bool contains = title.contains (filterRegExp ());
-
-        if (!contains)
-            for (const auto& tag : tags)
-                if (tag.contains (filterRegExp ()))
-                {
-                    contains = true;
-                    break;
-                }
-
+        for (int i = 0, size = tags.count (); !contains && i < size; ++i)
+        {
+            const auto& tag = tags.at (i);
+            if (tag.contains (filterRegExp ()))
+            {
+                contains = true;
+                break;
+            }
+        }
         return contains;
     }
 
@@ -64,11 +83,13 @@ namespace LinksBag
     void FilterModel::handleFavoriteStateChanged (qint64 id)
     {
         static_cast<PocketEntriesModel*> (sourceModel ())->handleFavoriteStateChanged (id);
+        emit itemUpdated ();
     }
 
     void FilterModel::handleReadStateChanged (qint64 id)
     {
         static_cast<PocketEntriesModel*> (sourceModel ())->handleReadStateChanged (id);
+        emit itemUpdated ();
     }
 
     void FilterModel::handleItemDeleted (qint64 id)
@@ -79,5 +100,18 @@ namespace LinksBag
     void FilterModel::handleSearchTextChanged (const QString& text)
     {
         setFilterFixedString (text);
+    }
+
+    void FilterModel::filter (int type)
+    {
+        FilterType_ = static_cast<FilterType> (type);
+        QTimer::singleShot (0,
+                this,
+                SLOT (invalidateFilterSlot ()));
+    }
+
+    void FilterModel::invalidateFilterSlot ()
+    {
+        invalidateFilter ();
     }
 }

@@ -1,10 +1,12 @@
 
 #include <QGuiApplication>
+#include <QtQml>
 #include <QQuickView>
 #include <QQmlContext>
 #include <QDir>
 #include <QTextCodec>
 #include "sailfishapplication.h"
+#include "src/enumsproxy.h"
 #include "src/filtermodel.h"
 #include "src/getpocketmanager.h"
 #include "src/pocketentriesmodel.h"
@@ -18,6 +20,9 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     app->setOrganizationName ("Dellirium");
     app->setApplicationName ("LinksBag");
 
+    qmlRegisterUncreatableType<LinksBag::EnumsProxy> ("org.LinksBag", 1, 0, "LinksBag",
+                    "This exports otherwise unavailable LinksBag datatypes to QML");
+
     auto pocketManager = new LinksBag::GetPocketManager;
     auto proxyModel = new LinksBag::FilterModel;
 	auto pocketModel = new LinksBag::PocketEntriesModel;
@@ -29,15 +34,15 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 			SLOT (handleGotEntries (QList<PocketEntry>)));
     QObject::connect (pocketManager,
             SIGNAL (favoriteStateChanged (qint64)),
-            pocketModel,
+            proxyModel,
             SLOT (handleFavoriteStateChanged (qint64)));
     QObject::connect (pocketManager,
             SIGNAL (readStateChanged (qint64)),
-            pocketModel,
+            proxyModel,
             SLOT (handleReadStateChanged (qint64)));
     QObject::connect (pocketManager,
             SIGNAL (itemDeleted (qint64)),
-            pocketModel,
+            proxyModel,
             SLOT (handleItemDeleted (qint64)));
 
 	view->rootContext ()->setContextProperty ("pocketManager",

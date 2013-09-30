@@ -8,13 +8,15 @@ QT += network
 SOURCES += main.cpp \
 	src/getpocketmanager.cpp \
 	src/pocketentriesmodel.cpp \
-	src/filtermodel.cpp
+	src/filtermodel.cpp \
+    src/enumsproxy.cpp
 
 # C++ headers
 HEADERS += \
 	src/getpocketmanager.h \
 	src/pocketentriesmodel.h \
-	src/filtermodel.h
+	src/filtermodel.h \
+    src/enumsproxy.h
 
 # QML files and folders
 qml.files = *.qml pages cover main.qml

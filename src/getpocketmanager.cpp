@@ -256,6 +256,7 @@ namespace LinksBag
             if (itemObject.isEmpty ())
                 continue;
 
+//            qDebug () << itemObject;
             PocketEntry entry;
             entry.Id_ = itemObject.value ("item_id").toVariant ().toLongLong ();
             entry.Title_ = itemObject.value ("resolved_title").toString ();
@@ -265,8 +266,8 @@ namespace LinksBag
             entry.Url_ = QUrl (itemObject.value ("resolved_url").toString ());
             entry.AddTime_ = QDateTime::fromTime_t (itemObject.value ("time_added")
                     .toVariant ().toLongLong ());
-            entry.Favorite_ = itemObject.value ("favorite").toBool ();
-            entry.Read_ = itemObject.value ("time_read").toDouble () != 0;
+            entry.Favorite_ = itemObject.value ("favorite").toString () == "1";
+            entry.Read_ = itemObject.value ("time_read").toString () != "0";
             for (const auto& tag : itemObject.value ("tags").toObject ())
             {
                 const auto& tagObject = tag.toObject ();
@@ -315,7 +316,6 @@ namespace LinksBag
         if (object.value ("action_results").toArray ().at (0).toBool () &&
                 object.value ("status").toVariant ().toInt () == 1)
             emit favoriteStateChanged (Reply2FavoriteId_.take (reply));
-
     }
 
     void GetPocketManager::handleDeleteItemFinished ()
