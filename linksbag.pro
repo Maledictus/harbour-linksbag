@@ -1,32 +1,32 @@
-QMAKE_CXXFLAGS += -std=c++0x
-# The name of your app
+# The name of your app.
+# NOTICE: name defined in TARGET has a corresponding QML filename.
+#         If name defined in TARGET is changed, following needs to be
+#         done to match new name:
+#         - corresponding QML filename must be changed
+#         - desktop icon filename must be changed
+#         - desktop filename must be changed
+#         - icon definition filename in desktop file must be changed
 TARGET = linksbag
 
-QT += network
+CONFIG += sailfishapp
 
-# C++ sources
-SOURCES += main.cpp \
-	src/getpocketmanager.cpp \
-	src/pocketentriesmodel.cpp \
-	src/filtermodel.cpp \
-    src/enumsproxy.cpp
+SOURCES += src/linksbag.cpp \
+    src/networkaccessmanagerfactory.cpp \
+    src/customnetworkaccessmanager.cpp
 
-# C++ headers
+OTHER_FILES += qml/linksbag.qml \
+	qml/CoverPage.qml \
+	qml/BookmarksPage.qml \
+	qml/SecondPage.qml \
+    rpm/linksbag.spec \
+    rpm/linksbag.yaml \
+    linksbag.desktop \
+    rpm/linksbag.spec \
+    qml/LocalStorage.qml \
+    qml/AuthManager.qml \
+    qml/NetworkManager.qml
+
 HEADERS += \
-	src/getpocketmanager.h \
-	src/pocketentriesmodel.h \
-	src/filtermodel.h \
-    src/enumsproxy.h
-
-# QML files and folders
-qml.files = *.qml pages cover main.qml
-
-# The .desktop file
-desktop.files = linksbag.desktop
-
-# Please do not modify the following line.
-include(sailfishapplication/sailfishapplication.pri)
-
-OTHER_FILES = rpm/linksbag.yaml \
-		rpm/linksbag.spec
+    src/networkaccessmanagerfactory.h \
+    src/customnetworkaccessmanager.h
 

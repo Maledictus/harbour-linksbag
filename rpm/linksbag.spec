@@ -12,22 +12,24 @@ Name:       linksbag
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
-Summary:    SailfishOS GetPocket.com client
+Summary:    GetPocket client for SailfishOS
 Version:    0.1
 Release:    1
 Group:      Qt/Qt
-License:    LICENSE
+License:    The MIT License (MIT)
+URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  linksbag.yaml
-Requires:   sailfishsilica-qt5
-Requires:   mapplauncherd-booster-silica-qt5
-BuildRequires:  pkgconfig(qdeclarative5-boostable)
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Qml)
+Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(Qt5Qml)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
+BuildRequires:  libqtwebkit5-devel
+BuildRequires:  desktop-file-utils
 
 %description
-Short description of my SailfishOS Application
+Application gives access to bookmarks stored in getpocket service
 
 
 %prep
@@ -42,7 +44,7 @@ Short description of my SailfishOS Application
 
 %qtc_qmake5 
 
-%qtc_make %{?jobs:-j%jobs}
+%qtc_make %{?_smp_mflags}
 
 # >> build post
 # << build post
@@ -56,13 +58,24 @@ rm -rf %{buildroot}
 # >> install post
 # << install post
 
+desktop-file-install --delete-original       \
+  --dir %{buildroot}%{_datadir}/applications             \
+   %{buildroot}%{_datadir}/applications/*.desktop
+
 %files
 %defattr(-,root,root,-)
-/opt/sdk/share/applications
-/opt/sdk/share/linksbag
-/opt/sdk/bin
+/usr/share/icons/hicolor/86x86/apps
 /usr/share/applications
 /usr/share/linksbag
 /usr/bin
+%{_bindir}
+%{_datadir}/%{name}/qml
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%{_datadir}/%{name}
+%{_datadir}/applications
+%{_datadir}/%{name}
+%{_datadir}/applications
+%{_datadir}/icons/hicolor/86x86/apps
 # >> files
 # << files

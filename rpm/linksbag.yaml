@@ -1,28 +1,35 @@
 Name: linksbag
-Summary: SailfishOS GetPocket.com client
+Summary: GetPocket client for SailfishOS
 Version: 0.1
 Release: 1
 Group: Qt/Qt
-License: LICENSE
+URL: http://example.org/
+License: The MIT License (MIT)
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  Short description of my SailfishOS Application
+  Application gives access to bookmarks stored in getpocket service
 Configure: none
 Builder: qtc5
 PkgConfigBR:
-- qdeclarative5-boostable
-- Qt5Core
-- Qt5Qml
 - Qt5Quick
+- Qt5Qml
+- Qt5Core
+- sailfishapp >= 0.0.10
 Requires:
-- sailfishsilica-qt5
-- mapplauncherd-booster-silica-qt5
+- sailfishsilica-qt5 >= 0.10.9
 Files:
-- /opt/sdk/share/applications
-- /opt/sdk/share/linksbag
-- /opt/sdk/bin
+- /usr/share/icons/hicolor/86x86/apps
 - /usr/share/applications
 - /usr/share/linksbag
 - /usr/bin
-- 
+- '%{_bindir}'
+- '%{_datadir}/%{name}/qml'
+- '%{_datadir}/applications/%{name}.desktop'
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
+- '%{_datadir}/%{name}'
+- '%{_datadir}/applications'
+- '%{_datadir}/%{name}'
+- '%{_datadir}/applications'
+- '%{_datadir}/icons/hicolor/86x86/apps'
+PkgBR: [libqtwebkit5-devel]
