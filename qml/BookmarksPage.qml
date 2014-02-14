@@ -37,6 +37,9 @@ Page {
     property alias m: model
     property bool loading
 
+    signal login ()
+    signal logout ()
+
     ListModel {
         id: model
     }
@@ -46,6 +49,13 @@ Page {
 
         model: model
         anchors.fill: parent
+
+        PullDownMenu {
+            MenuItem {
+                text: authManager.userName === "" ? qsTr("Login") : qsTr ("Logout")
+                onClicked: authManager.userName === "" ? login () : logout ()
+            }
+        }
 
         header: PageHeader {
             title: qsTr ("All bookmarks")
