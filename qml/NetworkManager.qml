@@ -8,11 +8,14 @@ Item {
         var source = "https://getpocket.com/v3/oauth/request"
         var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
                 "\", \"redirect_uri\": \"linksbag://authorizationFinished\" }"
-        sendRequest (source, params, "POST");
+        sendRequest (source, params, "POST")
     }
 
-    function authorizeApplication () {
-
+    function requestAccessToken () {
+        var source = "https://getpocket.com/v3/oauth/authorize"
+        var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
+                "\", \"code\": \""+ authManager.requestToken +"\" }"
+        sendRequest (source, params, "POST")
     }
 
     function sendRequest (source, params, method) {
@@ -24,25 +27,37 @@ Item {
         http.open (method, source, true);
         http.onreadystatechange = function () {
             //console.log("http.status: " + http.readyState + " " + http.status + " " + http.statusText)
-            var maxValue = 0;
+            var maxValue = 0
 
             if (http.readyState === XMLHttpRequest.DONE) {
-                authManager.countLoading = Math.max (authManager.countLoading - 1, 0);
+                authManager.countLoading = Math.max (authManager.countLoading - 1, 0)
                 if (http.status === 200) {
                     try {
                         var result = http.responseText;
                         //console.log("XXXXXXXXXXXXXXX " + result + "YYYYYYYYYYYYYYYYYYYYY")
                         var resultObject = JSON.parse (result)
-                        authManager.requestToken = resultObject.code;
+
+                        if (resultObject.code !== undefined) {
+                            authManager.requestToken = resultObject.code
+                        }
+
+                        if (resultObject.access_token !== undefined) {
+                            authManager.accessToken = resultObject.access_token
+                        }
+
+                        if (resultObject.username !== undefined) {
+                            authManager.userName = resultObject.username
+                        }
+
                     } catch(e) {
                         console.log("sendRequest: parse failed: " + e)
                     }
                 } else if (http.status === 401) {
                     console.log("http.status: 401 not authorized")
-                    authManager.requestToken = "";
+                    authManager.requestToken = ""
 
                 } else if (http.status === 0) {
-                    authManager.countLoading = 0;
+                    authManager.countLoading = 0
                 } else {
                     console.log("error in onreadystatechange: " + http.status +
                             " " + http.statusText + ", " +
@@ -50,9 +65,9 @@ Item {
                 }
             }
         }
-        http.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        http.setRequestHeader("X-Accept", "application/json");
-        authManager.countLoading++;
+        http.setRequestHeader("Content-Type", "application/json; charset=UTF-8")
+        http.setRequestHeader("X-Accept", "application/json")
+        authManager.countLoading++
         http.send (params)
     }
 }

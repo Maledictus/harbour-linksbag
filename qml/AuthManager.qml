@@ -9,6 +9,9 @@ Item {
 
     property string requestToken
     property string accessToken
+
+    property string userName
+
     property int lastUpdate: 0
 
     property int countLoading: 0
@@ -16,6 +19,7 @@ Item {
     Component.onCompleted: {
         try {
             accessToken = localStorage.getSettingsValue ("accessToken", "")
+            userName = localStorage.getSettingsValue ("userName", "")
             lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
         } catch (e) {
             console.log ("exception: getSettingsValue" + e)
@@ -29,41 +33,45 @@ Item {
 
     onRequestTokenChanged: {
         console.log("request token changed ! " + requestToken)
-//        webview.url = "https://getpocket.com/auth/authorize?request_token=" +
-//                requestToken + "&redirect_uri=linksbag:authorizationFinished"
+        webview.url = "https://getpocket.com/auth/authorize?request_token=" +
+                requestToken + "&redirect_uri=linksbag:authorizationFinished"
+    }
+
+    onAccessTokenChanged: {
+        console.log ("access token changed ! " + accessToken)
+        webview.visible = false
+        localStorage.setSettingsValue("accessToken", accessToken)
+    }
+
+    onUserNameChanged: {
+        console.log ("user name changed ! " + userName)
+        localStorage.setSettingsValue("userName", userName)
     }
 
     function auth_refresh () {
-        networkManager.obtainAccessToken()
+        webview.visible = true
+        networkManager.obtainAccessToken ()
     }
 
     WebView {
         id: webview
-        anchors.fill: parent;
+        anchors.fill: parent
+
+        visible: false
 
         onLoadingChanged: {
-            console.log("webview"  + loading)
+
+            console.log ("webview "  + loading)
             if (loading) {
                 countLoading++;
-
             } else {
                 countLoading--;
 
-//                var str = url.toString();
-//                var i = str.indexOf("access_token", 0)
-//                if (i > 0) {
-//                    var t = str.substr(i+13,str.length)
-//                    accessToken = t;
-//                    data.visible = false;
-//                } else {
-//                    if (str.indexOf("foursquare.com",0) <= 0) {
-//                        console.log("authentication error")
-//                        auth_refresh();
-//                    } else {
-//                        console.log("web page of foursquare.com")
-//                    }
-//                }
-
+                var str = loadRequest.url.toString();
+                var i = str.indexOf ("linksbag:authorizationFinished", 0)
+                if (!i) {
+                    networkManager.requestAccessToken ()
+                }
             }
         }
 
