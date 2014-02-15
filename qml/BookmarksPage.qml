@@ -34,11 +34,14 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
-    property alias m: model
+    property alias m: listModel
     property bool loading
 
     signal login ()
     signal logout ()
+    signal markAsRead (bool read)
+    signal markAsFavorite (bool favorite)
+    signal removeBookmark (string uid)
 
     property int lastUpdate: 0
 
@@ -47,7 +50,7 @@ Page {
     }
 
     ListModel {
-        id: model
+        id: listModel
     }
 
     function loadBookmarks () {
@@ -57,7 +60,7 @@ Page {
     SilicaListView {
         id: listView
 
-        model: model
+        model: listModel
         anchors.fill: parent
 
         PullDownMenu {
@@ -78,7 +81,7 @@ Page {
         delegate: BackgroundItem {
             id: delegate
 
-            property int bookmarkId : uid
+            property string bookmarkId : uid
             property url bookmarkUrl : url
             property bool bookmarkIsFavorite : favorite
             property bool bookmarkIsRead : read
@@ -94,7 +97,7 @@ Page {
 
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.verticalCenter: tagsLabel.text.length === 0 ?
+                anchors.verticalCenter: tagsLabel.text.length === 0 && !menuOpen ?
                     parent.verticalCenter :
                     undefined
                 anchors.margins: Theme.paddingMedium
@@ -128,7 +131,8 @@ Page {
                 var idx = index
                 remorse.execute(delegate, qsTr ("Removing bookmark"),
                         function () {
-                            model.remove (idx);
+                            removeBookmark (bookmarkId)
+                            listModel.remove (idx)
                         }, 3000);
             }
 
@@ -149,12 +153,14 @@ Page {
                     text: listView.currentItem.bookmarkIsRead ?
                         qsTr ("Mark as unread") :
                         qsTr ("Mark as read")
+                    onClicked: markAsRead (!listView.currentItem.bookmarkIsRead)
                 }
 
                 MenuItem {
                     text: listView.currentItem.bookmarkIsFavorite ?
                         qsTr ("Mark as favorite") :
                         qsTr ("Mark as unfavorite")
+                    onClicked: markAsFavorite (!listView.currentItem.bookmarkIsFavorite)
                 }
 
                 MenuItem {
@@ -168,14 +174,14 @@ Page {
     }
 
     BusyIndicator {
-        visible: loading && !model.count
+        visible: loading && !listModel.count
         running: visible
         anchors.centerIn: parent
     }
 
     Label {
         anchors.centerIn: parent
-        visible: !loading && !model.count
+        visible: !loading && !listModel.count
         text: qsTr ("Offline")
     }
 }

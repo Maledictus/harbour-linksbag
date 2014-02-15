@@ -41,11 +41,18 @@ ApplicationWindow
         loading: authManager.countLoading > 0
 
         onLogout: authManager.logout ();
+
+        onMarkAsRead: networkManager.markAsRead (read)
+        onMarkAsFavorite: networkManager.markASFavorite (favorite)
+        onRemoveBookmark: networkManager.removeBookmark (uid)
+
     }
 
     AuthManager {
         id: authManager
         anchors.fill: parent
+
+        onAuthenticated: bookmarksPage.loadBookmarks ()
     }
 
     LocalStorage {

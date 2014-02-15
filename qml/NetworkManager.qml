@@ -27,6 +27,20 @@ Item {
         sendRequest (source, params, "POST")
     }
 
+    function removeBookmark (uid) {
+        var source = "https://getpocket.com/v3/send"
+        var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
+                "\", \"access_token\": \""+ authManager.accessToken +"\"," +
+                "\"actions\": [ { \"action\": \"delete\", \"item_id\": \"" + uid + "\" } ] }"
+        sendRequest (source, params, "POST")
+    }
+
+    function markAsRead (read) {
+    }
+
+    function markAsFavorite (favorite) {
+    }
+
     function sendRequest (source, params, method) {
         console.log(method + ": " + source + "?" + params)
 
