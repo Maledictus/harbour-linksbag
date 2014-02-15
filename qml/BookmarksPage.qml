@@ -40,8 +40,18 @@ Page {
     signal login ()
     signal logout ()
 
+    property int lastUpdate: 0
+
+    Component.onCompleted: {
+        lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
+    }
+
     ListModel {
         id: model
+    }
+
+    function loadBookmarks () {
+        networkManager.loadBookmarks (lastUpdate)
     }
 
     SilicaListView {
@@ -61,10 +71,50 @@ Page {
             title: qsTr ("All bookmarks")
         }
 
-        spacing: 10
+        spacing: 5
 
         delegate: BackgroundItem {
+            id: delegate
+            height: 70
+            property int bookmarkId : uid
+            property url bookmarkUrl : url
+            property bool bookmarkIsFavorite : favorite
+            property bool bookmarkIsRead : read
 
+            Label {
+                id: titleLabel
+
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.verticalCenter: tagsLabel.text.length === 0 ?
+                    parent.verticalCenter :
+                    undefined
+                anchors.margins: Theme.paddingMedium
+
+                font.family: Theme.fontFamilyHeading
+                font.pixelSize:  Theme.fontSizeMedium
+                elide: Text.ElideRight
+                color: parent.down ? Theme.highlightColor : Theme.primaryColor
+
+                text: title
+            }
+
+            Label {
+                id: tagsLabel
+
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: titleLabel.bottom
+                anchors.leftMargin: Theme.paddingMedium
+                anchors.rightMargin: Theme.paddingMedium
+                anchors.topMargin: 0
+
+                font.pixelSize:  Theme.fontSizeTiny
+                elide: Text.ElideRight
+                color: parent.down ? Theme.highlightColor : Theme.primaryColor
+
+                text: tags
+            }
         }
 
         VerticalScrollDecorator{}

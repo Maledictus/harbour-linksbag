@@ -18,10 +18,17 @@ Item {
         sendRequest (source, params, "POST")
     }
 
+    function loadBookmarks (lastUpdate) {
+        var source = "https://getpocket.com/v3/get"
+        var params = "{ \"consumer_key\": \"" + authManager.consumerKey + "\"," +
+                " \"access_token\": \""+ authManager.accessToken +"\"," +
+                " \"state\": \"all\", \"sort\": \"newest\", \"detailType\": \"complete\"," +
+                " \"since\": \"" + lastUpdate + "\"}"
+        sendRequest (source, params, "POST")
+    }
+
     function sendRequest (source, params, method) {
         console.log(method + ": " + source + "?" + params)
-
-        var array, item, i, data, user;
 
         var http = new XMLHttpRequest ()
         http.open (method, source, true);
@@ -49,6 +56,42 @@ Item {
                             authManager.userName = resultObject.username
                         }
 
+                        if (resultObject.list !== undefined) {
+                            bookmarksPage.m.clear()
+                            var list = resultObject.list
+                            for (var key in list) {
+                                var item = list [key]
+                                var uid = item.item_id
+                                var url = item.resolved_url
+                                var title = item.resolved_title
+                                if (!title || title.length === 0)
+                                    title = item.given_title
+                                if (!title || title.length === 0)
+                                    title = url
+                                var favorite = item.favorite
+                                var read = item.time_read !== "0"
+                                var tagsList = item.tags
+                                var tags = ""
+                                for (var tag in tagsList) {
+                                    if (tag === undefined)
+                                        continue
+                                    if (tags && tags.length !== 0)
+                                        tags += ", "
+                                    tags += tag
+                                }
+
+                                var data = {
+                                    "uid" : uid,
+                                    "url" : url,
+                                    "title" : title,
+                                    "favorite" : favorite,
+                                    "read" : read,
+                                    "tags" : tags
+                                }
+
+                                bookmarksPage.m.append (data)
+                            }
+                        }
                     } catch(e) {
                         console.log("sendRequest: parse failed: " + e)
                     }

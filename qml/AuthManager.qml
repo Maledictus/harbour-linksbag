@@ -12,15 +12,14 @@ Item {
 
     property string userName
 
-    property int lastUpdate: 0
-
     property int countLoading: 0
+
+    signal authenticated ()
 
     Component.onCompleted: {
         try {
             accessToken = localStorage.getSettingsValue ("accessToken", "")
             userName = localStorage.getSettingsValue ("userName", "")
-            lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
         } catch (e) {
             console.log ("exception: getSettingsValue" + e)
         }
@@ -41,6 +40,8 @@ Item {
         console.log ("access token changed ! " + accessToken)
         webview.visible = false
         localStorage.setSettingsValue("accessToken", accessToken)
+
+        authenticated ()
     }
 
     onUserNameChanged: {
