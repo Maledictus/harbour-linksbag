@@ -53,6 +53,12 @@ Item {
         networkManager.obtainAccessToken ()
     }
 
+    function logout () {
+        console.log ("Logout")
+        localStorage.setSettingsValue("accessToken", "")
+        localStorage.setSettingsValue("userName", "")
+    }
+
     WebView {
         id: webview
         anchors.fill: parent

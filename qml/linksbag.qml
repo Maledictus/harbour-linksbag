@@ -39,6 +39,8 @@ ApplicationWindow
     BookmarksPage {
         id: bookmarksPage
         loading: authManager.countLoading > 0
+
+        onLogout: authManager.logout ();
     }
 
     AuthManager {
