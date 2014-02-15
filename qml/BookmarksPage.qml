@@ -39,8 +39,8 @@ Page {
 
     signal login ()
     signal logout ()
-    signal markAsRead (bool read)
-    signal markAsFavorite (bool favorite)
+    signal markAsRead (string uid, bool read)
+    signal markAsFavorite (string uid, bool favorite)
     signal removeBookmark (string uid)
 
     property int lastUpdate: 0
@@ -153,14 +153,22 @@ Page {
                     text: listView.currentItem.bookmarkIsRead ?
                         qsTr ("Mark as unread") :
                         qsTr ("Mark as read")
-                    onClicked: markAsRead (!listView.currentItem.bookmarkIsRead)
+                    onClicked: {
+                        markAsRead (listView.currentItem.bookmarkId,
+                            !listView.currentItem.bookmarkIsRead)
+                        listView.currentItem.bookmarkIsRead = !listView.currentItem.bookmarkIsRead
+                    }
                 }
 
                 MenuItem {
                     text: listView.currentItem.bookmarkIsFavorite ?
                         qsTr ("Mark as favorite") :
                         qsTr ("Mark as unfavorite")
-                    onClicked: markAsFavorite (!listView.currentItem.bookmarkIsFavorite)
+                    onClicked: {
+                        markAsFavorite (listView.currentItem.bookmarkId,
+                            !listView.currentItem.bookmarkIsFavorite)
+                        listView.currentItem.bookmarkIsFavorite = !listView.currentItem.bookmarkIsFavorite
+                    }
                 }
 
                 MenuItem {

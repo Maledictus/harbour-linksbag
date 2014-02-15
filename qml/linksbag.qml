@@ -42,8 +42,8 @@ ApplicationWindow
 
         onLogout: authManager.logout ();
 
-        onMarkAsRead: networkManager.markAsRead (read)
-        onMarkAsFavorite: networkManager.markASFavorite (favorite)
+        onMarkAsRead: networkManager.markAsRead (uid, read)
+        onMarkAsFavorite: networkManager.markAsFavorite (uid, favorite)
         onRemoveBookmark: networkManager.removeBookmark (uid)
 
     }

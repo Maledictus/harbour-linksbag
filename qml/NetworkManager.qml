@@ -31,14 +31,28 @@ Item {
         var source = "https://getpocket.com/v3/send"
         var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
                 "\", \"access_token\": \""+ authManager.accessToken +"\"," +
-                "\"actions\": [ { \"action\": \"delete\", \"item_id\": \"" + uid + "\" } ] }"
+                "\"actions\": [ { \"action\": \"delete\", \"item_id\": \"" +
+                uid + "\" } ] }"
         sendRequest (source, params, "POST")
     }
 
-    function markAsRead (read) {
+    function markAsRead (uid, read) {
+        var source = "https://getpocket.com/v3/send"
+        var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
+                "\", \"access_token\": \""+ authManager.accessToken +"\"," +
+                "\"actions\": [ { \"action\": \"" + (read ? "archive" : "readd") +
+                "\", \"item_id\": \"" + uid + "\" } ] }"
+        sendRequest (source, params, "POST")
     }
 
-    function markAsFavorite (favorite) {
+    function markAsFavorite (uid, favorite) {
+        var source = "https://getpocket.com/v3/send"
+        var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
+                "\", \"access_token\": \""+ authManager.accessToken +"\"," +
+                "\"actions\": [ { \"action\": \"" +
+                (favorite ? "favorite" : "unfavorite") + "\", \"item_id\": \"" +
+                uid + "\" } ] }"
+        sendRequest (source, params, "POST")
     }
 
     function sendRequest (source, params, method) {
@@ -55,7 +69,7 @@ Item {
                 if (http.status === 200) {
                     try {
                         var result = http.responseText;
-                        //console.log("XXXXXXXXXXXXXXX " + result + "YYYYYYYYYYYYYYYYYYYYY")
+                        console.log("XXXXXXXXXXXXXXX " + result + "YYYYYYYYYYYYYYYYYYYYY")
                         var resultObject = JSON.parse (result)
 
                         if (resultObject.code !== undefined) {
@@ -82,7 +96,7 @@ Item {
                                     title = item.given_title
                                 if (!title || title.length === 0)
                                     title = url
-                                var favorite = item.favorite
+                                var favorite = item.time_favorited !== "0"
                                 var read = item.time_read !== "0"
                                 var tagsList = item.tags
                                 var tags = ""
