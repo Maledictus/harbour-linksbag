@@ -73,13 +73,21 @@ Page {
 
         spacing: 5
 
+        property Item contextMenu
+
         delegate: BackgroundItem {
             id: delegate
-            height: 70
+
             property int bookmarkId : uid
             property url bookmarkUrl : url
             property bool bookmarkIsFavorite : favorite
             property bool bookmarkIsRead : read
+
+            property bool menuOpen: listView.contextMenu != null &&
+                                listView.contextMenu.parent === delegate
+            height: menuOpen ?
+                listView.contextMenu.height + 70 :
+                70
 
             Label {
                 id: titleLabel
@@ -114,6 +122,45 @@ Page {
                 color: parent.down ? Theme.highlightColor : Theme.primaryColor
 
                 text: tags
+            }
+
+            function remove () {
+                var idx = index
+                remorse.execute(delegate, qsTr ("Removing bookmark"),
+                        function () {
+                            model.remove (idx);
+                        }, 3000);
+            }
+
+            RemorseItem { id: remorse }
+
+            onPressAndHold: {
+                listView.currentIndex = index;
+                if (!listView.contextMenu)
+                    listView.contextMenu = bookmarkContextMenuComponent.createObject()
+                listView.contextMenu.show(delegate)
+            }
+        }
+
+        Component {
+            id: bookmarkContextMenuComponent
+            ContextMenu {
+                MenuItem {
+                    text: listView.currentItem.bookmarkIsRead ?
+                        qsTr ("Mark as unread") :
+                        qsTr ("Mark as read")
+                }
+
+                MenuItem {
+                    text: listView.currentItem.bookmarkIsFavorite ?
+                        qsTr ("Mark as favorite") :
+                        qsTr ("Mark as unfavorite")
+                }
+
+                MenuItem {
+                    text: qsTr ("Remove")
+                    onClicked: listView.currentItem.remove ();
+                }
             }
         }
 
