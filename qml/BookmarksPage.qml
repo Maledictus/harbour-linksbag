@@ -83,6 +83,8 @@ Page {
 
             property string bookmarkId : uid
             property url bookmarkUrl : url
+            property string bookmarkTitle: title
+            property string bookmarkTags: tags
             property bool bookmarkIsFavorite : favorite
             property bool bookmarkIsRead : read
 
@@ -110,7 +112,7 @@ Page {
                 elide: Text.ElideRight
                 color: parent.down ? Theme.highlightColor : Theme.primaryColor
 
-                text: title
+                text: delegate.bookmarkTitle
             }
 
             Image {
@@ -137,7 +139,7 @@ Page {
                 elide: Text.ElideRight
                 color: parent.down ? Theme.highlightColor : Theme.primaryColor
 
-                text: tags
+                text: delegate.bookmarkTags
             }
 
             function remove () {
