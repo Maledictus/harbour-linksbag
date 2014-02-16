@@ -96,7 +96,9 @@ Page {
                 id: titleLabel
 
                 anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.right: favoriteImage.visible ?
+                    favoriteImage.left :
+                    parent.right
                 anchors.verticalCenter: tagsLabel.text.length === 0 && !menuOpen ?
                     parent.verticalCenter :
                     undefined
@@ -104,10 +106,21 @@ Page {
 
                 font.family: Theme.fontFamilyHeading
                 font.pixelSize:  Theme.fontSizeMedium
+                font.bold: !delegate.bookmarkIsRead
                 elide: Text.ElideRight
                 color: parent.down ? Theme.highlightColor : Theme.primaryColor
 
                 text: title
+            }
+
+            Image {
+                id: favoriteImage
+                anchors.right: parent.right
+                anchors.leftMargin: Theme.paddingMedium;
+                anchors.rightMargin: Theme.paddingMedium
+                fillMode: Image.PreserveAspectFit
+                source: "image://Theme/icon-m-favorite-selected"
+                visible: delegate.bookmarkIsFavorite
             }
 
             Label {
@@ -162,8 +175,8 @@ Page {
 
                 MenuItem {
                     text: listView.currentItem.bookmarkIsFavorite ?
-                        qsTr ("Mark as favorite") :
-                        qsTr ("Mark as unfavorite")
+                        qsTr ("Mark as unfavorite") :
+                        qsTr ("Mark as favorite")
                     onClicked: {
                         markAsFavorite (listView.currentItem.bookmarkId,
                             !listView.currentItem.bookmarkIsFavorite)
