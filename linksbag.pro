@@ -24,7 +24,8 @@ OTHER_FILES += qml/linksbag.qml \
     rpm/linksbag.spec \
     qml/LocalStorage.qml \
     qml/AuthManager.qml \
-    qml/NetworkManager.qml
+    qml/NetworkManager.qml \
+    qml/functions.js
 
 HEADERS += \
     src/networkaccessmanagerfactory.h \

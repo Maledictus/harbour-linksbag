@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "functions.js" as F
 
 Item {
     id: networkManager
@@ -22,7 +23,7 @@ Item {
         var source = "https://getpocket.com/v3/get"
         var params = "{ \"consumer_key\": \"" + authManager.consumerKey + "\"," +
                 " \"access_token\": \""+ authManager.accessToken +"\"," +
-                " \"state\": \"all\", \"sort\": \"newest\", \"detailType\": \"complete\"," +
+                " \"state\": \"all\", \"sort\": \"oldest\", \"detailType\": \"complete\"," +
                 " \"since\": \"" + lastUpdate + "\"}"
         sendRequest (source, params, "POST")
     }
@@ -69,7 +70,7 @@ Item {
                 if (http.status === 200) {
                     try {
                         var result = http.responseText;
-                        console.log("XXXXXXXXXXXXXXX " + result + "YYYYYYYYYYYYYYYYYYYYY")
+                        //console.log("XXXXXXXXXXXXXXX " + result + "YYYYYYYYYYYYYYYYYYYYY")
                         var resultObject = JSON.parse (result)
 
                         if (resultObject.code !== undefined) {
@@ -87,8 +88,10 @@ Item {
                         if (resultObject.list !== undefined) {
                             bookmarksPage.m.clear()
                             var list = resultObject.list
-                            for (var key in list) {
-                                var item = list [key]
+                            var result = F.addSortingKey(list)
+
+                            for (var i = 0; i < result.length; ++i) {
+                                var item = list [result [i].uid]
                                 var uid = item.item_id
                                 var url = item.resolved_url
                                 var title = item.resolved_title
@@ -96,7 +99,7 @@ Item {
                                     title = item.given_title
                                 if (!title || title.length === 0)
                                     title = url
-                                var favorite = item.time_favorited !== "0"
+                                var favorite = item.favorite !== "0"
                                 var read = item.time_read !== "0"
                                 var tagsList = item.tags
                                 var tags = ""
