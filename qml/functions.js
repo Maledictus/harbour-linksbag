@@ -1,3 +1,31 @@
+var itemsObject = new Object
+
+function addItems (newItems) {
+    for (var i = 0; i < newItems.length; ++i) {
+        var newItem = newItems [i]
+        if (itemsObject === undefined ||
+                !itemsObject.hasOwnProperty (newItem.uid)) {
+            itemsObject[newItem.uid] = newItem
+        }
+    }
+}
+
+function addItem (item) {
+    if (itemsObject === undefined ||
+            !itemsObject.hasOwnProperty (item.uid)) {
+        var data = new Object;
+        for (var key in item) {
+            data [key] = item [key]
+        }
+
+        itemsObject[item.uid] = data
+    }
+}
+
+function getItems () {
+    console.log(JSON.stringify (itemsObject, null, 4))
+}
+
 function addSortingKey (object)
 {
     var sortedList = new Array ()

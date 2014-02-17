@@ -30,6 +30,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "functions.js" as F
 
 Page {
     id: page
@@ -51,6 +52,27 @@ Page {
 
     ListModel {
         id: listModel
+
+        function update () {
+            for (var i = 0; i < listModel.count; ++i) {
+                var item = listModel.get(i);
+                F.addItem(item)
+            }
+            listModel.clear ()
+
+            F.getItems ()
+            for (var i = 0; i < items.length; ++i) {
+                var item = items [i]
+              //  console.log (item.title, item.uid)
+//                if (listView.searchField.text == "" ||
+//                        items [i].title.indexOf(listView.searchField.text) >= 0 ||
+//                        items [i].tags.indexOf(listView.searchField.text) >= 0) {
+//                    listModel.append (items [i])
+//                }
+            }
+        }
+
+        Component.onCompleted: update ()
     }
 
     function loadBookmarks () {
@@ -63,6 +85,8 @@ Page {
         model: listModel
         anchors.fill: parent
 
+        property alias searchField: listView.header
+
         PullDownMenu {
             MenuItem {
                 text: authManager.userName === "" ? qsTr("Login") : qsTr ("Logout")
@@ -70,9 +94,19 @@ Page {
             }
         }
 
-        header: PageHeader {
-            title: qsTr ("All bookmarks")
-        }
+        header: SearchField {
+                id: headerItem
+
+                width: parent.width
+
+                placeholderText: qsTr ("Search")
+
+                onTextChanged: {
+                    listModel.update ()
+                }
+            }
+
+        currentIndex: -1
 
         spacing: 5
 
@@ -89,7 +123,7 @@ Page {
             property bool bookmarkIsRead : read
 
             property bool menuOpen: listView.contextMenu != null &&
-                                listView.contextMenu.parent === delegate
+                    listView.contextMenu.parent === delegate
             height: menuOpen ?
                 listView.contextMenu.height + 70 :
                 70
