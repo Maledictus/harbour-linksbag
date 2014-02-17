@@ -17,13 +17,16 @@ function addItem (item) {
         for (var key in item) {
             data [key] = item [key]
         }
-
         itemsObject[item.uid] = data
     }
 }
 
 function getItems () {
-    console.log(JSON.stringify (itemsObject, null, 4))
+    var array = new Array;
+    for (var key in itemsObject) {
+        array.push (itemsObject [key])
+    }
+    return array
 }
 
 function addSortingKey (object)

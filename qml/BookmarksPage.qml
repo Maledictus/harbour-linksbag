@@ -46,6 +46,9 @@ Page {
 
     property int lastUpdate: 0
 
+    property string searchString
+    onSearchStringChanged: listModel.update()
+
     Component.onCompleted: {
         lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
     }
@@ -60,15 +63,14 @@ Page {
             }
             listModel.clear ()
 
-            F.getItems ()
-            for (var i = 0; i < items.length; ++i) {
-                var item = items [i]
-              //  console.log (item.title, item.uid)
-//                if (listView.searchField.text == "" ||
-//                        items [i].title.indexOf(listView.searchField.text) >= 0 ||
-//                        items [i].tags.indexOf(listView.searchField.text) >= 0) {
-//                    listModel.append (items [i])
-//                }
+            var array = F.getItems ()
+            for (var i = 0; i < array.length; ++i) {
+                var item = array [i]
+                if (searchString === "" ||
+                        item.title.toLowerCase ().indexOf(searchString) >= 0 ||
+                        item.tags.toLowerCase ().indexOf(searchString) >= 0) {
+                    listModel.append (item)
+                }
             }
         }
 
@@ -79,13 +81,32 @@ Page {
         networkManager.loadBookmarks (lastUpdate)
     }
 
+    Column {
+        id: headerContainer
+
+        width: page.width
+
+        SearchField {
+            id: searchField
+            width: parent.width
+
+            placeholderText: qsTr ("Search")
+
+            Binding {
+                target: page
+                property: "searchString"
+                value: searchField.text.toLowerCase().trim()
+            }
+        }
+    }
+
     SilicaListView {
         id: listView
 
         model: listModel
         anchors.fill: parent
 
-        property alias searchField: listView.header
+        property alias searchFieldText: searchField.text
 
         PullDownMenu {
             MenuItem {
@@ -94,17 +115,13 @@ Page {
             }
         }
 
-        header: SearchField {
-                id: headerItem
 
-                width: parent.width
-
-                placeholderText: qsTr ("Search")
-
-                onTextChanged: {
-                    listModel.update ()
-                }
-            }
+        header: Item {
+            id: header
+            width: headerContainer.width
+            height: headerContainer.height
+            Component.onCompleted: headerContainer.parent = header
+        }
 
         currentIndex: -1
 
