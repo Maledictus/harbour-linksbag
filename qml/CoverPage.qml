@@ -34,10 +34,19 @@ import Sailfish.Silica 1.0
 CoverBackground {
     id: cover
 
+    signal refresh()
+
     Label {
         id: label
         anchors.centerIn: parent
         text: "LinksBag"
+    }
+
+    CoverActionList {
+        CoverAction {
+            iconSource: "image://theme/icon-cover-refresh"
+            onTriggered: refresh()
+        }
     }
 }
 

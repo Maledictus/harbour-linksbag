@@ -34,9 +34,17 @@ import Sailfish.Silica 1.0
 ApplicationWindow
 {
     initialPage: bookmarksPage
-    cover: Qt.resolvedUrl("CoverPage.qml")
+    cover: coverPage
 
     property Page bookmarkViewPage
+
+    CoverPage {
+        id: coverPage
+
+        onRefresh: {
+            bookmarksPage.loadBookmarks()
+        }
+    }
 
     BookmarksPage {
         id: bookmarksPage
