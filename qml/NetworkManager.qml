@@ -86,10 +86,14 @@ Item {
                         }
 
                         if (resultObject.list !== undefined) {
+                            bookmarksPage.lastUpdate = resultObject.since
+
+                            if (resultObject.complete != 1) {
+                                return
+                            }
                             bookmarksPage.m.clear()
                             var list = resultObject.list
-                            var result = F.addSortingKey(list)
-
+                            var result = F.sort(list)
                             for (var i = 0; i < result.length; ++i) {
                                 var item = list [result [i].uid]
                                 var uid = item.item_id

@@ -46,6 +46,7 @@ Page {
 
     property int lastUpdate: 0
 
+    property bool inSearchMode: searchField.focus
     property string searchString
     onSearchStringChanged: listModel.update()
 
@@ -78,7 +79,7 @@ Page {
     }
 
     function loadBookmarks () {
-        networkManager.loadBookmarks (lastUpdate)
+        networkManager.loadBookmarks (page.lastUpdate)
     }
 
     Column {
@@ -112,6 +113,11 @@ Page {
             MenuItem {
                 text: authManager.userName === "" ? qsTr("Login") : qsTr ("Logout")
                 onClicked: authManager.userName === "" ? login () : logout ()
+            }
+
+            MenuItem {
+                text: qsTr ("Refresh")
+                onClicked: page.loadBookmarks()
             }
         }
 
@@ -255,7 +261,7 @@ Page {
 
     Label {
         anchors.centerIn: parent
-        visible: !loading && !listModel.count
+        visible: !loading && !listModel.count && !inSearchMode
         text: qsTr ("Offline")
     }
 }

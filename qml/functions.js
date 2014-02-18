@@ -29,7 +29,7 @@ function getItems () {
     return array
 }
 
-function addSortingKey (object)
+function sort (object)
 {
     var sortedList = new Array ()
     for (var key in object) {
