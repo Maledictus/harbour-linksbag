@@ -43,6 +43,7 @@ Page {
     signal markAsRead (string uid, bool read)
     signal markAsFavorite (string uid, bool favorite)
     signal removeBookmark (string uid)
+    signal selectBookmark (string uid, string url, bool isRead, bool isFavorite)
 
     property int lastUpdate: 0
 
@@ -80,6 +81,24 @@ Page {
 
     function loadBookmarks () {
         networkManager.loadBookmarks (page.lastUpdate)
+    }
+
+    function markBookmarkAsRead (uid, setRead) {
+        for (var i = 0; i < listModel.count; ++i) {
+            if (listModel.get (i).uid === uid) {
+                listModel.get (i).read = setRead
+                return
+            }
+        }
+    }
+
+    function markBookmarkAsFavorite (uid, setFavorite) {
+        for (var i = 0; i < listModel.count; ++i) {
+            if (listModel.get (i).uid === uid) {
+                listModel.get (i).favorite = setFavorite
+                return
+            }
+        }
     }
 
     Column {
@@ -216,6 +235,8 @@ Page {
                     listView.contextMenu = bookmarkContextMenuComponent.createObject()
                 listView.contextMenu.show(delegate)
             }
+
+            onClicked: selectBookmark(uid, url, read, favorite)
         }
 
         Component {

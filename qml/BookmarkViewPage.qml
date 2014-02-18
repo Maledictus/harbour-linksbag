@@ -30,13 +30,57 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import "functions.js" as F
 
 Page {
     id: page
 
+    property string uid
+    property string url
+    property bool isRead
+    property bool isFavorite
+
+    signal markAsRead (string uid, bool setRead)
+    signal markAsFavorite (string uid, bool setFavorite)
+
     SilicaWebView {
         id: webView
+
+        anchors.fill: parent
+
+        PullDownMenu {
+            MenuItem {
+                text: isRead ?
+                    qsTr ("Mark as unread") :
+                    qsTr ("Mark as read")
+                onClicked: {
+                    isRead = !isRead
+                    markAsRead (uid, isRead)
+                }
+            }
+
+            MenuItem {
+                text: isFavorite ?
+                    qsTr ("Mark as unfavorite") :
+                    qsTr ("Mark as favorite")
+                onClicked: {
+                    isFavorite = !isFavorite
+                    markAsFavorite (uid, isFavorite)
+                }
+            }
+        }
+
+        BusyIndicator {
+            id: webviewBusyIndicator
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            visible: webView.loading;
+            running: true;
+        }
+    }
+
+    onUrlChanged: {
+        webView.url = page.url
     }
 }
 

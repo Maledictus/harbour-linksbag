@@ -36,6 +36,8 @@ ApplicationWindow
     initialPage: bookmarksPage
     cover: Qt.resolvedUrl("CoverPage.qml")
 
+    property Page bookmarkViewPage
+
     BookmarksPage {
         id: bookmarksPage
         loading: authManager.countLoading > 0
@@ -45,6 +47,15 @@ ApplicationWindow
         onMarkAsRead: networkManager.markAsRead (uid, read)
         onMarkAsFavorite: networkManager.markAsFavorite (uid, favorite)
         onRemoveBookmark: networkManager.removeBookmark (uid)
+        onSelectBookmark: {
+            bookmarkViewPage = pageStack.push (Qt.resolvedUrl("BookmarkViewPage.qml"),
+                {
+                   "uid": uid,
+                   "url": url,
+                   "isRead": isRead,
+                   "isFavorite": isFavorite
+                })
+        }
 
     }
 
@@ -62,6 +73,17 @@ ApplicationWindow
     NetworkManager {
         id: networkManager
     }
+
+    Connections {
+        target: bookmarkViewPage
+        ignoreUnknownSignals: true
+        onMarkAsRead: {
+            bookmarksPage.markBookmarkAsRead (uid, setRead)
+            networkManager.markAsRead (uid, setRead)
+        }
+        onMarkAsFavorite: {
+            bookmarksPage.markBookmarkAsFavorite (uid, setFavorite)
+            networkManager.markAsFavorite (uid, setFavorite)
+        }
+    }
 }
-
-
