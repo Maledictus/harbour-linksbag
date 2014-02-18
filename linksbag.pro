@@ -17,7 +17,6 @@ SOURCES += src/linksbag.cpp \
 OTHER_FILES += qml/linksbag.qml \
 	qml/CoverPage.qml \
 	qml/BookmarksPage.qml \
-	qml/SecondPage.qml \
     rpm/linksbag.spec \
     rpm/linksbag.yaml \
     linksbag.desktop \
@@ -25,7 +24,8 @@ OTHER_FILES += qml/linksbag.qml \
     qml/LocalStorage.qml \
     qml/AuthManager.qml \
     qml/NetworkManager.qml \
-    qml/functions.js
+    qml/functions.js \
+    qml/BookmarkViewPage.qml
 
 HEADERS += \
     src/networkaccessmanagerfactory.h \
