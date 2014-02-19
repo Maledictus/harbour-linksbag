@@ -25,7 +25,8 @@ OTHER_FILES += qml/linksbag.qml \
     qml/AuthManager.qml \
     qml/NetworkManager.qml \
     qml/functions.js \
-    qml/BookmarkViewPage.qml
+    qml/BookmarkViewPage.qml \
+    qml/NotificationPopup.qml
 
 HEADERS += \
     src/networkaccessmanagerfactory.h \
