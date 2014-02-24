@@ -6,9 +6,11 @@
 #         - desktop icon filename must be changed
 #         - desktop filename must be changed
 #         - icon definition filename in desktop file must be changed
-TARGET = linksbag
+TARGET = harbour-linksbag
 
 CONFIG += sailfishapp
+
+QT += webkit
 
 SOURCES += src/linksbag.cpp \
     src/networkaccessmanagerfactory.cpp \
@@ -17,18 +19,19 @@ SOURCES += src/linksbag.cpp \
 OTHER_FILES += qml/linksbag.qml \
 	qml/CoverPage.qml \
 	qml/BookmarksPage.qml \
-    rpm/linksbag.spec \
-    rpm/linksbag.yaml \
-    linksbag.desktop \
-    rpm/linksbag.spec \
+    rpm/harbour-linksbag.spec \
+    rpm/harbour-linksbag.yaml \
+    harbour-linksbag.desktop \
     qml/LocalStorage.qml \
     qml/AuthManager.qml \
     qml/NetworkManager.qml \
     qml/functions.js \
-    qml/BookmarkViewPage.qml \
-    qml/NotificationPopup.qml
+    qml/BookmarkViewPage.qml
 
 HEADERS += \
     src/networkaccessmanagerfactory.h \
     src/customnetworkaccessmanager.h
+
+RESOURCES += \
+    harbour-linksbag.qrc
 
