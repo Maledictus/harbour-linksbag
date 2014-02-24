@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="linksbag.png">qml/images/harbour-linksbag.png</file>
+    </qresource>
+</RCC>
