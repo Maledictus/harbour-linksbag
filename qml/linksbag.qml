@@ -38,13 +38,6 @@ ApplicationWindow
         }
     }
 
-    NotificationPopup {
-        id: notificationPopup;
-        onCanceled: {
-            pageStack.push(notificationsPage)
-        }
-    }
-
     BookmarksPage {
         id: bookmarksPage
         loading: authManager.countLoading > 0
