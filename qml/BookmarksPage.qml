@@ -176,7 +176,6 @@ Page {
 
                 font.family: Theme.fontFamilyHeading
                 font.pixelSize:  Theme.fontSizeMedium
-                font.bold: !delegate.bookmarkIsRead
                 elide: Text.ElideRight
                 color: parent.down ? Theme.highlightColor : Theme.primaryColor
 
@@ -185,9 +184,9 @@ Page {
 
             IconButton {
                 id: favoriteImage
-                anchors.right: parent.right
+                anchors.right: readImage.left
                 anchors.leftMargin: Theme.paddingMedium;
-                anchors.rightMargin: Theme.paddingMedium
+                anchors.rightMargin: Theme.paddingSmall
                 icon.source: delegate.bookmarkIsFavorite ?
                     "image://Theme/icon-m-favorite-selected" :
                     "image://Theme/icon-m-favorite"
@@ -195,8 +194,19 @@ Page {
                     delegate.bookmarkIsFavorite = !delegate.bookmarkIsFavorite
                     markAsFavorite(delegate.bookmarkId, delegate.bookmarkIsFavorite)
                 }
+            }
 
-
+            IconButton {
+                id: readImage
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingMedium
+                icon.source: delegate.bookmarkIsRead ?
+                    "image://Theme/icon-m-certificates" :
+                    "image://Theme/icon-m-mail"
+                onClicked: {
+                    delegate.bookmarkIsRead = !delegate.bookmarkIsRead
+                    markAsRead(delegate.bookmarkId, delegate.bookmarkIsRead)
+                }
             }
 
             Label {
@@ -240,17 +250,6 @@ Page {
         Component {
             id: bookmarkContextMenuComponent
             ContextMenu {
-                MenuItem {
-                    text: listView.currentItem.bookmarkIsRead ?
-                        qsTr ("Mark as unread") :
-                        qsTr ("Mark as read")
-                    onClicked: {
-                        markAsRead (listView.currentItem.bookmarkId,
-                            !listView.currentItem.bookmarkIsRead)
-                        listView.currentItem.bookmarkIsRead = !listView.currentItem.bookmarkIsRead
-                    }
-                }
-
                 MenuItem {
                     text: qsTr ("Remove")
                     onClicked: listView.currentItem.remove ();
