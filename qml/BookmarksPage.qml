@@ -251,8 +251,13 @@ Page {
             id: bookmarkContextMenuComponent
             ContextMenu {
                 MenuItem {
+                    text: qsTr ("Open in external browser")
+                    onClicked: Qt.openUrlExternally(listView.contentItem.bookmarkUrl)
+                }
+
+                MenuItem {
                     text: qsTr ("Remove")
-                    onClicked: listView.currentItem.remove ();
+                    onClicked: listView.currentItem.remove ()
                 }
             }
         }
