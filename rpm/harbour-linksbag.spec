@@ -14,17 +14,17 @@ Name:       harbour-linksbag
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    GetPocket client for SailfishOS
 Version:    0.6
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    The MIT License (MIT)
 URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-linksbag.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
-BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
-BuildRequires:  pkgconfig(Qt5Core)
-BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(Qt5Qml)
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
 BuildRequires:  libqtwebkit5-devel
 BuildRequires:  desktop-file-utils
 
@@ -64,12 +64,12 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_datadir}/icons/hicolor/86x86/apps
-%{_datadir}/applications
-%{_datadir}/%{name}
-%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/%{name}/qml
 %{_bindir}
+%{_datadir}/%{name}/qml
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%{_datadir}/%{name}
+%{_datadir}/applications
+%{_datadir}/icons/hicolor/86x86/apps
 # >> files
 # << files
