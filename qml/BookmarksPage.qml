@@ -183,14 +183,20 @@ Page {
                 text: delegate.bookmarkTitle
             }
 
-            Image {
+            IconButton {
                 id: favoriteImage
                 anchors.right: parent.right
                 anchors.leftMargin: Theme.paddingMedium;
                 anchors.rightMargin: Theme.paddingMedium
-                fillMode: Image.PreserveAspectFit
-                source: "image://Theme/icon-m-favorite-selected"
-                visible: delegate.bookmarkIsFavorite
+                icon.source: delegate.bookmarkIsFavorite ?
+                    "image://Theme/icon-m-favorite-selected" :
+                    "image://Theme/icon-m-favorite"
+                onClicked: {
+                    delegate.bookmarkIsFavorite = !delegate.bookmarkIsFavorite
+                    markAsFavorite(delegate.bookmarkId, delegate.bookmarkIsFavorite)
+                }
+
+
             }
 
             Label {
@@ -242,17 +248,6 @@ Page {
                         markAsRead (listView.currentItem.bookmarkId,
                             !listView.currentItem.bookmarkIsRead)
                         listView.currentItem.bookmarkIsRead = !listView.currentItem.bookmarkIsRead
-                    }
-                }
-
-                MenuItem {
-                    text: listView.currentItem.bookmarkIsFavorite ?
-                        qsTr ("Mark as unfavorite") :
-                        qsTr ("Mark as favorite")
-                    onClicked: {
-                        markAsFavorite (listView.currentItem.bookmarkId,
-                            !listView.currentItem.bookmarkIsFavorite)
-                        listView.currentItem.bookmarkIsFavorite = !listView.currentItem.bookmarkIsFavorite
                     }
                 }
 
