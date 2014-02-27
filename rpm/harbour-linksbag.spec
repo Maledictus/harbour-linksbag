@@ -13,7 +13,7 @@ Name:       harbour-linksbag
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    GetPocket client for SailfishOS
-Version:    0.5
+Version:    0.6
 Release:    1
 Group:      Qt/Qt
 License:    The MIT License (MIT)
@@ -71,9 +71,5 @@ desktop-file-install --delete-original       \
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/qml
 %{_bindir}
-/usr/bin
-/usr/share/harbour-linksbag
-/usr/share/applications
-/usr/share/icons/hicolor/86x86/apps
 # >> files
 # << files

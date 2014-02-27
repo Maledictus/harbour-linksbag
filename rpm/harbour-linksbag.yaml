@@ -1,6 +1,6 @@
 Name: harbour-linksbag
 Summary: GetPocket client for SailfishOS
-Version: 0.5
+Version: 0.6
 Release: 1
 Group: Qt/Qt
 URL: http://example.org/
@@ -26,8 +26,4 @@ Files:
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/%{name}/qml'
 - '%{_bindir}'
-- /usr/bin
-- /usr/share/harbour-linksbag
-- /usr/share/applications
-- /usr/share/icons/hicolor/86x86/apps
 PkgBR: [libqtwebkit5-devel]
