@@ -251,6 +251,11 @@ Page {
             id: bookmarkContextMenuComponent
             ContextMenu {
                 MenuItem {
+                    text: qsTr ("Copy url to clipboard")
+                    onClicked: Clipboard.text = listView.currentItem.bookmarkUrl
+                }
+
+                MenuItem {
                     text: qsTr ("Open in external browser")
                     onClicked: Qt.openUrlExternally(listView.currentItem.bookmarkUrl)
                 }
