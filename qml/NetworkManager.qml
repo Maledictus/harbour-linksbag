@@ -126,7 +126,7 @@ Item {
                                 if (!title || title.length === 0)
                                     title = url
                                 var favorite = item.favorite !== "0"
-                                var read = item.time_read !== "0"
+                                var read = item.status === "1"
                                 var tagsList = item.tags
                                 var tags = ""
                                 for (var tag in tagsList) {
@@ -154,17 +154,13 @@ Item {
                     }
                 } else if (http.status === 400) {
                     console.log("http.status: 400 - Invalid request, please make sure you follow the documentation for proper syntax")
-                    notificationPopup.show(qsTr("Error: %1").arg (http.getResponseHeader("X-Error")))
                 } else if (http.status === 401) {
                     console.log("http.status: 401 - Not authorized")
                     authManager.requestToken = ""
-                    notificationPopup.show(qsTr("Error: %1").arg (http.getResponseHeader("X-Error")))
                 } else if (http.status === 403) {
                     console.log ("https.status: 403 - User was authenticated, but access denied due to lack of permission or rate limiting")
-                    notificationPopup.show(qsTr("Error: %1").arg (http.getResponseHeader("X-Error")))
                 } else if (http.status === 503) {
                     console.log("http.status: 503 - Pocket's sync server is down for scheduled maintenance")
-                    notificationPopup.show(qsTr("Error: %1").arg (http.getResponseHeader("X-Error")))
                 } else if (http.status === 0) {
                     authManager.countLoading = 0
                 } else {
