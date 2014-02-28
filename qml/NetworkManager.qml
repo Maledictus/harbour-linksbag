@@ -148,6 +148,7 @@ Item {
 
                                 bookmarksPage.m.append (data)
                             }
+                            bookmarksPage.cacheItems();
                         }
                     } catch(e) {
                         console.log("sendRequest: parse failed: " + e)

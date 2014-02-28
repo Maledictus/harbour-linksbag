@@ -31,6 +31,7 @@
 
 #include <sailfishapp.h>
 #include "networkaccessmanagerfactory.h"
+#include "cachemanager.h"
 
 
 int main (int argc, char *argv [])
@@ -44,11 +45,11 @@ int main (int argc, char *argv [])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
+
     LinksBag::NetworkAccessManagerFactory namFactory;
 
     QGuiApplication* app = SailfishApp::application (argc, argv);
     QQuickView* view = SailfishApp::createView ();
-
 
     QTranslator translator;
     if (translator.load (QLatin1String ("linksbag_") + QLocale::system ().name (),
@@ -62,6 +63,8 @@ int main (int argc, char *argv [])
     {
         view->rootContext ()->setContextProperty ("locale","en");
     }
+
+    view->rootContext ()->setContextProperty ("cacheManager", new LinksBag::CacheManager);
 
 
     view->engine ()->setNetworkAccessManagerFactory (&namFactory);

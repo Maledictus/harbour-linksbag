@@ -72,6 +72,13 @@ Page {
     }
 
     function loadBookmarks () {
+        var items = cacheManager.GetSavedItems ()
+        var count = items.length
+        console.log ("load saved items: ", count)
+        for (var i = 0; i < count; ++i) {
+            listModel.append(items[i])
+        }
+
         networkManager.loadBookmarks (page.lastUpdate)
     }
 
@@ -91,6 +98,12 @@ Page {
                 return
             }
         }
+    }
+
+    function cacheItems () {
+        listModel.update ()
+        cacheManager.SaveItems (F.getItems())
+        localStorage.setSettingsValue ("lastUpdate", lastUpdate)
     }
 
     Column {

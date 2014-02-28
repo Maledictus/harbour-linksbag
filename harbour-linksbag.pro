@@ -14,7 +14,8 @@ QT += webkit
 
 SOURCES += src/linksbag.cpp \
     src/networkaccessmanagerfactory.cpp \
-    src/customnetworkaccessmanager.cpp
+    src/customnetworkaccessmanager.cpp \
+    src/cachemanager.cpp
 
 OTHER_FILES += qml/linksbag.qml \
 	qml/CoverPage.qml \
@@ -30,7 +31,8 @@ OTHER_FILES += qml/linksbag.qml \
 
 HEADERS += \
     src/networkaccessmanagerfactory.h \
-    src/customnetworkaccessmanager.h
+    src/customnetworkaccessmanager.h \
+    src/cachemanager.h
 
 RESOURCES += \
     harbour-linksbag.qrc
