@@ -63,7 +63,7 @@ ApplicationWindow
         id: authManager
         anchors.fill: parent
 
-        onAuthenticated: bookmarksPage.loadBookmarks ()
+        onAuthenticated: bookmarksPage.restoreBookmarks()
     }
 
     LocalStorage {

@@ -66,11 +66,28 @@ Page {
         for (var i = 0; i < array.length; ++i) {
             listModel.append (array[i])
         }
+
+        cacheManager.SaveItems (array)
+    }
+
+    function restoreBookmarks () {
+        var array = cacheManager.GetSavedItems ()
+        for (var i = 0; i < array.length; ++i) {
+            runtimeCache.addItem (array[i])
+        }
+
+        array = runtimeCache.getItems()
+        listModel.clear()
+        for (var i = 0; i < array.length; ++i) {
+            listModel.append (array[i])
+        }
+
+        loadBookmarks()
     }
 
     function loadBookmarks () {
-        //var lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
-        networkManager.loadBookmarks (0)
+        var lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
+        networkManager.loadBookmarks (lastUpdate)
     }
 
     function markBookmarkAsRead (uid, setRead) {
