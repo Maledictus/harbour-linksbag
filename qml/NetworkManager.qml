@@ -99,13 +99,14 @@ Item {
                             authManager.requestToken = resultObject.code
                         }
 
+                        if (resultObject.username !== undefined) {
+                            authManager.userName = resultObject.username
+                        }
+
                         if (resultObject.access_token !== undefined) {
                             authManager.accessToken = resultObject.access_token
                         }
 
-                        if (resultObject.username !== undefined) {
-                            authManager.userName = resultObject.username
-                        }
 
                         if (resultObject.list !== undefined) {
                             bookmarksPage.lastUpdate = resultObject.since

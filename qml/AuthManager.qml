@@ -40,8 +40,8 @@ Item {
 
     Component.onCompleted: {
         try {
-            accessToken = localStorage.getSettingsValue ("accessToken", "")
             userName = localStorage.getSettingsValue ("userName", "")
+            accessToken = localStorage.getSettingsValue ("accessToken", "")
         } catch (e) {
             console.log ("exception: getSettingsValue" + e)
         }
@@ -53,12 +53,18 @@ Item {
     }
 
     onRequestTokenChanged: {
+        if (requestToken === undefined || requestToken === "")
+            return
+
         console.log("request token changed ! " + requestToken)
         webview.url = "https://getpocket.com/auth/authorize?request_token=" +
                 requestToken + "&redirect_uri=linksbag:authorizationFinished"
     }
 
     onAccessTokenChanged: {
+        if (accessToken === undefined || accessToken === "")
+            return
+
         console.log ("access token changed ! " + accessToken)
         webview.visible = false
         localStorage.setSettingsValue("accessToken", accessToken)
@@ -78,8 +84,16 @@ Item {
 
     function logout () {
         console.log ("Logout")
+
         localStorage.setSettingsValue("accessToken", "")
         localStorage.setSettingsValue("userName", "")
+        localStorage.setSettingsValue("lastUpdate", "0")
+
+        accessToken = ""
+        requestToken = ""
+        userName = ""
+
+        auth_refresh()
     }
 
     WebView {
