@@ -37,15 +37,9 @@ Page {
     signal removeBookmark (string uid)
     signal selectBookmark (string uid, string url, bool isRead, bool isFavorite)
 
-    property int lastUpdate: 0
-
     property bool inSearchMode: searchField.focus
     property string searchString
     onSearchStringChanged: listModel.update()
-
-    Component.onCompleted: {
-        lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
-    }
 
     ListModel {
         id: listModel
@@ -71,15 +65,13 @@ Page {
         Component.onCompleted: update ()
     }
 
-    function loadBookmarks () {
-        var items = cacheManager.GetSavedItems ()
-        var count = items.length
-        console.log ("load saved items: ", count)
-        for (var i = 0; i < count; ++i) {
-            listModel.append(items[i])
-        }
+    function bookmarksDownloaded (lastUpdate) {
+        localStorage.setSettingsValue ("lastUpdate", lastUpdate)
+    }
 
-        networkManager.loadBookmarks (page.lastUpdate)
+    function loadBookmarks () {
+        //var lastUpdate = parseInt (localStorage.getSettingsValue ("lastUpdate", 0))
+        networkManager.loadBookmarks (0)
     }
 
     function markBookmarkAsRead (uid, setRead) {
@@ -98,12 +90,6 @@ Page {
                 return
             }
         }
-    }
-
-    function cacheItems () {
-        listModel.update ()
-        cacheManager.SaveItems (F.getItems())
-        localStorage.setSettingsValue ("lastUpdate", lastUpdate)
     }
 
     Column {

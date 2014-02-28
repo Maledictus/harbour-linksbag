@@ -72,6 +72,8 @@ ApplicationWindow
 
     NetworkManager {
         id: networkManager
+
+        onGotBookmarks: bookmarksPage.bookmarksDownloaded (lastUpdate)
     }
 
     Connections {

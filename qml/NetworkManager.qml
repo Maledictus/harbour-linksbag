@@ -27,6 +27,8 @@ import "functions.js" as F
 Item {
     id: networkManager
 
+    signal gotBookmarks (string lastUpdate)
+
     function obtainAccessToken () {
         var source = "https://getpocket.com/v3/oauth/request"
         var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
@@ -109,8 +111,6 @@ Item {
 
 
                         if (resultObject.list !== undefined) {
-                            bookmarksPage.lastUpdate = resultObject.since
-
                             if (resultObject.complete != 1) {
                                 return
                             }
@@ -149,7 +149,8 @@ Item {
 
                                 bookmarksPage.m.append (data)
                             }
-                            bookmarksPage.cacheItems();
+
+                            gotBookmarks (resultObject.since)
                         }
                     } catch(e) {
                         console.log("sendRequest: parse failed: " + e)
