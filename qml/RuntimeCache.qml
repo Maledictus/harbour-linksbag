@@ -29,13 +29,11 @@ Item {
     property var itemsObject: new Object()
 
     function addItem (item) {
-        if (!itemsObject.hasOwnProperty (item.uid)) {
-            var data = new Object;
-            for (var key in item) {
-                data [key] = item [key]
-            }
-            itemsObject[item.uid] = data
+        var data = new Object;
+        for (var key in item) {
+            data [key] = item [key]
         }
+        itemsObject[item.uid] = data
     }
 
     function getItems () {
