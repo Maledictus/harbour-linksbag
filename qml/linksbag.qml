@@ -76,6 +76,10 @@ ApplicationWindow
         onGotBookmarks: bookmarksPage.bookmarksDownloaded (lastUpdate)
     }
 
+    RuntimeCache {
+        id: runtimeCache
+    }
+
     Connections {
         target: bookmarkViewPage
         ignoreUnknownSignals: true

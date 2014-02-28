@@ -22,7 +22,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "functions.js" as F
 
 Page {
     id: page
@@ -45,13 +44,8 @@ Page {
         id: listModel
 
         function update () {
-            for (var i = 0; i < listModel.count; ++i) {
-                var item = listModel.get(i);
-                F.addItem(item)
-            }
             listModel.clear ()
-
-            var array = F.getItems ()
+            var array = runtimeCache.getItems()
             for (var i = 0; i < array.length; ++i) {
                 var item = array [i]
                 if (searchString === "" ||
@@ -67,6 +61,11 @@ Page {
 
     function bookmarksDownloaded (lastUpdate) {
         localStorage.setSettingsValue ("lastUpdate", lastUpdate)
+        var array = runtimeCache.getItems()
+        listModel.clear()
+        for (var i = 0; i < array.length; ++i) {
+            listModel.append (array[i])
+        }
     }
 
     function loadBookmarks () {

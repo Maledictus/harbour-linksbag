@@ -22,7 +22,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "functions.js" as F
 
 Item {
     id: networkManager
@@ -114,11 +113,9 @@ Item {
                             if (resultObject.complete != 1) {
                                 return
                             }
-                            bookmarksPage.m.clear()
                             var list = resultObject.list
-                            var result = F.sort(list)
-                            for (var i = 0; i < result.length; ++i) {
-                                var item = list [result [i].uid]
+                            for (var key in list) {
+                                var item = list [key]
                                 var uid = item.item_id
                                 var url = item.resolved_url
                                 var title = item.resolved_title
@@ -138,16 +135,19 @@ Item {
                                     tags += tag
                                 }
 
+                                var sortId = item.sort_id
+
                                 var data = {
                                     "uid" : uid,
                                     "url" : url,
                                     "title" : title,
                                     "favorite" : favorite,
                                     "read" : read,
-                                    "tags" : tags
+                                    "tags" : tags,
+                                    "sortId" : sortId
                                 }
 
-                                bookmarksPage.m.append (data)
+                                runtimeCache.addItem(data)
                             }
 
                             gotBookmarks (resultObject.since)
