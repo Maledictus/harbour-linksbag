@@ -110,47 +110,54 @@ Item {
 
 
                         if (resultObject.list !== undefined) {
-
-                            if (resultObject.complete === 1) {
-                                var list = resultObject.list
-                                for (var key in list) {
-                                    var item = list [key]
-                                    var uid = item.item_id
-                                    var url = item.resolved_url
-                                    var title = item.resolved_title
-                                    if (!title || title.length === 0)
-                                        title = item.given_title
-                                    if (!title || title.length === 0)
-                                        title = url
-                                    var favorite = item.favorite !== "0"
-                                    var read = item.status === "1"
-                                    var tagsList = item.tags
-                                    var tags = ""
-                                    for (var tag in tagsList) {
-                                        if (tag === undefined)
-                                            continue
-                                        if (tags && tags.length !== 0)
-                                            tags += ", "
-                                        tags += tag
-                                    }
-
-                                    var sortId = item.sort_id
-
-                                    var data = {
-                                        "uid" : uid,
-                                        "url" : url,
-                                        "title" : title,
-                                        "favorite" : favorite,
-                                        "read" : read,
-                                        "tags" : tags,
-                                        "sortId" : sortId
-                                    }
-
-                                    runtimeCache.addItem(data)
+                            var list = resultObject.list
+                            for (var key in list) {
+                                var item = list [key]
+                                var uid = item.item_id
+                                var url = item.resolved_url
+                                var title = item.resolved_title
+                                if (!title || title.length === 0)
+                                    title = item.given_title
+                                if (!title || title.length === 0)
+                                    title = url
+                                var favorite = item.favorite !== "0"
+                                var read = item.status === "1"
+                                var tagsList = item.tags
+                                var addedTime = item.time_added
+                                var tags = ""
+                                for (var tag in tagsList) {
+                                    if (tag === undefined)
+                                        continue
+                                    if (tags && tags.length !== 0)
+                                        tags += ", "
+                                    tags += tag
                                 }
+
+                                var sortId = item.sort_id
+
+                                var data = {
+                                    "uid" : uid,
+                                    "url" : url,
+                                    "title" : title,
+                                    "favorite" : favorite,
+                                    "read" : read,
+                                    "tags" : tags,
+                                    "sortId" : sortId,
+                                    "addedTime" : addedTime
+                                }
+
+                                if (item.status === "2")
+                                    runtimeCache.removeItem(uid)
+                                else
+                                    runtimeCache.addItem(data)
                             }
                             gotBookmarks (resultObject.since)
                         }
+
+                        if (resultObject.action_results !== undefined) {
+                                bookmarksPage.loadBookmarks()
+                        }
+
                     } catch(e) {
                         console.log("sendRequest: parse failed: " + e)
                     }

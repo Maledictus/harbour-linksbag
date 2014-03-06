@@ -27,7 +27,9 @@ OTHER_FILES += qml/linksbag.qml \
     qml/AuthManager.qml \
     qml/NetworkManager.qml \
     qml/BookmarkViewPage.qml \
-    qml/RuntimeCache.qml
+    qml/RuntimeCache.qml \
+    qml/FilterSelectorPage.qml \
+    qml/BookmarksFilter.qml
 
 HEADERS += \
     src/networkaccessmanagerfactory.h \

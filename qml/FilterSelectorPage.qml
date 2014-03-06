@@ -20,36 +20,54 @@
     THE SOFTWARE.
 */
 
-
 import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-Item {
-    id: runtimeCache
+Page {
 
-    property var itemsObject: new Object()
+    property var _callback
 
-    function addItem (item) {
-        var data = new Object;
-        for (var key in item) {
-            data [key] = item [key]
+    Component.onDestruction: {
+        if (_callback) {
+            _callback()
         }
-        itemsObject[item.uid] = data
     }
 
-    function getItems (type){
-        var array = new Array;
-        for (var key in itemsObject) {
-            if ((type === "read" && itemsObject[key].read === true) ||
-                    (type === "favorite" && itemsObject[key].favorite === true) ||
-                    (type === "unread" && itemsObject[key].read !== true) ||
-                    type === "all")
-                array.push (itemsObject [key])
-        }
-        array.sort (function (a, b) { return b.addedTime - a.addedTime })
-        return array
-    }
+    SilicaListView {
+        id: listview
 
-    function removeItem (id) {
-        delete itemsObject[id]
+        anchors.fill: parent
+        model: bookmarksPage.bookmarksFilters
+
+        header: PageHeader {
+            title: qsTr("Filter by")
+        }
+
+        delegate: ListItem {
+            id: listitem
+
+            width: listview.width
+
+            Label {
+                text: modelData.name
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.verticalCenter: parent.verticalCenter
+                color: listitem.highlighted ? Theme.highlightColor : Theme.primaryColor
+            }
+
+            onClicked: {
+                function closure(sorter)
+                {
+                    return function()
+                    {
+                        bookmarksPage.bookmarksFilter = sorter;
+                    }
+                }
+
+                _callback = closure(modelData);
+                pageStack.pop();
+            }
+        }
     }
 }

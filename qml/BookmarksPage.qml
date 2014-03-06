@@ -29,6 +29,8 @@ Page {
     property alias m: listModel
     property bool loading
 
+    property BookmarksFilter bookmarksFilter: allBookmarksFilter
+
     signal login ()
     signal logout ()
     signal markAsRead (string uid, bool read)
@@ -38,14 +40,43 @@ Page {
 
     property bool inSearchMode: searchField.focus
     property string searchString
+
     onSearchStringChanged: listModel.update()
+
+    onBookmarksFilterChanged: {
+        reloadBookmarks(bookmarksFilter.name.toLowerCase())
+    }
+
+
+    property BookmarksFilter allBookmarksFilter: BookmarksFilter {
+        name: qsTr("All")
+    }
+
+    property BookmarksFilter readBookmarksFilter: BookmarksFilter {
+        name: qsTr("Read")
+    }
+
+    property BookmarksFilter unreadBookmarksFilter: BookmarksFilter {
+        name: qsTr("Unread")
+    }
+
+    property BookmarksFilter favoriteBookmarksFilter: BookmarksFilter {
+        name: qsTr("Favorite")
+    }
+
+    property variant bookmarksFilters: [
+        allBookmarksFilter,
+        readBookmarksFilter,
+        unreadBookmarksFilter,
+        favoriteBookmarksFilter
+    ]
 
     ListModel {
         id: listModel
 
         function update () {
             listModel.clear ()
-            var array = runtimeCache.getItems()
+            var array = runtimeCache.getItems(bookmarksFilter.name.toLowerCase())
             for (var i = 0; i < array.length; ++i) {
                 var item = array [i]
                 if (searchString === "" ||
@@ -61,7 +92,7 @@ Page {
 
     function bookmarksDownloaded (lastUpdate) {
         localStorage.setSettingsValue ("lastUpdate", lastUpdate)
-        var array = runtimeCache.getItems()
+        var array = runtimeCache.getItems(bookmarksFilter.name.toLowerCase())
         listModel.clear()
         for (var i = 0; i < array.length; ++i) {
             listModel.append (array[i])
@@ -70,13 +101,21 @@ Page {
         cacheManager.SaveItems (array)
     }
 
+    function reloadBookmarks (type) {
+        var array = runtimeCache.getItems(type)
+        listModel.clear()
+        for (var i = 0; i < array.length; ++i) {
+            listModel.append (array[i])
+        }
+    }
+
     function restoreBookmarks () {
         var array = cacheManager.GetSavedItems ()
         for (var i = 0; i < array.length; ++i) {
             runtimeCache.addItem (array[i])
         }
 
-        array = runtimeCache.getItems()
+        array = runtimeCache.getItems(bookmarksFilter.name.toLowerCase())
         listModel.clear()
         for (var i = 0; i < array.length; ++i) {
             listModel.append (array[i])
@@ -142,11 +181,18 @@ Page {
             }
 
             MenuItem {
+                text: qsTr("View: %1").arg(bookmarksFilter.name)
+
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("FilterSelectorPage.qml"));
+                }
+            }
+
+            MenuItem {
                 text: qsTr ("Refresh")
                 onClicked: page.loadBookmarks()
             }
         }
-
 
         header: Item {
             id: header
@@ -206,8 +252,8 @@ Page {
                     "image://Theme/icon-m-favorite-selected" :
                     "image://Theme/icon-m-favorite"
                 onClicked: {
-                    delegate.bookmarkIsFavorite = !delegate.bookmarkIsFavorite
-                    markAsFavorite(delegate.bookmarkId, delegate.bookmarkIsFavorite)
+                    //delegate.bookmarkIsFavorite = !delegate.bookmarkIsFavorite
+                    markAsFavorite(delegate.bookmarkId, !delegate.bookmarkIsFavorite)
                 }
             }
 
@@ -219,8 +265,8 @@ Page {
                     "image://Theme/icon-m-certificates" :
                     "image://Theme/icon-m-mail"
                 onClicked: {
-                    delegate.bookmarkIsRead = !delegate.bookmarkIsRead
-                    markAsRead(delegate.bookmarkId, delegate.bookmarkIsRead)
+                    //delegate.bookmarkIsRead = !delegate.bookmarkIsRead
+                    markAsRead(delegate.bookmarkId, !delegate.bookmarkIsRead)
                 }
             }
 
