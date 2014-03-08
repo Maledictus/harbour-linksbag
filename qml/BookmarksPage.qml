@@ -287,13 +287,24 @@ Page {
                 }
             }
 
+            Image {
+                id: tagsIcon
+
+                anchors.left: urlLabel.left
+                //anchors.top: urlLabel.bottom
+                anchors.verticalCenter: tagsLabel.verticalCenter
+                source: "qrc:/images/icon-s-tag.png"
+
+                visible: delegate.bookmarkTags != ""
+            }
+
             Label {
                 id: tagsLabel
 
-                anchors.left: parent.left
+                anchors.left: tagsIcon.right
                 anchors.right: titleLabel.right
                 anchors.top: urlLabel.bottom
-                anchors.leftMargin: Theme.paddingMedium
+                anchors.leftMargin: Theme.paddingSmall
                 anchors.rightMargin: Theme.paddingMedium
                 anchors.topMargin: 0
 

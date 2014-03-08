@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/images">
         <file alias="linksbag.png">qml/images/harbour-linksbag.png</file>
+        <file alias="icon-s-tag.png">qml/images/icon-s-tag.png</file>
     </qresource>
 </RCC>
