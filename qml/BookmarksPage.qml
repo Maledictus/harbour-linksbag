@@ -219,9 +219,9 @@ Page {
 
             property bool menuOpen: listView.contextMenu != null &&
                     listView.contextMenu.parent === delegate
-            height: menuOpen ?
-                listView.contextMenu.height + 70 :
-                70
+            height: titleLabel.height + urlLabel.height + tagsLabel.height +
+                    (menuOpen ? listView.contextMenu.height : 0);
+
 
             Label {
                 id: titleLabel
@@ -230,9 +230,6 @@ Page {
                 anchors.right: favoriteImage.visible ?
                     favoriteImage.left :
                     parent.right
-                anchors.verticalCenter: tagsLabel.text.length === 0 && !menuOpen ?
-                    parent.verticalCenter :
-                    undefined
                 anchors.margins: Theme.paddingMedium
 
                 font.family: Theme.fontFamilyHeading
@@ -271,12 +268,43 @@ Page {
             }
 
             Label {
-                id: tagsLabel
+                id: urlLabel
 
                 anchors.left: parent.left
-                anchors.right: parent.right
+                anchors.right: titleLabel.right
                 anchors.top: titleLabel.bottom
                 anchors.leftMargin: Theme.paddingMedium
+                anchors.rightMargin: Theme.paddingMedium
+                anchors.topMargin: 0
+
+                font.pixelSize:  Theme.fontSizeTiny
+                elide: Text.ElideRight
+                color: parent.down ? Theme.highlightColor : Theme.primaryColor
+
+                text: {
+                    var matches = delegate.bookmarkUrl.toString().match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                    return matches ? matches[1] : delegate.bookmarkUrl;
+                }
+            }
+
+            Image {
+                id: tagsIcon
+
+                anchors.left: urlLabel.left
+                //anchors.top: urlLabel.bottom
+                anchors.verticalCenter: tagsLabel.verticalCenter
+                source: "qrc:/images/icon-s-tag.png"
+
+                visible: delegate.bookmarkTags != ""
+            }
+
+            Label {
+                id: tagsLabel
+
+                anchors.left: tagsIcon.right
+                anchors.right: titleLabel.right
+                anchors.top: urlLabel.bottom
+                anchors.leftMargin: Theme.paddingSmall
                 anchors.rightMargin: Theme.paddingMedium
                 anchors.topMargin: 0
 
