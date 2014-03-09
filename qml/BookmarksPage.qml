@@ -249,7 +249,6 @@ Page {
                     "image://Theme/icon-m-favorite-selected" :
                     "image://Theme/icon-m-favorite"
                 onClicked: {
-                    //delegate.bookmarkIsFavorite = !delegate.bookmarkIsFavorite
                     markAsFavorite(delegate.bookmarkId, !delegate.bookmarkIsFavorite)
                 }
             }
@@ -262,7 +261,6 @@ Page {
                     "image://Theme/icon-m-certificates" :
                     "image://Theme/icon-m-mail"
                 onClicked: {
-                    //delegate.bookmarkIsRead = !delegate.bookmarkIsRead
                     markAsRead(delegate.bookmarkId, !delegate.bookmarkIsRead)
                 }
             }
@@ -291,7 +289,6 @@ Page {
                 id: tagsIcon
 
                 anchors.left: urlLabel.left
-                //anchors.top: urlLabel.bottom
                 anchors.verticalCenter: tagsLabel.verticalCenter
                 source: "qrc:/images/icon-s-tag.png"
 
