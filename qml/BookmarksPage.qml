@@ -36,7 +36,7 @@ Page {
     signal markAsRead (string uid, bool read)
     signal markAsFavorite (string uid, bool favorite)
     signal removeBookmark (string uid)
-    signal selectBookmark (string uid, string url, bool isRead, bool isFavorite)
+    signal selectBookmark (string uid, string url, string title, bool isRead, bool isFavorite)
 
     property bool inSearchMode: searchField.focus
     property string searchString
@@ -330,12 +330,17 @@ Page {
                 listView.contextMenu.show(delegate)
             }
 
-            onClicked: selectBookmark(uid, url, read, favorite)
+            onClicked: selectBookmark(uid, url, title, read, favorite)
         }
 
         Component {
             id: bookmarkContextMenuComponent
             ContextMenu {
+                MenuItem {
+                    text: qsTr ("Share")
+                    onClicked: pageStack.push(Qt.resolvedUrl("ShareLinkPage.qml"),
+                            { "link" : listView.currentItem.bookmarkUrl, "linkTitle": listView.currentItem.bookmarkTitle })
+                }
                 MenuItem {
                     text: qsTr ("Copy url to clipboard")
                     onClicked: Clipboard.text = listView.currentItem.bookmarkUrl

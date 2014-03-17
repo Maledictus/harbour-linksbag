@@ -28,6 +28,7 @@ Page {
 
     property string uid
     property string url
+    property string title
     property bool isRead
     property bool isFavorite
 
@@ -40,6 +41,12 @@ Page {
         anchors.fill: parent
 
         PullDownMenu {
+            MenuItem {
+                text: qsTr ("Share")
+                onClicked: pageStack.push(Qt.resolvedUrl("ShareLinkPage.qml"),
+                        { "link" : page.url, "linkTitle": page.title })
+            }
+
             MenuItem {
                 text: isRead ?
                     qsTr ("Mark as unread") :

@@ -52,6 +52,7 @@ ApplicationWindow
                 {
                    "uid": uid,
                    "url": url,
+                   "title": title,
                    "isRead": isRead,
                    "isFavorite": isFavorite
                 })
