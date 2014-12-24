@@ -79,6 +79,17 @@ Item {
         sendRequest (source, params, "POST")
     }
 
+    function addBookmarks (bookmarks) {
+        for (var i = 0; i < bookmarks.length; ++i) {
+            var source = "https://getpocket.com/v3/add"
+            var params = "{ \"consumer_key\": \"" + authManager.consumerKey +
+                    "\", \"access_token\": \""+ authManager.accessToken +
+                    "\", \"url\": \"" + bookmarks [i].url +
+                    "\", \"title\": \"" + bookmarks [i].title +"\" }"
+            sendRequest (source, params, "POST")
+        }
+    }
+
     function sendRequest (source, params, method) {
         console.log(method + ": " + source + "?" + params)
 
@@ -156,6 +167,45 @@ Item {
 
                         if (resultObject.action_results !== undefined) {
                                 bookmarksPage.loadBookmarks()
+                        }
+
+                        if (resultObject.item !== undefined) {
+                                var item = resultObject.item
+                            var uid = item.item_id
+                            var url = item.resolved_url
+                            var title = item.resolved_title
+                            if (!title || title.length === 0)
+                                title = item.given_title
+                            if (!title || title.length === 0)
+                                title = url
+                            var favorite = item.favorite !== "0"
+                            var read = item.status === "1"
+                            var tagsList = item.tags
+                            var addedTime = item.time_added
+                            var tags = ""
+                            for (var tag in tagsList) {
+                                if (tag === undefined)
+                                    continue
+                                if (tags && tags.length !== 0)
+                                    tags += ", "
+                                tags += tag
+                            }
+
+                            var sortId = item.sort_id
+
+                            var data = {
+                                "uid" : uid,
+                                "url" : url,
+                                "title" : title,
+                                "favorite" : favorite,
+                                "read" : read,
+                                "tags" : tags,
+                                "sortId" : sortId,
+                                "addedTime" : addedTime
+                            }
+
+                            if (item.status === "1")
+                                runtimeCache.addItem(data)
                         }
 
                     } catch(e) {

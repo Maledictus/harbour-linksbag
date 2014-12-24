@@ -36,6 +36,7 @@ namespace LinksBag
 
         Q_INVOKABLE void SaveItems (const QVariant& items);
         Q_INVOKABLE QVariantList GetSavedItems () const;
+        Q_INVOKABLE QVariantList GetNewBookmarks () const;
     signals:
 
     public slots:

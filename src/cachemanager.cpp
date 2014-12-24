@@ -21,6 +21,11 @@
 */
 
 #include "cachemanager.h"
+#include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QtDebug>
@@ -30,6 +35,39 @@ namespace LinksBag
     CacheManager::CacheManager (QObject *parent)
     : QObject (parent)
     {
+    }
+
+    QVariantList CacheManager::GetNewBookmarks () const
+    {
+        const QString bookmarksPath = "/home/nemo/.local/share/org.sailfishos/sailfish-browser/bookmarks.json";
+        QFile file (bookmarksPath);
+        if (!file.open (QIODevice::ReadOnly))
+        {
+            qDebug () << "Unable to open file with bookmarks: "
+                    << file.errorString ();
+            return QVariantList ();
+        }
+
+        const QByteArray& ba = file.readAll ();
+        QJsonDocument doc = QJsonDocument::fromJson (ba);
+        QJsonArray bookmarks = doc.array ();
+
+        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::DataLocation));
+        QVariantList addedBookmarks = settings.value ("bookmarks").toList ();
+        QVariantList result;
+        for (int i = 0, size = bookmarks.size (); i < size; ++i)
+        {
+            const QJsonObject& object = bookmarks.at (i).toObject ();
+            if (!addedBookmarks.contains (object ["url"].toString ()))
+            {
+                result << object.toVariantMap ();
+            }
+            addedBookmarks << bookmarks.at (i).toObject () ["url"].toString ();
+        }
+
+        settings.setValue ("bookmarks", addedBookmarks);
+
+        return result;
     }
 
     void CacheManager::SaveItems (const QVariant& items)
