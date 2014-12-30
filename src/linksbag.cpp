@@ -25,14 +25,15 @@
 #endif
 
 #include <QGuiApplication>
+#include <QtQml>
 #include <QQmlEngine>
 #include <QQuickView>
 #include <QQmlContext>
 
 #include <sailfishapp.h>
-#include "networkaccessmanagerfactory.h"
-#include "cachemanager.h"
+#include "linksbagmanager.h"
 
+static const char *URI = "harbour.linksbag.LinksBagManager";
 
 int main (int argc, char *argv [])
 {
@@ -45,30 +46,16 @@ int main (int argc, char *argv [])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-
-    LinksBag::NetworkAccessManagerFactory namFactory;
-
     QGuiApplication* app = SailfishApp::application (argc, argv);
+    app->setApplicationName ("harbour-linksbag");
+    app->setApplicationVersion ("1.0");
+
     QQuickView* view = SailfishApp::createView ();
+    auto getpocket = new LinksBag::LinksBagManager;
+    Q_UNUSED (getpocket)
+    qmlRegisterType<LinksBag::LinksBagManager> (URI, 1, 0, "LinksBagManager");
 
-    QTranslator translator;
-    if (translator.load (QLatin1String ("linksbag_") + QLocale::system ().name (),
-            SailfishApp::pathTo (QString ("i18n")).toLocalFile ()))
-    {
-        app->installTranslator (&translator);
-        view->rootContext ()->setContextProperty ("locale",
-                QLocale::system ().bcp47Name ());
-    }
-    else
-    {
-        view->rootContext ()->setContextProperty ("locale","en");
-    }
-
-    view->rootContext ()->setContextProperty ("cacheManager", new LinksBag::CacheManager);
-
-
-    view->engine ()->setNetworkAccessManagerFactory (&namFactory);
-    view->setSource (SailfishApp::pathTo ("qml/linksbag.qml"));
+    view->setSource (SailfishApp::pathTo ("qml/harbour-linksbag.qml"));
     view->showFullScreen ();
 
     return app->exec ();

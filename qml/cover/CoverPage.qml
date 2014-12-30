@@ -26,7 +26,8 @@ import Sailfish.Silica 1.0
 CoverBackground {
     id: coverPage
 
-    signal refresh()
+    property alias model: listView.model
+
     BackgroundItem {
         anchors.fill: parent
 
@@ -35,7 +36,7 @@ CoverBackground {
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter:  parent.horizontalCenter
             fillMode: Image.PreserveAspectFit
-            source: "qrc:/images/linksbag.png"
+            source: "qrc:/images/harbour-linksbag.png"
             opacity: 0.2
             horizontalAlignment: Image.AlignHCenter
             verticalAlignment: Image.AlignVCenter
@@ -44,7 +45,13 @@ CoverBackground {
         }
     }
 
+    function loadModel () {
+        listView.model = manager.bookmarksModel
+    }
+
     SilicaListView {
+        id: listView
+
         anchors.bottom: actionsList.top
         anchors.left: parent.left
         anchors.right: parent.right
@@ -54,16 +61,12 @@ CoverBackground {
 
         spacing: 10
 
-        model: bookmarksPage.m
         width: parent.width
         clip: true
 
         delegate: BackgroundItem {
             id: delegate
             height: 30
-
-            property string bookmarkTitle: title
-            property bool bookmarkIsRead : read
 
             Label {
                 id: titleLabel
@@ -73,7 +76,7 @@ CoverBackground {
                 color: Theme.highlightColor
                 font.pixelSize: Theme.fontSizeTiny
 
-                text: delegate.bookmarkTitle
+                text: bookmarkTitle
             }
         }
     }
@@ -82,7 +85,7 @@ CoverBackground {
         id: actionsList
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-            onTriggered: refresh()
+//            onTriggered: m
         }
     }
 }

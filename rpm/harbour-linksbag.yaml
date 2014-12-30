@@ -1,9 +1,9 @@
 Name: harbour-linksbag
 Summary: GetPocket client for SailfishOS
-Version: 0.7
+Version: 1.0
 Release: 1
-Group: Qt/Qt
-URL: http://example.org/
+Group: Applications/Network
+URL: https://github.com/Maledictus/LinksBag
 License: The MIT License (MIT)
 Sources:
 - '%{name}-%{version}.tar.bz2'

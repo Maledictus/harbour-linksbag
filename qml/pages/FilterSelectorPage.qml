@@ -20,23 +20,55 @@
     THE SOFTWARE.
 */
 
-#include "customnetworkaccessmanager.h"
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-namespace LinksBag
-{
-    CustomNetworkAccessManager::CustomNetworkAccessManager (QObject *parent)
-    : QNetworkAccessManager (parent)
-    , UserAgent_ ("Mozilla/5.0 (Linux; U; Jolla; Sailfish; Mobile; rv:20.0)"
-            " Gecko/20.0 Firefox/20.0 LinksBag 0.1+")
-    {
+Page {
+
+    property var _callback
+    property var bookmarksPage
+
+    Component.onDestruction: {
+        if (_callback) {
+            _callback()
+        }
     }
 
-    QNetworkReply* CustomNetworkAccessManager::createRequest (QNetworkAccessManager::Operation op,
-            const QNetworkRequest& req, QIODevice *outgoingData)
-    {
-        QNetworkRequest newRequest (req);
-        newRequest.setRawHeader("User-Agent", UserAgent_.toLatin1 ());
-        QNetworkReply *reply = QNetworkAccessManager::createRequest (op, newRequest, outgoingData);
-        return reply;
+    SilicaListView {
+        id: listview
+
+        anchors.fill: parent
+        model: bookmarksPage.bookmarksFilters
+
+        header: PageHeader {
+            title: qsTr("Filter by")
+        }
+
+        delegate: ListItem {
+            id: listitem
+
+            width: listview.width
+
+            Label {
+                text: modelData.name
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.verticalCenter: parent.verticalCenter
+                color: listitem.highlighted ? Theme.highlightColor : Theme.primaryColor
+            }
+
+            onClicked: {
+                function closure(sorter)
+                {
+                    return function()
+                    {
+                        bookmarksPage.bookmarksFilter = sorter;
+                    }
+                }
+
+                _callback = closure(modelData);
+                pageStack.pop();
+            }
+        }
     }
 }

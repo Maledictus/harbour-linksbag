@@ -34,14 +34,15 @@ namespace LinksBag
 
     void CacheManager::SaveItems (const QVariant& items)
     {
-        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::DataLocation));
+        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::CacheLocation) + "/bookmarks_cache");
+        qDebug () << QStandardPaths::writableLocation (QStandardPaths::CacheLocation) + "/bookmarks_cache";
         settings.setValue ("items", items.toList());
-        qDebug () << "items saved: " << items.toList().count();
+        settings.sync ();
     }
 
     QVariantList CacheManager::GetSavedItems () const
     {
-        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::DataLocation));
+        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::CacheLocation) + "/bookmarks_cache");
         return settings.value ("items").toList ();
     }
 }

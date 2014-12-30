@@ -13,11 +13,11 @@ Name:       harbour-linksbag
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    GetPocket client for SailfishOS
-Version:    0.7
+Version:    1.0
 Release:    1
-Group:      Qt/Qt
+Group:      Applications/Network
 License:    The MIT License (MIT)
-URL:        http://example.org/
+URL:        https://github.com/Maledictus/LinksBag
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-linksbag.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9

@@ -26,14 +26,20 @@ import Sailfish.Silica 1.0
 Page {
     id: page
 
-    property string uid
-    property string url
-    property string title
-    property bool isRead
-    property bool isFavorite
+    property string bookmarkId
+    property QtObject currentBookmark
 
-    signal markAsRead (string uid, bool setRead)
-    signal markAsFavorite (string uid, bool setFavorite)
+    function load () {
+        currentBookmark = manager.GetBookmark (bookmarkId)
+    }
+
+    onCurrentBookmarkChanged: {
+        if (currentBookmark === 0 || currentBookmark === null) {
+            return
+        }
+
+        webView.url = currentBookmark.url
+    }
 
     SilicaWebView {
         id: webView
@@ -42,43 +48,47 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr ("Share")
-                onClicked: pageStack.push(Qt.resolvedUrl("ShareLinkPage.qml"),
-                        { "link" : page.url, "linkTitle": page.title })
-            }
+                visible: currentBookmark !== 0 && currentBookmark !== null
+                text: {
+                    if (currentBookmark === 0 || currentBookmark === null) {
+                        return "";
+                    }
 
-            MenuItem {
-                text: isRead ?
-                    qsTr ("Mark as unread") :
-                    qsTr ("Mark as read")
+                    return currentBookmark.read ?
+                        qsTr ("Mark as unread") :
+                        qsTr ("Mark as read")
+
+                }
                 onClicked: {
-                    isRead = !isRead
-                    markAsRead (uid, isRead)
+                    manager.markAsRead (currentBookmark.id, !currentBookmark.read)
                 }
             }
 
             MenuItem {
-                text: isFavorite ?
-                    qsTr ("Mark as unfavorite") :
-                    qsTr ("Mark as favorite")
+                visible: currentBookmark !== 0 && currentBookmark !== null
+                text: {
+                    if (currentBookmark === 0 || currentBookmark === null) {
+                        return "";
+                    }
+
+                    return currentBookmark.favorite ?
+                        qsTr ("Mark as unfavorite") :
+                        qsTr ("Mark as favorite")
+                }
+
                 onClicked: {
-                    isFavorite = !isFavorite
-                    markAsFavorite (uid, isFavorite)
+                    manager.markAsFavorite (currentBookmark.id, !currentBookmark.favorite)
                 }
             }
         }
 
         BusyIndicator {
             id: webviewBusyIndicator
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
             anchors.bottom: parent.bottom
             visible: webView.loading;
             running: true;
         }
-    }
-
-    onUrlChanged: {
-        webView.url = page.url
     }
 }
 

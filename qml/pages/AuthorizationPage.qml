@@ -22,35 +22,58 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Sailfish.TransferEngine 1.0
 
 Page {
-    id: page
+    id: authPage
 
-    property string link
-    property string linkTitle
+    SilicaWebView {
+        id: webView
 
-    ShareMethodList {
-        id: shareMethodList
         anchors.fill: parent
-        header: PageHeader {
-            //: List header for link sharing method list
-            //% "Share link"
-            title: qsTr("Share link")
-        }
-        filter: "text/x-url"
-        content: {
-            "type": "text/x-url",
-            "status": page.link,
-            "linkTitle": page.linkTitle
+
+        onLoadingChanged: {
+            var str = loadRequest.url.toString();
+            var i = str.indexOf ("linksbag:authorizationFinished", 0)
+            if (!i) {
+                manager.requestAccessToken ()
+            }
         }
 
-        ViewPlaceholder {
-            enabled: shareMethodList.model.count === 0
-
-            //: Empty state for share link page
-            //% "No sharing accounts available. You can add accounts in settings"
-            text: qsTrId("No sharing accounts available. You can add accounts in settings")
+        BusyIndicator {
+            anchors.centerIn: parent
+            visible: webView.loading;
+            running: visible;
         }
     }
+
+    Component.onCompleted: {
+        manager.obtainRequestToken ()
+    }
+
+    Connections {
+        target: manager
+        onRequestTokenChanged: {
+            webView.url = "https://getpocket.com/auth/authorize?request_token=" +
+                    manager.requestToken + "&redirect_uri=linksbag:authorizationFinished"
+        }
+    }
+
+//    function auth_refresh () {
+//        webview.visible = true
+//        networkManager.obtainAccessToken ()
+//    }
+
+//    function logout () {
+//        console.log ("Logout")
+
+//        localStorage.setSettingsValue("accessToken", "")
+//        localStorage.setSettingsValue("userName", "")
+//        localStorage.setSettingsValue("lastUpdate", "0")
+
+//        accessToken = ""
+//        requestToken = ""
+//        userName = ""
+
+//        auth_refresh()
+//    }
 }

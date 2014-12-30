@@ -20,24 +20,47 @@
     THE SOFTWARE.
 */
 
-#pragma once
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import harbour.linksbag.LinksBagManager 1.0
+import "cover"
+import "pages"
 
-#include <QtNetwork>
-#include <QQmlNetworkAccessManagerFactory>
-#include "customnetworkaccessmanager.h"
-
-namespace LinksBag
+ApplicationWindow
 {
-    class NetworkAccessManagerFactory : public QQmlNetworkAccessManagerFactory
-    {
-    public:
-        explicit NetworkAccessManagerFactory ();
+    id: mainWindow
 
-        QNetworkAccessManager* create (QObject* parent)
-        {
-            CustomNetworkAccessManager* manager = new CustomNetworkAccessManager (parent);
-            return manager;
+    cover: CoverPage {
+        model: manager.bookmarksModel
+    }
+
+    LinksBagManager {
+        id: manager
+
+        onAuthorizationChanged: {
+            if (authorized) {
+                var page = pageStack.replace (Qt.resolvedUrl ("pages/BookmarksPage.qml"))
+                page.load ()
+            }
         }
+    }
 
-    };
+    Component {
+        id: authComponent
+
+        AuthorizationPage {
+            id: authPage
+        }
+    }
+
+    Component.onCompleted: {
+        if (manager.authorized) {
+            var page = pageStack.push (Qt.resolvedUrl ("pages/BookmarksPage.qml"))
+            page.load ()
+        }
+        else {
+            pageStack.clear ()
+            pageStack.push (authComponent)
+        }
+    }
 }
