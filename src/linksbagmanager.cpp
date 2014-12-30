@@ -90,7 +90,7 @@ namespace LinksBag
         Authorized_ = !settings.value ("username").isNull () &&
                 !settings.value ("access_token").isNull ();
         emit authorizationChanged ();
-        setFilter (settings.value ("filter").toString ());
+        setFilter (settings.value ("filter", "all").toString ());
         emit filterChanged ();
     }
 
@@ -101,7 +101,7 @@ namespace LinksBag
 
     QString LinksBagManager::GetFilter () const
     {
-        return Filter_;
+        return Filter_.isEmpty () ? "all" : Filter_;
     }
 
     void LinksBagManager::SaveBookmarks ()

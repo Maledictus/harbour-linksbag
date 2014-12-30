@@ -75,9 +75,9 @@ Page {
 
     function load () {
         busyIndicator.visible = true
+        setFilter (manager.filter)
         bookmarksView.model = manager.bookmarksModel
         manager.loadBookmarks ()
-        setFilter (manager.filter)
     }
 
     Connections {
