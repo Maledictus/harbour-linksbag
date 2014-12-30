@@ -30,8 +30,7 @@ OTHER_FILES += qml/linksbag.qml \
     qml/RuntimeCache.qml \
     qml/FilterSelectorPage.qml \
     qml/BookmarksFilter.qml \
-    qml/ShareLinkPage.qml \
-    qml/NewBookmarksDialog.qml
+    qml/ShareLinkPage.qml
 
 HEADERS += \
     src/networkaccessmanagerfactory.h \

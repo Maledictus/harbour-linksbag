@@ -27,7 +27,7 @@ import Sailfish.Silica 1.0
 Item {
     id: authManager
 
-    property string consumerKey: "36050-db8157de51cbb0c5f72edc33"
+    property string consumerKey: "12464-6eefaffd8db4baedd23a64af"
 
     property string requestToken
     property string accessToken

@@ -176,17 +176,6 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: qsTr ("Check new bookmarks")
-                onClicked: {
-                    var page = pageStack.push (Qt.resolvedUrl ("NewBookmarksDialog.qml"))
-                    page.load ()
-                    page.accepted.connect (function () {
-                        networkManager.addBookmarks (page.selectedBookmarks)
-                    })
-                }
-            }
-
-            MenuItem {
                 text: authManager.userName === "" ? qsTr("Login") : qsTr ("Logout")
                 onClicked: authManager.userName === "" ? login () : logout ()
             }
