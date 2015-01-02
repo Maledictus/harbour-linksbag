@@ -157,6 +157,8 @@ Page {
         delegate: BackgroundItem {
             id: delegate
 
+            property string url : bookmarkUrl
+
             property bool menuOpen: bookmarksView.contextMenu != null &&
                     bookmarksView.contextMenu.parent === delegate
             height: contentItem.childrenRect.height +
@@ -285,14 +287,14 @@ Page {
                 MenuItem {
                     text: qsTr ("Copy url to clipboard")
                     onClicked: {
-                        Clipboard.text = bookmarksView.currentItem.bookmarkUrl
+                        Clipboard.text = bookmarksView.currentItem.url
                     }
                 }
 
                 MenuItem {
                     text: qsTr ("Open in external browser")
                     onClicked: {
-                        Qt.openUrlExternally (bookmarksView.currentItem.bookmarkUrl)
+                        Qt.openUrlExternally (bookmarksView.currentItem.url)
                     }
                 }
 
