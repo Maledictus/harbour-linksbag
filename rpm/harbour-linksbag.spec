@@ -20,17 +20,19 @@ License:    The MIT License (MIT)
 URL:        https://github.com/Maledictus/LinksBag
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-linksbag.yaml
+
 Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires:   nemo-transferengine-qt5 declarative-transferengine-qt5 >= 0.0.44
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(sailfishapp) >= 0.0.13
 BuildRequires:  libqtwebkit5-devel
 BuildRequires:  desktop-file-utils
+BuildRequires: pkgconfig(nemotransferengine-qt5)
 
 %description
 Application gives access to bookmarks stored in getpocket.com service
-
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -64,10 +66,6 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-/usr/share/icons/hicolor/86x86/apps
-/usr/share/applications
-/usr/share/harbour-linksbag
-/usr/bin
 %{_bindir}
 %{_datadir}/%{name}/qml
 %{_datadir}/applications/%{name}.desktop
@@ -75,5 +73,8 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications
 %{_datadir}/icons/hicolor/86x86/apps
+/usr/lib/nemo-transferengine/plugins/*.so
+%attr(4755, root, root) %{_bindir}/*
 # >> files
 # << files
+
