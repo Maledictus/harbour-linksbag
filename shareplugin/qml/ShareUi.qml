@@ -5,31 +5,50 @@ import Sailfish.TransferEngine 1.0
 ShareDialog {
     id: root
 
-    property int viewWidth: root.isPortrait ? Screen.width : Screen.width / 2
+    property bool isLink: root.content && ('type') in root.content && root.content.type === "text/x-url"
 
     onAccepted: {
         shareItem.start ()
     }
 
-    Item {
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
+    Column {
+        anchors.fill: parent
+
+        spacing: Theme.paddingMedium
+
+        DialogHeader {
+            acceptText: qsTr ("Put in pocket")
         }
 
         Label {
-            anchors.centerIn:parent
-            width: viewWidth
-            text: root.content + " " +
-                    root.content.status + " " +
-                    root.content.linkTitle + " " +
-                    typeof(root.content.status) + " " +
-                    typeof(root.content.linkTitle) + " " +
-                    typeof(shareItem)
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: root.isLink
+            text: root.content.linkTitle
+            width: root.width - Theme.paddingLarge * 2
+            elide: Text.ElideRight
+            wrapMode:  Text.Wrap
+            maximumLineCount: 2
+        }
 
-            horizontalAlignment: Text.AlignHCenter
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: Theme.highlightColor
+            text: root.content.status
+            width: root.width - Theme.paddingLarge * 2
+            elide: Text.ElideRight
+            wrapMode:  Text.Wrap
+            maximumLineCount: 3
+            opacity: .6
+            font.pixelSize: Theme.fontSizeSmall
+        }
+
+        TextArea {
+            id: tagsArea
+
+            visible: root.isLink
+            label: qsTr ("Tags")
+            placeholderText: qsTr ("Tags (separate by comma)...")
+            width: parent.width
         }
     }
 
@@ -40,13 +59,12 @@ ShareDialog {
         metadataStripped: true
         serviceId: root.methodId
         userData: {
-            "description": "Add url to getpocket.com",
             "accountId": root.accountId,
-            "scalePercent": root.scalePercent
+            "link": root.content.status,
+            "tags": tagsArea.text
         }
+        mimeType: root.isLink ? "text/x-url" : "text/plain"
     }
 
-    DialogHeader {
-        acceptText: qsTr ("Put in pocket")
-    }
+    Component.onCompleted:  tagsArea.forceActiveFocus ()
 }

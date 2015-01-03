@@ -20,8 +20,9 @@ void LinksBagPluginInfo::query ()
     QSettings settings (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) + "/harbour-linksbag/harbour-linksbag.conf",
             QSettings::NativeFormat);
     const QString& userName = settings.value ("username").toString ();
+    const QString& accessToken = settings.value ("access_token").toString ();
 
-    if (userName.isEmpty ())
+    if (userName.isEmpty () || accessToken.isEmpty ())
     {
         emit infoError (tr ("LinksBag not authorized"));
         return;

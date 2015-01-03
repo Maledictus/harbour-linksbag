@@ -1,3 +1,5 @@
+QMAKE_CXXFLAGS += -std=c++0x
+
 TEMPLATE = lib
 
 TARGET = $$qtLibraryTarget(linksbagshareplugin)
@@ -12,11 +14,13 @@ PKGCONFIG += nemotransferengine-qt5
 
 HEADERS += src/getpockettransferiface.h \
     src/getpocketplugininfo.h \
-    src/getpocketmediatransfer.h
+    src/getpocketmediatransfer.h \
+    src/getpocketapi.h
 
 SOURCES += src/getpockettransferiface.cpp \
     src/getpocketplugininfo.cpp \
-    src/getpocketmediatransfer.cpp
+    src/getpocketmediatransfer.cpp \
+    src/getpocketapi.cpp
 
 OTHER_FILES += qml/ShareUi.qml
 

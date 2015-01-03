@@ -19,6 +19,8 @@ public:
     QString	displayName () const;
     bool restartEnabled () const;
     QUrl serviceIcon () const;
+private:
+    void BookmarkAdded (bool success);
 
 public slots:
     void cancel ();
