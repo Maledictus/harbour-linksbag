@@ -22,6 +22,16 @@ SOURCES += src/linksbag.cpp \
     src/bookmark.cpp \
     src/enumsproxy.cpp
 
+OTHER_FILES += qml/harbour-linksbag.qml \
+    qml/cover/CoverPage.qml \
+    qml/pages/BookmarksPage.qml \
+    qml/pages/BookmarkViewPage.qml \
+    qml/pages/FilterSelectorPage.qml \
+    qml/pages/BookmarksFilter.qml \
+    qml/pages/AuthorizationPage.qml \
+    qml/pages/Popup.qml \
+    rpm/harbour-linksbag.spec \
+    harbour-linksbag.desktop
 
 HEADERS += \
     src/getpocketapi.h \
@@ -31,16 +41,5 @@ HEADERS += \
     src/bookmark.h \
     src/enumsproxy.h
 
-OTHER_FILES += qml/harbour-linksbag.qml \
-    qml/cover/CoverPage.qml \
-    qml/pages/BookmarksPage.qml \
-    qml/pages/BookmarkViewPage.qml \
-    qml/pages/FilterSelectorPage.qml \
-    qml/pages/BookmarksFilter.qml \
-    qml/pages/AuthorizationPage.qml \
-    qml/pages/Popup.qml \
-    harbour-linksbag.desktop
-
 RESOURCES += src/harbour-linksbag.qrc
 
-INSTALLS += target
