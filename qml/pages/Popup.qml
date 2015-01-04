@@ -108,6 +108,14 @@ MouseArea {
                 }
             }
         }
+
+        MouseArea {
+            anchors.fill: parent
+            preventStealing: true
+            onClicked: {
+                hide ()
+            }
+        }
     }
 
     onClicked: hide ()
