@@ -209,7 +209,10 @@ namespace LinksBag
 
     void GetPocketApi::handleNetworkError (QNetworkReply::NetworkError err)
     {
-        qDebug () << Q_FUNC_INFO << err;
+        if (auto reply = qobject_cast<QNetworkReply*> (sender ()))
+        {
+            emit error (reply->errorString ());
+        }
     }
 
     void GetPocketApi::handleObtainRequestToken ()

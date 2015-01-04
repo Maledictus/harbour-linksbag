@@ -43,6 +43,21 @@ ApplicationWindow
                 page.load ()
             }
         }
+
+        onNotify: {
+            popup.title = message
+            if (type == LinksBag.Erorr) {
+                popup.image = "image://Theme/icon-system-warning"
+            }
+            else {
+                popup.image = "image://Theme/icon-system-resources"
+            }
+            popup.show ()
+        }
+    }
+
+    Popup {
+        id: popup
     }
 
     Component {

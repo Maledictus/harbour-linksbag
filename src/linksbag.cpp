@@ -31,6 +31,7 @@
 #include <QQmlContext>
 
 #include <sailfishapp.h>
+#include "enumsproxy.h"
 #include "linksbagmanager.h"
 
 static const char *URI = "harbour.linksbag.LinksBagManager";
@@ -48,12 +49,14 @@ int main (int argc, char *argv [])
 
     QGuiApplication* app = SailfishApp::application (argc, argv);
     app->setApplicationName ("harbour-linksbag");
-    app->setApplicationVersion ("1.0");
+    app->setApplicationVersion ("1.2");
 
     QQuickView* view = SailfishApp::createView ();
     auto getpocket = new LinksBag::LinksBagManager;
     Q_UNUSED (getpocket)
     qmlRegisterType<LinksBag::LinksBagManager> (URI, 1, 0, "LinksBagManager");
+    qmlRegisterUncreatableType<LinksBag::EnumsProxy> (URI, 1, 0, "LinksBag",
+            "This exports otherwise unavailable LinksBag datatypes to QML");
 
     view->setSource (SailfishApp::pathTo ("qml/harbour-linksbag.qml"));
     view->showFullScreen ();

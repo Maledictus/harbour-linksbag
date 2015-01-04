@@ -55,6 +55,7 @@ namespace LinksBag
                     SaveBookmarks ();
 
                     emit requestFinished ();
+                    emit notify (NTError, tr ("Bookmarks updated"));
                 });
 
         connect (Api_,
@@ -65,6 +66,7 @@ namespace LinksBag
                    BookmarksModel_->RemoveBookmark (id);
                    SaveBookmarks ();
                    emit requestFinished ();
+                   emit notify (NTInfo, tr ("Bookmark removed"));
                 });
 
         connect (Api_,
@@ -74,6 +76,7 @@ namespace LinksBag
                     BookmarksModel_->MarkBookmarkAsFavorite (id, favorite);
                     SaveBookmarks ();
                     emit requestFinished ();
+                    emit notify (NTInfo, tr ("Bookmark marked as favorite"));
                 });
 
         connect (Api_,
@@ -83,6 +86,16 @@ namespace LinksBag
                     BookmarksModel_->MarkBookmarkAsRead (id, read);
                     SaveBookmarks ();
                     emit requestFinished ();
+                    emit notify (NTInfo, tr ("Bookmark marked as read"));
+                });
+
+        connect (Api_,
+                &GetPocketApi::error,
+                this,
+                [this] (const QString& msg)
+                {
+                    qDebug () << 1;
+                    emit notify (NTError, msg);
                 });
 
         QSettings settings (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) +

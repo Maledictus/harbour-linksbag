@@ -15,12 +15,12 @@ CONFIG += sailfishapp
 QT += webkit network
 
 SOURCES += src/linksbag.cpp \
-    src/cachemanager.cpp \
     src/getpocketapi.cpp \
     src/linksbagmanager.cpp \
     src/bookmarksmodel.cpp \
     src/filterproxymodel.cpp \
-    src/bookmark.cpp
+    src/bookmark.cpp \
+    src/enumsproxy.cpp
 
 OTHER_FILES += qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
@@ -28,17 +28,18 @@ OTHER_FILES += qml/harbour-linksbag.qml \
     qml/pages/BookmarkViewPage.qml \
     qml/pages/FilterSelectorPage.qml \
     qml/pages/BookmarksFilter.qml \
+    qml/pages/AuthorizationPage.qml \
+    qml/pages/Popup.qml \
     rpm/harbour-linksbag.spec \
-    rpm/harbour-linksbag.yaml \
-    harbour-linksbag.desktop \
-    qml/pages/AuthorizationPage.qml
+    harbour-linksbag.desktop
 
-HEADERS += src/cachemanager.h \
+HEADERS += \
     src/getpocketapi.h \
     src/linksbagmanager.h \
     src/bookmarksmodel.h \
     src/filterproxymodel.h \
-    src/bookmark.h
+    src/bookmark.h \
+    src/enumsproxy.h
 
 RESOURCES += src/harbour-linksbag.qrc
 

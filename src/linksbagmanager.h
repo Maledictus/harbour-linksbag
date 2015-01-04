@@ -26,6 +26,13 @@ namespace LinksBag
         Q_PROPERTY (QString filter READ GetFilter () NOTIFY filterChanged)
 
     public:
+        enum NotifyType
+        {
+            NTError = 0,
+            NTInfo
+        };
+
+
         explicit LinksBagManager (QObject *parent = 0);
 
         QString GetRequestToken () const;
@@ -56,5 +63,7 @@ namespace LinksBag
         void filterChanged ();
         void bookmarksModelChanged ();
         void requestFinished ();
+
+        void notify (int type, const QString& message);
     };
 } // namespace LinskBag

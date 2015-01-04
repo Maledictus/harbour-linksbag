@@ -58,5 +58,7 @@ namespace LinksBag
         void bookmarkMarkedAsFavorite (const QString& id, bool favorite);
         void bookmarkMarkedAsRead (const QString& id, bool read);
 
+        void error (const QString& message);
+
     };
 } // namespace LinksBag
