@@ -211,7 +211,21 @@ namespace LinksBag
     {
         if (auto reply = qobject_cast<QNetworkReply*> (sender ()))
         {
-            emit error (reply->errorString ());
+            QString msg;
+            switch (err)
+            {
+            case QNetworkReply::UnknownContentError:
+            case QNetworkReply::UnknownNetworkError:
+                msg = reply->rawHeader ("X-Error");
+                break;
+            default:
+                return;
+            }
+
+            if (msg.isEmpty ())
+                msg = reply->errorString ();
+
+            emit error (msg);
         }
     }
 
@@ -219,14 +233,12 @@ namespace LinksBag
     {
         if (auto reply = qobject_cast<QNetworkReply*> (sender ()))
         {
+            reply->deleteLater ();
+            if (reply->error () != QNetworkReply::NoError)
+                return;
             QJsonDocument doc = QJsonDocument::fromJson (reply->readAll ());
-            if (doc.isNull ())
-                ;//TODO error
-            else
-            {
-                RequestToken_ = doc.object () ["code"].toString ();
-                emit requestTokenChanged ();
-            }
+            RequestToken_ = doc.object () ["code"].toString ();
+            emit requestTokenChanged ();
         }
     }
 
@@ -234,15 +246,14 @@ namespace LinksBag
     {
         if (auto reply = qobject_cast<QNetworkReply*> (sender ()))
         {
+            reply->deleteLater ();
+            if (reply->error () != QNetworkReply::NoError)
+                return;
+
             QJsonDocument doc = QJsonDocument::fromJson (reply->readAll ());
-            if (doc.isNull ())
-                ;//TODO error
-            else
-            {
-                AccessToken_ = doc.object () ["access_token"].toString ();
-                UserName_ = doc.object () ["username"].toString ();
-                emit applicationAuthorized ();
-            }
+            AccessToken_ = doc.object () ["access_token"].toString ();
+            UserName_ = doc.object () ["username"].toString ();
+            emit applicationAuthorized ();
         }
     }
 
@@ -250,14 +261,12 @@ namespace LinksBag
     {
         if (auto reply = qobject_cast<QNetworkReply*> (sender ()))
         {
+            reply->deleteLater ();
+            if (reply->error () != QNetworkReply::NoError)
+                return;
+
             QJsonDocument doc = QJsonDocument::fromJson (reply->readAll ());
             QJsonObject rootObject = doc.object ();
-            if (rootObject ["error"].toString () == "null")
-            {
-                //TODO error
-                return;
-            }
-
             const quint64 since = rootObject ["since"].toDouble ();
 
             const auto& listObject = rootObject ["list"].toObject ();
@@ -296,16 +305,15 @@ namespace LinksBag
     {
         if (auto reply = qobject_cast<QNetworkReply*> (sender ()))
         {
+            reply->deleteLater ();
+            if (reply->error () != QNetworkReply::NoError)
+                return;
+
             QJsonDocument doc = QJsonDocument::fromJson (reply->readAll ());
             const QString& id = Reply2Remove_.take (reply);
-            if (doc.isNull ())
-                ;//TODO error
-            else
-            {
-                const auto& rootObject = doc.object ();
-                if (rootObject ["status"].toInt () == 1)
-                    emit bookmarkRemoved (id);
-            }
+            const auto& rootObject = doc.object ();
+            if (rootObject ["status"].toInt () == 1)
+                emit bookmarkRemoved (id);
         }
     }
 

@@ -30,12 +30,13 @@ MouseArea {
 
         triggeredOnStart: false
         repeat: false
-        interval: 3000
+        interval: 5000
         onTriggered: popup.hide ()
     }
 
     function hide () {
         if (hideTimer.running)
+            messageLabel.text = ""
             hideTimer.stop ()
             popup.opacity = 0.0
     }
@@ -53,25 +54,60 @@ MouseArea {
     Image {
         id: img
 
-        anchors.verticalCenter: popup.verticalCenter
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        anchors.leftMargin: Theme.paddingMedium
     }
 
-    Label {
-        id: messageLabel
+    Timer {
+        id: backPosTimer
 
-        anchors.verticalCenter: popup.verticalCenter
+        triggeredOnStart: false
+        repeat: false
+        interval: 250
+        onTriggered: flickable.contentX = 0
+    }
+
+
+    SilicaFlickable {
+        id: flickable
         anchors.left: img.right
-        anchors.leftMargin: Theme.paddingMedium
         anchors.right: parent.right
+        anchors.leftMargin: Theme.paddingMedium
         anchors.rightMargin: Theme.paddingMedium
-        horizontalAlignment: Text.AlignLeft
+        anchors.verticalCenter: parent.verticalCenter
 
-        font.pixelSize: Theme.fontSizeTiny
-        elide: Text.ElideRight
-        wrapMode: Text.Wrap
-        maximumLineCount: 3
+        height: messageLabel.paintedHeight
+        contentWidth: messageLabel.width
+        clip:true
+
+        flickableDirection: Flickable.HorizontalFlick
+        PropertyAnimation on contentX {
+            id: animation
+
+            from: 0
+            duration: 4000
+            loops: 1
+
+            onStopped: {
+                backPosTimer.start ()
+            }
+        }
+
+        Label {
+            id: messageLabel
+
+            anchors.left: parent.left
+            horizontalAlignment: Text.AlignLeft
+
+            font.pixelSize: Theme.fontSizeTiny
+
+            onTextChanged: {
+                if (text != "" && flickable.width < messageLabel.width) {
+                    animation.to = messageLabel.width - flickable.width + Theme.paddingMedium * 2
+                    animation.restart ()
+                }
+            }
+        }
     }
 
     onClicked: hide ()

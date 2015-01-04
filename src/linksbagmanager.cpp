@@ -55,7 +55,7 @@ namespace LinksBag
                     SaveBookmarks ();
 
                     emit requestFinished ();
-                    emit notify (NTError, tr ("Bookmarks updated"));
+                    emit notify (NTInfo, tr ("Bookmarks updated"));
                 });
 
         connect (Api_,
@@ -94,8 +94,8 @@ namespace LinksBag
                 this,
                 [this] (const QString& msg)
                 {
-                    qDebug () << 1;
                     emit notify (NTError, msg);
+                    emit requestFinished ();
                 });
 
         QSettings settings (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) +
