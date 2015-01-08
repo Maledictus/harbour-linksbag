@@ -110,6 +110,18 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                text: manager.searchFieldVisible ?
+                        qsTr ("Hide search field") :
+                        qsTr ("Show search field")
+
+                onClicked: {
+                     manager.searchFieldVisible = manager.searchFieldVisible ?
+                         false :
+                         true
+                }
+            }
+
+            MenuItem {
                 text: qsTr("View: %1").arg(bookmarksFilter.name)
 
                 onClicked: {
@@ -136,6 +148,8 @@ Page {
 
             SearchField {
                 id: search
+
+                visible: manager.searchFieldVisible
 
                 anchors.left: parent.left
                 anchors.right: parent.right

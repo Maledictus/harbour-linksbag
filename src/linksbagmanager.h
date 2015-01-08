@@ -23,7 +23,8 @@ namespace LinksBag
         Q_PROPERTY (QString requestToken READ GetRequestToken NOTIFY requestTokenChanged)
         Q_PROPERTY (bool authorized READ IsAuthorized NOTIFY authorizationChanged)
         Q_PROPERTY (QObject* bookmarksModel READ GetBookmarksModel NOTIFY bookmarksModelChanged)
-        Q_PROPERTY (QString filter READ GetFilter () NOTIFY filterChanged)
+        Q_PROPERTY (QString filter READ GetFilter NOTIFY filterChanged)
+        Q_PROPERTY (bool searchFieldVisible READ GetSearchFieldVisibility WRITE SetSearchFieldVisibility NOTIFY searchFieldVisibilityChanged)
 
     public:
         enum NotifyType
@@ -39,6 +40,8 @@ namespace LinksBag
         bool IsAuthorized () const;
         QObject* GetBookmarksModel () const;
         QString GetFilter () const;
+        bool GetSearchFieldVisibility () const;
+        void SetSearchFieldVisibility (bool visible);
         Q_INVOKABLE QObject* GetBookmark (const QString& id) const;
     private:
         void SaveBookmarks ();
@@ -63,6 +66,7 @@ namespace LinksBag
         void filterChanged ();
         void bookmarksModelChanged ();
         void requestFinished ();
+        void searchFieldVisibilityChanged ();
 
         void notify (int type, const QString& message);
     };
