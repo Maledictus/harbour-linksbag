@@ -107,6 +107,22 @@ namespace LinksBag
         emit filterChanged ();
     }
 
+    void LinksBagManager::SetSearchFieldVisibility (bool visible)
+    {
+        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) +
+                "/harbour-linksbag/harbour-linksbag.conf", QSettings::NativeFormat);
+        settings.setValue ("search_field_visibility", visible);
+        settings.sync ();
+        emit searchFieldVisibilityChanged ();
+    }
+
+    bool LinksBagManager::GetSearchFieldVisibility () const
+    {
+        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) +
+                "/harbour-linksbag/harbour-linksbag.conf", QSettings::NativeFormat);
+        return settings.value ("search_field_visibility", true).toBool ();
+    }
+    
     QObject* LinksBagManager::GetBookmark (const QString& id) const
     {
         return BookmarksModel_->GetBookmark (id);
