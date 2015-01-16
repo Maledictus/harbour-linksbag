@@ -57,23 +57,4 @@ Page {
                     manager.requestToken + "&redirect_uri=linksbag:authorizationFinished"
         }
     }
-
-//    function auth_refresh () {
-//        webview.visible = true
-//        networkManager.obtainAccessToken ()
-//    }
-
-//    function logout () {
-//        console.log ("Logout")
-
-//        localStorage.setSettingsValue("accessToken", "")
-//        localStorage.setSettingsValue("userName", "")
-//        localStorage.setSettingsValue("lastUpdate", "0")
-
-//        accessToken = ""
-//        requestToken = ""
-//        userName = ""
-
-//        auth_refresh()
-//    }
 }
