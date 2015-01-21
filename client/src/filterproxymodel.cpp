@@ -30,7 +30,7 @@ namespace LinksBag
         else if (Filter_ == "read")
             result = sourceModel ()->data (index, BookmarksModel::BRRead).toBool ();
         else if (Filter_ == "unread")
-            result = !sourceModel ()->data (index, BookmarksModel::BRFavorite).toBool ();
+            result = !sourceModel ()->data (index, BookmarksModel::BRRead).toBool ();
         else if (Filter_ == "favorite")
             result = sourceModel ()->data (index, BookmarksModel::BRFavorite).toBool ();
 
