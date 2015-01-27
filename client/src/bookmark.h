@@ -21,6 +21,9 @@ namespace LinksBag
         bool Read_;
         QDateTime AddTime_;
         QDateTime UpdateTime_;
+        bool IsArticle_;
+        bool IsImage_;
+        bool IsVideo_;
 
     public:
         enum Status
@@ -43,6 +46,9 @@ namespace LinksBag
         Q_PROPERTY (bool read READ IsRead NOTIFY readChanged)
         Q_PROPERTY (QDateTime addTime READ GetAddTime)
         Q_PROPERTY (QDateTime updateTime READ GetUpdateTime)
+        Q_PROPERTY (bool isArticle READ IsArticle)
+        Q_PROPERTY (bool isImage READ IsImage)
+        Q_PROPERTY (bool isVideo READ IsVideo)
 
     public:
         explicit Bookmark(QObject *parent = 0);
@@ -69,6 +75,12 @@ namespace LinksBag
         void SetUpdateTime (const QDateTime& dt);
         Status GetStatus () const;
         void SetStatus (Status status);
+        bool IsArticle () const;
+        void SetIsArticle (bool article);
+        bool IsImage () const;
+        void SetIsImage (bool image);
+        bool IsVideo () const;
+        void SetIsVideo (bool video);
 
         QByteArray Serialize () const;
         static Bookmark* Deserialize (const QByteArray& data, QObject *parent);

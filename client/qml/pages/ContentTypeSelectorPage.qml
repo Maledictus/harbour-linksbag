@@ -24,37 +24,51 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
-    id: authPage
 
-    SilicaWebView {
-        id: webView
+    property var _callback
+    property var bookmarksPage
+
+    Component.onDestruction: {
+        if (_callback) {
+            _callback()
+        }
+    }
+
+    SilicaListView {
+        id: listview
 
         anchors.fill: parent
+        model: bookmarksPage.contentTypeFilters
 
-        onLoadingChanged: {
-            var str = loadRequest.url.toString();
-            var i = str.indexOf ("linksbag:authorizationFinished", 0)
-            if (!i) {
-                manager.requestAccessToken ()
+        header: PageHeader {
+            title: qsTr("Filter by")
+        }
+
+        delegate: ListItem {
+            id: listitem
+
+            width: listview.width
+
+            Label {
+                text: modelData.name
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.verticalCenter: parent.verticalCenter
+                color: listitem.highlighted ? Theme.highlightColor : Theme.primaryColor
             }
-        }
 
-        BusyIndicator {
-            anchors.centerIn: parent
-            visible: webView.loading;
-            running: visible;
-        }
-    }
+            onClicked: {
+                function closure(sorter)
+                {
+                    return function()
+                    {
+                        bookmarksPage.contentTypeFilter = sorter;
+                    }
+                }
 
-    Component.onCompleted: {
-        manager.obtainRequestToken ()
-    }
-
-    Connections {
-        target: manager
-        onRequestTokenChanged: {
-            webView.url = "https://getpocket.com/auth/authorize?request_token=" +
-                    manager.requestToken + "&redirect_uri=linksbag:authorizationFinished"
+                _callback = closure(modelData);
+                pageStack.pop();
+            }
         }
     }
 }

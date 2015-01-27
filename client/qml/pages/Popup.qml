@@ -35,11 +35,10 @@ MouseArea {
     }
 
     function hide () {
-        if (hideTimer.running) {
+        if (hideTimer.running)
             messageLabel.text = ""
             hideTimer.stop ()
-        }
-        popup.opacity = 0.0
+            popup.opacity = 0.0
     }
 
     function show () {
@@ -119,7 +118,5 @@ MouseArea {
         }
     }
 
-    onClicked: {
-        hide ()
-    }
+    onClicked: hide ()
 }

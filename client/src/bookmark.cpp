@@ -7,6 +7,9 @@ namespace LinksBag
     : QObject (parent)
     , Favorite_ (false)
     , Read_ (false)
+    , IsArticle_ (false)
+    , IsImage_ (false)
+    , IsVideo_ (false)
     , Status_ (Bookmark::SNoStatus)
     {
     }
@@ -124,9 +127,39 @@ namespace LinksBag
         Status_ = status;
     }
 
+    void Bookmark::SetIsArticle (bool article)
+    {
+        IsArticle_ = article;
+    }
+
+    bool Bookmark::IsArticle () const
+    {
+        return IsArticle_;
+    }
+
+    void Bookmark::SetIsImage (bool image)
+    {
+        IsImage_ = image;
+    }
+
+    void Bookmark::SetIsVideo (bool video)
+    {
+        IsVideo_ = video;
+    }
+
+    bool Bookmark::IsVideo () const
+    {
+        return IsVideo_;
+    }
+
+    bool Bookmark::IsImage () const
+    {
+        return IsImage_;
+    }
+
     QByteArray Bookmark::Serialize () const
     {
-        quint16 ver = 1;
+        quint16 ver = 2;
         QByteArray result;
         {
             QDataStream ostr (&result, QIODevice::WriteOnly);
@@ -141,19 +174,22 @@ namespace LinksBag
                     << Tags_
                     << AddTime_
                     << UpdateTime_
-                    << Status_;
+                    << Status_
+                    << IsArticle_
+                    << IsImage_
+                    << IsVideo_;
         }
 
         return result;
     }
 
-    Bookmark *Bookmark::Deserialize (const QByteArray& data, QObject *parent)
+    Bookmark* Bookmark::Deserialize (const QByteArray& data, QObject *parent)
     {
         quint16 ver = 0;
         QDataStream in (data);
         in >> ver;
 
-        if (ver != 1)
+        if (ver < 1 || ver > 2)
         {
             qWarning () << Q_FUNC_INFO
                     << "unknown version"
@@ -175,6 +211,13 @@ namespace LinksBag
                 >> result->UpdateTime_
                 >> status;
         result->SetStatus (static_cast<Status> (status));
+
+        if (ver == 2)
+        {
+            in >> result->IsArticle_
+                    >> result->IsImage_
+                    >> result->IsVideo_;
+        }
 
         return result;
     }

@@ -54,13 +54,13 @@ Page {
                         return "";
                     }
 
-                    return currentBookmark.read ?
-                        qsTr ("Mark as unread") :
-                        qsTr ("Mark as read")
-
+                    return currentBookmark.favorite ?
+                        qsTr ("Mark as unfavorite") :
+                        qsTr ("Mark as favorite")
                 }
+
                 onClicked: {
-                    manager.markAsRead (currentBookmark.id, !currentBookmark.read)
+                    manager.markAsFavorite (currentBookmark.id, !currentBookmark.favorite)
                 }
             }
 
@@ -71,13 +71,13 @@ Page {
                         return "";
                     }
 
-                    return currentBookmark.favorite ?
-                        qsTr ("Mark as unfavorite") :
-                        qsTr ("Mark as favorite")
-                }
+                    return currentBookmark.read ?
+                        qsTr ("Mark as unread") :
+                        qsTr ("Mark as read")
 
+                }
                 onClicked: {
-                    manager.markAsFavorite (currentBookmark.id, !currentBookmark.favorite)
+                    manager.markAsRead (currentBookmark.id, !currentBookmark.read)
                 }
             }
         }

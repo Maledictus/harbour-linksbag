@@ -293,6 +293,9 @@ namespace LinksBag
                 bm->SetTags (tagsObject.keys ());
                 bm->SetImageUrl (bookmarkObject ["image"].toObject () ["src"].toString ());
                 bm->SetStatus (static_cast<Bookmark::Status> (bookmarkObject ["status"].toString ().toInt ()));
+                bm->SetIsArticle (bookmarkObject ["is_article"].toString () == "1");
+                bm->SetIsImage (bookmarkObject ["has_image"].toString () == "2");
+                bm->SetIsVideo (bookmarkObject ["has_video"].toString () == "2" || bookmarkObject ["has_video"].toString () == "1");
 
                 bookmarks << bm;
             }

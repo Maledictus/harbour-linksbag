@@ -1,4 +1,5 @@
 #include "linksbagmanager.h"
+#include <QCoreApplication>
 #include <QSettings>
 #include <QStandardPaths>
 #include "bookmarksmodel.h"
@@ -100,11 +101,26 @@ namespace LinksBag
 
         QSettings settings (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) +
                 "/harbour-linksbag/harbour-linksbag.conf", QSettings::NativeFormat);
+
+        if (qApp->applicationVersion () == "1.5")
+        {
+            if (settings.value ("need_full_update", true).toBool ())
+                settings.setValue ("lastUpdate", 0);
+            settings.setValue ("need_full_update", false);
+        }
+
         Authorized_ = !settings.value ("username").isNull () &&
                 !settings.value ("access_token").isNull ();
         emit authorizationChanged ();
         setFilter (settings.value ("filter", "all").toString ());
         emit filterChanged ();
+        setContentTypeFilter (settings.value ("content_type_filter", "all").toString ());
+        emit contentTypeFilterChanged ();
+    }
+
+    QString LinksBagManager::GetContentTypeFilter () const
+    {
+        return ContentTypeFilter_.isEmpty () ? "all" : ContentTypeFilter_;
     }
 
     void LinksBagManager::SetSearchFieldVisibility (bool visible)
@@ -122,7 +138,7 @@ namespace LinksBag
                 "/harbour-linksbag/harbour-linksbag.conf", QSettings::NativeFormat);
         return settings.value ("search_field_visibility", true).toBool ();
     }
-    
+
     QObject* LinksBagManager::GetBookmark (const QString& id) const
     {
         return BookmarksModel_->GetBookmark (id);
@@ -204,6 +220,17 @@ namespace LinksBag
         Api_->RequestAccessToken ();
     }
 
+    void LinksBagManager::setContentTypeFilter (const QString& contentTypeFilter)
+    {
+        ContentTypeFilter_ = contentTypeFilter;
+        FilterProxyModel_->SetContentTypeFilter (ContentTypeFilter_);
+        FilterProxyModel_->sort (0, Qt::DescendingOrder);
+        QSettings settings (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) +
+                "/harbour-linksbag/harbour-linksbag.conf", QSettings::NativeFormat);
+        settings.setValue ("content_type_filter", ContentTypeFilter_);
+        settings.sync ();
+    }
+
     void LinksBagManager::filterBookmarks (const QString &text)
     {
         FilterProxyModel_->setFilterRegExp (text);
@@ -223,7 +250,6 @@ namespace LinksBag
     void LinksBagManager::loadBookmarks ()
     {
         LoadBookmarksFromStorage ();
-        emit requestFinished ();
     }
 
     void LinksBagManager::refreshBookmarks ()

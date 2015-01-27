@@ -24,7 +24,10 @@ namespace LinksBag
             BRTags,
             BRAddTime,
             BRUpdateTime,
-            BRStatus
+            BRStatus,
+            BRIsArticle,
+            BRIsImage,
+            BRIsVideo
         };
 
         explicit BookmarksModel (QObject *parent = 0);

@@ -44,6 +44,12 @@ namespace LinksBag
             return bookmark->GetUpdateTime ();
         case BRStatus:
             return bookmark->GetStatus ();
+        case BRIsArticle:
+            return bookmark->IsArticle ();
+        case BRIsImage:
+            return bookmark->IsImage ();
+        case BRIsVideo:
+            return bookmark->IsVideo ();
         default:
             return QVariant ();
         }
@@ -68,6 +74,9 @@ namespace LinksBag
         roles [BRAddTime] = "bookmarkAddTime";
         roles [BRUpdateTime] = "bookmarkUpdateTime";
         roles [BRStatus] = "bookmarkStatus";
+        roles [BRIsArticle] = "bookmarkIsArticle";
+        roles [BRIsImage] = "bookmarkIsImage";
+        roles [BRIsVideo] = "bookmarkIsVideo";
 
         return roles;
     }
@@ -116,7 +125,19 @@ namespace LinksBag
                 case Bookmark::SArchived:
                 {
                     Bookmark *bm = Bookmarks_ [pos];
+                    bm->SetUrl (bms->GetUrl ());
+                    bm->SetTitle (bms->GetTitle ());
+                    bm->SetDescription (bms->GetDescription ());
+                    bm->SetIsFavorite (bms->IsFavorite ());
                     bm->SetIsRead (true);
+                    bm->SetAddTime (bms->GetAddTime ());
+                    bm->SetUpdateTime (bms->GetUpdateTime ());
+                    bm->SetTags (bms->GetTags ());
+                    bm->SetImageUrl (bms->GetImageUrl ());
+                    bm->SetStatus (bms->GetStatus ());
+                    bm->SetIsArticle (bms->IsArticle ());
+                    bm->SetIsImage (bms->IsImage ());
+                    bm->SetIsVideo (bms->IsVideo ());
 
                     emit dataChanged (index (pos), index (pos));
 
@@ -135,6 +156,9 @@ namespace LinksBag
                     bm->SetTags (bms->GetTags ());
                     bm->SetImageUrl (bms->GetImageUrl ());
                     bm->SetStatus (bms->GetStatus ());
+                    bm->SetIsArticle (bms->IsArticle ());
+                    bm->SetIsImage (bms->IsImage ());
+                    bm->SetIsVideo (bms->IsVideo ());
 
                     emit dataChanged (index (pos), index (pos));
 

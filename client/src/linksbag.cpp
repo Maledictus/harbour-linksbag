@@ -49,7 +49,7 @@ int main (int argc, char *argv [])
 
     QGuiApplication* app = SailfishApp::application (argc, argv);
     app->setApplicationName ("harbour-linksbag");
-    app->setApplicationVersion ("1.2");
+    app->setApplicationVersion ("1.5");
 
     QQuickView* view = SailfishApp::createView ();
     auto getpocket = new LinksBag::LinksBagManager;

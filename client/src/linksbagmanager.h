@@ -17,6 +17,7 @@ namespace LinksBag
         QString RequesToken_;
         QString UserName_;
         QString Filter_;
+        QString ContentTypeFilter_;
         bool Authorized_;
         BookmarksModel *BookmarksModel_;
         FilterProxyModel *FilterProxyModel_;
@@ -24,7 +25,8 @@ namespace LinksBag
         Q_PROPERTY (bool authorized READ IsAuthorized NOTIFY authorizationChanged)
         Q_PROPERTY (QObject* bookmarksModel READ GetBookmarksModel NOTIFY bookmarksModelChanged)
         Q_PROPERTY (QString filter READ GetFilter NOTIFY filterChanged)
-	Q_PROPERTY (bool searchFieldVisible READ GetSearchFieldVisibility WRITE SetSearchFieldVisibility NOTIFY searchFieldVisibilityChanged)
+        Q_PROPERTY (QString contentTypeFilter READ GetContentTypeFilter NOTIFY contentTypeFilterChanged)
+        Q_PROPERTY (bool searchFieldVisible READ GetSearchFieldVisibility WRITE SetSearchFieldVisibility NOTIFY searchFieldVisibilityChanged)
 
     public:
         enum NotifyType
@@ -40,7 +42,8 @@ namespace LinksBag
         bool IsAuthorized () const;
         QObject* GetBookmarksModel () const;
         QString GetFilter () const;
-	bool GetSearchFieldVisibility () const;
+        QString GetContentTypeFilter () const;
+        bool GetSearchFieldVisibility () const;
         void SetSearchFieldVisibility (bool visible);
         Q_INVOKABLE QObject* GetBookmark (const QString& id) const;
     private:
@@ -53,6 +56,7 @@ namespace LinksBag
 
         void filterBookmarks (const QString& text);
         void setFilter (const QString& filter);
+        void setContentTypeFilter (const QString& contentTypeFilter);
 
         void loadBookmarks ();
         void refreshBookmarks ();
@@ -64,9 +68,10 @@ namespace LinksBag
         void credentialsChanged ();
         void authorizationChanged ();
         void filterChanged ();
+        void contentTypeFilterChanged ();
         void bookmarksModelChanged ();
         void requestFinished ();
-	void searchFieldVisibilityChanged ();
+        void searchFieldVisibilityChanged ();
 
         void notify (int type, const QString& message);
     };

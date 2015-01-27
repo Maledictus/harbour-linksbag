@@ -9,10 +9,12 @@ namespace LinksBag
         Q_OBJECT
 
         QString Filter_;
+        QString ContentTypeFilter_;
     public:
         explicit FilterProxyModel(QObject *parent = 0);
 
         void SetFilter (const QString& filter);
+        void SetContentTypeFilter (const QString& filter);
 
         virtual bool filterAcceptsRow (int sourceRow, const QModelIndex& sourceParent) const;
         virtual bool lessThan (const QModelIndex& left, const QModelIndex& right) const;

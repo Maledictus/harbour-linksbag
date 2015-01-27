@@ -27,9 +27,14 @@ Page {
     id: page
 
     property BookmarksFilter bookmarksFilter
+    property BookmarksFilter contentTypeFilter
 
     onBookmarksFilterChanged: {
         manager.setFilter (bookmarksFilter.key)
+    }
+
+    onContentTypeFilterChanged: {
+        manager.setContentTypeFilter (contentTypeFilter.key)
     }
 
     property BookmarksFilter allBookmarksFilter: BookmarksFilter {
@@ -59,6 +64,33 @@ Page {
         favoriteBookmarksFilter
     ]
 
+    property BookmarksFilter allContentTypeBookmarksFilter: BookmarksFilter {
+        key: "all"
+        name: qsTr("All")
+    }
+
+    property BookmarksFilter articlesContentTypeBookmarksFilter: BookmarksFilter {
+        key: "article"
+        name: qsTr("Articles")
+    }
+
+    property BookmarksFilter imagesContentTypeBookmarksFilter: BookmarksFilter {
+        key: "image"
+        name: qsTr("Images")
+    }
+
+    property BookmarksFilter videosContentTypeBookmarksFilter: BookmarksFilter {
+        key: "video"
+        name: qsTr("Videos")
+    }
+
+    property variant contentTypeFilters: [
+        allContentTypeBookmarksFilter,
+        articlesContentTypeBookmarksFilter,
+        imagesContentTypeBookmarksFilter,
+        videosContentTypeBookmarksFilter
+    ]
+
     function setFilter (filter) {
         var found = false
         for (var i = 0; i < bookmarksFilters.length; ++i) {
@@ -73,11 +105,28 @@ Page {
         }
     }
 
+    function setContentTypeFilter (filter) {
+        var found = false
+        for (var i = 0; i < contentTypeFilters.length; ++i) {
+            if (contentTypeFilters [i].key === filter) {
+                contentTypeFilter = contentTypeFilters [i]
+                found = true
+                break;
+            }
+        }
+        if (!found) {
+            contentTypeFilter = allContentTypeBookmarksFilter
+        }
+    }
+
     function load () {
         busyIndicator.visible = true
         setFilter (manager.filter)
+        setContentTypeFilter (manager.contentTypeFilter)
         bookmarksView.model = manager.bookmarksModel
         manager.loadBookmarks ()
+
+        manager.refreshBookmarks ()
     }
 
     Connections {
@@ -109,7 +158,7 @@ Page {
         }
 
         PullDownMenu {
-	    MenuItem {
+            MenuItem {
                 text: manager.searchFieldVisible ?
                         qsTr ("Hide search field") :
                         qsTr ("Show search field")
@@ -120,7 +169,16 @@ Page {
                          true
                 }
             }
-            
+
+            MenuItem {
+                text: qsTr("Type: %1").arg(contentTypeFilter.name)
+
+                onClicked: {
+                    pageStack.push (Qt.resolvedUrl ("ContentTypeSelectorPage.qml"),
+                        { bookmarksPage : page });
+                }
+            }
+
             MenuItem {
                 text: qsTr("View: %1").arg(bookmarksFilter.name)
 
@@ -143,14 +201,15 @@ Page {
             id: headerColumn
             width: bookmarksView.width
             PageHeader {
-                title: qsTr ("Bookmarks: ") + bookmarksFilter.name
+                title: qsTr ("Bookmarks: %1, %2").arg (bookmarksFilter.name)
+                        .arg (contentTypeFilter.name)
             }
 
             SearchField {
                 id: search
 
                 visible: manager.searchFieldVisible
-                
+
                 anchors.left: parent.left
                 anchors.right: parent.right
 
