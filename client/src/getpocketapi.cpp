@@ -44,7 +44,6 @@ namespace
 {
     QNetworkRequest CreateRequest(const QString& path)
     {
-
         QNetworkRequest request(QUrl(QString("https://getpocket.com/v3") +
                 path));
         request.setHeader(QNetworkRequest::ContentTypeHeader,
@@ -129,7 +128,7 @@ void GetPocketApi::RemoveBookmark(const QString& id)
     connect(reply,
             &QNetworkReply::finished,
             this,
-            [=, &id]()
+            [=]()
             {
                 handleRemoveBookmark(id);
             });
@@ -154,7 +153,7 @@ void GetPocketApi::MarkBookmarkAsFavorite(const QString& id, bool favorite)
     connect(reply,
             &QNetworkReply::finished,
             this,
-            [=, &id, &favorite]()
+            [this, id, favorite]()
             {
                 handleMarkBookmarkAsFavorite(id, favorite);
             });
@@ -176,11 +175,10 @@ void GetPocketApi::MarkBookmarkAsRead(const QString& id, bool read)
 
     QNetworkReply *reply = m_NAM->post(CreateRequest("/send"),
             doc.toJson());
-
     connect(reply,
             &QNetworkReply::finished,
             this,
-            [=, &id, &read]()
+            [this, id, read]()
             {
                 handleMarkBookmarkAsRead(id, read);
             });
@@ -335,8 +333,6 @@ void GetPocketApi::handleLoadBookmarks()
 
 void GetPocketApi::handleRemoveBookmark(const QString& id)
 {
-    qDebug() << Q_FUNC_INFO;
-
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -359,8 +355,6 @@ void GetPocketApi::handleRemoveBookmark(const QString& id)
 
 void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite)
 {
-    qDebug() << Q_FUNC_INFO;
-
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -384,8 +378,6 @@ void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite
 
 void GetPocketApi::handleMarkBookmarkAsRead(const QString& id, bool read)
 {
-    qDebug() << Q_FUNC_INFO;
-
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
