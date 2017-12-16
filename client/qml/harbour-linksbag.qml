@@ -33,7 +33,7 @@ import "pages"
 ApplicationWindow {
     id: mainWindow
 
-    cover: CoverPage { }
+    cover: CoverPage { model: linksbagManager.filterModel }
 
     _defaultPageOrientations: Orientation.Landscape | Orientation.Portrait
     initialPage: accountSettings.value("access_token", "").length > 0 &&

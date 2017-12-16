@@ -23,30 +23,27 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-CoverBackground {
+Cover {
     id: coverPage
 
     property alias model: listView.model
 
-    BackgroundItem {
-        anchors.fill: parent
+    anchors.fill: parent
+    transparent: true
 
+    BackgroundItem {
+        anchors.centerIn: parent
+        width: coverBgImage.width
+        height: coverBgImage.height
         Image {
             id: coverBgImage
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter:  parent.horizontalCenter
             fillMode: Image.PreserveAspectFit
+            anchors.centerIn: parent
             source: "qrc:/images/harbour-linksbag.png"
-            opacity: 0.2
-            horizontalAlignment: Image.AlignHCenter
-            verticalAlignment: Image.AlignVCenter
+            opacity: 0.5
             width: 128
             height: 128
         }
-    }
-
-    function loadModel () {
-        listView.model = manager.bookmarksModel
     }
 
     SilicaListView {
@@ -56,7 +53,7 @@ CoverBackground {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.margins: Theme.paddingLarge
+        anchors.margins: Theme.paddingMedium
         height: 240
 
         spacing: 10
@@ -85,7 +82,9 @@ CoverBackground {
         id: actionsList
         CoverAction {
             iconSource: "image://theme/icon-cover-refresh"
-//            onTriggered: m
+            onTriggered: {
+                linksbagManager.refreshBookmarks()
+            }
         }
     }
 }
