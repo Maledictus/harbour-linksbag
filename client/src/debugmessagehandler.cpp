@@ -81,6 +81,9 @@ void Write(QtMsgType type, const QMessageLogContext& ctx, const QString& msg)
     case QtFatalMsg:
         *ostr << "[F] ";
         break;
+    case QtInfoMsg:
+        *ostr << "[I] ";
+        break;
     }
 
     *ostr << "["
