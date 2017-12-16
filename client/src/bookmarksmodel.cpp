@@ -118,7 +118,7 @@ void BookmarksModel::RemoveBookmark(const QString& id)
 void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
 {
     Bookmarks_t bmss = bookmarks;
-    for(int i = bmss.count() - 1; !m_Bookmarks.isEmpty() && i >= 0; --i)
+    for(int i = bmss.count() - 1; i >= 0; --i)
     {
         auto bms = bmss.at(i);
         auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),
@@ -161,11 +161,12 @@ void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
             }
             }
         }
+        else {
+            beginInsertRows(QModelIndex(), rowCount(), rowCount());
+            m_Bookmarks.append(bms);
+            endInsertRows();
+        }
     }
-
-    beginInsertRows(QModelIndex(), rowCount(), rowCount() + bmss.count() - 1);
-    m_Bookmarks.append(bmss);
-    endInsertRows();
 }
 
 void BookmarksModel::SetBookmarks(const Bookmarks_t& bookmarks)
