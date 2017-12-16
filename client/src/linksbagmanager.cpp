@@ -134,24 +134,23 @@ void LinksBagManager::MakeConnections()
             this,
             [this](const QString& id)
             {
-                qDebug() << Q_FUNC_INFO;
-               m_BookmarksModel->RemoveBookmark(id);
+                m_BookmarksModel->RemoveBookmark(id);
             });
 
     connect(m_Api.get(),
             &GetPocketApi::bookmarkMarkedAsFavorite,
             [this](const QString& id, bool favorite)
             {
-                qDebug() << Q_FUNC_INFO;
                 m_BookmarksModel->MarkBookmarkAsFavorite(id, favorite);
+                emit bookmarkFavoriteStateChanged(id, favorite);
             });
 
     connect(m_Api.get(),
             &GetPocketApi::bookmarkMarkedAsRead,
             [this](const QString& id, bool read)
             {
-                qDebug() << Q_FUNC_INFO;
                 m_BookmarksModel->MarkBookmarkAsRead(id, read);
+                emit bookmarkReadStateChanged(id, read);
             });
 }
 
@@ -169,7 +168,6 @@ void LinksBagManager::SetLogged(const bool logged)
 
 void LinksBagManager::SaveBookmarks()
 {
-    qDebug() << Q_FUNC_INFO;
     const auto& bookmarks = m_BookmarksModel->GetBookmarks();
     if (bookmarks.isEmpty())
         return;
@@ -215,7 +213,6 @@ void LinksBagManager::filterBookmarks(const QString &text)
 
 void LinksBagManager::loadBookmarksFromCache()
 {
-    qDebug() << Q_FUNC_INFO;
     QSettings settings(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) +
             "/linksbag_cache", QSettings::IniFormat);
     const int size = settings.beginReadArray("Bookmarks");

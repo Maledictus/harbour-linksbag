@@ -94,6 +94,9 @@ signals:
     void bookmarksModelChanged();
     void filterModelChanged();
 
+    void bookmarkReadStateChanged(const QString& id, bool readState);
+    void bookmarkFavoriteStateChanged(const QString& id, bool favoriteState);
+
     void error(const QString& msg, int type);
     void notify(const QString& msg);
 };
