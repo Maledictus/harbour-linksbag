@@ -46,8 +46,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/Popup.qml \
     harbour-linksbag.desktop \
     qml/pages/helpers/readability.js \
-    qml/pages/helpers/userscript.js \
-    qml/pages/BookmarkViewPage2.qml
+    qml/pages/helpers/userscript.js
 
 lupdate_only{
 SOURCES = qml/harbour-linksbag.qml \
