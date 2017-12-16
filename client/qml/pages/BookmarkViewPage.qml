@@ -24,103 +24,150 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtWebKit 3.0
 
+import "./helpers/readability.js" as Readability
+
 Page {
     id: page
 
     property string bookmarkId
     property variant currentBookmark
-    property bool readerMode: false
 
+    property bool bookmarkRead: false
+    property bool bookmarkFavorite: false
     onStatusChanged: {
         if (status == PageStatus.Active && linksbagManager.logged) {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
+            bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
+            bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
             webView.url = currentBookmark.bookmarkUrl
         }
     }
 
-    function toggleReaderMode() {
-        if (readerMode) {
-            webView.reload();
-        } else {
-            // FIXME: dirty hack to load js from local file
-            var xhr = new XMLHttpRequest;
-            xhr.open("GET", "./helpers/readability.js");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                    var read = new Object({'type':'readability', 'content': xhr.responseText });
-                    webView.experimental.postMessage( JSON.stringify(read) );
-                }
+    Connections {
+        target: linksbagManager
+        onBookmarkReadStateChanged: {
+            if (bookmarkId !== id) {
+                return
             }
-            xhr.send();
+
+            bookmarkRead = readState
+            currentBookmark.bookmarkRead = readState
         }
-        readerMode = !readerMode;
+
+        onBookmarkFavoriteStateChanged: {
+            if (bookmarkId !== id) {
+                return
+            }
+
+            bookmarkFavorite = favoriteState
+            currentBookmark.bookmarkFavorite = favoriteState
+        }
     }
 
+    SilicaFlickable {
+        id: pageView
+
+        anchors.fill: parent
+
+        contentWidth: width
+        contentHeight: column.height + Theme.paddingSmall
+
+        clip: true
+
+        PullDownMenu {
+            enabled: !busyIndicator.running
+            MenuItem {
+                text: bookmarkRead ?
+                        qsTr("Mark as unread") :
+                        qsTr("Mark as read")
+                }
+
+                onClicked: {
+                    linksbagManager.markAsRead(currentBookmark.bookmarkID,
+                            !currentBookmark.bookmarkRead)
+                }
+            }
+
+            MenuItem {
+                text: bookmarkFavorite ?
+                        qsTr("Mark as unfavorite") :
+                        qsTr("Mark as favorite")
+               onClicked: {
+                    linksbagManager.markAsFavorite(currentBookmark.bookmarkID,
+                            !currentBookmark.bookmarkFavorite)
+                }
+            }
+        }
+
+        Column {
+            id: column
+
+            width: pageView.width
+
+            anchors.top: parent.top
+            anchors.topMargin: Theme.paddingSmall
+            anchors.left: parent.left
+            anchors.leftMargin: Theme.horizontalPageMargin
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.horizontalPageMargin
+
+            Label {
+                id: entryText
+
+                width: parent.width
+
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                horizontalAlignment: Qt.AlignJustify
+            }
+       }
+
+       VerticalScrollDecorator {}
+    }
+
+    BusyIndicator {
+        id: busyIndicator
+        size: BusyIndicatorSize.Large
+        anchors.centerIn: parent
+        visible: true;
+        running: true;
+    }
 
     SilicaWebView {
         id: webView
 
-        anchors.fill: parent
+        visible: false
+        z: -1
 
-        header: PageHeader {
-            title: qsTr("Reading")
-        }
-
-        PullDownMenu {
-            MenuItem {
-                text: currentBookmark && currentBookmark.bookmarkRead ?
-                        qsTr("Mark as unread") :
-                        qsTr("Mark as read")
-
-                onClicked: {
-                    toggleReaderMode()
-//                    linksbagManager.markAsRead(currentBookmark.id,
-//                            !currentBookmark.read)
-                }
-            }
-
-            MenuItem {
-                text: currentBookmark && currentBookmark.bookmarkFavorite ?
-                        qsTr("Mark as unfavorite") :
-                        qsTr("Mark as favorite")
-               onClicked: {
-                    linksbagManager.markAsFavorite(currentBookmark.id,
-                            !currentBookmark.favorite)
-                }
-            }
-        }
-
-        experimental.userScripts: [ Qt.resolvedUrl("helpers/userscript.js") ]
+        experimental.preferences.webGLEnabled: true
+        experimental.preferences.notificationsEnabled: true
+        experimental.preferences.javascriptEnabled: true
         experimental.preferences.navigatorQtObjectEnabled: true
 
-        experimental.onMessageReceived: {
-            console.log('onMessageReceived: ' + message.data );
-            var data = null
-            try {
-                data = JSON.parse(message.data)
-            } catch (error) {
-                console.log('onMessageReceived: ' + message.data );
-                return
-            }
+        experimental.userScripts: [
+            Qt.resolvedUrl("helpers/readability.js") ,
+            Qt.resolvedUrl("helpers/ReaderModeHandler.js"),
+            Qt.resolvedUrl("helpers/MessageListener.js")
+        ]
 
-            switch (data.type) {
-            case 'inreadmode': {
-                webView.experimental.evaluateJavaScript("document.documentElement.innerHTML",
-                        function(result){
-                            var page = pageStack.push(Qt.resolvedUrl("BookmarkViewPage2.qml"),
-                                { text: result })
-                            console.log(page)
-                        })
-            }
+        onLoadingChanged: {
+            if (loadRequest.status === WebView.LoadSucceededStatus) {
+                webView.postMessage("readermodehandler_enable");
+                getSource()
             }
         }
 
-        BusyIndicator {
-            size: BusyIndicatorSize.Large
-            anchors.centerIn: parent
-            visible: webView.loading;
-            running: true;
+        function postMessage(message, data) {
+            experimental.postMessage(JSON.stringify({ "type": message, "data": data }));
         }
+    }
+
+    function getSource(){
+        var js = "document.documentElement.outerHTML";
+        webView.experimental.evaluateJavaScript(js, function(result){
+            busyIndicator.running = false
+            entryText.text = result
+        })
     }
 }
 
