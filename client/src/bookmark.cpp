@@ -22,6 +22,7 @@
 
 #include "bookmark.h"
 #include <QtDebug>
+#include <QDataStream>
 
 namespace LinksBag
 {
