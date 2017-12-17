@@ -189,7 +189,7 @@ Page {
                 MenuItem {
                     text: qsTr("Open in external browser")
                     onClicked: {
-                        Qt.openUrlExternally(bookmarkUrl)
+                        Qt.openUrlExternally(encodeURI(bookmarkUrl))
                     }
                 }
 

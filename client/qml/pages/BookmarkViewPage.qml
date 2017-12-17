@@ -109,7 +109,9 @@ Page {
 
             MenuItem {
                 text: qsTr("Open in browser")
-                onClicked: Qt.openUrlExternally(currentBookmark.bookmarkUrl)
+                onClicked: {
+                    Qt.openUrlExternally(encodeURI(currentBookmark.bookmarkUrl))
+                }
             }
         }
 
