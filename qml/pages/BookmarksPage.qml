@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -98,6 +98,13 @@ Page {
         visible: running
     }
 
+    function resetAccount () {
+        resetAccountRemorse.execute(qsTr("Reseting account..."),
+                function() { linksbagManager.resetAccount() } )
+    }
+
+    RemorsePopup { id: resetAccountRemorse }
+
     SilicaListView {
         id: bookmarksView
 
@@ -138,6 +145,14 @@ Page {
 
         PullDownMenu {
             visible: !linksbagManager.busy
+
+            MenuItem {
+                text: qsTr("Reset account")
+
+                onClicked: {
+                    bookmarksPage.resetAccount()
+                }
+            }
 
             MenuItem {
                 text: bookmarksView.showSearchField ?

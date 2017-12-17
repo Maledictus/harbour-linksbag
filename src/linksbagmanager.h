@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -86,6 +86,8 @@ public slots:
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);
     void updateTags(const QString& id, const QString& tags);
+
+    void resetAccount();
 
 signals:
     void busyChanged();

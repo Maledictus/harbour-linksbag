@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -277,8 +277,8 @@ void GetPocketApi::handleObtainRequestToken()
     }
 
     m_RequestToken = doc.object()["code"].toString();
-    emit requestFinished(true);
     emit requestTokenChanged(m_RequestToken);
+    emit requestFinished(true);
 }
 
 void GetPocketApi::handleRequestAccessToken()
@@ -295,6 +295,7 @@ void GetPocketApi::handleRequestAccessToken()
     const auto& userName = doc.object()["username"].toString();
     emit logged(!accessToken.isEmpty() && !userName.isEmpty(),
             accessToken, userName);
+    emit requestFinished(true);
 }
 
 void GetPocketApi::handleLoadBookmarks()

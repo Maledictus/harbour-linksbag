@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -111,11 +111,11 @@ void LinksBagManager::MakeConnections()
             this,
             [=](bool logged, const QString& accessToken, const QString& userName)
             {
-                SetLogged(logged);
                 AccountSettings::Instance(this)->
                         setValue("access_token", accessToken);
                 AccountSettings::Instance(this)->
                         setValue("user_name", userName);
+                SetLogged(logged);
             });
 
     connect(m_Api.get(),
@@ -272,5 +272,14 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
 {
     SetBusy(true);
     m_Api->UpdateTags(id, tags);
+}
+
+void LinksBagManager::resetAccount()
+{
+    AccountSettings::Instance(this)->
+            setValue("access_token", "");
+    AccountSettings::Instance(this)->
+            setValue("user_name", "");
+    SetLogged(false);
 }
 } // namespace LinskBag
