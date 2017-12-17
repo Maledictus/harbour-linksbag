@@ -56,7 +56,6 @@ Page {
         }
 
         experimental.onMessageReceived: {
-            console.log('onMessageReceived: ' + message.data );
             var data = null
             try {
                 data = JSON.parse(message.data)

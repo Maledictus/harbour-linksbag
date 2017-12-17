@@ -266,8 +266,6 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
 
 void GetPocketApi::handleObtainRequestToken()
 {
-    qDebug() << Q_FUNC_INFO;
-
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -276,8 +274,6 @@ void GetPocketApi::handleObtainRequestToken()
         return;
     }
 
-    qDebug() << doc.toJson();
-
     m_RequestToken = doc.object()["code"].toString();
     emit requestFinished(true);
     emit requestTokenChanged(m_RequestToken);
@@ -285,8 +281,6 @@ void GetPocketApi::handleObtainRequestToken()
 
 void GetPocketApi::handleRequestAccessToken()
 {
-    qDebug() << Q_FUNC_INFO;
-
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -303,8 +297,6 @@ void GetPocketApi::handleRequestAccessToken()
 
 void GetPocketApi::handleLoadBookmarks()
 {
-    qDebug() << Q_FUNC_INFO;
-
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)

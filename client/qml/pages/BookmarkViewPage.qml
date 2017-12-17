@@ -41,6 +41,7 @@ Page {
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
             timer.running = true
+            console.log(currentBookmark.bookmarkUrl)
         }
     }
 
