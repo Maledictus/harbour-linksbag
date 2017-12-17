@@ -57,6 +57,7 @@ public:
     void RemoveBookmark(const QString& id);
     void MarkBookmarkAsFavorite(const QString& id, bool favorite);
     void MarkBookmarkAsRead(const QString& id, bool read);
+    void UpdateTags(const QString& id, const QString& tags);
 private:
     QJsonDocument PreparsingReply(QObject *sender, bool& ok);
 
@@ -68,6 +69,7 @@ private slots:
     void handleRemoveBookmark(const QString& id);
     void handleMarkBookmarkAsFavorite(const QString& id, bool favorite);
     void handleMarkBookmarkAsRead(const QString& id, bool read);
+    void handleTagsUpdated(const QString& id, const QString& tags);
 
 signals:
     void requestFinished(bool success, const QString& errorMsg = QString());
@@ -81,5 +83,6 @@ signals:
     void bookmarkRemoved(const QString& id);
     void bookmarkMarkedAsFavorite(const QString& id, bool favorite);
     void bookmarkMarkedAsRead(const QString& id, bool read);
+    void tagsUpdated(const QString& id, const QString& tags);
 };
 } // namespace LinksBag

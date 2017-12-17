@@ -194,6 +194,16 @@ Page {
                 }
 
                 MenuItem {
+                    text: qsTr ("Edit tags")
+                    onClicked: {
+                        var dialog = pageStack.push("EditTagDialog.qml", { tags: bookmarkTags })
+                        dialog.accepted.connect(function () {
+                            linksbagManager.updateTags(bookmarkID, dialog.tags)
+                        })
+                    }
+                }
+
+                MenuItem {
                     text: qsTr ("Remove")
                     onClicked: {
                         remove()
@@ -237,6 +247,8 @@ Page {
 
                 Row {
                     width: parent.width
+
+                    clip: true
 
                     Image {
                         id: tagsIcon

@@ -85,6 +85,7 @@ public slots:
     void removeBookmark(const QString& id);
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);
+    void updateTags(const QString& id, const QString& tags);
 
 signals:
     void busyChanged();

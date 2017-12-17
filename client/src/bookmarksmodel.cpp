@@ -204,6 +204,20 @@ void BookmarksModel::MarkBookmarkAsRead(const QString& id, bool read)
     }
 }
 
+void BookmarksModel::UpdateTags(const QString& id, const QString& tags)
+{
+    for(int i = 0, size = m_Bookmarks.count(); i < size; ++i)
+    {
+        auto& bm = m_Bookmarks[i];
+        if(bm.GetID() == id)
+        {
+            bm.SetTags(tags.split(',', QString::SkipEmptyParts));
+            emit dataChanged(index(i, 0), index(i, 0));
+            break;
+        }
+    }
+}
+
 Bookmarks_t BookmarksModel::GetBookmarks() const
 {
     return m_Bookmarks;

@@ -152,6 +152,13 @@ void LinksBagManager::MakeConnections()
                 m_BookmarksModel->MarkBookmarkAsRead(id, read);
                 emit bookmarkReadStateChanged(id, read);
             });
+
+    connect(m_Api.get(),
+            &GetPocketApi::tagsUpdated,
+            [this](const QString& id, const QString& tags)
+            {
+                m_BookmarksModel->UpdateTags(id, tags);
+            });
 }
 
 void LinksBagManager::SetBusy(const bool busy)
@@ -260,5 +267,11 @@ void LinksBagManager::markAsRead(const QString& id, bool read)
 {
     SetBusy(true);
     m_Api->MarkBookmarkAsRead(id, read);
+}
+
+void LinksBagManager::updateTags(const QString& id, const QString& tags)
+{
+    SetBusy(true);
+    m_Api->UpdateTags(id, tags);
 }
 } // namespace LinskBag

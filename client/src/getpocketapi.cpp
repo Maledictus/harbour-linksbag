@@ -184,6 +184,32 @@ void GetPocketApi::MarkBookmarkAsRead(const QString& id, bool read)
             });
 }
 
+void GetPocketApi::UpdateTags(const QString& id, const QString& tags)
+{
+    QVariantMap params;
+    params["consumer_key"] = m_ConsumerKey;
+    params["access_token"] = AccountSettings::Instance(this)->value("access_token");
+    QVariantList actions;
+    QVariantMap action;
+    action["action"] = "tags_replace";
+    action["item_id"] = id;
+    action["tags"] = tags;
+    actions.append(action);
+    params ["actions"] = actions;
+
+    QJsonDocument doc(QJsonObject::fromVariantMap(params));
+
+    QNetworkReply *reply = m_NAM->post(CreateRequest("/send"),
+            doc.toJson());
+    connect(reply,
+            &QNetworkReply::finished,
+            this,
+            [this, id, tags]()
+            {
+                handleTagsUpdated(id, tags);
+            });
+}
+
 QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
 {
     QJsonDocument doc;
@@ -396,6 +422,28 @@ void GetPocketApi::handleMarkBookmarkAsRead(const QString& id, bool read)
     {
         emit requestFinished(false, tr("Unable to mark bookamakr as " +
                 read ? "read" : "unread"));
+    }
+}
+
+void GetPocketApi::handleTagsUpdated(const QString& id, const QString& tags)
+{
+    bool ok = false;
+    QJsonDocument doc = PreparsingReply(sender(), ok);
+    if (!ok)
+    {
+        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        return;
+    }
+
+    const auto& rootObject = doc.object();
+    if(rootObject ["status"].toInt() == 1)
+    {
+        emit tagsUpdated(id, tags);
+        emit requestFinished(true);
+    }
+    else
+    {
+        emit requestFinished(false, tr("Unable to update tags"));
     }
 }
 } // namespace LinksBag
