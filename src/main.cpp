@@ -22,40 +22,40 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#include "applicationsettings.h"
+#include <QGuiApplication>
+#include <QScopedPointer>
+#include <QTimer>
 
-#include <QCoreApplication>
-#include <QDir>
-#include <QStandardPaths>
+#include <sailfishapp.h>
 
-namespace LinksBag
+#include <QtDebug>
+
+#include "src/application.h"
+#include "src/debugmessagehandler.h"
+
+int main(int argc, char *argv [])
 {
-ApplicationSettings::ApplicationSettings(QObject *parent)
-: QObject(parent)
-, m_Settings(QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
-             .filePath(QCoreApplication::applicationName()) + "/linksbag.conf",
-        QSettings::IniFormat)
-{
+    qInstallMessageHandler(DebugHandler::Write);
+
+    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    app->setApplicationDisplayName("LinksBag");
+    app->setApplicationName("harbour-linksbag");
+    app->setApplicationVersion(QString(APP_VERSION));
+
+    qDebug() << "====Application starting====" << app->applicationVersion();
+
+    QScopedPointer<LinksBag::Application> application(new LinksBag::Application());
+    QTimer::singleShot(1, application.data(), SLOT(start()));
+
+    QObject::connect(app.data(),
+            &QGuiApplication::aboutToQuit,
+            application.data(),
+            &LinksBag::Application::handleAboutToQuit);
+
+    const int retVal = app->exec();
+
+    qDebug() << "====Application closing====";
+
+    return retVal;
 }
-
-ApplicationSettings* ApplicationSettings::Instance(QObject *parent)
-{
-    static ApplicationSettings *appSettings = nullptr;
-    if (!appSettings)
-    {
-        appSettings = new ApplicationSettings(parent);
-    }
-    return appSettings;
-}
-
-QVariant ApplicationSettings::value(const QString& key, const QVariant& def) const
-{
-    return m_Settings.value(key, def);
-}
-
-void ApplicationSettings::setValue(const QString& key, const QVariant& value)
-{
-    m_Settings.setValue(key, value);
-}
-} // namespace Mnemosy
 

@@ -4,3 +4,5 @@ X-Nemo-Application-Type=silica-qt5
 Name=LinksBag
 Icon=harbour-linksbag
 Exec=harbour-linksbag
+Name[ru]=LinksBag
+Name[en]=LinksBag

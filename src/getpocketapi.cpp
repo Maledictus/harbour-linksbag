@@ -369,7 +369,7 @@ void GetPocketApi::handleRemoveBookmark(const QString& id)
     }
     else
     {
-        emit requestFinished(false, tr("Unable to remove bookamakr"));
+        emit requestFinished(false, tr("Unable to remove bookamark"));
     }
 }
 
@@ -391,8 +391,8 @@ void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite
     }
     else
     {
-        emit requestFinished(false, tr("Unable to mark bookamakr as " +
-                favorite ? "favorite" : "unfavorite"));
+        emit requestFinished(false, tr("Unable to mark bookamark as %1")
+                .arg(favorite ? tr("favorite") : tr("unfavorite")));
     }
 }
 
@@ -414,8 +414,8 @@ void GetPocketApi::handleMarkBookmarkAsRead(const QString& id, bool read)
     }
     else
     {
-        emit requestFinished(false, tr("Unable to mark bookamakr as " +
-                read ? "read" : "unread"));
+        emit requestFinished(false, tr("Unable to mark bookamark as %1")
+                .arg(read ? tr("read") : tr("unread")));
     }
 }
 

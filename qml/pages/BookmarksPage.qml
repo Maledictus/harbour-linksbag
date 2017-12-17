@@ -110,7 +110,7 @@ Page {
             id: headerColumn
             width: bookmarksView.width
             PageHeader {
-                title: qsTr("Bookmarks: ") + bookmarksFilter.name
+                title: qsTr("Bookmarks: %1").arg(bookmarksFilter.name)
             }
 
             SearchField {
@@ -189,7 +189,7 @@ Page {
                 }
 
                 MenuItem {
-                    text: qsTr("Open in external browser")
+                    text: qsTr("Open in browser")
                     onClicked: {
                         Qt.openUrlExternally(encodeURI(bookmarkUrl))
                     }
