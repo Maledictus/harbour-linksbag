@@ -21,7 +21,7 @@ SOURCES += src/main.cpp \
     src/bookmark.cpp \
     src/enumsproxy.cpp \
     src/settings/accountsettings.cpp \
-    src/settings/applicationsettings.cpp \
+    src/settings/applicationsettings.cpp
 
 HEADERS += src/debugmessagehandler.h \
     src/application.h \
@@ -32,7 +32,7 @@ HEADERS += src/debugmessagehandler.h \
     src/bookmark.h \
     src/enumsproxy.h \
     src/settings/accountsettings.h \
-    src/settings/applicationsettings.h \
+    src/settings/applicationsettings.h
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
@@ -48,7 +48,8 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/helpers/readability.js \
     qml/pages/helpers/userscript.js \
     qml/pages/helpers/ReaderModeHandler.js \
-    qml/pages/helpers/MessageListener.js
+    qml/pages/helpers/MessageListener.js \
+    qml/pages/EditTagDialog.qml
 
 lupdate_only{
 SOURCES = qml/harbour-linksbag.qml \
@@ -58,5 +59,6 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/pages/FilterSelectorPage.qml \
     qml/pages/BookmarksFilter.qml \
     qml/pages/AuthorizationPage.qml \
-    qml/pages/Popup.qml
+    qml/pages/Popup.qml \
+    qml/pages/EditTagDialog.qml
 }
