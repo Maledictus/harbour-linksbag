@@ -209,7 +209,12 @@ void GetPocketApi::UpdateTags(const QString& id, const QString& tags)
             [this, id, tags]()
             {
                 handleTagsUpdated(id, tags);
-            });
+    });
+}
+
+void GetPocketApi::ResetAccount()
+{
+    m_RequestToken.clear();
 }
 
 QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)

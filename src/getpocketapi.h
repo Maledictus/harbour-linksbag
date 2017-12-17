@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -60,6 +60,8 @@ public:
     void MarkBookmarkAsFavorite(const QString& id, bool favorite);
     void MarkBookmarkAsRead(const QString& id, bool read);
     void UpdateTags(const QString& id, const QString& tags);
+
+    void ResetAccount();
 private:
     QJsonDocument PreparsingReply(QObject *sender, bool& ok);
 

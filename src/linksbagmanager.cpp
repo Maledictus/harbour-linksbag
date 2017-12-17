@@ -280,6 +280,15 @@ void LinksBagManager::resetAccount()
             setValue("access_token", "");
     AccountSettings::Instance(this)->
             setValue("user_name", "");
+
+    m_Api->ResetAccount();
+
+    QSettings settings(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) +
+            "/linksbag_cache", QSettings::IniFormat);
+    settings.remove("Bookmarks");
+    settings.sync();
     SetLogged(false);
+
+
 }
 } // namespace LinskBag
