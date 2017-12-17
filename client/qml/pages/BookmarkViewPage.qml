@@ -31,6 +31,7 @@ Page {
 
     property string bookmarkId
     property variant currentBookmark
+    property bool isBusy: true
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
@@ -39,8 +40,16 @@ Page {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
-            webView.url = currentBookmark.bookmarkUrl
+            timer.running = true
         }
+    }
+
+    Timer {
+        id: timer
+        interval: 300;
+        running: false;
+        repeat: false
+        onTriggered: webView.url = currentBookmark.bookmarkUrl
     }
 
     Connections {
@@ -80,7 +89,6 @@ Page {
                 text: bookmarkRead ?
                         qsTr("Mark as unread") :
                         qsTr("Mark as read")
-                }
 
                 onClicked: {
                     linksbagManager.markAsRead(currentBookmark.bookmarkID,
@@ -92,10 +100,15 @@ Page {
                 text: bookmarkFavorite ?
                         qsTr("Mark as unfavorite") :
                         qsTr("Mark as favorite")
-               onClicked: {
+                onClicked: {
                     linksbagManager.markAsFavorite(currentBookmark.bookmarkID,
                             !currentBookmark.bookmarkFavorite)
                 }
+            }
+
+            MenuItem {
+                text: qsTr("Open in browser")
+                onClicked: Qt.openUrlExternally(currentBookmark.bookmarkUrl)
             }
         }
 
@@ -129,8 +142,8 @@ Page {
         id: busyIndicator
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
-        visible: true;
-        running: true;
+        visible: true
+        running: linksbagManager.busy || isBusy;
     }
 
     SilicaWebView {
@@ -165,7 +178,7 @@ Page {
     function getSource(){
         var js = "document.documentElement.outerHTML";
         webView.experimental.evaluateJavaScript(js, function(result){
-            busyIndicator.running = false
+            isBusy = false
             entryText.text = result
         })
     }
