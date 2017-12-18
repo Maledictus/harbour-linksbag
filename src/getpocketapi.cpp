@@ -209,7 +209,7 @@ void GetPocketApi::UpdateTags(const QString& id, const QString& tags)
             [this, id, tags]()
             {
                 handleTagsUpdated(id, tags);
-    });
+            });
 }
 
 void GetPocketApi::ResetAccount()
