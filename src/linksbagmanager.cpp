@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "linksbagmanager.h"
 
+#include <QDir>
 #include <QSettings>
 #include <QStandardPaths>
 
@@ -125,7 +126,7 @@ void LinksBagManager::MakeConnections()
             {
                 m_BookmarksModel->AddBookmarks(bookmarks);
                 m_FilterProxyModel->sort(0, Qt::DescendingOrder);
-                ApplicationSettings::Instance(this)->setValue("lastUpdate", since);
+                ApplicationSettings::Instance(this)->setValue("last_update", since);
             });
 
     connect(m_Api.get(),
@@ -247,7 +248,7 @@ void LinksBagManager::refreshBookmarks()
 {
     SetBusy(true);
     m_Api->LoadBookmarks(ApplicationSettings::Instance(this)->
-            value("lastUpdate", 0).toLongLong());
+            value("last_update", 0).toLongLong());
 }
 
 void LinksBagManager::removeBookmark(const QString& id)
@@ -276,10 +277,12 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
 
 void LinksBagManager::resetAccount()
 {
-    AccountSettings::Instance(this)->
-            setValue("access_token", "");
-    AccountSettings::Instance(this)->
-            setValue("user_name", "");
+    qDebug() << Q_FUNC_INFO;
+    AccountSettings::Instance(this)->remove("access_token");
+    AccountSettings::Instance(this)->remove("user_name");
+    ApplicationSettings::Instance(this)->remove("last_update");
+    ApplicationSettings::Instance(this)->remove("bookmarks_filter");
+    ApplicationSettings::Instance(this)->remove("search_field_visibility");
 
     m_Api->ResetAccount();
 
@@ -287,8 +290,15 @@ void LinksBagManager::resetAccount()
             "/linksbag_cache", QSettings::IniFormat);
     settings.remove("Bookmarks");
     settings.sync();
+
+    m_BookmarksModel->Clear();
+
+//    QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+//    if (dir.exists())
+//    {
+//        dir.removeRecursively();
+//    }
+
     SetLogged(false);
-
-
 }
 } // namespace LinskBag
