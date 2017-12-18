@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -98,7 +98,9 @@ QHash<int, QByteArray> BookmarksModel::roleNames() const
 
 void BookmarksModel::Clear()
 {
+    beginResetModel();
     m_Bookmarks.clear();
+    endResetModel();
 }
 
 void BookmarksModel::RemoveBookmark(const QString& id)
