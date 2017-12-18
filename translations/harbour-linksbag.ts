@@ -4,27 +4,27 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="93"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="92"/>
         <source>Mark as unread</source>
         <translation>Mark as unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="94"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="93"/>
         <source>Mark as read</source>
         <translation>Mark as read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="104"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="103"/>
         <source>Mark as unfavorite</source>
         <translation>Unfavorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="105"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="104"/>
         <source>Mark as favorite</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="113"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="112"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>
@@ -32,83 +32,93 @@
 <context>
     <name>BookmarksPage</name>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="48"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="47"/>
         <source>All</source>
         <translation>All</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="53"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="52"/>
         <source>Read</source>
         <translation>Read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="58"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="57"/>
         <source>Unread</source>
         <translation>Unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="63"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="62"/>
         <source>Favorite</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="113"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="101"/>
+        <source>Logout...</source>
+        <translation>Logout...</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/BookmarksPage.qml" line="118"/>
         <source>Bookmarks: %1</source>
         <translation>Bookmarks: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="124"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="129"/>
         <source>Search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="136"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="141"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
         <translation>There are no bookmarks. Pull down to refresh.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="144"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="148"/>
+        <source>Logout</source>
+        <translation>Logout</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/BookmarksPage.qml" line="157"/>
         <source>Hide search field</source>
         <translation>Hide search field</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="145"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="158"/>
         <source>Show search field</source>
         <translation>Sho search field</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="156"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="169"/>
         <source>View: %1</source>
         <translation>View: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="165"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="178"/>
         <source>Refresh</source>
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="184"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="197"/>
         <source>Copy url to clipboard</source>
         <translation>Copy url to clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="187"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="200"/>
         <source>Url copied into clipboard</source>
         <translation>Url copied into clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="192"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="205"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="199"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="212"/>
         <source>Edit tags</source>
         <translation>Edit tags</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="209"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="303"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="222"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="316"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -142,53 +152,53 @@
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="222"/>
+        <location filename="../src/getpocketapi.cpp" line="227"/>
         <source>General error</source>
         <translation>General error</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="238"/>
+        <location filename="../src/getpocketapi.cpp" line="243"/>
         <source>Network error %1: %2</source>
         <translation>Network error: %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="261"/>
+        <location filename="../src/getpocketapi.cpp" line="266"/>
         <source>Reply data is corrupted</source>
         <translation>Reply data is corrupted</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="372"/>
+        <location filename="../src/getpocketapi.cpp" line="378"/>
         <source>Unable to remove bookamark</source>
         <translation>Unable to remove bookamark</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="394"/>
-        <location filename="../src/getpocketapi.cpp" line="417"/>
+        <location filename="../src/getpocketapi.cpp" line="400"/>
+        <location filename="../src/getpocketapi.cpp" line="423"/>
         <source>Unable to mark bookamark as %1</source>
         <translation>Unable to mark bookamark as %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="395"/>
+        <location filename="../src/getpocketapi.cpp" line="401"/>
         <source>favorite</source>
         <translation>favorite</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="395"/>
+        <location filename="../src/getpocketapi.cpp" line="401"/>
         <source>unfavorite</source>
         <translation>unfavorite</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="418"/>
+        <location filename="../src/getpocketapi.cpp" line="424"/>
         <source>read</source>
         <translation>read</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="418"/>
+        <location filename="../src/getpocketapi.cpp" line="424"/>
         <source>unread</source>
         <translation>unread</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="440"/>
+        <location filename="../src/getpocketapi.cpp" line="446"/>
         <source>Unable to update tags</source>
         <translation>Unable to update tags</translation>
     </message>
