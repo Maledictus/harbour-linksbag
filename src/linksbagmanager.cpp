@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "src/bookmarksmodel.h"
 #include "src/filterproxymodel.h"
 #include "src/getpocketapi.h"
-#include "src/settings/accountsettings.h"
 #include "src/settings/applicationsettings.h"
 
 namespace LinksBag
@@ -49,8 +48,8 @@ LinksBagManager::LinksBagManager(QObject *parent)
 
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
 
-    SetLogged(!AccountSettings::Instance(this)->value("access_token").isNull() &&
-              !AccountSettings::Instance(this)->value("user_name").isNull());
+    SetLogged(!ApplicationSettings::Instance(this)->value("access_token").isNull() &&
+              !ApplicationSettings::Instance(this)->value("user_name").isNull());
     if (m_IsLogged)
     {
         loadBookmarksFromCache();
@@ -112,9 +111,9 @@ void LinksBagManager::MakeConnections()
             this,
             [=](bool logged, const QString& accessToken, const QString& userName)
             {
-                AccountSettings::Instance(this)->
+                ApplicationSettings::Instance(this)->
                         setValue("access_token", accessToken);
-                AccountSettings::Instance(this)->
+                ApplicationSettings::Instance(this)->
                         setValue("user_name", userName);
                 SetLogged(logged);
             });
@@ -277,9 +276,8 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
 
 void LinksBagManager::resetAccount()
 {
-    qDebug() << Q_FUNC_INFO;
-    AccountSettings::Instance(this)->remove("access_token");
-    AccountSettings::Instance(this)->remove("user_name");
+    ApplicationSettings::Instance(this)->remove("access_token");
+    ApplicationSettings::Instance(this)->remove("user_name");
     ApplicationSettings::Instance(this)->remove("last_update");
     ApplicationSettings::Instance(this)->remove("bookmarks_filter");
     ApplicationSettings::Instance(this)->remove("search_field_visibility");
@@ -293,11 +291,11 @@ void LinksBagManager::resetAccount()
 
     m_BookmarksModel->Clear();
 
-//    QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-//    if (dir.exists())
-//    {
-//        dir.removeRecursively();
-//    }
+    QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    if (dir.exists())
+    {
+        dir.removeRecursively();
+    }
 
     SetLogged(false);
 }

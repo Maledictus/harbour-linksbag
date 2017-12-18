@@ -5,7 +5,6 @@ VERSION = 2.0
 QT += webkit network
 
 CONFIG += link_pkgconfig sailfishapp c++11 sailfishapp_i18n
-PKGCONFIG += mlite5
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
@@ -20,7 +19,6 @@ SOURCES += src/main.cpp \
     src/filterproxymodel.cpp \
     src/bookmark.cpp \
     src/enumsproxy.cpp \
-    src/settings/accountsettings.cpp \
     src/settings/applicationsettings.cpp
 
 HEADERS += src/debugmessagehandler.h \
@@ -31,7 +29,6 @@ HEADERS += src/debugmessagehandler.h \
     src/filterproxymodel.h \
     src/bookmark.h \
     src/enumsproxy.h \
-    src/settings/accountsettings.h \
     src/settings/applicationsettings.h
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
@@ -50,9 +47,9 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/helpers/ReaderModeHandler.js \
     qml/pages/helpers/MessageListener.js \
     qml/pages/EditTagDialog.qml \
-    rpm/harbour-linksbag.spec \
     rpm/harbour-linksbag.changes \
-    rpm/harbour-linksbag.changes.run.in
+    rpm/harbour-linksbag.changes.run.in \
+    rpm/harbour-linksbag.yaml
 
 
 lupdate_only{

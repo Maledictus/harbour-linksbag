@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -35,7 +35,6 @@ THE SOFTWARE.
 #include "enumsproxy.h"
 #include "filterproxymodel.h"
 #include "linksbagmanager.h"
-#include "settings/accountsettings.h"
 #include "settings/applicationsettings.h"
 
 namespace LinksBag
@@ -53,8 +52,6 @@ void Application::ShowUI()
         qDebug() << "Construct view";
         m_View = SailfishApp::createView();
         m_View->setTitle("LinksBag");
-        m_View->rootContext()->setContextProperty("accountSettings",
-                AccountSettings::Instance(this));
         m_View->rootContext()->setContextProperty("applicationSettings",
                 ApplicationSettings::Instance(this));
         m_View->rootContext()->setContextProperty("linksbagManager",

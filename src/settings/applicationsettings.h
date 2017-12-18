@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -46,5 +46,6 @@ public:
     Q_INVOKABLE QVariant value(const QString& key,
             const QVariant& def = QVariant()) const;
     Q_INVOKABLE void setValue(const QString& key, const QVariant& value);
+    Q_INVOKABLE void remove(const QString& key);
 };
 } // namespace LinksBag

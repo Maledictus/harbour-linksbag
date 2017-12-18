@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -35,8 +35,8 @@ ApplicationWindow {
     cover: CoverPage { model: linksbagManager.filterModel }
 
     _defaultPageOrientations: Orientation.Landscape | Orientation.Portrait
-    initialPage: accountSettings.value("access_token", "").length > 0 &&
-                 accountSettings.value("user_name", "").length > 0 ?
+    initialPage: applicationSettings.value("access_token", "").length > 0 &&
+                 applicationSettings.value("user_name", "").length > 0 ?
             bookmarksComponent :
             authComponent
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -56,6 +56,13 @@ QVariant ApplicationSettings::value(const QString& key, const QVariant& def) con
 void ApplicationSettings::setValue(const QString& key, const QVariant& value)
 {
     m_Settings.setValue(key, value);
+    m_Settings.sync();
+}
+
+void ApplicationSettings::remove(const QString& key)
+{
+    m_Settings.remove(key);
+    m_Settings.sync();
 }
 } // namespace LinksBag
 
