@@ -1,4 +1,4 @@
-/*
+﻿/*
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
@@ -43,7 +43,6 @@ Page {
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
             timer.running = true
-            console.log(currentBookmark.bookmarkUrl)
         }
     }
 
