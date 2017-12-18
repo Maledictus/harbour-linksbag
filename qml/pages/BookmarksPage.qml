@@ -42,7 +42,6 @@ Page {
         return allBookmarksFilter;
     }
 
-
     property BookmarksFilter allBookmarksFilter: BookmarksFilter {
         key: "all"
         name: qsTr("All")
@@ -99,7 +98,7 @@ Page {
     }
 
     function resetAccount () {
-        resetAccountRemorse.execute(qsTr("Reseting account..."),
+        resetAccountRemorse.execute(qsTr("Logout..."),
                 function() { linksbagManager.resetAccount() } )
     }
 
@@ -110,8 +109,7 @@ Page {
 
         anchors.fill: parent
 
-        property bool showSearchField: applicationSettings
-                .value("searchFieldVisibility", true)
+        property bool showSearchField: (applicationSettings.value("show_search_field", true) == 'true')
 
         header: Column {
             id: headerColumn
@@ -147,7 +145,7 @@ Page {
             visible: !linksbagManager.busy
 
             MenuItem {
-                text: qsTr("Reset account")
+                text: qsTr("Logout")
 
                 onClicked: {
                     bookmarksPage.resetAccount()
@@ -160,10 +158,10 @@ Page {
                         qsTr("Show search field")
 
                 onClicked: {
-                    bookmarksView.showSearchField = !applicationSettings
-                            .value("searchFieldVisibility", true)
-                    applicationSettings.setValue("searchFieldVisibility",
+                    bookmarksView.showSearchField = !bookmarksView.showSearchField
+                    applicationSettings.setValue("show_search_field",
                             bookmarksView.showSearchField)
+
                 }
             }
 
