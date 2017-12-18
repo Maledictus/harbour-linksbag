@@ -31,6 +31,9 @@ BuildRequires:  desktop-file-utils
 %description
 Application gives access to bookmarks stored in getpocket.com service
 
+%description -l ru
+Приложение для работы с закладками, хранимыми в сервисе getpocket.com
+
 %prep
 %setup -q -n %{name}-%{version}
 
