@@ -152,51 +152,63 @@
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="227"/>
         <source>General error</source>
-        <translation type="vanished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="243"/>
         <source>Network error %1: %2</source>
-        <translation type="vanished">Ошибка сети %1: %2</translation>
+        <translation>Ошибка сети %1: %2</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="266"/>
         <source>Reply data is corrupted</source>
-        <translation type="vanished">Данные в ответе повреждены</translation>
+        <translation>Данные в ответе повреждены</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="378"/>
         <source>Unable to remove bookamark</source>
-        <translation type="vanished">Не удалось удалить закладку</translation>
+        <translation>Не удалось удалить закладку</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="400"/>
+        <location filename="../src/getpocketapi.cpp" line="423"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation type="vanished">Не удалось отметить закладку как %1</translation>
+        <translation>Не удалось отметить закладку как %1</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="401"/>
         <source>favorite</source>
-        <translation type="vanished">избранную</translation>
+        <translation>избранную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="401"/>
         <source>unfavorite</source>
-        <translation type="vanished">не избранную</translation>
+        <translation>не избранную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="424"/>
         <source>read</source>
-        <translation type="vanished">прочитанную</translation>
+        <translation>прочитанную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="424"/>
         <source>unread</source>
-        <translation type="vanished">непрочитанную</translation>
+        <translation>непрочитанную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="446"/>
         <source>Unable to update tags</source>
-        <translation type="vanished">Неудалось обновить метки</translation>
+        <translation>Неудалось обновить метки</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
+        <location filename="../src/linksbagmanager.cpp" line="99"/>
         <source>GetPocket error (%1): </source>
-        <translation type="vanished">Ошибка сервиса Pocket (%1): </translation>
+        <translation>Ошибка сервиса Pocket (%1): </translation>
     </message>
 </context>
 </TS>
