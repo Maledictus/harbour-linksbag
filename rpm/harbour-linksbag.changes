@@ -5,7 +5,10 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
-*Thu Dec 17 2017 Oleg Linkin <maledictusdemagog@gmail.com> 2.0
+* Thu Dec 31 2017 Oleg Linkin <maledictusdemagog@gmail.com> 2.1
+- Replace selfmade popup with nemo notification
+
+* Sun Dec 17 2017 Oleg Linkin <maledictusdemagog@gmail.com> 2.0
 - Make project structure more plain
 - Implement reader mode
 - Fix errors

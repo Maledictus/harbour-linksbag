@@ -40,7 +40,6 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/FilterSelectorPage.qml \
     qml/pages/BookmarksFilter.qml \
     qml/pages/AuthorizationPage.qml \
-    qml/pages/Popup.qml \
     harbour-linksbag.desktop \
     qml/pages/helpers/readability.js \
     qml/pages/helpers/userscript.js \
@@ -60,7 +59,6 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/pages/FilterSelectorPage.qml \
     qml/pages/BookmarksFilter.qml \
     qml/pages/AuthorizationPage.qml \
-    qml/pages/Popup.qml \
     qml/pages/EditTagDialog.qml
 }
 

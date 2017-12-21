@@ -25,6 +25,7 @@ THE SOFTWARE.
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.linksbag 1.0
+import Nemo.Notifications 1.0
 
 import "cover"
 import "pages"
@@ -40,15 +41,10 @@ ApplicationWindow {
             bookmarksComponent :
             authComponent
 
-    Popup {
-        id: popup
+    Notification {
+        id: notification
     }
 
-    function showPopup(message, icon) {
-        popup.title = message
-        popup.image = icon
-        popup.show()
-    }
 
     Connections {
         target: linksbagManager
@@ -65,11 +61,15 @@ ApplicationWindow {
         }
 
         onError: {
-            showPopup(msg, "image://Theme/icon-system-warning")
+            notification.previewBody = msg
+            notification.icon = "image://Theme/icon-system-warning"
+            notification.publish()
         }
 
         onNotify: {
-            showPopup(msg, "image://Theme/icon-system-resources")
+            notification.previewBody = msg
+            notification.icon = "image://Theme/icon-system-resources"
+            notification.publish()
         }
     }
 
