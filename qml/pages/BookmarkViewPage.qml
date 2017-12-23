@@ -31,7 +31,7 @@ Page {
 
     Readability {
         id: readability
-        onCoverImageChanged: cover.image = coverImage
+        onEntryChanged: entryText.text = customCss + entry
     }
 
     property string bookmarkId
@@ -51,8 +51,10 @@ Page {
         if (status == PageStatus.Active && linksbagManager.logged) {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
             cover.title = currentBookmark.bookmarkTitle
+            cover.image = currentBookmark.bookmarkImageUrl
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
+            readability.bookmarkImage = currentBookmark.bookmarkImageUrl
             readability.setArticle(currentBookmark.bookmarkUrl)
         }
     }
@@ -133,35 +135,77 @@ Page {
             anchors.right: parent.right
 
             Item {
-                height: Theme.paddingMedium
-                width: parent.width
-            }
+                id: header
+                height: page.height
+                state: busyIndicator.running ? "loading" : "loaded"
+                anchors {
+                    left: parent.left;
+                    right: parent.right;
+                }
 
-            Label {
-                id: entryHeader
-                width: parent.width
-                wrapMode: Text.WordWrap
-                horizontalAlignment: Qt.AlignCenter
-                font.pixelSize: Theme.fontSizeExtraLarge
-                text: currentBookmark.bookmarkTitle
-                anchors { margins: Theme.paddingLarge; left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin; }
+                states: [
+                    State {
+                        name: "loading"
+                        PropertyChanges { target: header; height: page.height }
+                    },
+                    State {
+                        name: "loaded"
+                        PropertyChanges { target: header; height: page.height*0.4 }
+                    }
+                ]
+
+                transitions: Transition {
+                    PropertyAnimation { properties: "height"; easing.type: Easing.InOutQuad; duration: 300 }
+                }
+
+                Image {
+                    id: thumbnailImage
+                    source: currentBookmark.bookmarkImageUrl
+                    anchors.fill: parent;
+                    fillMode: Image.PreserveAspectCrop
+                }
+                OpacityRampEffect {
+                    slope: 1.0
+                    offset: 0
+                    sourceItem: thumbnailImage
+                    direction: OpacityRamp.TopToBottom
+                }
+
+                Column {
+                    id: entryHeaderWrapper
+                    anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
+                    Label {
+                        id: entryHeader
+                        width: parent.width
+                        wrapMode: Text.WordWrap
+                        horizontalAlignment: Qt.AlignCenter
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        text: currentBookmark.bookmarkTitle
+                        anchors { margins: Theme.paddingLarge; left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin; }
+                    }
+
+                    Item {
+                        id: sourceLabel
+                        anchors { horizontalCenter: parent.horizontalCenter; margins: Theme.paddingLarge }
+                        width: sourceText.paintedWidth
+                        height: sourceText.paintedHeight + Theme.paddingSmall*6
+                        Text {
+                            id: sourceText
+                            anchors.centerIn: parent
+                            color: Theme.highlightColor
+                            text: {
+                                var matches = currentBookmark.bookmarkUrl.toString()
+                                        .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                                return matches ? matches[1] : currentBookmark.bookmarkUrl
+                            }
+                        }
+                    }
+                }
             }
 
             Item {
-                id: sourceLabel
-                anchors { horizontalCenter: parent.horizontalCenter; margins: Theme.paddingLarge }
-                width: sourceText.paintedWidth
-                height: sourceText.paintedHeight + Theme.paddingSmall*6
-                Text {
-                    id: sourceText
-                    anchors.centerIn: parent
-                    color: Theme.highlightColor
-                    text: {
-                        var matches = currentBookmark.bookmarkUrl.toString()
-                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                        return matches ? matches[1] : currentBookmark.bookmarkUrl
-                    }
-                }
+                height: Theme.paddingMedium
+                width: parent.width
             }
 
             Label {
@@ -169,7 +213,6 @@ Page {
                 width: parent.width
 
                 wrapMode: Text.WordWrap
-                text: customCss + readability.entry
                 textFormat: Text.RichText
                 horizontalAlignment: Qt.AlignJustify
             }

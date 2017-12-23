@@ -3,10 +3,21 @@ import QtWebKit 3.0
 import Sailfish.Silica 1.0
 
 Item {
-    property bool isBusy: false
+    property bool isBusy: true
     property bool ignoreHeader: false;
     property string entry: ""
-    property string coverImage: ""
+    property string bookmarkImage: ""
+
+    property string nextUrl: ""
+
+    function loadNextUrl() {
+        if (nextUrl != "" && !isBusy) {
+             isBusy = true;
+             webView.url = nextUrl;
+         }
+    }
+
+    onIsBusyChanged: loadNextUrl()
 
     function setArticle(url) {
         entry = "";
@@ -36,29 +47,14 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 webView.postMessage("readermodehandler_enable");
-                getNextPage();
+                //getNextPage();
                 getSource();
-                getCoverImage();
             }
         }
 
         function postMessage(message, data) {
             experimental.postMessage(JSON.stringify({ "type": message, "data": data }));
         }
-    }
-
-    function getCoverImage() {
-        var js = "(function() {
-            var images = document.querySelectorAll('img');
-            if (images.length > 0) {
-                return images[0].getAttribute('src');
-            } else {
-                return ''
-            }
-        })()";
-        webView.experimental.evaluateJavaScript(js, function(result) {
-            coverImage = result;
-        });
     }
 
     function getNextPage() {
@@ -71,20 +67,25 @@ Item {
             }
         })()";
         webView.experimental.evaluateJavaScript(js, function(result) {
-            if (result !== "") {
-                webView.url = result;
-                isBusy = true;
+            if (result) {
                 webView.ignoreHeader = true;
+                nextUrl = result;
+                loadNextUrl();
             }
         });
     }
 
     function getSource(){
         var js = "(function() {
-            var body = document.querySelector('.page');
-            document.querySelector('.page-numbers').remove();
+            var body = document.documentElement.querySelector('body');
+            try {
+                document.querySelector('.page-numbers').remove();
+            } catch (e) {}
             return body.innerHTML;
         })()";
+        if (bookmarkImage) {
+            webView.experimental.evaluateJavaScript("document.querySelector('img[src=\"" + bookmarkImage +  "\"]').remove()", function(result) {});
+        }
         if (webView.ignoreHeader) {
             webView.experimental.evaluateJavaScript("document.querySelector('.article-header').remove()", function(result) {});
         }

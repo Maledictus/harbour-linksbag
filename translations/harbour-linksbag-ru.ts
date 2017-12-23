@@ -12,27 +12,27 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="99"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="98"/>
         <source>Mark as unread</source>
         <translation>Не прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="100"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="99"/>
         <source>Mark as read</source>
         <translation>Прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="110"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="109"/>
         <source>Mark as unfavorite</source>
         <translation>Не избранное</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="111"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="110"/>
         <source>Mark as favorite</source>
         <translation>В избранное</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="119"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="118"/>
         <source>Open in browser</source>
         <translation>Открыть в браузере</translation>
     </message>
@@ -136,7 +136,7 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="229"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="321"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="344"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>

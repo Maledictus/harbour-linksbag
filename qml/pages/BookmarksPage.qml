@@ -186,7 +186,6 @@ Page {
         currentIndex: -1
 
         model: linksbagManager.filterModel
-        spacing: Theme.paddingMedium
 
         delegate: ListItem {
             id: rootDelegateItem
@@ -233,6 +232,24 @@ Page {
                 }
             }
 
+            Rectangle {
+                anchors.fill: parent;
+                opacity: 0.3;
+                color: "transparent";
+                Image {
+                    id: thumbnailImage
+                    source: bookmarkImageUrl
+                    anchors.fill: parent;
+                    fillMode: Image.PreserveAspectCrop
+                }
+                OpacityRampEffect {
+                    slope: 1.0
+                    offset: 0.15
+                    sourceItem: thumbnailImage
+                    direction: OpacityRamp.BottomToTop
+                }
+            }
+
             GlassItem {
                 id: unreadIndicator
                 width: Theme.itemSizeExtraSmall
@@ -249,6 +266,8 @@ Page {
                 anchors.right: favoriteImage.left
                 anchors.rightMargin: Theme.paddingMedium
 
+                Item { width: 1; height: Theme.paddingMedium; }
+
                 Label {
                     id: titleLabel
 
@@ -256,7 +275,8 @@ Page {
 
                     font.family: Theme.fontFamilyHeading
                     font.pixelSize:  Theme.fontSizeMedium
-                    elide: Text.ElideRight
+                    wrapMode: Text.WordWrap
+                    //elide: Text.ElideRight
 
                     text: bookmarkTitle
                 }
@@ -303,12 +323,14 @@ Page {
                         text: bookmarkTags
                     }
                 }
+
+                Item { width: 1; height: Theme.paddingMedium; }
             }
 
             IconButton {
                 id: favoriteImage
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.paddingMedium
+                anchors {
+                    right: parent.right; rightMargin: Theme.paddingMedium; }
                 icon.source: bookmarkFavorite ?
                     "image://Theme/icon-m-favorite-selected" :
                     "image://Theme/icon-m-favorite"

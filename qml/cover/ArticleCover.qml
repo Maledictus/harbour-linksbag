@@ -9,7 +9,6 @@ Item {
 
     Image {
         id: articleImage
-        opacity: 0.6
         sourceSize.width: width
         sourceSize.height: height
         anchors.fill: parent
