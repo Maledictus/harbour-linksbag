@@ -128,9 +128,41 @@ Page {
             anchors.right: parent.right
             anchors.rightMargin: Theme.horizontalPageMargin
 
+            Item {
+                height: Theme.paddingMedium
+                width: parent.width
+            }
+
+            Label {
+                id: entryHeader
+                width: parent.width
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Qt.AlignCenter
+                font.pixelSize: Theme.fontSizeExtraLarge
+                text: currentBookmark.bookmarkTitle
+                anchors.margins: Theme.paddingLarge
+            }
+
+            Rectangle {
+                id: sourceLabel
+                anchors { horizontalCenter: parent.horizontalCenter; margins: Theme.paddingLarge }
+                width: sourceText.paintedWidth + Theme.paddingSmall*4
+                height: sourceText.paintedHeight + Theme.paddingSmall*6
+                color: "transparent"
+                Text {
+                    id: sourceText
+                    anchors.centerIn: parent
+                    color: Theme.highlightColor
+                    text: {
+                        var matches = currentBookmark.bookmarkUrl.toString()
+                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                        return matches ? matches[1] : currentBookmark.bookmarkUrl
+                    }
+                }
+            }
+
             Label {
                 id: entryText
-
                 width: parent.width
 
                 wrapMode: Text.WordWrap
@@ -152,6 +184,10 @@ Page {
 
     SilicaWebView {
         id: webView
+
+        property string custom_css: "<style>
+            a:link { color: " + Theme.highlightColor + "; }
+        </style>"
 
         visible: false
         z: -1
@@ -183,7 +219,7 @@ Page {
         var js = "document.documentElement.outerHTML";
         webView.experimental.evaluateJavaScript(js, function(result){
             isBusy = false
-            entryText.text = result
+            entryText.text = webView.custom_css + result
         })
     }
 }
