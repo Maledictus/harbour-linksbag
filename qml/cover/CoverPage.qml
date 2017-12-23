@@ -51,7 +51,9 @@ Cover {
             top: parent.top;
             left: parent.left;
             right: parent.right;
-            margins: Theme.paddingLarge;
+            topMargin: Theme.paddingMedium
+            leftMargin: Theme.paddingLarge;
+            rightMargin: Theme.paddingLarge;
         }
         Label {
             anchors { top: parent.top; left: parent.left; }
@@ -82,7 +84,7 @@ Cover {
             top: coverHeader.bottom;
             left: parent.left;
             right: parent.right;
-            margins: Theme.paddingMedium
+            margins: Theme.paddingLarge;
             bottom: parent.bottom;
         }
 

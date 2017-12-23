@@ -185,6 +185,7 @@ Page {
         currentIndex: -1
 
         model: linksbagManager.filterModel
+        spacing: Theme.paddingMedium
 
         delegate: ListItem {
             id: rootDelegateItem
@@ -231,6 +232,16 @@ Page {
                 }
             }
 
+            GlassItem {
+                id: unreadIndicator
+                width: Theme.itemSizeExtraSmall
+                height: width
+                x: -(width/2)
+                anchors.top: parent.top
+                color: Theme.highlightColor
+                visible: !bookmarkRead
+            }
+
             Column {
                 anchors.left: parent.left
                 anchors.leftMargin: Theme.horizontalPageMargin
@@ -244,9 +255,7 @@ Page {
 
                     font.family: Theme.fontFamilyHeading
                     font.pixelSize:  Theme.fontSizeMedium
-                    font.bold: true
                     elide: Text.ElideRight
-                    opacity: bookmarkRead ? 0.7 : 1.0
 
                     text: bookmarkTitle
                 }
@@ -256,7 +265,8 @@ Page {
 
                     width: parent.width
 
-                    font.pixelSize:  Theme.fontSizeTiny
+                    font.pixelSize:  Theme.fontSizeExtraSmall
+                    color: Theme.secondaryColor
                     elide: Text.ElideRight
 
                     text: {
