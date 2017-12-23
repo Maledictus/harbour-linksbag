@@ -118,9 +118,28 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="222"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="316"/>
+        <source>Mark as unread</source>
+        <translation type="unfinished">Mark as unread</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/BookmarksPage.qml" line="222"/>
+        <source>Mark as read</source>
+        <translation type="unfinished">Mark as read</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/BookmarksPage.qml" line="227"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="310"/>
         <source>Remove</source>
         <translation>Remove</translation>
+    </message>
+</context>
+<context>
+    <name>CoverPage</name>
+    <message>
+        <location filename="../qml/cover/CoverPage.qml" line="58"/>
+        <source>Unread 
+articles</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -30,7 +30,7 @@ Page {
     id: bookmarksPage
 
     property BookmarksFilter bookmarksFilter : getFilterByKey(applicationSettings
-            .value("bookmarks_filter", "all"))
+            .value("bookmarks_filter", "unread"))
 
     function getFilterByKey(key) {
         for (var i = 0; i < bookmarksFilters.length; ++i) {
@@ -219,6 +219,11 @@ Page {
                 }
 
                 MenuItem {
+                    text: bookmarkRead ? qsTr("Mark as unread") : qsTr("Mark as read")
+                    onClicked: linksbagManager.markAsRead(bookmarkID, !bookmarkRead)
+                }
+
+                MenuItem {
                     text: qsTr ("Remove")
                     onClicked: {
                         remove()
@@ -241,6 +246,7 @@ Page {
                     font.pixelSize:  Theme.fontSizeMedium
                     font.bold: true
                     elide: Text.ElideRight
+                    opacity: bookmarkRead ? 0.7 : 1.0
 
                     text: bookmarkTitle
                 }
@@ -290,25 +296,13 @@ Page {
 
             IconButton {
                 id: favoriteImage
-                anchors.right: readImage.left
+                anchors.right: parent.right
                 anchors.rightMargin: Theme.paddingMedium
                 icon.source: bookmarkFavorite ?
                     "image://Theme/icon-m-favorite-selected" :
                     "image://Theme/icon-m-favorite"
                 onClicked: {
                     linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
-                }
-            }
-
-            IconButton {
-                id: readImage
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.horizontalPageMargin
-                icon.source: bookmarkRead ?
-                    "image://Theme/icon-m-certificates" :
-                    "image://Theme/icon-m-mail"
-                onClicked: {
-                    linksbagManager.markAsRead(bookmarkID, !bookmarkRead)
                 }
             }
 

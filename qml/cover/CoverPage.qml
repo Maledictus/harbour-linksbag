@@ -34,29 +34,57 @@ Cover {
     transparent: true
 
     BackgroundItem {
-        anchors.centerIn: parent
-        width: coverBgImage.width
-        height: coverBgImage.height
+        anchors.fill: parent
         Image {
             id: coverBgImage
-            fillMode: Image.PreserveAspectFit
-            anchors.centerIn: parent
-            source: "qrc:/images/harbour-linksbag.png"
-            opacity: 0.5
-            width: 128
-            height: 128
+            fillMode: Image.PreserveAspectCrop
+            anchors.fill: parent
+            source: "qrc:/images/linksbag-cover"
+            opacity: 0.1
+        }
+    }
+
+    Row {
+        id: coverHeader
+        height: Theme.itemSizeSmall
+        anchors {
+            top: parent.top;
+            left: parent.left;
+            right: parent.right;
+            margins: Theme.paddingLarge;
+        }
+        Label {
+            anchors { top: parent.top; left: parent.left; }
+            id: coverHeaderCount
+            font.pixelSize: Theme.fontSizeHuge
+            color: Theme.primaryColor
+            text: listView.count
+        }
+        Label  {
+            id: coverHeaderTitle
+            anchors {
+                top: parent.top;
+                topMargin: Theme.paddingMedium;
+                right: parent.right;
+                rightMargin: Theme.paddingLarge;
+                leftMargin: Theme.paddingMedium;
+                left: coverHeaderCount.right;
+            }
+            font.pixelSize: Theme.fontSizeExtraSmall
+            text: qsTr("Unread \narticles")
         }
     }
 
     SilicaListView {
         id: listView
 
-        anchors.bottom: actionsList.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.margins: Theme.paddingMedium
-        height: 240
+        anchors {
+            top: coverHeader.bottom;
+            left: parent.left;
+            right: parent.right;
+            margins: Theme.paddingMedium
+            bottom: parent.bottom;
+        }
 
         spacing: 10
 
@@ -65,17 +93,32 @@ Cover {
 
         delegate: BackgroundItem {
             id: delegate
-            height: 30
+            height: Theme.itemSizeExtraSmall
 
-            Label {
-                id: titleLabel
+            Column {
+                width: parent.width;
+                Label {
+                    id: itemLabel
+                    width: parent.width
+                    color: Theme.highlightColor
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                    text: bookmarkTitle
+                }
+                Label {
+                    id: sourceLabel
+                    width: parent.width
 
-                anchors.fill: parent
+                    font.pixelSize:  Theme.fontSizeTiny
+                    elide: Text.ElideRight
+                    color: Theme.secondaryHighlightColor
 
-                color: Theme.highlightColor
-                font.pixelSize: Theme.fontSizeTiny
-
-                text: bookmarkTitle
+                    text: {
+                        var matches = bookmarkUrl.toString()
+                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                        return matches ? matches[1] : bookmarkUrl
+                    }
+                }
             }
         }
     }
@@ -83,6 +126,7 @@ Cover {
     CoverActionList {
         id: actionsList
         CoverAction {
+            id: refreshAction
             iconSource: "image://theme/icon-cover-refresh"
             onTriggered: {
                 linksbagManager.refreshBookmarks()
