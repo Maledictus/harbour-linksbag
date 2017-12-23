@@ -28,7 +28,11 @@ import Sailfish.Silica 1.0
 Cover {
     id: coverPage
 
-    property alias model: listView.model
+    property alias model: articleList.model
+    property alias image: article.image
+    property alias title: article.title
+    property alias currentFilter: articleList.filter
+    property bool articleLayout: false
 
     anchors.fill: parent
     transparent: true
@@ -44,91 +48,19 @@ Cover {
         }
     }
 
-    Row {
-        id: coverHeader
-        height: Theme.itemSizeSmall
-        anchors {
-            top: parent.top;
-            left: parent.left;
-            right: parent.right;
-            topMargin: Theme.paddingMedium
-            leftMargin: Theme.paddingLarge;
-            rightMargin: Theme.paddingLarge;
-        }
-        Label {
-            anchors { top: parent.top; left: parent.left; }
-            id: coverHeaderCount
-            font.pixelSize: Theme.fontSizeHuge
-            color: Theme.primaryColor
-            text: listView.count
-        }
-        Label  {
-            id: coverHeaderTitle
-            anchors {
-                top: parent.top;
-                topMargin: Theme.paddingMedium;
-                right: parent.right;
-                rightMargin: Theme.paddingLarge;
-                leftMargin: Theme.paddingMedium;
-                left: coverHeaderCount.right;
-            }
-            font.pixelSize: Theme.fontSizeExtraSmall
-            text: qsTr("Unread \narticles")
-        }
+    ArticleCover {
+        id: article
+        visible: articleLayout
     }
 
-    SilicaListView {
-        id: listView
-
-        anchors {
-            top: coverHeader.bottom;
-            left: parent.left;
-            right: parent.right;
-            margins: Theme.paddingLarge;
-            bottom: parent.bottom;
-        }
-
-        spacing: 10
-
-        width: parent.width
-        clip: true
-
-        delegate: BackgroundItem {
-            id: delegate
-            height: Theme.itemSizeExtraSmall
-
-            Column {
-                width: parent.width;
-                Label {
-                    id: itemLabel
-                    width: parent.width
-                    color: Theme.highlightColor
-                    font.pixelSize: Theme.fontSizeSmall
-                    truncationMode: TruncationMode.Fade
-                    text: bookmarkTitle
-                }
-                Label {
-                    id: sourceLabel
-                    width: parent.width
-
-                    font.pixelSize:  Theme.fontSizeTiny
-                    elide: Text.ElideRight
-                    color: Theme.secondaryHighlightColor
-
-                    text: {
-                        var matches = bookmarkUrl.toString()
-                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                        return matches ? matches[1] : bookmarkUrl
-                    }
-                }
-            }
-        }
+    ArticleListCover {
+        id: articleList
+        anchors.bottomMargin: coverActionArea.height;
+        visible: !articleLayout
     }
 
     CoverActionList {
-        id: actionsList
         CoverAction {
-            id: refreshAction
             iconSource: "image://theme/icon-cover-refresh"
             onTriggered: {
                 linksbagManager.refreshBookmarks()

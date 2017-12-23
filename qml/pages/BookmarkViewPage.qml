@@ -40,11 +40,15 @@ Page {
     onStatusChanged: {
         if (status == PageStatus.Active && linksbagManager.logged) {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
+            cover.title = currentBookmark.bookmarkTitle
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
             timer.running = true
         }
     }
+
+    Component.onCompleted: cover.articleLayout = true
+    Component.onDestruction: cover.articleLayout = false
 
     Timer {
         id: timer
@@ -124,9 +128,7 @@ Page {
             anchors.top: parent.top
             anchors.topMargin: Theme.paddingSmall
             anchors.left: parent.left
-            anchors.leftMargin: Theme.horizontalPageMargin
             anchors.right: parent.right
-            anchors.rightMargin: Theme.horizontalPageMargin
 
             Item {
                 height: Theme.paddingMedium
@@ -140,15 +142,14 @@ Page {
                 horizontalAlignment: Qt.AlignCenter
                 font.pixelSize: Theme.fontSizeExtraLarge
                 text: currentBookmark.bookmarkTitle
-                anchors.margins: Theme.paddingLarge
+                anchors { margins: Theme.paddingLarge; left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin; }
             }
 
-            Rectangle {
+            Item {
                 id: sourceLabel
                 anchors { horizontalCenter: parent.horizontalCenter; margins: Theme.paddingLarge }
-                width: sourceText.paintedWidth + Theme.paddingSmall*4
+                width: sourceText.paintedWidth
                 height: sourceText.paintedHeight + Theme.paddingSmall*6
-                color: "transparent"
                 Text {
                     id: sourceText
                     anchors.centerIn: parent
@@ -187,6 +188,9 @@ Page {
 
         property string custom_css: "<style>
             a:link { color: " + Theme.highlightColor + "; }
+            img { margin: initial -" + Theme.horizontalPageMargin + "px; }
+            h1, h2, h3, h4, h5 { text-align: left; }
+            h1, h2, h3, h4, h5, p { margin: initial " + Theme.horizontalPageMargin + "px; }
         </style>"
 
         visible: false
@@ -207,6 +211,7 @@ Page {
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 webView.postMessage("readermodehandler_enable");
                 getSource()
+                getCoverImage()
             }
         }
 
@@ -215,11 +220,25 @@ Page {
         }
     }
 
+    function getCoverImage() {
+        var js = "(function() {
+            var images = document.querySelectorAll('img');
+            if (images.length > 0) {
+                return images[0].getAttribute('src');
+            } else {
+                return ''
+            }
+        })()";
+        webView.experimental.evaluateJavaScript(js, function(result) {
+            cover.image = result;
+        });
+    }
+
     function getSource(){
         var js = "document.documentElement.outerHTML";
         webView.experimental.evaluateJavaScript(js, function(result){
             isBusy = false
-            entryText.text = webView.custom_css + result
+            entryText.text = webView.custom_css + result;
         })
     }
 }

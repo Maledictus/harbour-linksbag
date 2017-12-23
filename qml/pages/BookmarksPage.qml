@@ -87,6 +87,7 @@ Page {
             linksbagManager.filterModel.filterBookmarks(LinksBag.Favorite)
         }
 
+        cover.currentFilter = bookmarksFilter.name
         applicationSettings.setValue("bookmarks_filter", bookmarksFilter.key)
     }
 
