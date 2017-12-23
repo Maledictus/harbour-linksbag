@@ -24,39 +24,41 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtWebKit 3.0
-
-import "./helpers/readability.js" as Readability
+import "../"
 
 Page {
     id: page
 
+    Readability {
+        id: readability
+        onCoverImageChanged: cover.image = coverImage
+    }
+
     property string bookmarkId
     property variant currentBookmark
-    property bool isBusy: true
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
+
+    property string customCss: "<style>
+        a:link { color: " + Theme.highlightColor + "; }
+        img { margin: initial -" + Theme.horizontalPageMargin + "px; }
+        h1, h2, h3, h4, h5 { text-align: left; }
+        h1, h2, h3, h4, h5, p { margin: initial " + Theme.horizontalPageMargin + "px; }
+    </style>"
+
     onStatusChanged: {
         if (status == PageStatus.Active && linksbagManager.logged) {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
             cover.title = currentBookmark.bookmarkTitle
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
-            timer.running = true
+            readability.setArticle(currentBookmark.bookmarkUrl)
         }
     }
 
     Component.onCompleted: cover.articleLayout = true
     Component.onDestruction: cover.articleLayout = false
-
-    Timer {
-        id: timer
-        interval: 300;
-        running: false;
-        repeat: false
-        onTriggered: webView.url = currentBookmark.bookmarkUrl
-    }
 
     Connections {
         target: linksbagManager
@@ -167,8 +169,14 @@ Page {
                 width: parent.width
 
                 wrapMode: Text.WordWrap
+                text: customCss + readability.entry
                 textFormat: Text.RichText
                 horizontalAlignment: Qt.AlignJustify
+            }
+            Item {
+                // additional padding at the bottom
+                height: Theme.paddingLarge*4
+                width: parent.width
             }
        }
 
@@ -180,66 +188,7 @@ Page {
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
         visible: true
-        running: linksbagManager.busy || isBusy;
-    }
-
-    SilicaWebView {
-        id: webView
-
-        property string custom_css: "<style>
-            a:link { color: " + Theme.highlightColor + "; }
-            img { margin: initial -" + Theme.horizontalPageMargin + "px; }
-            h1, h2, h3, h4, h5 { text-align: left; }
-            h1, h2, h3, h4, h5, p { margin: initial " + Theme.horizontalPageMargin + "px; }
-        </style>"
-
-        visible: false
-        z: -1
-
-        experimental.preferences.webGLEnabled: true
-        experimental.preferences.notificationsEnabled: true
-        experimental.preferences.javascriptEnabled: true
-        experimental.preferences.navigatorQtObjectEnabled: true
-
-        experimental.userScripts: [
-            Qt.resolvedUrl("helpers/readability.js") ,
-            Qt.resolvedUrl("helpers/ReaderModeHandler.js"),
-            Qt.resolvedUrl("helpers/MessageListener.js")
-        ]
-
-        onLoadingChanged: {
-            if (loadRequest.status === WebView.LoadSucceededStatus) {
-                webView.postMessage("readermodehandler_enable");
-                getSource()
-                getCoverImage()
-            }
-        }
-
-        function postMessage(message, data) {
-            experimental.postMessage(JSON.stringify({ "type": message, "data": data }));
-        }
-    }
-
-    function getCoverImage() {
-        var js = "(function() {
-            var images = document.querySelectorAll('img');
-            if (images.length > 0) {
-                return images[0].getAttribute('src');
-            } else {
-                return ''
-            }
-        })()";
-        webView.experimental.evaluateJavaScript(js, function(result) {
-            cover.image = result;
-        });
-    }
-
-    function getSource(){
-        var js = "document.documentElement.outerHTML";
-        webView.experimental.evaluateJavaScript(js, function(result){
-            isBusy = false
-            entryText.text = webView.custom_css + result;
-        })
+        running: linksbagManager.busy || readability.isBusy;
     }
 }
 
