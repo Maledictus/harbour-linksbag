@@ -12,27 +12,27 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="98"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="113"/>
         <source>Mark as unread</source>
         <translation>Mark as unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="99"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="114"/>
         <source>Mark as read</source>
         <translation>Mark as read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="109"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="124"/>
         <source>Mark as unfavorite</source>
         <translation>Unfavorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="110"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="125"/>
         <source>Mark as favorite</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="118"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="133"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>
@@ -105,38 +105,38 @@
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="199"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="198"/>
         <source>Copy url to clipboard</source>
         <translation>Copy url to clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="202"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="201"/>
         <source>Url copied into clipboard</source>
         <translation>Url copied into clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="207"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="206"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="214"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="213"/>
         <source>Edit tags</source>
         <translation>Edit tags</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="224"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="223"/>
         <source>Mark as unread</source>
         <translation type="unfinished">Mark as unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="224"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="223"/>
         <source>Mark as read</source>
         <translation type="unfinished">Mark as read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="229"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="344"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="228"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="342"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>

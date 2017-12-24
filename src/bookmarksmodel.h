@@ -48,7 +48,8 @@ public:
         BRTags,
         BRAddTime,
         BRUpdateTime,
-        BRStatus
+        BRStatus,
+        BRContent
     };
 
     explicit BookmarksModel(QObject *parent = 0);
@@ -65,6 +66,7 @@ public:
     void MarkBookmarkAsFavorite(const QString& id, bool favorite);
     void MarkBookmarkAsRead(const QString& id, bool read);
     void UpdateTags(const QString& id, const QString& tags);
+    void UpdateContent(const QString& id, const QString& content);
 
     Bookmarks_t GetBookmarks() const;
 

@@ -84,7 +84,7 @@ Item {
             return body.innerHTML;
         })()";
         if (bookmarkImage) {
-            webView.experimental.evaluateJavaScript("document.querySelector('img[src=\"" + bookmarkImage +  "\"]').remove()", function(result) {});
+            webView.experimental.evaluateJavaScript("document.querySelector('img[src=\"" + bookmarkImage + "\"]').remove()", function(result) {});
         }
         if (webView.ignoreHeader) {
             webView.experimental.evaluateJavaScript("document.querySelector('.article-header').remove()", function(result) {});

@@ -31,7 +31,15 @@ Page {
 
     Readability {
         id: readability
-        onEntryChanged: entryText.text = customCss + entry
+        isBusy: hasContent
+        onEntryChanged: {
+            if (entry !== currentBookmark.bookmarkContent) {
+                linksbagManager.updateContent(bookmarkId, entry);
+                linksbagManager.saveBookmarks();
+            }
+            entryText.text = customCss + entry;
+            hasContent = true;
+        }
     }
 
     property string bookmarkId
@@ -39,6 +47,7 @@ Page {
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
+    property bool hasContent: currentBookmark.bookmarkContent !== ""
 
     property string customCss: "<style>
         a:link { color: " + Theme.highlightColor + "; }
@@ -54,8 +63,13 @@ Page {
             cover.image = currentBookmark.bookmarkImageUrl
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
-            readability.bookmarkImage = currentBookmark.bookmarkImageUrl
-            readability.setArticle(currentBookmark.bookmarkUrl)
+            if (!hasContent) {
+                readability.bookmarkImage = currentBookmark.bookmarkImageUrl
+                readability.setArticle(currentBookmark.bookmarkUrl)
+            } else {
+                readability.entry = currentBookmark.bookmarkContent
+                readability.isBusy = false;
+            }
         }
     }
 
@@ -137,7 +151,7 @@ Page {
             Item {
                 id: header
                 height: page.height
-                state: busyIndicator.running ? "loading" : "loaded"
+                state: !hasContent ? "loading" : "loaded"
                 anchors {
                     left: parent.left;
                     right: parent.right;
@@ -150,12 +164,12 @@ Page {
                     },
                     State {
                         name: "loaded"
-                        PropertyChanges { target: header; height: page.height*0.4 }
+                        PropertyChanges { target: header; height: currentBookmark.bookmarkImageUrl.length > 0 ? page.height*0.4 : entryHeaderWrapper.childrenRect.height+Theme.paddingMedium }
                     }
                 ]
 
                 transitions: Transition {
-                    PropertyAnimation { properties: "height"; easing.type: Easing.InOutQuad; duration: 300 }
+                    PropertyAnimation { properties: "height"; easing.type: Easing.InOutQuad; duration: hasContent ? 0 : 300 }
                 }
 
                 Image {

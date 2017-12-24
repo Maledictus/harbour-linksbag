@@ -172,7 +172,7 @@ void LinksBagManager::SetLogged(const bool logged)
     emit loggedChanged();
 }
 
-void LinksBagManager::SaveBookmarks()
+void LinksBagManager::saveBookmarks()
 {
     const auto& bookmarks = m_BookmarksModel->GetBookmarks();
     if (bookmarks.isEmpty())
@@ -228,6 +228,7 @@ void LinksBagManager::loadBookmarksFromCache()
         settings.setArrayIndex(i);
         QByteArray data = settings.value("SerializedData").toByteArray();
         Bookmark bm = Bookmark::Deserialize(data);
+        qDebug() << "no nie" << bm.GetContent() << "czemu to nie dziala";
         if (!bm.IsValid())
         {
             qWarning() << Q_FUNC_INFO
@@ -272,6 +273,11 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
 {
     SetBusy(true);
     m_Api->UpdateTags(id, tags);
+}
+
+void LinksBagManager::updateContent(const QString &id, const QString &content)
+{
+    m_BookmarksModel->UpdateContent(id, content);
 }
 
 void LinksBagManager::resetAccount()

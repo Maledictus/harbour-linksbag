@@ -276,7 +276,6 @@ Page {
                     font.family: Theme.fontFamilyHeading
                     font.pixelSize:  Theme.fontSizeMedium
                     wrapMode: Text.WordWrap
-                    //elide: Text.ElideRight
 
                     text: bookmarkTitle
                 }

@@ -68,7 +68,6 @@ public:
     BookmarksModel* GetBookmarksModel() const;
     FilterProxyModel* GetFilterModel() const;
 
-    void SaveBookmarks();
 private:
     void MakeConnections();
     void SetBusy(const bool busy);
@@ -81,11 +80,13 @@ public slots:
     void filterBookmarks(const QString& text);
 
     void loadBookmarksFromCache();
+    void saveBookmarks();
     void refreshBookmarks();
     void removeBookmark(const QString& id);
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);
     void updateTags(const QString& id, const QString& tags);
+    void updateContent(const QString& id, const QString& content);
 
     void resetAccount();
 

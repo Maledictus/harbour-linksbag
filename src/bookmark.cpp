@@ -145,6 +145,16 @@ void Bookmark::SetStatus(Bookmark::Status status)
     m_Status = status;
 }
 
+QString Bookmark::GetContent() const
+{
+    return  m_Content;
+}
+
+void Bookmark::SetContent(const QString& content)
+{
+    m_Content = content;
+}
+
 QByteArray Bookmark::Serialize() const
 {
     quint16 ver = 1;
@@ -162,7 +172,8 @@ QByteArray Bookmark::Serialize() const
                 << m_Tags
                 << m_AddTime
                 << m_UpdateTime
-                << m_Status;
+                << m_Status
+                << m_Content;
     }
 
     return result;
@@ -194,7 +205,8 @@ Bookmark Bookmark::Deserialize(const QByteArray& data)
             >> result.m_Tags
             >> result.m_AddTime
             >> result.m_UpdateTime
-            >> status;
+            >> status
+            >> result.m_Content;
     result.SetStatus(static_cast<Status>(status));
 
     return result;
@@ -214,6 +226,7 @@ QVariantMap Bookmark::ToMap() const
     map["bookmarkAddTime"] = m_AddTime;
     map["bookmarkUpdateTime"] = m_UpdateTime;
     map["bookmarkStatus"] = m_Status;
+    map["bookmarkContent"] = m_Content;
 
     return map;
 }
