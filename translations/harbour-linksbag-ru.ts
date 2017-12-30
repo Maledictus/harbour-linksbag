@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
+<context>
+    <name>AuthorizationPage</name>
+    <message>
+        <location filename="../qml/pages/AuthorizationPage.qml" line="36"/>
+        <source>Authorization process...</source>
+        <translation>Идет процесс авторизации...</translation>
+    </message>
+</context>
 <context>
     <name>BookmarkViewPage</name>
     <message>
@@ -152,63 +158,67 @@
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="227"/>
         <source>General error</source>
-        <translation>Ошибка</translation>
+        <translation type="vanished">Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="243"/>
-        <source>Network error %1: %2</source>
-        <translation>Ошибка сети %1: %2</translation>
-    </message>
-    <message>
-        <location filename="../src/getpocketapi.cpp" line="266"/>
         <source>Reply data is corrupted</source>
-        <translation>Данные в ответе повреждены</translation>
+        <translation type="vanished">Данные в ответе повреждены</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="378"/>
         <source>Unable to remove bookamark</source>
-        <translation>Не удалось удалить закладку</translation>
+        <translation type="vanished">Не удалось удалить закладку</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="400"/>
-        <location filename="../src/getpocketapi.cpp" line="423"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation>Не удалось отметить закладку как %1</translation>
+        <translation type="vanished">Не удалось отметить закладку как %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="401"/>
         <source>favorite</source>
-        <translation>избранную</translation>
+        <translation type="vanished">избранную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="401"/>
         <source>unfavorite</source>
-        <translation>не избранную</translation>
+        <translation type="vanished">не избранную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="424"/>
         <source>read</source>
-        <translation>прочитанную</translation>
+        <translation type="vanished">прочитанную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="424"/>
         <source>unread</source>
-        <translation>непрочитанную</translation>
+        <translation type="vanished">непрочитанную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="446"/>
         <source>Unable to update tags</source>
-        <translation>Неудалось обновить метки</translation>
+        <translation type="vanished">Неудалось обновить метки</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="99"/>
         <source>GetPocket error (%1): </source>
-        <translation>Ошибка сервиса Pocket (%1): </translation>
+        <translation type="vanished">Ошибка сервиса Pocket (%1): </translation>
+    </message>
+</context>
+<context>
+    <name>LoginPage</name>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="36"/>
+        <source>GetPocket/Google account</source>
+        <translation>GetPocket/Google аккаунт</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="44"/>
+        <source>GetPocket/Firefox account</source>
+        <translation>GetPocket/Firefox аккаунт</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="58"/>
+        <source>Application not authorized.
+Pull down to do it</source>
+        <translation>Приложение не авторизовано.
+Потяние вниз, чтобы сделать это</translation>
     </message>
 </context>
 </TS>

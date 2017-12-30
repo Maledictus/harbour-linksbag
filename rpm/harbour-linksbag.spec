@@ -13,7 +13,7 @@ Name:       harbour-linksbag
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    GetPocket client for SailfishOS
-Version:    2.1
+Version:    2.2
 Release:    1
 Group:      Applications/Internet
 License:    The MIT License (MIT)
