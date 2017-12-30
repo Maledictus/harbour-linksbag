@@ -224,7 +224,7 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
     if (!reply)
     {
         qDebug() << "Invalid reply";
-        emit requestFinished(false, tr("General error"));
+        emit error(tr("General error"), 503, ETGeneral);
         ok = false;
         return doc;
     }
@@ -236,13 +236,12 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
             reply->error() != m_InvalidRequestError &&
             reply->error() != m_AuthError &&
             reply->error() != m_PermissionsRateError &&
-            reply->error() != m_MaintenanceError)
+            reply->error() != m_MaintenanceError &&
+            reply->error() != QNetworkReply::ContentOperationNotPermittedError)
     {
         qDebug() << Q_FUNC_INFO << "There is network error: "
                 << reply->error() << reply->errorString();
-        emit requestFinished(false, tr("Network error %1: %2")
-                .arg(reply->error())
-                .arg(reply->errorString()));
+        emit error(tr("Network error: %1").arg(reply->errorString()), reply->error(), ETGeneral);
         ok = false;
         return doc;
     }
@@ -258,12 +257,12 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
     }
 
     ok = false;
-    QJsonParseError error;
-    doc = QJsonDocument::fromJson(reply->readAll(), &error);
-    if (error.error != QJsonParseError::NoError)
+    QJsonParseError err;
+    doc = QJsonDocument::fromJson(reply->readAll(), &err);
+    if (err.error != QJsonParseError::NoError)
     {
         qDebug() << "Unable to generate json from reply";
-        emit requestFinished(false, tr("Reply data is corrupted"));
+        emit error(tr("Reply data is corrupted"), 503, ETGetPocket);
         return doc;
     }
 
@@ -273,6 +272,8 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
 
 void GetPocketApi::handleObtainRequestToken()
 {
+    emit requestFinished(true);
+
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -283,28 +284,64 @@ void GetPocketApi::handleObtainRequestToken()
 
     m_RequestToken = doc.object()["code"].toString();
     emit requestTokenChanged(m_RequestToken);
-    emit requestFinished(true);
 }
 
 void GetPocketApi::handleRequestAccessToken()
 {
-    bool ok = false;
-    QJsonDocument doc = PreparsingReply(sender(), ok);
-    if (!ok)
+    emit requestFinished(true);
+
+    auto reply = qobject_cast<QNetworkReply*> (sender());
+    if (!reply)
     {
-        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        qDebug() << "Invalid reply";
+        emit error(tr("General error"), 503, ETGeneral);
         return;
+    }
+    reply->deleteLater();
+
+    bool result = false;
+    if (reply->error() != QNetworkReply::NoError &&
+            reply->error() != QNetworkReply::UnknownContentError &&
+            reply->error() != QNetworkReply::UnknownNetworkError &&
+            reply->error() != m_InvalidRequestError &&
+            reply->error() != m_AuthError &&
+            reply->error() != m_PermissionsRateError &&
+            reply->error() != m_MaintenanceError &&
+            reply->error() != QNetworkReply::ContentOperationNotPermittedError)
+    {
+        qDebug() << Q_FUNC_INFO << "There is network error: "
+                << reply->error() << reply->errorString();
+        emit error(tr("Network error: %1").arg(reply->errorString()), reply->error(), ETGeneral);
+    }
+    else if (reply->error() != QNetworkReply::NoError)
+    {
+        const int errorCode = reply->rawHeader("X-Error-Code").toInt();
+        const QString errorString = reply->rawHeader("X-Error");
+        qDebug() << Q_FUNC_INFO << "There is getpocket error: "
+                << errorCode << errorString;
+        emit error(errorString, errorCode, ETGetPocket);
+        emit logged(result, QString(), QString());
+        return;
+    }
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll(), &err);
+    if (err.error != QJsonParseError::NoError)
+    {
+        qDebug() << "Unable to generate json from reply";
+        emit error(tr("Reply data is corrupted"), 503, ETGetPocket);
     }
 
     const auto& accessToken = doc.object()["access_token"].toString();
     const auto& userName = doc.object()["username"].toString();
-    emit logged(!accessToken.isEmpty() && !userName.isEmpty(),
-            accessToken, userName);
-    emit requestFinished(true);
+    result = !accessToken.isEmpty() && !userName.isEmpty();
+    emit logged(result, accessToken, userName);
 }
 
 void GetPocketApi::handleLoadBookmarks()
 {
+    emit requestFinished(true);
+
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -354,11 +391,12 @@ void GetPocketApi::handleLoadBookmarks()
     }
 
     emit gotBookmarks(bookmarks, since);
-    emit requestFinished(true);
 }
 
 void GetPocketApi::handleRemoveBookmark(const QString& id)
 {
+    emit requestFinished(true);
+
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -371,16 +409,17 @@ void GetPocketApi::handleRemoveBookmark(const QString& id)
     if(rootObject ["status"].toInt() == 1)
     {
         emit bookmarkRemoved(id);
-        emit requestFinished(true);
     }
     else
     {
-        emit requestFinished(false, tr("Unable to remove bookamark"));
+        emit error(tr("Unable to remove bookamark"));
     }
 }
 
 void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite)
 {
+    emit requestFinished(true);
+
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -393,17 +432,18 @@ void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite
     if(rootObject ["status"].toInt() == 1)
     {
         emit bookmarkMarkedAsFavorite(id, favorite);
-        emit requestFinished(true);
     }
     else
     {
-        emit requestFinished(false, tr("Unable to mark bookamark as %1")
+        emit error(tr("Unable to mark bookamark as %1")
                 .arg(favorite ? tr("favorite") : tr("unfavorite")));
     }
 }
 
 void GetPocketApi::handleMarkBookmarkAsRead(const QString& id, bool read)
 {
+    emit requestFinished(true);
+
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -416,17 +456,18 @@ void GetPocketApi::handleMarkBookmarkAsRead(const QString& id, bool read)
     if(rootObject ["status"].toInt() == 1)
     {
         emit bookmarkMarkedAsRead(id, read);
-        emit requestFinished(true);
     }
     else
     {
-        emit requestFinished(false, tr("Unable to mark bookamark as %1")
+        emit error(tr("Unable to mark bookamark as %1")
                 .arg(read ? tr("read") : tr("unread")));
     }
 }
 
 void GetPocketApi::handleTagsUpdated(const QString& id, const QString& tags)
 {
+    emit requestFinished(true);
+
     bool ok = false;
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
@@ -439,11 +480,10 @@ void GetPocketApi::handleTagsUpdated(const QString& id, const QString& tags)
     if(rootObject ["status"].toInt() == 1)
     {
         emit tagsUpdated(id, tags);
-        emit requestFinished(true);
     }
     else
     {
-        emit requestFinished(false, tr("Unable to update tags"));
+        emit error(tr("Unable to update tags"));
     }
 }
 } // namespace LinksBag

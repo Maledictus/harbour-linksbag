@@ -28,33 +28,38 @@ import Sailfish.Silica 1.0
 Page {
     id: authPage
 
-    Column {
-        anchors.centerIn: parent
-        spacing: Theme.paddingMedium
+    SilicaFlickable {
+        anchors.fill: parent
+
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("GetPocket/Google account")
+                enabled: authServerRunning
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("AuthorizationPage.qml"))
+                }
+            }
+
+            MenuItem {
+                text: qsTr("GetPocket/Firefox account")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("WebAuthorizationPage.qml"))
+                }
+            }
+        }
 
         Label {
-            text: qsTr("Authorization process...")
+            width: parent.width
+
+            anchors.centerIn: parent
+            anchors.leftMargin: Theme.horizontalPageMargin
+            anchors.rightMargin: Theme.horizontalPageMargin
+
+            text: qsTr("Application not authorized.\nPull down to do it")
             color: Theme.highlightColor
             font.pixelSize: Theme.fontSizeLarge
-        }
-
-        BusyIndicator {
-            anchors.horizontalCenter: parent.horizontalCenter
-            size: BusyIndicatorSize.Large
-            running: true
-            visible: running
-        }
-    }
-
-    Component.onCompleted: {
-        linksbagManager.obtainRequestToken()
-    }
-
-    Connections {
-        target: linksbagManager
-        onRequestTokenChanged: {
-           Qt.openUrlExternally("https://getpocket.com/auth/authorize?request_token=" +
-                    requestToken + "&redirect_uri=http://localhost:45623/linksbag_authorization")
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 }

@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <QtDebug>
 #include <QtQml>
 
+#include "authserver.h"
 #include "bookmarksmodel.h"
 #include "enumsproxy.h"
 #include "filterproxymodel.h"
@@ -42,7 +43,10 @@ namespace LinksBag
 Application::Application(QObject *parent)
 : QObject(parent)
 , m_View(nullptr)
+, m_AuthServer(new AuthServer(this))
 {
+    connect(m_AuthServer, &AuthServer::gotAuthAnswer,
+            this, &Application::handleAuthAnswerGot);
 }
 
 void Application::ShowUI()
@@ -56,14 +60,35 @@ void Application::ShowUI()
                 ApplicationSettings::Instance(this));
         m_View->rootContext()->setContextProperty("linksbagManager",
                 LinksBagManager::Instance(this));
+
+        const bool result = m_AuthServer->StartListening(QHostAddress::LocalHost, PORT);
+        m_View->rootContext()->setContextProperty("authServerRunning", result);
+
         m_View->setSource(SailfishApp::pathTo("qml/harbour-linksbag.qml"));
         m_View->showFullScreen();
+
+        connect(LinksBagManager::Instance(this), &LinksBagManager::loggedChanged,
+                this, &Application::handleLogged);
     }
     else
     {
         qDebug() << "Activating view";
         m_View->raise();
         m_View->requestActivate();
+    }
+}
+
+void Application::handleAuthAnswerGot(const QString& data)
+{
+    LinksBagManager::Instance(this)->handleGotAuthAnswer(data);
+}
+
+void Application::handleLogged()
+{
+    if (m_AuthServer)
+    {
+        m_AuthServer->SendAnswer(LinksBagManager::Instance(this)->GetLogged() ?
+                tr("Authorized") : tr("Not authorized"));
     }
 }
 
