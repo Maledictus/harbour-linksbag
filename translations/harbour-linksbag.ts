@@ -12,27 +12,27 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="113"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="114"/>
         <source>Mark as unread</source>
         <translation>Mark as unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="114"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="115"/>
         <source>Mark as read</source>
         <translation>Mark as read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="124"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="125"/>
         <source>Mark as unfavorite</source>
         <translation>Unfavorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="125"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="126"/>
         <source>Mark as favorite</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="133"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>

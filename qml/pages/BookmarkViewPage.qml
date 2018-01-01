@@ -29,7 +29,7 @@ import "../"
 Page {
     id: page
 
-    Readability {
+    Mercury {
         id: readability
         isBusy: hasContent
         onEntryChanged: {
@@ -47,7 +47,7 @@ Page {
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
-    property bool hasContent: currentBookmark.bookmarkContent !== ""
+    property bool hasContent: false //currentBookmark.bookmarkContent !== ""
 
     property string customCss: "<style>
         a:link { color: " + Theme.highlightColor + "; }

@@ -47,7 +47,7 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 webView.postMessage("readermodehandler_enable");
-                //getNextPage();
+                getNextPage();
                 getSource();
             }
         }
@@ -67,6 +67,7 @@ Item {
             }
         })()";
         webView.experimental.evaluateJavaScript(js, function(result) {
+            entry += "<p><b>getting page: " + result + "</p></b>";
             if (result) {
                 webView.ignoreHeader = true;
                 nextUrl = result;
@@ -79,7 +80,7 @@ Item {
         var js = "(function() {
             var body = document.documentElement.querySelector('body');
             try {
-                document.querySelector('.page-numbers').remove();
+                // document.querySelector('.page-numbers').remove();
             } catch (e) {}
             return body.innerHTML;
         })()";
