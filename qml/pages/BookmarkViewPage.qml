@@ -53,7 +53,6 @@ Page {
         a:link { color: " + Theme.highlightColor + "; }
         img { margin: initial -" + Theme.horizontalPageMargin + "px; }
         h1, h2, h3, h4, h5 { text-align: left; }
-        h1, h2, h3, h4, h5, p { margin: initial " + Theme.horizontalPageMargin + "px; }
     </style>"
 
     onStatusChanged: {
@@ -229,6 +228,12 @@ Page {
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 horizontalAlignment: Qt.AlignJustify
+
+                anchors.leftMargin: Theme.horizontalPageMargin
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.horizontalPageMargin
+
             }
             Item {
                 // additional padding at the bottom

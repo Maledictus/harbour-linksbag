@@ -7,13 +7,8 @@ Item {
     property string bookmarkImage: ""
 
     function setArticle(article_url) {
-        entry = "";
         isBusy = true;
         makeRequest(article_url);
-    }
-
-    function escapeRegExp(str) {
-        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     }
 
     function makeRequest(url) {
@@ -21,8 +16,11 @@ Item {
         entry = "";
         doc.onreadystatechange = function() {
             if (doc.readyState == XMLHttpRequest.DONE && doc.status == 200) {
-                entry = JSON.parse(doc.responseText).content;
-                entry = entry.replace(bookmarkImage, "").replace(new RegExp("figcaption", "g"), "p");
+                var entry_text = JSON.parse(doc.responseText).content;
+                entry_text = entry_text.replace(bookmarkImage, "");
+                entry_text = entry_text.replace(new RegExp("\%20[0-9].*x[a-z]?", "g"), "");
+                entry_text = entry_text.replace(new RegExp("<img(?!\/)", "g"), "<img width='" + (mainWindow.width - 2*Theme.horizontalPageMargin) + "'");
+                entry = entry_text;
                 isBusy = false;
             }
         }
