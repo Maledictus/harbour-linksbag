@@ -29,6 +29,11 @@ import "../"
 Page {
     id: page
 
+    Connections {
+        target: Theme
+        onHighlightColorChanged: entryText.text = generateCustomCss() + readability.entry;
+    }
+
     Mercury {
         id: readability
         isBusy: hasContent
@@ -37,7 +42,7 @@ Page {
                 linksbagManager.updateContent(bookmarkId, entry);
                 linksbagManager.saveBookmarks();
             }
-            entryText.text = customCss + entry;
+            entryText.text = generateCustomCss() + entry;
             hasContent = true;
         }
     }
@@ -47,13 +52,15 @@ Page {
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
-    property bool hasContent: false //currentBookmark.bookmarkContent !== ""
+    property bool hasContent: currentBookmark.bookmarkContent !== ""
 
-    property string customCss: "<style>
-        a:link { color: " + Theme.highlightColor + "; }
-        img { margin: initial -" + Theme.horizontalPageMargin + "px; }
-        h1, h2, h3, h4, h5 { text-align: left; }
-    </style>"
+    function generateCustomCss() {
+        return  "<style>
+            a:link { color: " + Theme.highlightColor + "; }
+            img { margin: initial -" + Theme.horizontalPageMargin + "px; }
+            h1, h2, h3, h4, h5 { text-align: left; }
+        </style>";
+    }
 
     onStatusChanged: {
         if (status == PageStatus.Active && linksbagManager.logged) {
@@ -149,7 +156,6 @@ Page {
 
             Item {
                 id: header
-                height: page.height
                 state: !hasContent ? "loading" : "loaded"
                 anchors {
                     left: parent.left;
@@ -159,11 +165,11 @@ Page {
                 states: [
                     State {
                         name: "loading"
-                        PropertyChanges { target: header; height: page.height }
+                        PropertyChanges { target: header; height: mainWindow.height }
                     },
                     State {
                         name: "loaded"
-                        PropertyChanges { target: header; height: currentBookmark.bookmarkImageUrl.length > 0 ? page.height*0.4 : entryHeaderWrapper.childrenRect.height+Theme.paddingMedium }
+                        PropertyChanges { target: header; height: currentBookmark.bookmarkImageUrl.length > 0 ? mainWindow.height*0.4 : entryHeaderWrapper.childrenRect.height+Theme.paddingMedium }
                     }
                 ]
 
