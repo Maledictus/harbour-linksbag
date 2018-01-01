@@ -116,7 +116,8 @@ Page {
             id: headerColumn
             width: bookmarksView.width
             PageHeader {
-                title: qsTr("Bookmarks: %1").arg(bookmarksFilter.name)
+                title: qsTr("Bookmarks")
+                description: qsTr(bookmarksFilter.name)
             }
 
             SearchField {
