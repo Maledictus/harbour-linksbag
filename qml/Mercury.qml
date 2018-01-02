@@ -17,9 +17,9 @@ Item {
         doc.onreadystatechange = function() {
             if (doc.readyState == XMLHttpRequest.DONE && doc.status == 200) {
                 var entry_text = JSON.parse(doc.responseText).content;
-                entry_text = entry_text.replace(bookmarkImage, "");
                 entry_text = entry_text.replace(new RegExp("\%20[0-9].*x[a-z]?", "g"), "");
                 entry_text = entry_text.replace(new RegExp("<img(?!\/)", "g"), "<img width='" + (mainWindow.width - 2*Theme.horizontalPageMargin) + "'");
+                entry_text = entry_text.replace(bookmarkImage, "");
                 entry = entry_text;
                 isBusy = false;
             }

@@ -12,27 +12,27 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="114"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="120"/>
         <source>Mark as unread</source>
         <translation>Mark as unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="115"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
         <source>Mark as read</source>
         <translation>Mark as read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="125"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="131"/>
         <source>Mark as unfavorite</source>
         <translation>Unfavorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="126"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="132"/>
         <source>Mark as favorite</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="140"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>
@@ -66,77 +66,77 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="119"/>
-        <source>Bookmarks: %1</source>
-        <translation>Bookmarks: %1</translation>
+        <source>Bookmarks</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="130"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="131"/>
         <source>Search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="142"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="143"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
         <translation>There are no bookmarks. Pull down to refresh.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="149"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="150"/>
         <source>Logout</source>
         <translation>Logout</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="158"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="159"/>
         <source>Hide search field</source>
         <translation>Hide search field</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="159"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="160"/>
         <source>Show search field</source>
         <translation>Sho search field</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="170"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="171"/>
         <source>View: %1</source>
         <translation>View: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="179"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="180"/>
         <source>Refresh</source>
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="198"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="199"/>
         <source>Copy url to clipboard</source>
         <translation>Copy url to clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="201"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="202"/>
         <source>Url copied into clipboard</source>
         <translation>Url copied into clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="206"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="207"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="213"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="214"/>
         <source>Edit tags</source>
         <translation>Edit tags</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="223"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="224"/>
         <source>Mark as unread</source>
         <translation type="unfinished">Mark as unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="223"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="224"/>
         <source>Mark as read</source>
         <translation type="unfinished">Mark as read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="228"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="342"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="229"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="343"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>

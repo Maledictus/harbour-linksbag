@@ -65,7 +65,7 @@ Item {
                 Label {
                     id: itemLabel
                     width: parent.width
-                    color: Theme.highlightColor
+                    color: Theme.primaryColor
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
                     text: bookmarkTitle
@@ -75,7 +75,7 @@ Item {
 
                     font.pixelSize:  Theme.fontSizeTiny
                     truncationMode: TruncationMode.Fade
-                    color: Theme.secondaryHighlightColor
+                    color: Theme.secondaryColor
 
                     text: {
                         var matches = bookmarkUrl.toString()

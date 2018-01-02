@@ -12,27 +12,27 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="114"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="120"/>
         <source>Mark as unread</source>
         <translation>Не прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="115"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
         <source>Mark as read</source>
         <translation>Прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="125"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="131"/>
         <source>Mark as unfavorite</source>
         <translation>Не избранное</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="126"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="132"/>
         <source>Mark as favorite</source>
         <translation>В избранное</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="140"/>
         <source>Open in browser</source>
         <translation>Открыть в браузере</translation>
     </message>
@@ -66,77 +66,77 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="119"/>
-        <source>Bookmarks: %1</source>
-        <translation>Закладки: %1</translation>
+        <source>Bookmarks</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="130"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="131"/>
         <source>Search</source>
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="142"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="143"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
         <translation>Нет закладок. Обновите список.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="149"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="150"/>
         <source>Logout</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="158"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="159"/>
         <source>Hide search field</source>
         <translation>Скрыть поле поиска</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="159"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="160"/>
         <source>Show search field</source>
         <translation>Показать поле поиска</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="170"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="171"/>
         <source>View: %1</source>
         <translation>Показывать: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="179"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="180"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="198"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="199"/>
         <source>Copy url to clipboard</source>
         <translation>Копировать ссылку в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="201"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="202"/>
         <source>Url copied into clipboard</source>
         <translation>Ссылка скопирована в буфер обмена успешно</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="206"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="207"/>
         <source>Open in browser</source>
         <translation>Открыть в браузере</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="213"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="214"/>
         <source>Edit tags</source>
         <translation>Редактировать метки</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="223"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="224"/>
         <source>Mark as unread</source>
         <translation type="unfinished">Не прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="223"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="224"/>
         <source>Mark as read</source>
         <translation type="unfinished">Прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="228"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="342"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="229"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="343"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>

@@ -113,8 +113,42 @@ Page {
 
         clip: true
 
+        PushUpMenu {
+            enabled: !busyIndicator.running
+            MenuItem {
+                text: bookmarkRead ?
+                        qsTr("Mark as unread") :
+                        qsTr("Mark as read")
+
+                onClicked: {
+                    linksbagManager.markAsRead(currentBookmark.bookmarkID,
+                            !currentBookmark.bookmarkRead)
+                    if (!bookmarkRead)
+                        pageStack.pop();
+                }
+            }
+
+            MenuItem {
+                text: bookmarkFavorite ?
+                        qsTr("Mark as unfavorite") :
+                        qsTr("Mark as favorite")
+                onClicked: {
+                    linksbagManager.markAsFavorite(currentBookmark.bookmarkID,
+                            !currentBookmark.bookmarkFavorite)
+                }
+            }
+         }
+
         PullDownMenu {
             enabled: !busyIndicator.running
+            MenuItem {
+                text: qsTr("Reload")
+                onClicked: {
+                    hasContent = false;
+                    readability.setArticle(currentBookmark.bookmarkUrl);
+                }
+            }
+
             MenuItem {
                 text: bookmarkRead ?
                         qsTr("Mark as unread") :
