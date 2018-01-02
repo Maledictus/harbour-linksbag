@@ -39,7 +39,8 @@ enum FilterType
     FTAll,
     FTRead,
     FTUnread,
-    FTFavorite
+    FTFavorite,
+    FTUnsynced
 };
 
 class EnumsProxy : public QObject
@@ -61,7 +62,8 @@ public:
         All = FTAll,
         Read = FTRead,
         Unread = FTUnread,
-        Favorite = FTFavorite
+        Favorite = FTFavorite,
+        Unsynced = FTUnsynced
     };
 };
 }

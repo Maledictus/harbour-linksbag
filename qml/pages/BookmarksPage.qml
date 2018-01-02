@@ -62,11 +62,17 @@ Page {
         name: qsTr("Favorite")
     }
 
+    property BookmarksFilter unsyncedBookmarksFilter: BookmarksFilter {
+        key: "unsynced"
+        name: qsTr("Unsynced")
+    }
+
     property variant bookmarksFilters: [
         allBookmarksFilter,
         readBookmarksFilter,
         unreadBookmarksFilter,
-        favoriteBookmarksFilter
+        favoriteBookmarksFilter,
+        unsyncedBookmarksFilter
     ]
 
     onBookmarksFilterChanged: {
@@ -152,6 +158,11 @@ Page {
                 onClicked: {
                     bookmarksPage.resetAccount()
                 }
+            }
+
+            MenuItem {
+                text: qsTr("Sync")
+                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkSyncPage.qml"), { bookmarksPage : bookmarksPage });
             }
 
             MenuItem {
