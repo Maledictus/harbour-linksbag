@@ -228,7 +228,6 @@ void LinksBagManager::loadBookmarksFromCache()
         settings.setArrayIndex(i);
         QByteArray data = settings.value("SerializedData").toByteArray();
         Bookmark bm = Bookmark::Deserialize(data);
-        qDebug() << "no nie" << bm.GetContent() << "czemu to nie dziala";
         if (!bm.IsValid())
         {
             qWarning() << Q_FUNC_INFO
