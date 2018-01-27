@@ -65,15 +65,14 @@ Page {
 
     property BookmarksFilter unsyncedBookmarksFilter: BookmarksFilter {
         key: "unsynced"
-        name: qsTr("Unsynced")
+        name: qsTr("Not downloaded")
     }
 
     property variant bookmarksFilters: [
         allBookmarksFilter,
         readBookmarksFilter,
         unreadBookmarksFilter,
-        favoriteBookmarksFilter,
-        unsyncedBookmarksFilter
+        favoriteBookmarksFilter
     ]
 
     onBookmarksFilterChanged: {
@@ -92,10 +91,6 @@ Page {
         else if (bookmarksFilter.key == "favorite")
         {
             linksbagManager.filterModel.filterBookmarks(LinksBag.Favorite)
-        }
-        else if (bookmarksFilter.key == "unsynced")
-        {
-            linksbagManager.filterModel.filterBookmarks(LinksBag.Unsynced)
         }
 
         cover.currentFilter = bookmarksFilter.name
@@ -166,8 +161,8 @@ Page {
             }
 
             MenuItem {
-                text: qsTr("Sync")
-                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkSyncPage.qml"),
+                text: qsTr("Downloads")
+                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkDownloadsPage.qml"),
                                 { bookmarksPage : bookmarksPage });
             }
 

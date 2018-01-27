@@ -39,8 +39,8 @@ Item {
             left: parent.left;
             right: parent.right;
             topMargin: Theme.paddingMedium
-            leftMargin: Theme.paddingLarge;
-            rightMargin: Theme.paddingLarge;
+            leftMargin: Theme.paddingMedium;
+            rightMargin: Theme.paddingMedium;
         }
         Label {
             id: coverHeaderCount
@@ -59,7 +59,8 @@ Item {
             lineHeight: 0.8;
             maximumLineCount: 2
             fontSizeMode: Text.HorizontalFit
-            text: filter + "\n" + qsTr("articles")
+            elide: Text.ElideRight
+            text: filter + "\n" + qsTr("bookmarks")
         }
     }
 

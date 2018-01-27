@@ -44,10 +44,13 @@ LinksBagManager::LinksBagManager(QObject *parent)
 , m_IsLogged(false)
 , m_BookmarksModel(new BookmarksModel(this))
 , m_FilterProxyModel(new FilterProxyModel(this))
+, m_DownloadingModel(new FilterProxyModel(this))
 {
     MakeConnections();
 
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
+    m_DownloadingModel->setSourceModel(m_BookmarksModel);
+    m_DownloadingModel->filterBookmarks(LinksBag::FTUnsynced);
 
     SetLogged(!ApplicationSettings::Instance(this)->value("access_token").isNull() &&
               !ApplicationSettings::Instance(this)->value("user_name").isNull());
@@ -196,9 +199,14 @@ BookmarksModel* LinksBagManager::GetBookmarksModel() const
     return m_BookmarksModel;
 }
 
-FilterProxyModel*LinksBagManager::GetFilterModel() const
+FilterProxyModel* LinksBagManager::GetFilterModel() const
 {
     return m_FilterProxyModel;
+}
+
+FilterProxyModel* LinksBagManager::GetDownloadingModel() const
+{
+    return m_DownloadingModel;
 }
 
 void LinksBagManager::obtainRequestToken()

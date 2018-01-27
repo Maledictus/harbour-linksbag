@@ -42,7 +42,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/BookmarksFilter.qml \
-    qml/pages/BookmarkSyncPage.qml \
+    qml/pages/BookmarkDownloadsPage.qml \
     qml/pages/BookmarkViewPage.qml \
     qml/pages/EditTagDialog.qml \
     qml/pages/FilterSelectorPage.qml \
@@ -56,7 +56,8 @@ DISTFILES += qml/harbour-linksbag.qml \
     harbour-linksbag.desktop \
     rpm/harbour-linksbag.changes \
     rpm/harbour-linksbag.changes.run.in \
-    rpm/harbour-linksbag.yaml
+    rpm/harbour-linksbag.yaml \
+
 
 lupdate_only{
 SOURCES = qml/harbour-linksbag.qml \
@@ -66,7 +67,7 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/BookmarksFilter.qml \
-    qml/pages/BookmarkSyncPage.qml \
+    qml/pages/BookmarkDownloadsPage.qml \
     qml/pages/BookmarkViewPage.qml \
     qml/pages/EditTagDialog.qml \
     qml/pages/FilterSelectorPage.qml \

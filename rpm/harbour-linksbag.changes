@@ -9,6 +9,7 @@
 - New GUI
 - Using Mercury (mercury.postlight.com) for reader mode
 - Replace Nemo.Notification with org.nemomobile.notifications for backward compatibility
+- Add possibility to download read-mode content for all bookmarks
 
 * Sat Dec 30 2017 Oleg Linkin <maledictusdemagog@gmail.com> 2.2
 - Change autorization process. Add possibility to authorize via google

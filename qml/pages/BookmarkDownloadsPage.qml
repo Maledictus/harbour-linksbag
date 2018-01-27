@@ -32,12 +32,6 @@ Page {
     property var currentBookmarkId
     property var bookmarksToSync
 
-    onStatusChanged: {
-        if (status == PageStatus.Active && linksbagManager.logged) {
-            linksbagManager.filterModel.filterBookmarks(LinksBag.Unsynced)
-        }
-    }
-
     Mercury {
         id: readability
         onEntryChanged: {
@@ -50,10 +44,10 @@ Page {
         id: listview
 
         anchors.fill: parent
-        model: linksbagManager.filterModel
+        model: linksbagManager.downloadingModel
 
         header: PageHeader {
-            title: qsTr("Syncing")
+            title: qsTr("Downloading")
             description: qsTr("%1 remaining").arg(listview.count)
         }
 
@@ -92,7 +86,7 @@ Page {
                      right: parent.right
                      rightMargin: Theme.horizontalPageMargin
                  }
-                 text: currentBookmarkId == bookmarkID ? qsTr("Syncing") : qsTr("Queued")
+                 text: currentBookmarkId == bookmarkID ? qsTr("Downloading") : qsTr("Queued")
                  font.pixelSize: Theme.fontSizeSmall
                  color: listitem.highlighted ? Theme.highlightColor : Theme.secondaryColor
              }
