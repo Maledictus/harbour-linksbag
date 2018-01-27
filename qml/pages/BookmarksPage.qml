@@ -93,6 +93,10 @@ Page {
         {
             linksbagManager.filterModel.filterBookmarks(LinksBag.Favorite)
         }
+        else if (bookmarksFilter.key == "unsynced")
+        {
+            linksbagManager.filterModel.filterBookmarks(LinksBag.Unsynced)
+        }
 
         cover.currentFilter = bookmarksFilter.name
         applicationSettings.setValue("bookmarks_filter", bookmarksFilter.key)
@@ -163,7 +167,8 @@ Page {
 
             MenuItem {
                 text: qsTr("Sync")
-                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkSyncPage.qml"), { bookmarksPage : bookmarksPage });
+                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkSyncPage.qml"),
+                                { bookmarksPage : bookmarksPage });
             }
 
             MenuItem {
@@ -175,7 +180,6 @@ Page {
                     bookmarksView.showSearchField = !bookmarksView.showSearchField
                     applicationSettings.setValue("show_search_field",
                             bookmarksView.showSearchField)
-
                 }
             }
 
@@ -289,6 +293,8 @@ Page {
                     font.family: Theme.fontFamilyHeading
                     font.pixelSize:  Theme.fontSizeMedium
                     wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    maximumLineCount: 4
 
                     text: bookmarkTitle
                 }
@@ -342,7 +348,9 @@ Page {
             IconButton {
                 id: favoriteImage
                 anchors {
-                    right: parent.right; rightMargin: Theme.paddingMedium; }
+                    right: parent.right;
+                    rightMargin: Theme.paddingMedium;
+                }
                 icon.source: bookmarkFavorite ?
                     "image://Theme/icon-m-favorite-selected" :
                     "image://Theme/icon-m-favorite"

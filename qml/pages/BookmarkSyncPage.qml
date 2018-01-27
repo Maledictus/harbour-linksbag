@@ -25,15 +25,17 @@ THE SOFTWARE.
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.linksbag 1.0
-import "../"
+import "./components"
 
 Page {
     property var bookmarksPage
     property var currentBookmarkId
     property var bookmarksToSync
 
-    Component.onCompleted: {
-        linksbagManager.filterModel.filterBookmarks(LinksBag.Unsynced)
+    onStatusChanged: {
+        if (status == PageStatus.Active && linksbagManager.logged) {
+            linksbagManager.filterModel.filterBookmarks(LinksBag.Unsynced)
+        }
     }
 
     Mercury {
@@ -62,21 +64,34 @@ Page {
             Label {
                 visible: false
                 text: index
-                onTextChanged: if (index == 0) {
-                   currentBookmarkId = bookmarkID;
-                   readability.setArticle(bookmarkUrl)
+                onTextChanged: {
+                    if (index == 0) {
+                        currentBookmarkId = bookmarkID;
+                        readability.setArticle(bookmarkUrl)
+                    }
                }
             }
 
             Label {
                  id: label
-                 anchors { left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin }
+                 anchors {
+                     left: parent.left
+                     leftMargin: Theme.horizontalPageMargin
+                     right: parent.right
+                     rightMargin: Theme.horizontalPageMargin
+                 }
                  text: bookmarkTitle
                  truncationMode: TruncationMode.Fade
                  color: listitem.highlighted ? Theme.highlightColor : Theme.primaryColor
              }
              Label {
-                 anchors { top: label.bottom; left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin }
+                 anchors {
+                     top: label.bottom
+                     left: parent.left
+                     leftMargin: Theme.horizontalPageMargin
+                     right: parent.right
+                     rightMargin: Theme.horizontalPageMargin
+                 }
                  text: currentBookmarkId == bookmarkID ? qsTr("Syncing") : qsTr("Queued")
                  font.pixelSize: Theme.fontSizeSmall
                  color: listitem.highlighted ? Theme.highlightColor : Theme.secondaryColor

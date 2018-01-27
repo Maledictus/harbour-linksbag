@@ -51,8 +51,10 @@ Item {
         anchors {
             fill: parent; margins: Theme.paddingLarge;
         }
-        font.pixelSize: Theme.fontSizeLarge
-        wrapMode: Text.WordWrap
+        font.pixelSize: Theme.fontSizeMedium
+        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        maximumLineCount: 6
+        elide: Text.ElideRight
         text: ""
     }
 }

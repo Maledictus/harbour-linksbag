@@ -39,6 +39,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
     qml/cover/ArticleCover.qml \
     qml/cover/ArticleListCover.qml \
+    qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/BookmarksFilter.qml \
     qml/pages/BookmarkSyncPage.qml \
@@ -62,6 +63,7 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
     qml/cover/ArticleCover.qml \
     qml/cover/ArticleListCover.qml \
+    qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/BookmarksFilter.qml \
     qml/pages/BookmarkSyncPage.qml \

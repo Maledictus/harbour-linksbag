@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../"
+import "./components"
 
 Page {
     id: page
@@ -53,7 +53,7 @@ Page {
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
-    property bool hasContent: currentBookmark.bookmarkContent !== ""
+    property bool hasContent: currentBookmark && currentBookmark.bookmarkContent !== "" ? true : false
 
     function generateCustomCss() {
         return  "<style>
@@ -200,21 +200,34 @@ Page {
                 states: [
                     State {
                         name: "loading"
-                        PropertyChanges { target: header; height: mainWindow.height }
+                        PropertyChanges {
+                            target: header;
+                            height: mainWindow.height
+                        }
                     },
                     State {
                         name: "loaded"
-                        PropertyChanges { target: header; height: currentBookmark.bookmarkImageUrl.length > 0 ? mainWindow.height*0.4 : entryHeaderWrapper.childrenRect.height+Theme.paddingMedium }
+                        PropertyChanges {
+                            target: header;
+                            height: currentBookmark && currentBookmark.bookmarkImageUrl.length > 0 ?
+                                    mainWindow.height*0.4 :
+                                    entryHeaderWrapper.childrenRect.height+Theme.paddingMedium
+                        }
                     }
                 ]
 
                 transitions: Transition {
-                    PropertyAnimation { properties: "height"; easing.type: Easing.InOutQuad; duration: hasContent ? 0 : 300 }
+                    PropertyAnimation {
+                        properties: "height";
+                        easing.type: Easing.InOutQuad;
+                        duration: hasContent ? 0 : 300 }
                 }
 
                 Image {
                     id: thumbnailImage
-                    source: currentBookmark.bookmarkImageUrl
+                    source: currentBookmark ?
+                            currentBookmark.bookmarkImageUrl :
+                            ""
                     anchors.fill: parent;
                     fillMode: Image.PreserveAspectCrop
                 }
@@ -227,30 +240,51 @@ Page {
 
                 Column {
                     id: entryHeaderWrapper
-                    anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
+                    anchors {
+                        bottom: parent.bottom;
+                        left: parent.left;
+                        right: parent.right;
+                    }
                     Label {
                         id: entryHeader
                         width: parent.width
                         wrapMode: Text.WordWrap
                         horizontalAlignment: Qt.AlignCenter
                         font.pixelSize: Theme.fontSizeExtraLarge
-                        text: currentBookmark.bookmarkTitle
-                        anchors { margins: Theme.paddingLarge; left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin; }
+                        text: currentBookmark ?
+                                  currentBookmark.bookmarkTitle :
+                                  ""
+                        anchors {
+                            margins: Theme.paddingLarge;
+                            left: parent.left;
+                            leftMargin: Theme.horizontalPageMargin;
+                            right: parent.right;
+                            rightMargin: Theme.horizontalPageMargin;
+                        }
                     }
 
                     Item {
                         id: sourceLabel
-                        anchors { horizontalCenter: parent.horizontalCenter; margins: Theme.paddingLarge }
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter;
+                            margins: Theme.paddingLarge
+                        }
                         width: sourceText.paintedWidth
                         height: sourceText.paintedHeight + Theme.paddingSmall*6
+                        visible: sourceText.text !== ""
                         Text {
                             id: sourceText
                             anchors.centerIn: parent
                             color: Theme.highlightColor
                             text: {
-                                var matches = currentBookmark.bookmarkUrl.toString()
-                                        .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                                return matches ? matches[1] : currentBookmark.bookmarkUrl
+                                if (currentBookmark) {
+                                    var matches = currentBookmark.bookmarkUrl.toString()
+                                            .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                                    return matches ? matches[1] : currentBookmark.bookmarkUrl
+                                }
+                                else {
+                                    return ""
+                                }
                             }
                         }
                     }

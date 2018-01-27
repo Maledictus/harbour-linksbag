@@ -157,7 +157,7 @@ void Bookmark::SetContent(const QString& content)
 
 QByteArray Bookmark::Serialize() const
 {
-    quint16 ver = 1;
+    quint16 ver = 2;
     QByteArray result;
     {
         QDataStream ostr(&result, QIODevice::WriteOnly);
@@ -185,7 +185,7 @@ Bookmark Bookmark::Deserialize(const QByteArray& data)
     QDataStream in(data);
     in >> ver;
 
-    if(ver != 1)
+    if(ver > 2)
     {
         qWarning() << Q_FUNC_INFO
                 << "unknown version"
@@ -205,8 +205,12 @@ Bookmark Bookmark::Deserialize(const QByteArray& data)
             >> result.m_Tags
             >> result.m_AddTime
             >> result.m_UpdateTime
-            >> status
-            >> result.m_Content;
+            >> status;
+
+    if (ver == 2)
+    {
+        in >> result.m_Content;
+    }
     result.SetStatus(static_cast<Status>(status));
 
     return result;

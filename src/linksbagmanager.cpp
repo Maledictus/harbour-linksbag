@@ -275,7 +275,7 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
     m_Api->UpdateTags(id, tags);
 }
 
-void LinksBagManager::updateContent(const QString &id, const QString &content)
+void LinksBagManager::updateContent(const QString& id, const QString& content)
 {
     m_BookmarksModel->UpdateContent(id, content);
 }

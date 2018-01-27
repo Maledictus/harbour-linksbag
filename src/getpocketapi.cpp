@@ -350,6 +350,8 @@ void GetPocketApi::handleLoadBookmarks()
         return;
     }
 
+    qDebug() << doc.toJson();
+
     QJsonObject rootObject = doc.object();
     const quint64 since = rootObject["since"].toDouble();
 
@@ -358,6 +360,12 @@ void GetPocketApi::handleLoadBookmarks()
     for(const auto& key : listObject.keys())
     {
         QJsonObject bookmarkObject = listObject[key].toObject();
+
+        if (!bookmarkObject.contains("resolved_url") ||
+                !bookmarkObject.contains("item_id"))
+        {
+            continue;
+        }
 
         Bookmark bm;
         bm.SetID(bookmarkObject["item_id"].toString());

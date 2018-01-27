@@ -74,8 +74,7 @@ Page {
                 if (!data.href.toString().indexOf("https://accounts.firefox.com/signin_permissions?")) {
                     webView.url = mainUrl
                 }
-
-            break;
+                break;
             }
             }
         }
