@@ -90,6 +90,8 @@ public slots:
 
     void resetAccount();
 
+    void handleGotAuthAnswer(const QString& data);
+
 signals:
     void busyChanged();
     void loggedChanged();

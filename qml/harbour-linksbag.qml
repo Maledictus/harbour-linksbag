@@ -35,24 +35,27 @@ ApplicationWindow {
 
     cover: CoverPage { model: linksbagManager.filterModel }
 
+    property bool alreadyLogged: applicationSettings.value("access_token", "").length > 0 &&
+            applicationSettings.value("user_name", "").length > 0
+
     _defaultPageOrientations: Orientation.Landscape | Orientation.Portrait
-    initialPage: applicationSettings.value("access_token", "").length > 0 &&
-                 applicationSettings.value("user_name", "").length > 0 ?
-            bookmarksComponent :
-            authComponent
+    initialPage: alreadyLogged ? bookmarksComponent : loginComponent
+
 
     Notification {
         id: notification
-    }
 
+        appIcon: "qrc:/images/harbour-linksbag.png"
+        appName: "LinksBag"
+        itemCount: 1
+    }
 
     Connections {
         target: linksbagManager
         onLoggedChanged: {
-            if (!linksbagManager.logged)
-            {
+            if (!linksbagManager.logged) {
                 pageStack.clear()
-                pageStack.push(Qt.resolvedUrl("pages/AuthorizationPage.qml"))
+                pageStack.push(Qt.resolvedUrl("pages/LoginPage.qml"))
             }
             else {
                 pageStack.clear()
@@ -61,12 +64,14 @@ ApplicationWindow {
         }
 
         onError: {
+            notification.previewSummary = ""
             notification.previewBody = msg
             notification.icon = "image://Theme/icon-system-warning"
             notification.publish()
         }
 
         onNotify: {
+            notification.previewSummary = ""
             notification.previewBody = msg
             notification.icon = "image://Theme/icon-system-resources"
             notification.publish()
@@ -74,9 +79,9 @@ ApplicationWindow {
     }
 
     Component {
-        id: authComponent
+        id: loginComponent
 
-        AuthorizationPage {}
+        LoginPage {}
     }
 
     Component {

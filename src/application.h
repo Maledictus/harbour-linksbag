@@ -30,15 +30,24 @@ class QQuickView;
 
 namespace LinksBag
 {
+class AuthServer;
+
 class Application : public QObject
 {
     Q_OBJECT
 
+    static const int PORT = 45623;
+
     QQuickView *m_View;
+    AuthServer *m_AuthServer;
 public:
     explicit Application(QObject *parent = 0);
 private:
     void ShowUI();
+
+private slots:
+    void handleAuthAnswerGot(const QString& data);
+    void handleLogged();
 
 public slots:
     void start();

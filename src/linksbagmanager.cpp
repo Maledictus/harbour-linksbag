@@ -297,12 +297,14 @@ void LinksBagManager::resetAccount()
 
     m_BookmarksModel->Clear();
 
-    QDir dir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
-    if (dir.exists())
-    {
-        dir.removeRecursively();
-    }
-
     SetLogged(false);
+}
+
+void LinksBagManager::handleGotAuthAnswer(const QString& data)
+{
+    if (data.contains("/linksbag_authorization"))
+    {
+        m_Api->RequestAccessToken();
+    }
 }
 } // namespace LinskBag
