@@ -37,6 +37,7 @@ class Bookmark
     QUrl m_Url;
     QString m_Title;
     QString m_Description;
+    QString m_Content;
     QUrl m_ImageUrl;
     QStringList m_Tags;
     bool m_Favorite;
@@ -80,6 +81,9 @@ public:
     void SetUpdateTime(const QDateTime& dt);
     Status GetStatus() const;
     void SetStatus(Status status);
+
+    QString GetContent() const;
+    void SetContent(const QString& content);
 
     QByteArray Serialize() const;
     static Bookmark Deserialize(const QByteArray& data);

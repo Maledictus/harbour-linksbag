@@ -107,6 +107,6 @@ void Application::start()
 
 void Application::handleAboutToQuit()
 {
-    LinksBagManager::Instance(this)->SaveBookmarks();
+    LinksBagManager::Instance(this)->saveBookmarks();
 }
 } // namespace LinksBag

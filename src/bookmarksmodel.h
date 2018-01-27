@@ -1,7 +1,8 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
+Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
+Copyright (c) 2017-2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -48,7 +49,8 @@ public:
         BRTags,
         BRAddTime,
         BRUpdateTime,
-        BRStatus
+        BRStatus,
+        BRContent
     };
 
     explicit BookmarksModel(QObject *parent = 0);
@@ -65,6 +67,7 @@ public:
     void MarkBookmarkAsFavorite(const QString& id, bool favorite);
     void MarkBookmarkAsRead(const QString& id, bool read);
     void UpdateTags(const QString& id, const QString& tags);
+    void UpdateContent(const QString& id, const QString& content);
 
     Bookmarks_t GetBookmarks() const;
 

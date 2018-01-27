@@ -56,6 +56,10 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& source
     {
         result = sourceModel()->data(index, BookmarksModel::BRFavorite).toBool();
     }
+    else if (m_Filter == FTUnsynced)
+    {
+        result = !sourceModel()->data(index, BookmarksModel::BRRead).toBool() && sourceModel()->data(index, BookmarksModel::BRContent).toString() == "";
+    }
 
     return result && (index.data(BookmarksModel::BRTitle).toString().contains(filterRegExp()) ||
             index.data(BookmarksModel::BRDescription).toString().contains(filterRegExp()) ||
@@ -74,7 +78,7 @@ bool FilterProxyModel::lessThan(const QModelIndex& left, const QModelIndex& righ
 void FilterProxyModel::filterBookmarks(int type)
 {
     FilterType filter;
-    if (type < 0 || type > FTFavorite)
+    if (type < 0 || type > FTUnsynced)
     {
         filter = FTAll;
     }

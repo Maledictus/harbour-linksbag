@@ -2,6 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
+Copyright (c) 2017-2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,35 +25,63 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtWebKit 3.0
-
-import "./helpers/readability.js" as Readability
+import "../"
 
 Page {
     id: page
 
-    property string bookmarkId
-    property variant currentBookmark
-    property bool isBusy: true
+    Connections {
+        target: Theme
+        onHighlightColorChanged: entryText.text = generateCustomCss() + readability.entry;
+    }
 
-    property bool bookmarkRead: false
-    property bool bookmarkFavorite: false
-    onStatusChanged: {
-        if (status == PageStatus.Active && linksbagManager.logged) {
-            currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
-            bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
-            bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
-            timer.running = true
+    Mercury {
+        id: readability
+        isBusy: hasContent
+        onEntryChanged: {
+            if (entry !== currentBookmark.bookmarkContent) {
+                linksbagManager.updateContent(bookmarkId, entry);
+                linksbagManager.saveBookmarks();
+            }
+            entryText.text = generateCustomCss() + entry;
+            hasContent = true;
         }
     }
 
-    Timer {
-        id: timer
-        interval: 300;
-        running: false;
-        repeat: false
-        onTriggered: webView.url = currentBookmark.bookmarkUrl
+    property string bookmarkId
+    property variant currentBookmark
+
+    property bool bookmarkRead: false
+    property bool bookmarkFavorite: false
+    property bool hasContent: currentBookmark.bookmarkContent !== ""
+
+    function generateCustomCss() {
+        return  "<style>
+            a:link { color: " + Theme.highlightColor + "; }
+            img { margin: initial -" + Theme.horizontalPageMargin + "px; }
+            h1, h2, h3, h4, h5 { text-align: left; }
+        </style>";
     }
+
+    onStatusChanged: {
+        if (status == PageStatus.Active && linksbagManager.logged) {
+            currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
+            cover.title = currentBookmark.bookmarkTitle
+            cover.image = currentBookmark.bookmarkImageUrl
+            bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
+            bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
+            if (!hasContent) {
+                readability.bookmarkImage = currentBookmark.bookmarkImageUrl
+                readability.setArticle(currentBookmark.bookmarkUrl)
+            } else {
+                readability.entry = currentBookmark.bookmarkContent
+                readability.isBusy = false;
+            }
+        }
+    }
+
+    Component.onCompleted: cover.articleLayout = true
+    Component.onDestruction: cover.articleLayout = false
 
     Connections {
         target: linksbagManager
@@ -85,8 +114,42 @@ Page {
 
         clip: true
 
+        PushUpMenu {
+            enabled: !busyIndicator.running
+            MenuItem {
+                text: bookmarkRead ?
+                        qsTr("Mark as unread") :
+                        qsTr("Mark as read")
+
+                onClicked: {
+                    linksbagManager.markAsRead(currentBookmark.bookmarkID,
+                            !currentBookmark.bookmarkRead)
+                    if (!bookmarkRead)
+                        pageStack.pop();
+                }
+            }
+
+            MenuItem {
+                text: bookmarkFavorite ?
+                        qsTr("Mark as unfavorite") :
+                        qsTr("Mark as favorite")
+                onClicked: {
+                    linksbagManager.markAsFavorite(currentBookmark.bookmarkID,
+                            !currentBookmark.bookmarkFavorite)
+                }
+            }
+         }
+
         PullDownMenu {
             enabled: !busyIndicator.running
+            MenuItem {
+                text: qsTr("Reload")
+                onClicked: {
+                    hasContent = false;
+                    readability.setArticle(currentBookmark.bookmarkUrl);
+                }
+            }
+
             MenuItem {
                 text: bookmarkRead ?
                         qsTr("Mark as unread") :
@@ -124,18 +187,99 @@ Page {
             anchors.top: parent.top
             anchors.topMargin: Theme.paddingSmall
             anchors.left: parent.left
-            anchors.leftMargin: Theme.horizontalPageMargin
             anchors.right: parent.right
-            anchors.rightMargin: Theme.horizontalPageMargin
+
+            Item {
+                id: header
+                state: !hasContent ? "loading" : "loaded"
+                anchors {
+                    left: parent.left;
+                    right: parent.right;
+                }
+
+                states: [
+                    State {
+                        name: "loading"
+                        PropertyChanges { target: header; height: mainWindow.height }
+                    },
+                    State {
+                        name: "loaded"
+                        PropertyChanges { target: header; height: currentBookmark.bookmarkImageUrl.length > 0 ? mainWindow.height*0.4 : entryHeaderWrapper.childrenRect.height+Theme.paddingMedium }
+                    }
+                ]
+
+                transitions: Transition {
+                    PropertyAnimation { properties: "height"; easing.type: Easing.InOutQuad; duration: hasContent ? 0 : 300 }
+                }
+
+                Image {
+                    id: thumbnailImage
+                    source: currentBookmark.bookmarkImageUrl
+                    anchors.fill: parent;
+                    fillMode: Image.PreserveAspectCrop
+                }
+                OpacityRampEffect {
+                    slope: 1.0
+                    offset: 0
+                    sourceItem: thumbnailImage
+                    direction: OpacityRamp.TopToBottom
+                }
+
+                Column {
+                    id: entryHeaderWrapper
+                    anchors { bottom: parent.bottom; left: parent.left; right: parent.right; }
+                    Label {
+                        id: entryHeader
+                        width: parent.width
+                        wrapMode: Text.WordWrap
+                        horizontalAlignment: Qt.AlignCenter
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        text: currentBookmark.bookmarkTitle
+                        anchors { margins: Theme.paddingLarge; left: parent.left; leftMargin: Theme.horizontalPageMargin; right: parent.right; rightMargin: Theme.horizontalPageMargin; }
+                    }
+
+                    Item {
+                        id: sourceLabel
+                        anchors { horizontalCenter: parent.horizontalCenter; margins: Theme.paddingLarge }
+                        width: sourceText.paintedWidth
+                        height: sourceText.paintedHeight + Theme.paddingSmall*6
+                        Text {
+                            id: sourceText
+                            anchors.centerIn: parent
+                            color: Theme.highlightColor
+                            text: {
+                                var matches = currentBookmark.bookmarkUrl.toString()
+                                        .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                                return matches ? matches[1] : currentBookmark.bookmarkUrl
+                            }
+                        }
+                    }
+                }
+            }
+
+            Item {
+                height: Theme.paddingMedium
+                width: parent.width
+            }
 
             Label {
                 id: entryText
-
                 width: parent.width
 
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 horizontalAlignment: Qt.AlignJustify
+
+                anchors.leftMargin: Theme.horizontalPageMargin
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.horizontalPageMargin
+
+            }
+            Item {
+                // additional padding at the bottom
+                height: Theme.paddingLarge*4
+                width: parent.width
             }
        }
 
@@ -147,44 +291,7 @@ Page {
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
         visible: true
-        running: linksbagManager.busy || isBusy;
-    }
-
-    SilicaWebView {
-        id: webView
-
-        visible: false
-        z: -1
-
-        experimental.preferences.webGLEnabled: true
-        experimental.preferences.notificationsEnabled: true
-        experimental.preferences.javascriptEnabled: true
-        experimental.preferences.navigatorQtObjectEnabled: true
-
-        experimental.userScripts: [
-            Qt.resolvedUrl("helpers/readability.js") ,
-            Qt.resolvedUrl("helpers/ReaderModeHandler.js"),
-            Qt.resolvedUrl("helpers/MessageListener.js")
-        ]
-
-        onLoadingChanged: {
-            if (loadRequest.status === WebView.LoadSucceededStatus) {
-                webView.postMessage("readermodehandler_enable");
-                getSource()
-            }
-        }
-
-        function postMessage(message, data) {
-            experimental.postMessage(JSON.stringify({ "type": message, "data": data }));
-        }
-    }
-
-    function getSource(){
-        var js = "document.documentElement.outerHTML";
-        webView.experimental.evaluateJavaScript(js, function(result){
-            isBusy = false
-            entryText.text = result
-        })
+        running: linksbagManager.busy || readability.isBusy;
     }
 }
 

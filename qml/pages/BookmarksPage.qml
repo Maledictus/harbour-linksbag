@@ -2,6 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2017 Oleg Linkin <maledictusdemagog@gmail.com>
+Copyright (c) 2017-2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +31,7 @@ Page {
     id: bookmarksPage
 
     property BookmarksFilter bookmarksFilter : getFilterByKey(applicationSettings
-            .value("bookmarks_filter", "all"))
+            .value("bookmarks_filter", "unread"))
 
     function getFilterByKey(key) {
         for (var i = 0; i < bookmarksFilters.length; ++i) {
@@ -62,11 +63,17 @@ Page {
         name: qsTr("Favorite")
     }
 
+    property BookmarksFilter unsyncedBookmarksFilter: BookmarksFilter {
+        key: "unsynced"
+        name: qsTr("Unsynced")
+    }
+
     property variant bookmarksFilters: [
         allBookmarksFilter,
         readBookmarksFilter,
         unreadBookmarksFilter,
-        favoriteBookmarksFilter
+        favoriteBookmarksFilter,
+        unsyncedBookmarksFilter
     ]
 
     onBookmarksFilterChanged: {
@@ -87,6 +94,7 @@ Page {
             linksbagManager.filterModel.filterBookmarks(LinksBag.Favorite)
         }
 
+        cover.currentFilter = bookmarksFilter.name
         applicationSettings.setValue("bookmarks_filter", bookmarksFilter.key)
     }
 
@@ -115,7 +123,8 @@ Page {
             id: headerColumn
             width: bookmarksView.width
             PageHeader {
-                title: qsTr("Bookmarks: %1").arg(bookmarksFilter.name)
+                title: qsTr("Bookmarks")
+                description: qsTr(bookmarksFilter.name)
             }
 
             SearchField {
@@ -150,6 +159,11 @@ Page {
                 onClicked: {
                     bookmarksPage.resetAccount()
                 }
+            }
+
+            MenuItem {
+                text: qsTr("Sync")
+                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkSyncPage.qml"), { bookmarksPage : bookmarksPage });
             }
 
             MenuItem {
@@ -219,11 +233,44 @@ Page {
                 }
 
                 MenuItem {
+                    text: bookmarkRead ? qsTr("Mark as unread") : qsTr("Mark as read")
+                    onClicked: linksbagManager.markAsRead(bookmarkID, !bookmarkRead)
+                }
+
+                MenuItem {
                     text: qsTr ("Remove")
                     onClicked: {
                         remove()
                     }
                 }
+            }
+
+            Rectangle {
+                anchors.fill: parent;
+                opacity: 0.3;
+                color: "transparent";
+                Image {
+                    id: thumbnailImage
+                    source: bookmarkImageUrl
+                    anchors.fill: parent;
+                    fillMode: Image.PreserveAspectCrop
+                }
+                OpacityRampEffect {
+                    slope: 1.0
+                    offset: 0.15
+                    sourceItem: thumbnailImage
+                    direction: OpacityRamp.BottomToTop
+                }
+            }
+
+            GlassItem {
+                id: unreadIndicator
+                width: Theme.itemSizeExtraSmall
+                height: width
+                x: -(width/2)
+                anchors.top: parent.top
+                color: Theme.highlightColor
+                visible: !bookmarkRead
             }
 
             Column {
@@ -232,6 +279,8 @@ Page {
                 anchors.right: favoriteImage.left
                 anchors.rightMargin: Theme.paddingMedium
 
+                Item { width: 1; height: Theme.paddingMedium; }
+
                 Label {
                     id: titleLabel
 
@@ -239,8 +288,7 @@ Page {
 
                     font.family: Theme.fontFamilyHeading
                     font.pixelSize:  Theme.fontSizeMedium
-                    font.bold: true
-                    elide: Text.ElideRight
+                    wrapMode: Text.WordWrap
 
                     text: bookmarkTitle
                 }
@@ -250,7 +298,8 @@ Page {
 
                     width: parent.width
 
-                    font.pixelSize:  Theme.fontSizeTiny
+                    font.pixelSize:  Theme.fontSizeExtraSmall
+                    color: Theme.secondaryColor
                     elide: Text.ElideRight
 
                     text: {
@@ -286,29 +335,19 @@ Page {
                         text: bookmarkTags
                     }
                 }
+
+                Item { width: 1; height: Theme.paddingMedium; }
             }
 
             IconButton {
                 id: favoriteImage
-                anchors.right: readImage.left
-                anchors.rightMargin: Theme.paddingMedium
+                anchors {
+                    right: parent.right; rightMargin: Theme.paddingMedium; }
                 icon.source: bookmarkFavorite ?
                     "image://Theme/icon-m-favorite-selected" :
                     "image://Theme/icon-m-favorite"
                 onClicked: {
                     linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
-                }
-            }
-
-            IconButton {
-                id: readImage
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.horizontalPageMargin
-                icon.source: bookmarkRead ?
-                    "image://Theme/icon-m-certificates" :
-                    "image://Theme/icon-m-mail"
-                onClicked: {
-                    linksbagManager.markAsRead(bookmarkID, !bookmarkRead)
                 }
             }
 

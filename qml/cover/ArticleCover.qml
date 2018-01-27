@@ -1,7 +1,6 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
 Copyright (c) 2017-2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,48 +22,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <QObject>
+Item {
+    anchors.fill: parent
 
-namespace LinksBag
-{
-enum ErrorType
-{
-    ETGeneral = 0,
-    ETGetPocket
-};
+    property alias image: articleImage.source
+    property alias title: articleTitle.text
 
-enum FilterType
-{
-    FTAll,
-    FTRead,
-    FTUnread,
-    FTFavorite,
-    FTUnsynced
-};
+    Image {
+        id: articleImage
+        sourceSize.width: width
+        sourceSize.height: height
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectCrop
+    }
 
-class EnumsProxy : public QObject
-{
-    Q_OBJECT
+    OpacityRampEffect {
+        slope: 1.0
+        offset: 0.15
+        sourceItem: articleImage
+        direction: OpacityRamp.BottomToTop
+    }
 
-    Q_ENUMS(ErrorTypeProxy)
-    Q_ENUMS(FilterTypeProxy)
-
-public:
-    enum ErrorTypeProxy
-    {
-        GeneralError = ETGeneral,
-        GetPockerError = ETGetPocket
-    };
-
-    enum FilterTypeProxy
-    {
-        All = FTAll,
-        Read = FTRead,
-        Unread = FTUnread,
-        Favorite = FTFavorite,
-        Unsynced = FTUnsynced
-    };
-};
+    Label {
+        id: articleTitle
+        anchors {
+            fill: parent; margins: Theme.paddingLarge;
+        }
+        font.pixelSize: Theme.fontSizeLarge
+        wrapMode: Text.WordWrap
+        text: ""
+    }
 }
