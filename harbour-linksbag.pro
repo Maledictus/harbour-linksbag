@@ -1,6 +1,6 @@
 TARGET = harbour-linksbag
 
-VERSION = 2.2
+VERSION = 2.3
 
 QT += webkit network
 
@@ -37,27 +37,47 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
 DISTFILES += qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
+    qml/cover/ArticleCover.qml \
+    qml/cover/ArticleListCover.qml \
     qml/pages/BookmarksPage.qml \
-    qml/pages/BookmarkViewPage.qml \
-    qml/pages/FilterSelectorPage.qml \
     qml/pages/BookmarksFilter.qml \
-    harbour-linksbag.desktop \
-    qml/pages/helpers/readability.js \
-    qml/pages/helpers/userscript.js \
-    qml/pages/helpers/ReaderModeHandler.js \
-    qml/pages/helpers/MessageListener.js \
+    qml/pages/BookmarkSyncPage.qml \
+    qml/pages/BookmarkViewPage.qml \
     qml/pages/EditTagDialog.qml \
+    qml/pages/FilterSelectorPage.qml \
+    qml/pages/LoginPage.qml \
+    qml/pages/WebAuthorizationPage.qml \
+    qml/pages/components/Mercury.qml \
+    qml/pages/components/Readability.qml \
+    qml/pages/helpers/MessageListener.js \
+    qml/pages/helpers/ReaderModeHandler.js \
+    qml/pages/helpers/readability.js \
+    harbour-linksbag.desktop \
     rpm/harbour-linksbag.changes \
     rpm/harbour-linksbag.changes.run.in \
-    rpm/harbour-linksbag.yaml \
-    qml/pages/WebAuthorizationPage.qml
+    rpm/harbour-linksbag.yaml
 
 lupdate_only{
-SOURCES = qml/* \
-    qml/cover/* \
-    qml/pages/*
+SOURCES = qml/harbour-linksbag.qml \
+    qml/cover/CoverPage.qml \
+    qml/cover/ArticleCover.qml \
+    qml/cover/ArticleListCover.qml \
+    qml/pages/BookmarksPage.qml \
+    qml/pages/BookmarksFilter.qml \
+    qml/pages/BookmarkSyncPage.qml \
+    qml/pages/BookmarkViewPage.qml \
+    qml/pages/EditTagDialog.qml \
+    qml/pages/FilterSelectorPage.qml \
+    qml/pages/LoginPage.qml \
+    qml/pages/WebAuthorizationPage.qml \
+    qml/pages/components/Mercury.qml \
+    qml/pages/components/Readability.qml \
+    qml/pages/helpers/MessageListener.js \
+    qml/pages/helpers/ReaderModeHandler.js \
+    qml/pages/helpers/readability.js
 }
 
 TRANSLATIONS += translations/harbour-linksbag.ts \
     translations/harbour-linksbag-en.ts \
     translations/harbour-linksbag-ru.ts
+

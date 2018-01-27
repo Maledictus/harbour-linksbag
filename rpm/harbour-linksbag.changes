@@ -5,6 +5,9 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Sun Jan 28 2018 Oleg Linkin <maledictusdemagog@gmail.com> 2.3
+-
+
 * Sat Dec 30 2017 Oleg Linkin <maledictusdemagog@gmail.com> 2.2
 - Change autorization process. Add possibility to authorize via google
 

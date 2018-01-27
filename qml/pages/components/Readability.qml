@@ -64,9 +64,9 @@ Item {
         experimental.preferences.navigatorQtObjectEnabled: true
 
         experimental.userScripts: [
-            Qt.resolvedUrl("pages/helpers/readability.js") ,
-            Qt.resolvedUrl("pages/helpers/ReaderModeHandler.js"),
-            Qt.resolvedUrl("pages/helpers/MessageListener.js")
+            Qt.resolvedUrl("../pages/helpers/readability.js") ,
+            Qt.resolvedUrl("../pages/helpers/ReaderModeHandler.js"),
+            Qt.resolvedUrl("../pages/helpers/MessageListener.js")
         ]
 
         onLoadingChanged: {
