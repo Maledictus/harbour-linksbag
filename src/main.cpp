@@ -43,7 +43,6 @@ int main(int argc, char *argv [])
     app->setApplicationVersion(QString(APP_VERSION));
 
     qDebug() << "====Application starting====" << app->applicationVersion();
-
     QScopedPointer<LinksBag::Application> application(new LinksBag::Application());
     QTimer::singleShot(1, application.data(), SLOT(start()));
 

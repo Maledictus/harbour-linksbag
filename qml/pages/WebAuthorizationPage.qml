@@ -57,8 +57,6 @@ Page {
             }
         }
         experimental.preferences.privateBrowsingEnabled: true
-        experimental.preferences.offlineWebApplicationCacheEnabled: false
-        experimental.preferences.localStorageEnabled: false
         experimental.onMessageReceived: {
             var data = null
             try {

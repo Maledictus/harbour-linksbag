@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS version="2.1" language="es">
 <context>
     <name>ArticleListCover</name>
     <message>
         <location filename="../qml/cover/ArticleListCover.qml" line="63"/>
         <source>bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>marcadores</translation>
     </message>
 </context>
 <context>
@@ -14,7 +14,7 @@
     <message>
         <location filename="../qml/pages/AuthorizationPage.qml" line="36"/>
         <source>Authorization process...</source>
-        <translation type="unfinished"></translation>
+        <translation>Proceso de autorización...</translation>
     </message>
 </context>
 <context>
@@ -23,17 +23,17 @@
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="50"/>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
         <source>Downloading</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargando</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="51"/>
         <source>%1 remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 restante</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
         <source>Queued</source>
-        <translation type="unfinished"></translation>
+        <translation>En cola</translation>
     </message>
 </context>
 <context>
@@ -42,35 +42,35 @@
         <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="155"/>
         <source>Mark as unread</source>
-        <translation>Mark as unread</translation>
+        <translation>Marcar como no leído</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="122"/>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="156"/>
         <source>Mark as read</source>
-        <translation>Mark as read</translation>
+        <translation>Marcar como leído</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="166"/>
         <source>Mark as unfavorite</source>
-        <translation>Unfavorite</translation>
+        <translation>Desmarcar como favorito</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="135"/>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="167"/>
         <source>Mark as favorite</source>
-        <translation>Favorite</translation>
+        <translation>Marcar como favorito</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="146"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Volver a cargar</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkViewPage.qml" line="175"/>
         <source>Open in browser</source>
-        <translation>Open in browser</translation>
+        <translation>Abrir en el navegador</translation>
     </message>
 </context>
 <context>
@@ -78,113 +78,113 @@
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="48"/>
         <source>All</source>
-        <translation>All</translation>
+        <translation>Todo</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="53"/>
         <source>Read</source>
-        <translation>Read</translation>
+        <translation>Leídos</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="58"/>
         <source>Unread</source>
-        <translation>Unread</translation>
+        <translation>No leídos</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="63"/>
         <source>Favorite</source>
-        <translation>Favorite</translation>
+        <translation>Favoritos</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="68"/>
         <source>Not downloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>No descargado</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="108"/>
         <source>Logout...</source>
-        <translation>Logout...</translation>
+        <translation>Cerrando sesión...</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="125"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Marcadores</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="137"/>
         <source>Search</source>
-        <translation>Search</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="149"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
-        <translation>There are no bookmarks. Pull down to refresh.</translation>
+        <translation>No hay marcadores. Desliza hacia abajo para actualizar.</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="156"/>
         <source>Logout</source>
-        <translation>Logout</translation>
+        <translation>Cerrar sesión</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="164"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargas</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="171"/>
         <source>Hide search field</source>
-        <translation>Hide search field</translation>
+        <translation>Ocultar campo de búsqueda</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="172"/>
         <source>Show search field</source>
-        <translation>Sho search field</translation>
+        <translation>Mostrar campo de búsqueda</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="182"/>
         <source>View: %1</source>
-        <translation>View: %1</translation>
+        <translation>Mostrar: %1</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="191"/>
         <source>Refresh</source>
-        <translation>Refresh</translation>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="210"/>
         <source>Copy url to clipboard</source>
-        <translation>Copy url to clipboard</translation>
+        <translation>Copiar url al portapapeles</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="213"/>
         <source>Url copied into clipboard</source>
-        <translation>Url copied into clipboard</translation>
+        <translation>Url copiada al portapapeles</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="218"/>
         <source>Open in browser</source>
-        <translation>Open in browser</translation>
+        <translation>Abrir en el navegador</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
         <source>Edit tags</source>
-        <translation>Edit tags</translation>
+        <translation>Editar etiquetas</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
         <source>Mark as unread</source>
-        <translation type="unfinished">Mark as unread</translation>
+        <translation>Marcar como no leído</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
         <source>Mark as read</source>
-        <translation type="unfinished">Mark as read</translation>
+        <translation>Marcar como leído</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="240"/>
         <location filename="../qml/pages/BookmarksPage.qml" line="358"/>
         <source>Remove</source>
-        <translation>Remove</translation>
+        <translation>Eliminar</translation>
     </message>
 </context>
 <context>
@@ -192,17 +192,17 @@
     <message>
         <location filename="../qml/pages/EditTagDialog.qml" line="41"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <location filename="../qml/pages/EditTagDialog.qml" line="42"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../qml/pages/EditTagDialog.qml" line="50"/>
         <source>Tags</source>
-        <translation>Tags</translation>
+        <translation>Etiquetas</translation>
     </message>
 </context>
 <context>
@@ -210,53 +210,53 @@
     <message>
         <location filename="../qml/pages/FilterSelectorPage.qml" line="46"/>
         <source>Filter by</source>
-        <translation>Filter by</translation>
+        <translation>Filtro</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
         <source>General error</source>
-        <translation type="vanished">General error</translation>
+        <translation type="vanished">Error general</translation>
     </message>
     <message>
         <source>Reply data is corrupted</source>
-        <translation type="vanished">Reply data is corrupted</translation>
+        <translation type="vanished">Los datos de respuesta están corruptos</translation>
     </message>
     <message>
         <source>Unable to remove bookamark</source>
-        <translation type="vanished">Unable to remove bookamark</translation>
+        <translation type="vanished">No es posible eliminar marcador</translation>
     </message>
     <message>
         <source>Unable to mark bookamark as %1</source>
-        <translation type="vanished">Unable to mark bookamark as %1</translation>
+        <translation type="vanished">No es posible marcar marcador como %1</translation>
     </message>
     <message>
         <source>favorite</source>
-        <translation type="vanished">favorite</translation>
+        <translation type="vanished">favorito</translation>
     </message>
     <message>
         <source>unfavorite</source>
-        <translation type="vanished">unfavorite</translation>
+        <translation type="vanished">no favorito</translation>
     </message>
     <message>
         <source>read</source>
-        <translation type="vanished">read</translation>
+        <translation type="vanished">leído</translation>
     </message>
     <message>
         <source>unread</source>
-        <translation type="vanished">unread</translation>
+        <translation type="vanished">no leído</translation>
     </message>
     <message>
         <source>Unable to update tags</source>
-        <translation type="vanished">Unable to update tags</translation>
+        <translation type="vanished">No es posible actualizar etiquetas</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
         <source>GetPocket error (%1): </source>
-        <translation type="vanished">Pocket service error (%1): </translation>
+        <translation type="vanished">Error en servivo pocket (%1): </translation>
     </message>
 </context>
 <context>
@@ -264,19 +264,19 @@
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="36"/>
         <source>GetPocket/Google account</source>
-        <translation>GetPocket/Google account</translation>
+        <translation>Cuenta de GetPocket/Google</translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="44"/>
         <source>GetPocket/Firefox account</source>
-        <translation>GetPocket/Firefox account</translation>
+        <translation>Cuenta de GetPocket/Firefox</translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="58"/>
         <source>Application not authorized.
 Pull down to do it</source>
-        <translation>Application not authorized.
-Pull down to do it</translation>
+        <translation>Aplicación no autorizada.
+Desliza hacia abajo para autorizarla</translation>
     </message>
 </context>
 </TS>

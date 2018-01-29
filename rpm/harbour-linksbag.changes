@@ -5,11 +5,13 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
-* Sun Jan 28 2018 Oleg Linkin <maledictusdemagog@gmail.com> 2.3
+* Mon Jan 29 2018 Oleg Linkin <maledictusdemagog@gmail.com> 2.3
 - New GUI
 - Using Mercury (mercury.postlight.com) for reader mode
 - Replace Nemo.Notification with org.nemomobile.notifications for backward compatibility
 - Add possibility to download read-mode content for all bookmarks
+- Add translations: FR, ES, SV
+- Some bugfixes
 
 * Sat Dec 30 2017 Oleg Linkin <maledictusdemagog@gmail.com> 2.2
 - Change autorization process. Add possibility to authorize via google

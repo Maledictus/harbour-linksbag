@@ -57,6 +57,12 @@ DISTFILES += qml/harbour-linksbag.qml \
     rpm/harbour-linksbag.changes \
     rpm/harbour-linksbag.changes.run.in \
     rpm/harbour-linksbag.yaml \
+    translations/harbour-linksbag.ts \
+    translations/harbour-linksbag-en.ts \
+    translations/harbour-linksbag-ru.ts \
+    translations/harbour-linksbag-es.ts \
+    translations/harbour-linksbag-sv.ts \
+    translations/harbour-linksbag-fr.ts
 
 
 lupdate_only{
@@ -82,5 +88,7 @@ SOURCES = qml/harbour-linksbag.qml \
 
 TRANSLATIONS += translations/harbour-linksbag.ts \
     translations/harbour-linksbag-en.ts \
-    translations/harbour-linksbag-ru.ts
-
+    translations/harbour-linksbag-ru.ts \
+    translations/harbour-linksbag-es.ts \
+    translations/harbour-linksbag-sv.ts \
+    translations/harbour-linksbag-fr.ts
