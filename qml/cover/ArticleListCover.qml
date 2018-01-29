@@ -31,44 +31,45 @@ Item {
     property alias model: listView.model
     property string filter: ""
 
-    Row {
-        id: coverHeader
-        height: Theme.itemSizeSmall
+    Label {
+        id: coverHeaderCount
+        text: listView.count
+        x: Theme.paddingLarge
+        y: Theme.paddingMedium
+        font.pixelSize: Theme.fontSizeHuge
+    }
+
+    Label {
+        id: unreadLabel
+
+        text: qsTr("%1 bookmarks").arg(filter)
+        font.pixelSize: Theme.fontSizeExtraSmall
+        maximumLineCount: 2
+        wrapMode: Text.WordWrap
+        lineHeight: 0.8
+        height: implicitHeight/0.8
+        verticalAlignment: Text.AlignVCenter
         anchors {
-            top: parent.top;
-            left: parent.left;
-            right: parent.right;
-            topMargin: Theme.paddingMedium
-            leftMargin: Theme.paddingMedium;
-            rightMargin: Theme.paddingMedium;
+            right: parent.right
+            rightMargin: Theme.paddingLarge
+            left: coverHeaderCount.right
+            leftMargin: Theme.paddingMedium
+            baseline: coverHeaderCount.baseline
+            baselineOffset: lineCount > 1 ? -implicitHeight/2 : -(height-implicitHeight)/2
         }
-        Label {
-            id: coverHeaderCount
-            font.pixelSize: Theme.fontSizeHuge
-            color: Theme.primaryColor
-            text: listView.count
-        }
-        spacing: Theme.paddingMedium
-        Label  {
-            id: coverHeaderTitle
-            anchors {
-                top: parent.top;
-                topMargin: Theme.paddingMedium;
-            }
-            font.pixelSize: Theme.fontSizeExtraSmall
-            lineHeight: 0.8;
-            maximumLineCount: 2
-            fontSizeMode: Text.HorizontalFit
-            elide: Text.ElideRight
-            text: filter + "\n" + qsTr("bookmarks")
-        }
+    }
+
+    OpacityRampEffect {
+        offset: 0.5
+        sourceItem: unreadLabel
+        enabled: unreadLabel.implicitWidth > Math.ceil(unreadLabel.width)
     }
 
     SilicaListView {
         id: listView
 
         anchors {
-            top: coverHeader.bottom;
+            top: unreadLabel.bottom;
             left: parent.left;
             right: parent.right;
             margins: Theme.paddingLarge;
@@ -90,7 +91,7 @@ Item {
                 Label {
                     id: itemLabel
                     width: parent.width
-                    color: Theme.primaryColor
+                    color: Theme.highlightColor
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
                     text: bookmarkTitle
