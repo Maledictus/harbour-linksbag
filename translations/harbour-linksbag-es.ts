@@ -4,9 +4,9 @@
 <context>
     <name>ArticleListCover</name>
     <message>
-        <location filename="../qml/cover/ArticleListCover.qml" line="63"/>
-        <source>bookmarks</source>
-        <translation>marcadores</translation>
+        <location filename="../qml/cover/ArticleListCover.qml" line="45"/>
+        <source>%1 bookmarks</source>
+        <translation>%1 marcadores</translation>
     </message>
 </context>
 <context>
@@ -214,49 +214,81 @@
     </message>
 </context>
 <context>
+    <name>LinksBag::Application</name>
+    <message>
+        <location filename="../src/application.cpp" line="91"/>
+        <source>Authorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="91"/>
+        <source>Not authorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinksBag::GetPocketApi</name>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="227"/>
+        <location filename="../src/getpocketapi.cpp" line="297"/>
         <source>General error</source>
-        <translation type="vanished">Error general</translation>
+        <translation>Error general</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="244"/>
+        <location filename="../src/getpocketapi.cpp" line="314"/>
+        <source>Network error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/getpocketapi.cpp" line="265"/>
+        <location filename="../src/getpocketapi.cpp" line="332"/>
         <source>Reply data is corrupted</source>
-        <translation type="vanished">Los datos de respuesta están corruptos</translation>
+        <translation>Los datos de respuesta están corruptos</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="423"/>
         <source>Unable to remove bookamark</source>
-        <translation type="vanished">No es posible eliminar marcador</translation>
+        <translation>No es posible eliminar marcador</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="446"/>
+        <location filename="../src/getpocketapi.cpp" line="470"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation type="vanished">No es posible marcar marcador como %1</translation>
+        <translation>No es posible marcar marcador como %1</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>favorite</source>
-        <translation type="vanished">favorito</translation>
+        <translation>favorito</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>unfavorite</source>
-        <translation type="vanished">no favorito</translation>
+        <translation>no favorito</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>read</source>
-        <translation type="vanished">leído</translation>
+        <translation>leído</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>unread</source>
-        <translation type="vanished">no leído</translation>
+        <translation>no leído</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="494"/>
         <source>Unable to update tags</source>
-        <translation type="vanished">No es posible actualizar etiquetas</translation>
+        <translation>No es posible actualizar etiquetas</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
+        <location filename="../src/linksbagmanager.cpp" line="103"/>
         <source>GetPocket error (%1): </source>
-        <translation type="vanished">Error en servivo pocket (%1): </translation>
+        <translation>Error en servivo pocket (%1): </translation>
     </message>
 </context>
 <context>

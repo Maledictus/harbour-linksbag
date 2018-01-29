@@ -4,9 +4,9 @@
 <context>
     <name>ArticleListCover</name>
     <message>
-        <location filename="../qml/cover/ArticleListCover.qml" line="63"/>
-        <source>bookmarks</source>
-        <translation>Bokmärken</translation>
+        <location filename="../qml/cover/ArticleListCover.qml" line="45"/>
+        <source>%1 bookmarks</source>
+        <translation>%1 bokmärken</translation>
     </message>
 </context>
 <context>
@@ -103,7 +103,7 @@
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="108"/>
         <source>Logout...</source>
-        <translation>Logga ut</translation>
+        <translation>Logga ut...</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="125"/>
@@ -214,49 +214,81 @@
     </message>
 </context>
 <context>
+    <name>LinksBag::Application</name>
+    <message>
+        <location filename="../src/application.cpp" line="91"/>
+        <source>Authorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="91"/>
+        <source>Not authorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinksBag::GetPocketApi</name>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="227"/>
+        <location filename="../src/getpocketapi.cpp" line="297"/>
         <source>General error</source>
-        <translation type="vanished">Allmänt fel</translation>
+        <translation>Allmänt fel</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="244"/>
+        <location filename="../src/getpocketapi.cpp" line="314"/>
+        <source>Network error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/getpocketapi.cpp" line="265"/>
+        <location filename="../src/getpocketapi.cpp" line="332"/>
         <source>Reply data is corrupted</source>
-        <translation type="vanished">Svarsdata är skadad</translation>
+        <translation>Svarsdata är skadad</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="423"/>
         <source>Unable to remove bookamark</source>
-        <translation type="vanished">Kan inte ta bort bokmärke</translation>
+        <translation>Kan inte ta bort bokmärke</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="446"/>
+        <location filename="../src/getpocketapi.cpp" line="470"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation type="vanished">Kan inte markera bokmärke som %1</translation>
+        <translation>Kan inte markera bokmärke som %1</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>favorite</source>
-        <translation type="vanished">favorit</translation>
+        <translation>favorit</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>unfavorite</source>
-        <translation type="vanished">inte favorit</translation>
+        <translation>inte favorit</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>read</source>
-        <translation type="vanished">läst</translation>
+        <translation>läst</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>unread</source>
-        <translation type="vanished">oläst</translation>
+        <translation>oläst</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="494"/>
         <source>Unable to update tags</source>
-        <translation type="vanished">Kan inte uppdatera taggar</translation>
+        <translation>Kan inte uppdatera taggar</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
+        <location filename="../src/linksbagmanager.cpp" line="103"/>
         <source>GetPocket error (%1): </source>
-        <translation type="vanished">GetPocket-fel (%1): </translation>
+        <translation>GetPocket-fel (%1): </translation>
     </message>
 </context>
 <context>
@@ -276,7 +308,7 @@
         <source>Application not authorized.
 Pull down to do it</source>
         <translation>Programmet är inte auktoriserat.
-Dra neråt för att göra det.</translation>
+Dra neråt för att göra det</translation>
     </message>
 </context>
 </TS>
