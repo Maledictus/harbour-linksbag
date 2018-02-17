@@ -5,6 +5,9 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Sat Feb 17 2018 Oleg Linkin <maledictusdemagog@gmail.com> 2.4
+- Add NL translation, update translations
+
 * Mon Jan 29 2018 Oleg Linkin <maledictusdemagog@gmail.com> 2.3
 - New GUI
 - Using Mercury (mercury.postlight.com) for reader mode

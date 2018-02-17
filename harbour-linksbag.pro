@@ -1,6 +1,6 @@
 TARGET = harbour-linksbag
 
-VERSION = 2.3
+VERSION = 2.4
 
 QT += webkit network
 
@@ -91,4 +91,5 @@ TRANSLATIONS += translations/harbour-linksbag.ts \
     translations/harbour-linksbag-ru.ts \
     translations/harbour-linksbag-es.ts \
     translations/harbour-linksbag-sv.ts \
-    translations/harbour-linksbag-fr.ts
+    translations/harbour-linksbag-fr.ts \
+    translations/harbour-linksbag-nl.ts
