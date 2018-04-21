@@ -118,6 +118,8 @@ public slots:
     QString getContent(const QString& id);
 
     void resetAccount();
+    void resetThumbnailCache();
+    void resetArticleCache();
 
     void handleGotAuthAnswer(const QString& data);
 

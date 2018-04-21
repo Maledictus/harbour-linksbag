@@ -20,18 +20,18 @@
 <context>
     <name>BookmarkDownloadsPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="50"/>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="83"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="47"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
         <source>Downloading</source>
         <translation>Загружается</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="51"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
         <source>%1 remaining</source>
         <translation>%1 осталось</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="83"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
@@ -101,88 +101,83 @@
         <translation>Не загружено</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="109"/>
-        <source>Logout...</source>
-        <translation>Выходим...</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="126"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="119"/>
         <source>Bookmarks</source>
         <translation>Закладки</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="138"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="131"/>
         <source>Search</source>
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="150"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="143"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
         <translation>Нет закладок. Обновите список.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="157"/>
-        <source>Logout</source>
-        <translation>Выход</translation>
+        <location filename="../qml/pages/BookmarksPage.qml" line="150"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="165"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="155"/>
         <source>Downloads</source>
         <translation>Загрузки</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="172"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="162"/>
         <source>Hide search field</source>
         <translation>Скрыть поле поиска</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="173"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="163"/>
         <source>Show search field</source>
         <translation>Показать поле поиска</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="183"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="173"/>
         <source>View: %1</source>
         <translation>Показывать: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="192"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="182"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="210"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="200"/>
         <source>Copy url to clipboard</source>
         <translation>Копировать ссылку в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="213"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="203"/>
         <source>Url copied into clipboard</source>
         <translation>Ссылка скопирована в буфер обмена успешно</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="218"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="208"/>
         <source>Open in browser</source>
         <translation>Открыть в браузере</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="215"/>
         <source>Edit tags</source>
         <translation>Редактировать метки</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
         <source>Mark as unread</source>
         <translation>Не прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
         <source>Mark as read</source>
         <translation>Прочитано</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="240"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="241"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="230"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="231"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -311,6 +306,89 @@
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="72"/>
         <source>Firefox/Regular account</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="43"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="46"/>
+        <source>Sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="49"/>
+        <source>Sync on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="52"/>
+        <source>App will try to sync with Pocket on startup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="58"/>
+        <source>Download articles automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="59"/>
+        <source>Every new article will be saved for offline viewing automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="64"/>
+        <source>Parser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="68"/>
+        <source>Mercury is faster and lighter on your device but if you want articles to be processed on your device, you can use Readability instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="81"/>
+        <source>Cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="84"/>
+        <source>Remove saved articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="85"/>
+        <source>Removing saved articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="89"/>
+        <source>Clear thumbnail cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="90"/>
+        <source>Clearing thumbnail cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="93"/>
+        <source>Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="99"/>
+        <source>Logout</source>
+        <translation type="unfinished">Выход</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="100"/>
+        <source>Logging out</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

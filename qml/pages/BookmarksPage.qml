@@ -105,13 +105,6 @@ Page {
         visible: running
     }
 
-    function resetAccount () {
-        resetAccountRemorse.execute(qsTr("Logout..."),
-                function() { linksbagManager.resetAccount() } )
-    }
-
-    RemorsePopup { id: resetAccountRemorse }
-
     SilicaListView {
         id: bookmarksView
 
@@ -154,11 +147,8 @@ Page {
             visible: !linksbagManager.busy
 
             MenuItem {
-                text: qsTr("Logout")
-
-                onClicked: {
-                    bookmarksPage.resetAccount()
-                }
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
             }
 
             MenuItem {
@@ -376,5 +366,12 @@ Page {
         }
 
         VerticalScrollDecorator {}
+    }
+
+    Component.onCompleted: {
+        // Sync on startup
+        if (applicationSettings.value("sync_on_startup", false)) {
+            linksbagManager.refreshBookmarks();
+        }
     }
 }

@@ -25,19 +25,16 @@ THE SOFTWARE.
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.linksbag 1.0
-import "./components"
+import "."
 
 Page {
     property var bookmarksPage
     property var currentBookmarkId
     property var bookmarksToSync
 
-    Mercury {
+    ParserLoader {
         id: readability
-        onEntryChanged: {
-            //console.log(entry);
-            linksbagManager.updateContent(currentBookmarkId, entry);
-        }
+        onEntryChanged: linksbagManager.updateContent(currentBookmarkId, entry);
     }
 
     SilicaListView {

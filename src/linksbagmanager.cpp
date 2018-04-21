@@ -376,10 +376,41 @@ void LinksBagManager::resetAccount()
             "/linksbag_cache", QSettings::IniFormat);
     settings.remove("Bookmarks");
     settings.sync();
+    resetArticleCache();
+    resetThumbnailCache();
+
+    // fix logout
+    QDir webkitCache(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/.QtWebKit");
+    webkitCache.removeRecursively();
+    webkitCache = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/.QtWebKit");
+    webkitCache.removeRecursively();
 
     m_BookmarksModel->Clear();
 
     SetLogged(false);
+}
+
+void LinksBagManager::resetArticleCache()
+{
+    // remove directory
+    QDir article(articleCacheDirectory);
+    article.removeRecursively();
+
+    // recreate directory
+    article.mkpath(articleCacheDirectory);
+}
+
+void LinksBagManager::resetThumbnailCache()
+{
+    // remove directories
+    QDir cache(thumbnailDirectory);
+    cache.removeRecursively();
+    cache = QDir(coverImagesDirectory);
+    cache.removeRecursively();
+
+    // recreate directories
+    cache.mkpath(thumbnailDirectory);
+    cache.mkpath(coverImagesDirectory);
 }
 
 void LinksBagManager::handleGotAuthAnswer(const QString& data)

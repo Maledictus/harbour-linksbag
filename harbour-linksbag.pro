@@ -62,7 +62,9 @@ DISTFILES += qml/harbour-linksbag.qml \
     translations/harbour-linksbag-ru.ts \
     translations/harbour-linksbag-es.ts \
     translations/harbour-linksbag-sv.ts \
-    translations/harbour-linksbag-fr.ts
+    translations/harbour-linksbag-fr.ts \
+    qml/pages/SettingsPage.qml \
+    qml/pages/ParserLoader.qml
 
 
 lupdate_only{
