@@ -304,7 +304,7 @@ Page {
                     height: sourceLabel.paintedHeight
                     Rectangle {
                         y: 1
-                        opacity: 0.5
+                        opacity: 0.7
                         width: parent.width
                         height: parent.height - y
                         radius: Theme.paddingSmall/2
@@ -321,6 +321,40 @@ Page {
                             var matches = bookmarkUrl.toString()
                                     .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
                             return matches ? matches[1] : bookmarkUrl
+                        }
+                    }
+                }
+                Item {
+                    width: tagsRow.childrenRect.width + 2*Theme.paddingSmall
+                    height: tagsRow.childrenRect.height
+                    visible: bookmarkTags != ""
+                    Rectangle {
+                        y: 1
+                        radius: Theme.paddingSmall/2
+                        width: parent.width
+                        height: parent.height - 1
+                        opacity: 0.5
+                        color: 'black'
+                    }
+                    Row {
+                        x: Theme.paddingSmall
+                        id: tagsRow
+                        spacing: Theme.paddingSmall
+                        width: parent.width
+                        clip: true
+
+                        Image {
+                            anchors.verticalCenter: parent.verticalCenter
+                            source: "qrc:/images/icon-s-tag.png"
+                            visible: bookmarkTags != ""
+                        }
+
+                        Label {
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize:  Theme.fontSizeTiny
+                            font.italic: true
+                            elide: Text.ElideRight
+                            text: bookmarkTags
                         }
                     }
                 }
