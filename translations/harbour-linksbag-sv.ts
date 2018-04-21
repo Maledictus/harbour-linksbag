@@ -332,16 +332,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="58"/>
-        <source>Download articles automatically</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="59"/>
-        <source>Every new article will be saved for offline viewing automatically.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/pages/SettingsPage.qml" line="64"/>
         <source>Parser</source>
         <translation type="unfinished"></translation>
