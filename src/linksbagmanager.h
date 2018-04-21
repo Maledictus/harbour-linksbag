@@ -27,17 +27,30 @@ THE SOFTWARE.
 
 #include <memory>
 
+#include "src/bookmark.h"
 #include <QObject>
 #include <QVariantMap>
 #include <QMap>
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
+#include <QThreadPool>
 
 namespace LinksBag
 {
 class BookmarksModel;
 class FilterProxyModel;
 class GetPocketApi;
+
+class DownloadedImageHandler: public QRunnable
+{
+public:
+    DownloadedImageHandler(QNetworkReply *reply, QString id, BookmarksModel* model = 0);
+    void run();
+private:
+    BookmarksModel* m_model;
+    QNetworkReply* m_reply;
+    const QString m_id;
+};
 
 class LinksBagManager : public QObject
 {
@@ -96,15 +109,12 @@ public slots:
     void loadBookmarksFromCache();
     void saveBookmarks();
     void refreshBookmarks();
-    void getThumbnail(const QString& id);
-    QString getThumbnailPath(const QString &id);
     void removeBookmark(const QString& id);
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);
     void updateTags(const QString& id, const QString& tags);
 
     void updateContent(const QString& id, const QString& content);
-    bool hasContent(const QString& id);
     QString getContent(const QString& id);
 
     void resetAccount();
@@ -112,8 +122,6 @@ public slots:
     void handleGotAuthAnswer(const QString& data);
 
 signals:
-    void thumbnailFound(const QString& id, const QString& thumbnailPath);
-
     void busyChanged();
     void loggedChanged();
     void requestTokenChanged(const QString& requestToken);

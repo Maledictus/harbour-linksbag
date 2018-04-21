@@ -40,10 +40,24 @@ THE SOFTWARE.
 #include "src/settings/applicationsettings.h"
 
 const QString thumbnailDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/thumbnails/";
+const QString coverImagesDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/covers/";
 const QString articleCacheDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/articles/";
 
 namespace LinksBag
 {
+DownloadedImageHandler::DownloadedImageHandler(QNetworkReply *reply, QString id, BookmarksModel *model):
+    m_reply(reply), m_id(id), m_model(model) {}
+
+void DownloadedImageHandler::run()
+{
+    QImage downloadedImage = QImage::fromData(m_reply->readAll());
+    downloadedImage.save(coverImagesDirectory + m_id + ".jpg");
+    downloadedImage.scaled(
+        720, 400, Qt::KeepAspectRatioByExpanding
+    ).copy(0, 0, 720, 400).save(thumbnailDirectory + m_id + ".jpg");
+    m_model->RefreshBookmark(m_id);
+}
+
 LinksBagManager::LinksBagManager(QObject *parent)
 : QObject(parent)
 , m_Api(new GetPocketApi(this))
@@ -59,6 +73,7 @@ LinksBagManager::LinksBagManager(QObject *parent)
     QDir dir;
     dir.mkpath(thumbnailDirectory);
     dir.mkpath(articleCacheDirectory);
+    dir.mkpath(coverImagesDirectory);
 
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
     m_DownloadingModel->setSourceModel(m_BookmarksModel);
@@ -141,6 +156,20 @@ void LinksBagManager::MakeConnections()
             [this](const Bookmarks_t& bookmarks, quint64 since)
             {
                 m_BookmarksModel->AddBookmarks(bookmarks);
+                saveBookmarks();
+                const auto& savedBookmarks = m_BookmarksModel->GetBookmarks();
+                for (int i=savedBookmarks.size()-1; i>=0; --i) {
+                    Bookmark b = savedBookmarks.at(i);
+                    QString path = thumbnailDirectory + b.GetID() + ".jpg";
+                    if (QFile(path).exists())
+                        continue;
+
+                    QUrl url = b.GetImageUrl();
+                    if (!url.isEmpty()) {
+                        m_thumbnailUrls[url] = b.GetID();
+                        m_thumbnailDownloader->get(QNetworkRequest(url));
+                    }
+                }
                 m_FilterProxyModel->sort(0, Qt::DescendingOrder);
                 ApplicationSettings::Instance(this)->setValue("last_update", since);
             });
@@ -189,45 +218,12 @@ void LinksBagManager::SetLogged(const bool logged)
     emit loggedChanged();
 }
 
-QString LinksBagManager::getThumbnailPath(const QString &id)
-{
-    QString path = thumbnailDirectory + id + ".jpg";
-    if (QFile(path).exists())
-        return path;
-    return "";
-}
-
-void LinksBagManager::getThumbnail(const QString &id)
-{
-    // check if thumbnail for this article is available in cache
-    QString path = getThumbnailPath(id);
-    if (!path.isEmpty())
-        return;
-
-    // nope, we need actual URL to the file then
-    const auto& bookmarks = m_BookmarksModel->GetBookmarks();
-    if (bookmarks.isEmpty())
-        return;
-    auto it = std::find_if(bookmarks.begin(), bookmarks.end(),
-            [id](decltype(bookmarks.front()) bookmark)
-            {
-                return bookmark.GetID() == id;
-            });
-    QUrl url = it->GetImageUrl();
-    if (!url.isEmpty()) {
-        m_thumbnailUrls[url] = id;
-        m_thumbnailDownloader->get(QNetworkRequest(url));
-    }
-}
-
 void LinksBagManager::thumbnailReceived(QNetworkReply *pReply) {
     if (pReply->error() == QNetworkReply::NoError) {
         QString bookmarkId = m_thumbnailUrls.value(pReply->url(), "");
-        QString path = thumbnailDirectory + bookmarkId + ".jpg";
-        QImage::fromData(pReply->readAll()).scaled(720, 400, Qt::KeepAspectRatioByExpanding).copy(0, 0, 720, 400).save(path);
-        m_thumbnailUrls.remove(pReply->url());
-        emit thumbnailFound(bookmarkId, path);
+        QThreadPool::globalInstance()->start(new DownloadedImageHandler(pReply, bookmarkId, m_BookmarksModel));
     }
+    m_thumbnailUrls.remove(pReply->url());
 }
 
 void LinksBagManager::saveBookmarks()
@@ -347,12 +343,7 @@ void LinksBagManager::updateContent(const QString& id, const QString& content)
         qDebug() << "Can't save file: " << file.errorString();
     }
     file.close();
-    m_DownloadingModel->invalidate();
-}
-
-bool LinksBagManager::hasContent(const QString &id)
-{
-    return QFile::exists(articleCacheDirectory + id + ".html");
+    m_BookmarksModel->RefreshBookmark(id);
 }
 
 QString LinksBagManager::getContent(const QString& id) {

@@ -69,6 +69,10 @@ QVariant BookmarksModel::data(const QModelIndex& index, int role) const
         return bookmark.GetUpdateTime();
     case BRStatus:
         return bookmark.GetStatus();
+    case BRThumbnail:
+        return bookmark.GetThumbnail();
+    case BRHasContent:
+        return bookmark.HasContent();
     default:
         return QVariant();
     }
@@ -93,6 +97,8 @@ QHash<int, QByteArray> BookmarksModel::roleNames() const
     roles [BRAddTime] = "bookmarkAddTime";
     roles [BRUpdateTime] = "bookmarkUpdateTime";
     roles [BRStatus] = "bookmarkStatus";
+    roles [BRThumbnail] = "bookmarkThumbnail";
+    roles [BRHasContent] = "bookmarkHasContent";
 
     return roles;
 }
@@ -220,6 +226,20 @@ void BookmarksModel::UpdateTags(const QString& id, const QString& tags)
             emit dataChanged(index(i, 0), index(i, 0));
             break;
         }
+    }
+}
+
+void BookmarksModel::RefreshBookmark(const QString &id)
+{
+    auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),
+            [id](decltype(m_Bookmarks.front()) bookmark)
+            {
+                return bookmark.GetID() == id;
+            });
+    if (it != m_Bookmarks.end())
+    {
+        const int pos = std::distance(m_Bookmarks.begin(), it);
+        emit dataChanged(index(pos), index(pos));
     }
 }
 

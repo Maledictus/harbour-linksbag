@@ -203,8 +203,7 @@ Page {
         delegate: ListItem {
             id: rootDelegateItem
             width: bookmarksView.width
-            height: Theme.paddingLarge*4 + textColumn.childrenRect.height
-            contentHeight: height
+            contentHeight: Theme.paddingLarge*4 + textColumn.childrenRect.height
 
             menu: ContextMenu {
                 MenuItem {
@@ -248,15 +247,10 @@ Page {
             Image {
                 cache: true
                 asynchronous: true
-                id: thumbnailImage
                 anchors.fill: parent
-                source: linksbagManager.getThumbnailPath(bookmarkID)
+                source: bookmarkThumbnail
                 fillMode: Image.PreserveAspectCrop
                 smooth: false
-                Connections {
-                    target: linksbagManager
-                    onThumbnailFound: if (id == bookmarkID) thumbnailImage.source = thumbnailPath
-                }
             }
 
             GlassItem {
@@ -305,16 +299,29 @@ Page {
                         }
                     }
                 }
-                Label {
-                    x: Theme.paddingSmall
-                    width: parent.width
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    color: 'white'
-                    elide: Text.ElideRight
-                    text: {
-                        var matches = bookmarkUrl.toString()
-                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                        return matches ? matches[1] : bookmarkUrl
+                Item {
+                    width: Math.min(parent.width - 2*textColumn.margin, sourceLabel.paintedWidth + 2*Theme.paddingSmall)
+                    height: sourceLabel.paintedHeight
+                    Rectangle {
+                        y: 1
+                        opacity: 0.5
+                        width: parent.width
+                        height: parent.height - y
+                        radius: Theme.paddingSmall/2
+                        color: 'black'
+                    }
+                    Label {
+                        id: sourceLabel
+                        x: Theme.paddingSmall
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: 'white'
+                        elide: Text.ElideRight
+                        maximumLineCount: 1
+                        text: {
+                            var matches = bookmarkUrl.toString()
+                                    .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                            return matches ? matches[1] : bookmarkUrl
+                        }
                     }
                 }
             }

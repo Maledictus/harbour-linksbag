@@ -67,7 +67,7 @@ public:
     void SetTitle(const QString& title);
     QString GetDescription() const;
     void SetDescription(const QString& title);
-    QUrl GetImageUrl() const;
+    QUrl GetImageUrl();
     void SetImageUrl(const QUrl& url);
     QStringList GetTags() const;
     void SetTags(const QStringList& tags);
@@ -81,6 +81,9 @@ public:
     void SetUpdateTime(const QDateTime& dt);
     Status GetStatus() const;
     void SetStatus(Status status);
+
+    bool HasContent();
+    QString GetThumbnail();
 
     QByteArray Serialize() const;
     static Bookmark Deserialize(const QByteArray& data);

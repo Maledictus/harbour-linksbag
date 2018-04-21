@@ -25,10 +25,7 @@ THE SOFTWARE.
 
 #include "filterproxymodel.h"
 #include "bookmarksmodel.h"
-#include <QStandardPaths>
-#include <QFile>
 
-const QString articleCacheDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/articles/";
 
 namespace LinksBag
 {
@@ -63,8 +60,8 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& source
     }
     else if (m_Filter == FTUnsynced)
     {
-        bool exists = QFile::exists(articleCacheDirectory + sourceModel()->data(index, BookmarksModel::BRID).toString() + ".html");
-        result = !sourceModel()->data(index, BookmarksModel::BRRead).toBool() && !exists;
+        result = !sourceModel()->data(index, BookmarksModel::BRRead).toBool() &&
+                !sourceModel()->data(index, BookmarksModel::BRHasContent).toBool();
     }
 
     return result && (index.data(BookmarksModel::BRTitle).toString().contains(filterRegExp()) ||

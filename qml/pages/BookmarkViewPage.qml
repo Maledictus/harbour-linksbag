@@ -50,7 +50,7 @@ Page {
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
-    property bool hasContent: linksbagManager.hasContent(bookmarkId)
+    property bool hasContent: false
 
     function generateCustomCss() {
         return  "<style>
@@ -63,11 +63,11 @@ Page {
     onStatusChanged: {
         if (status == PageStatus.Active && linksbagManager.logged) {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
+            hasContent = currentBookmark.bookmarkHasContent
             cover.title = currentBookmark.bookmarkTitle
             cover.image = currentBookmark.bookmarkImageUrl
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
-            console.log(hasContent)
 
             if (!hasContent) {
                 readability.bookmarkImage = currentBookmark.bookmarkImageUrl
@@ -223,6 +223,8 @@ Page {
                 }
 
                 Image {
+                    asynchronous: true
+                    smooth: false
                     id: thumbnailImage
                     source: currentBookmark ?
                             currentBookmark.bookmarkImageUrl :

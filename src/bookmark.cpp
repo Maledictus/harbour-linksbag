@@ -26,6 +26,14 @@ THE SOFTWARE.
 #include "bookmark.h"
 #include <QtDebug>
 #include <QDataStream>
+#include <QStandardPaths>
+#include <QFile>
+
+
+const QString thumbnailDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/thumbnails/";
+const QString articleCacheDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/articles/";
+const QString coverImagesDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/covers/";
+
 
 namespace LinksBag
 {
@@ -76,9 +84,12 @@ void Bookmark::SetDescription(const QString& desc)
     m_Description = desc;
 }
 
-QUrl Bookmark::GetImageUrl() const
+QUrl Bookmark::GetImageUrl()
 {
-    return m_ImageUrl;
+    QString cachedPath = coverImagesDirectory + m_ID + ".jpg";
+    if (QFile::exists(cachedPath)) {
+        return cachedPath;
+    } else return m_ImageUrl;
 }
 
 void Bookmark::SetImageUrl(const QUrl& url)
@@ -144,6 +155,19 @@ Bookmark::Status Bookmark::GetStatus() const
 void Bookmark::SetStatus(Bookmark::Status status)
 {
     m_Status = status;
+}
+
+QString Bookmark::GetThumbnail()
+{
+    QString path = thumbnailDirectory + m_ID + ".jpg";
+    if (QFile(path).exists())
+        return path;
+    return "";
+}
+
+bool Bookmark::HasContent()
+{
+    return QFile::exists(articleCacheDirectory + m_ID + ".html");
 }
 
 QByteArray Bookmark::Serialize() const
@@ -215,6 +239,7 @@ QVariantMap Bookmark::ToMap() const
     map["bookmarkAddTime"] = m_AddTime;
     map["bookmarkUpdateTime"] = m_UpdateTime;
     map["bookmarkStatus"] = m_Status;
+    map["bookmarkHasContent"] = QFile::exists(articleCacheDirectory + m_ID + ".html");
 
     return map;
 }
