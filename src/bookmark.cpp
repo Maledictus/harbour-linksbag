@@ -84,7 +84,12 @@ void Bookmark::SetDescription(const QString& desc)
     m_Description = desc;
 }
 
-QUrl Bookmark::GetImageUrl()
+QUrl Bookmark::GetImageUrl() const
+{
+    return m_ImageUrl;
+}
+
+QUrl Bookmark::GetCoverImageUrl()
 {
     QString cachedPath = coverImagesDirectory + m_ID + ".jpg";
     if (QFile::exists(cachedPath)) {
@@ -240,6 +245,9 @@ QVariantMap Bookmark::ToMap() const
     map["bookmarkUpdateTime"] = m_UpdateTime;
     map["bookmarkStatus"] = m_Status;
     map["bookmarkHasContent"] = QFile::exists(articleCacheDirectory + m_ID + ".html");
+
+    QString cachedPath = coverImagesDirectory + m_ID + ".jpg";
+    map["bookmarkCoverImage"] = QFile::exists(cachedPath) ? cachedPath : m_ImageUrl;
 
     return map;
 }

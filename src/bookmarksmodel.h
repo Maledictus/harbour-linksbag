@@ -51,6 +51,7 @@ public:
         BRUpdateTime,
         BRStatus,
         BRThumbnail,
+        BRCoverImage,
         BRHasContent
     };
 

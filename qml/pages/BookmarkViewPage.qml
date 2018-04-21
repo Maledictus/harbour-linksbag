@@ -37,7 +37,6 @@ Page {
 
     ParserLoader {
         id: readability
-        isBusy: hasContent
         onEntryChanged: {
             linksbagManager.updateContent(bookmarkId, entry);
             entryText.text = generateCustomCss() + entry;
@@ -65,7 +64,6 @@ Page {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
             hasContent = currentBookmark.bookmarkHasContent
             cover.title = currentBookmark.bookmarkTitle
-            cover.image = currentBookmark.bookmarkImageUrl
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
 
@@ -73,9 +71,10 @@ Page {
                 readability.bookmarkImage = currentBookmark.bookmarkImageUrl
                 readability.setArticle(currentBookmark.bookmarkUrl)
             } else {
-                readability.entry = linksbagManager.getContent(bookmarkId)
-                readability.isBusy = false;
+                entryText.text = generateCustomCss() + linksbagManager.getContent(bookmarkId)
             }
+
+            cover.image = currentBookmark.bookmarkCoverImage
         }
     }
 

@@ -39,36 +39,36 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="120"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="154"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="119"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="153"/>
         <source>Mark as unread</source>
         <translation>Oznacz jako nieprzeczytane</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="155"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="120"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="154"/>
         <source>Mark as read</source>
         <translation>Oznacz jako przeczytane</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="133"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="165"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="132"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="164"/>
         <source>Mark as unfavorite</source>
         <translation>Usuń z ulubionych</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="166"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="133"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="165"/>
         <source>Mark as favorite</source>
         <translation>Dodaj do ulubionych</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="145"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="144"/>
         <source>Reload</source>
         <translation>Przeładuj</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="174"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="173"/>
         <source>Open in browser</source>
         <translation>Otwórz w przeglądarce</translation>
     </message>

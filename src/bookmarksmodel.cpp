@@ -73,6 +73,8 @@ QVariant BookmarksModel::data(const QModelIndex& index, int role) const
         return bookmark.GetThumbnail();
     case BRHasContent:
         return bookmark.HasContent();
+    case BRCoverImage:
+        return bookmark.GetCoverImageUrl();
     default:
         return QVariant();
     }
@@ -99,6 +101,7 @@ QHash<int, QByteArray> BookmarksModel::roleNames() const
     roles [BRStatus] = "bookmarkStatus";
     roles [BRThumbnail] = "bookmarkThumbnail";
     roles [BRHasContent] = "bookmarkHasContent";
+    roles [BRCoverImage] = "bookmarkCoverImage";
 
     return roles;
 }

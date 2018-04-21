@@ -67,7 +67,8 @@ public:
     void SetTitle(const QString& title);
     QString GetDescription() const;
     void SetDescription(const QString& title);
-    QUrl GetImageUrl();
+    QUrl GetCoverImageUrl();
+    QUrl GetImageUrl() const;
     void SetImageUrl(const QUrl& url);
     QStringList GetTags() const;
     void SetTags(const QStringList& tags);
