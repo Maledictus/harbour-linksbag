@@ -1,10 +1,12 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="fr">
 <context>
     <name>ArticleListCover</name>
     <message>
-        <location filename="../qml/cover/ArticleListCover.qml" line="63"/>
-        <source>bookmarks</source>
-        <translation>marque-p.</translation>
+        <location filename="../qml/cover/ArticleListCover.qml" line="45"/>
+        <source>%1 bookmarks</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -19,7 +21,7 @@
     <name>BookmarkDownloadsPage</name>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="50"/>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="83"/>
         <source>Downloading</source>
         <translation>Préchargement</translation>
     </message>
@@ -29,7 +31,7 @@
         <translation>%1 restant(s)</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="83"/>
         <source>Queued</source>
         <translation>En attente</translation>
     </message>
@@ -37,36 +39,36 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="155"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="120"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="154"/>
         <source>Mark as unread</source>
         <translation>Marquer comme non vu</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="122"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="156"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="155"/>
         <source>Mark as read</source>
         <translation>Marquer comme vu</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="166"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="133"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="165"/>
         <source>Mark as unfavorite</source>
         <translation>Retirer des favoris</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="135"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="167"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="166"/>
         <source>Mark as favorite</source>
         <translation>Ajouter aux favoris</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="146"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="145"/>
         <source>Reload</source>
         <translation>Recharger</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="175"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="174"/>
         <source>Open in browser</source>
         <translation>Ouvrir dans le navigateur</translation>
     </message>
@@ -180,7 +182,7 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="240"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="358"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="334"/>
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
@@ -212,69 +214,104 @@
     </message>
 </context>
 <context>
+    <name>LinksBag::Application</name>
+    <message>
+        <location filename="../src/application.cpp" line="91"/>
+        <source>Authorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application.cpp" line="91"/>
+        <source>Not authorized</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LinksBag::GetPocketApi</name>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="227"/>
+        <location filename="../src/getpocketapi.cpp" line="297"/>
         <source>General error</source>
-        <translation type="vanished">Erreur générale</translation>
+        <translation>Erreur générale</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="244"/>
+        <location filename="../src/getpocketapi.cpp" line="314"/>
+        <source>Network error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/getpocketapi.cpp" line="265"/>
+        <location filename="../src/getpocketapi.cpp" line="332"/>
         <source>Reply data is corrupted</source>
-        <translation type="vanished">Les données sont corrompues</translation>
+        <translation>Les données sont corrompues</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="423"/>
         <source>Unable to remove bookamark</source>
-        <translation type="vanished">Impossible de supprimer le marque-page</translation>
+        <translation>Impossible de supprimer le marque-page</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="446"/>
+        <location filename="../src/getpocketapi.cpp" line="470"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation type="vanished">Impossible de définir le marque-page comme %1</translation>
+        <translation>Impossible de définir le marque-page comme %1</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>favorite</source>
-        <translation type="vanished">favori</translation>
+        <translation>favori</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>unfavorite</source>
-        <translation type="vanished">non favori</translation>
+        <translation>non favori</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>read</source>
-        <translation type="vanished">vu</translation>
+        <translation>vu</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>unread</source>
-        <translation type="vanished">non vu</translation>
+        <translation>non vu</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="494"/>
         <source>Unable to update tags</source>
-        <translation type="vanished">Impossible de mettre à jour les labels</translation>
+        <translation>Impossible de mettre à jour les labels</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
+        <location filename="../src/linksbagmanager.cpp" line="116"/>
         <source>GetPocket error (%1): </source>
-        <translation type="vanished">Erreur serveur Pocket (%1) :</translation>
+        <translation>Erreur serveur Pocket (%1) :</translation>
     </message>
 </context>
 <context>
     <name>LoginPage</name>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="36"/>
-        <source>GetPocket/Google account</source>
-        <translation>GetPocket / Compte Google</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/LoginPage.qml" line="44"/>
-        <source>GetPocket/Firefox account</source>
-        <translation>GetPocket / Compte Firefox</translation>
+        <location filename="../qml/pages/LoginPage.qml" line="50"/>
+        <source>Welcome to LinksBag</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="58"/>
-        <source>Application not authorized.
-Pull down to do it</source>
-        <translation>Application non autorisée. 
-Tirez vers le bas pour accorder les autorisations.</translation>
+        <source>Before we begin, choose how you&apos;ll log into your GetPocket.com account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="63"/>
+        <source>Login with Google</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="71"/>
+        <source>Firefox/Regular account</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

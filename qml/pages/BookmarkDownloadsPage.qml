@@ -35,8 +35,8 @@ Page {
     Mercury {
         id: readability
         onEntryChanged: {
+            //console.log(entry);
             linksbagManager.updateContent(currentBookmarkId, entry);
-            linksbagManager.saveBookmarks();
         }
     }
 
@@ -55,16 +55,10 @@ Page {
             id: listitem
             width: listview.width
 
-            Label {
-                visible: false
-                text: index
-                onTextChanged: {
-                    if (index == 0) {
-                        currentBookmarkId = bookmarkID;
-                        readability.setArticle(bookmarkUrl)
-                    }
-               }
-            }
+            Component.onCompleted: if (index == 0) {
+               currentBookmarkId = bookmarkID;
+               readability.setArticle(bookmarkUrl)
+           }
 
             Label {
                  id: label

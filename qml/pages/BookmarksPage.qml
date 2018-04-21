@@ -244,15 +244,19 @@ Page {
                 }
             }
 
-            Rectangle {
+            Item {
                 anchors.fill: parent;
                 opacity: 0.3;
-                color: "transparent";
                 Image {
                     id: thumbnailImage
-                    source: bookmarkImageUrl
-                    anchors.fill: parent;
-                    fillMode: Image.PreserveAspectCrop
+                    source: ""
+                    height: parent.height
+                    clip: true
+                    Component.onCompleted: linksbagManager.getThumbnail(bookmarkID)
+                    Connections {
+                        target: linksbagManager
+                        onThumbnailFound: if (id == bookmarkID) thumbnailImage.source = thumbnailPath
+                    }
                 }
                 OpacityRampEffect {
                     slope: 1.0
@@ -262,95 +266,67 @@ Page {
                 }
             }
 
-            GlassItem {
-                id: unreadIndicator
-                width: Theme.itemSizeExtraSmall
-                height: width
-                x: -(width/2)
-                anchors.top: parent.top
-                color: Theme.highlightColor
-                visible: !bookmarkRead
-            }
-
-            Column {
-                anchors.left: parent.left
-                anchors.leftMargin: Theme.horizontalPageMargin
-                anchors.right: favoriteImage.left
-                anchors.rightMargin: Theme.paddingMedium
-
-                Item { width: 1; height: Theme.paddingMedium; }
-
-                Label {
-                    id: titleLabel
-
-                    width: parent.width
-
-                    font.family: Theme.fontFamilyHeading
-                    font.pixelSize:  Theme.fontSizeMedium
-                    wrapMode: Text.WordWrap
-                    elide: Text.ElideRight
-                    maximumLineCount: 4
-
-                    text: bookmarkTitle
+            Row {
+                spacing: Theme.paddingLarge
+                x: -Theme.horizontalPageMargin
+                y: Theme.paddingLarge*2
+                height: childrenRect.height + Theme.paddingLarge*2
+                width: bookmarksView.width
+                GlassItem {
+                    id: unreadIndicator
+                    width: Theme.itemSizeExtraSmall
+                    height: width
+                    x: -(width/2)
+                    color: Theme.highlightColor
+                    visible: !bookmarkRead
                 }
+                Column {
+                    width: parent.width - favoriteImage.width - 2*Theme.paddingLarge - unreadIndicator.width
 
-                Label {
-                    id: urlLabel
-
-                    width: parent.width
-
-                    font.pixelSize:  Theme.fontSizeExtraSmall
-                    color: Theme.secondaryColor
-                    elide: Text.ElideRight
-
-                    text: {
-                        var matches = bookmarkUrl.toString()
-                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                        return matches ? matches[1] : bookmarkUrl
-                    }
-                }
-
-                Row {
-                    width: parent.width
-
-                    clip: true
-
-                    Image {
-                        id: tagsIcon
-
-                        anchors.verticalCenter: parent.verticalCenter
-                        source: "qrc:/images/icon-s-tag.png"
-
-                        visible: bookmarkTags != ""
+                    Label {
+                        width: parent.width
+                        font.family: Theme.fontFamilyHeading
+                        font.pixelSize:  Theme.fontSizeMedium
+                        wrapMode: Text.WordWrap
+                        elide: Text.ElideRight
+                        maximumLineCount: 4
+                        text: bookmarkTitle
                     }
 
                     Label {
-                        id: tagsLabel
-
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        font.pixelSize:  Theme.fontSizeTiny
-                        font.italic: true
+                        width: parent.width
+                        font.pixelSize:  Theme.fontSizeExtraSmall
+                        color: Theme.secondaryColor
                         elide: Text.ElideRight
+                        text: {
+                            var matches = bookmarkUrl.toString()
+                                    .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                            return matches ? matches[1] : bookmarkUrl
+                        }
+                    }
 
-                        text: bookmarkTags
+                    Row {
+                        width: parent.width
+                        clip: true
+                        Image {
+                            anchors.verticalCenter: parent.verticalCenter
+                            source: "qrc:/images/icon-s-tag.png"
+                            visible: bookmarkTags != ""
+                        }
+                        Label {
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize:  Theme.fontSizeTiny
+                            font.italic: true
+                            elide: Text.ElideRight
+                            text: bookmarkTags
+                        }
                     }
                 }
 
-                Item { width: 1; height: Theme.paddingMedium; }
-            }
-
-            IconButton {
-                id: favoriteImage
-                anchors {
-                    right: parent.right;
-                    rightMargin: Theme.paddingMedium;
-                }
-                icon.source: bookmarkFavorite ?
-                    "image://Theme/icon-m-favorite-selected" :
-                    "image://Theme/icon-m-favorite"
-                onClicked: {
-                    linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
+                IconButton {
+                    id: favoriteImage
+                    icon.source: "image://Theme/icon-m-favorite" + (bookmarkFavorite ? "-selected": "")
+                    onClicked: linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
                 }
             }
 

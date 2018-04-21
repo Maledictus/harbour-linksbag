@@ -21,7 +21,7 @@
     <name>BookmarkDownloadsPage</name>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="50"/>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="83"/>
         <source>Downloading</source>
         <translation>Laddar ner</translation>
     </message>
@@ -31,7 +31,7 @@
         <translation>%1 återstår</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="83"/>
         <source>Queued</source>
         <translation>Köat</translation>
     </message>
@@ -39,36 +39,36 @@
 <context>
     <name>BookmarkViewPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="155"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="120"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="154"/>
         <source>Mark as unread</source>
         <translation>Markera som oläst</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="122"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="156"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="121"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="155"/>
         <source>Mark as read</source>
         <translation>Markera som läst</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="166"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="133"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="165"/>
         <source>Mark as unfavorite</source>
         <translation>Ta bort favoritmärkning</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="135"/>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="167"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="134"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="166"/>
         <source>Mark as favorite</source>
         <translation>Markera som favorit</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="146"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="145"/>
         <source>Reload</source>
         <translation>Uppdatera</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkViewPage.qml" line="175"/>
+        <location filename="../qml/pages/BookmarkViewPage.qml" line="174"/>
         <source>Open in browser</source>
         <translation>Öppna i webbläsaren</translation>
     </message>
@@ -182,7 +182,7 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="240"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="358"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="334"/>
         <source>Remove</source>
         <translation>Ta bort</translation>
     </message>
@@ -286,7 +286,7 @@
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="103"/>
+        <location filename="../src/linksbagmanager.cpp" line="116"/>
         <source>GetPocket error (%1): </source>
         <translation>GetPocket-fel (%1): </translation>
     </message>
@@ -294,21 +294,24 @@
 <context>
     <name>LoginPage</name>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="36"/>
-        <source>GetPocket/Google account</source>
-        <translation>GetPocket-/Google-konto</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/LoginPage.qml" line="44"/>
-        <source>GetPocket/Firefox account</source>
-        <translation>GetPocket-/Firefox-konto</translation>
+        <location filename="../qml/pages/LoginPage.qml" line="50"/>
+        <source>Welcome to LinksBag</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="58"/>
-        <source>Application not authorized.
-Pull down to do it</source>
-        <translation>Programmet är inte auktoriserat.
-Dra neråt för att göra det</translation>
+        <source>Before we begin, choose how you&apos;ll log into your GetPocket.com account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="63"/>
+        <source>Login with Google</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="71"/>
+        <source>Firefox/Regular account</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

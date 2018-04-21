@@ -2,6 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
+Copyright (c) 2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +29,9 @@ THE SOFTWARE.
 
 #include <QObject>
 #include <QVariantMap>
+#include <QMap>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 namespace LinksBag
 {
@@ -53,6 +57,9 @@ class LinksBagManager : public QObject
     FilterProxyModel *m_FilterProxyModel;
     FilterProxyModel *m_DownloadingModel;
 
+    QMap<QUrl, QString> m_thumbnailUrls;
+    QNetworkAccessManager *m_thumbnailDownloader;
+
     Q_PROPERTY(bool busy READ GetBusy NOTIFY busyChanged)
     Q_PROPERTY(bool logged READ GetLogged NOTIFY loggedChanged)
     Q_PROPERTY(BookmarksModel* bookmarksModel READ GetBookmarksModel
@@ -77,6 +84,9 @@ private:
     void SetBusy(const bool busy);
     void SetLogged(const bool logged);
 
+private slots:
+    void thumbnailReceived(QNetworkReply* pReply);
+
 public slots:
     void obtainRequestToken();
     void requestAccessToken();
@@ -86,17 +96,23 @@ public slots:
     void loadBookmarksFromCache();
     void saveBookmarks();
     void refreshBookmarks();
+    void getThumbnail(const QString& id);
     void removeBookmark(const QString& id);
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);
     void updateTags(const QString& id, const QString& tags);
+
     void updateContent(const QString& id, const QString& content);
+    bool hasContent(const QString& id);
+    QString getContent(const QString& id);
 
     void resetAccount();
 
     void handleGotAuthAnswer(const QString& data);
 
 signals:
+    void thumbnailFound(const QString& id, const QString& thumbnailPath);
+
     void busyChanged();
     void loggedChanged();
     void requestTokenChanged(const QString& requestToken);

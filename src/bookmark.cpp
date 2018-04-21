@@ -2,6 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
+Copyright (c) 2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -145,19 +146,9 @@ void Bookmark::SetStatus(Bookmark::Status status)
     m_Status = status;
 }
 
-QString Bookmark::GetContent() const
-{
-    return  m_Content;
-}
-
-void Bookmark::SetContent(const QString& content)
-{
-    m_Content = content;
-}
-
 QByteArray Bookmark::Serialize() const
 {
-    quint16 ver = 2;
+    quint16 ver = 3;
     QByteArray result;
     {
         QDataStream ostr(&result, QIODevice::WriteOnly);
@@ -172,8 +163,7 @@ QByteArray Bookmark::Serialize() const
                 << m_Tags
                 << m_AddTime
                 << m_UpdateTime
-                << m_Status
-                << m_Content;
+                << m_Status;
     }
 
     return result;
@@ -185,7 +175,7 @@ Bookmark Bookmark::Deserialize(const QByteArray& data)
     QDataStream in(data);
     in >> ver;
 
-    if(ver > 2)
+    if(ver > 3)
     {
         qWarning() << Q_FUNC_INFO
                 << "unknown version"
@@ -206,11 +196,6 @@ Bookmark Bookmark::Deserialize(const QByteArray& data)
             >> result.m_AddTime
             >> result.m_UpdateTime
             >> status;
-
-    if (ver == 2)
-    {
-        in >> result.m_Content;
-    }
     result.SetStatus(static_cast<Status>(status));
 
     return result;
@@ -230,7 +215,6 @@ QVariantMap Bookmark::ToMap() const
     map["bookmarkAddTime"] = m_AddTime;
     map["bookmarkUpdateTime"] = m_UpdateTime;
     map["bookmarkStatus"] = m_Status;
-    map["bookmarkContent"] = m_Content;
 
     return map;
 }

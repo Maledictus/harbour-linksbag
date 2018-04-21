@@ -69,8 +69,6 @@ QVariant BookmarksModel::data(const QModelIndex& index, int role) const
         return bookmark.GetUpdateTime();
     case BRStatus:
         return bookmark.GetStatus();
-    case BRContent:
-        return bookmark.GetContent();
     default:
         return QVariant();
     }
@@ -95,7 +93,6 @@ QHash<int, QByteArray> BookmarksModel::roleNames() const
     roles [BRAddTime] = "bookmarkAddTime";
     roles [BRUpdateTime] = "bookmarkUpdateTime";
     roles [BRStatus] = "bookmarkStatus";
-    roles [BRContent] = "bookmarkContent";
 
     return roles;
 }
@@ -163,7 +160,6 @@ void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
                 bm.SetTags(bms.GetTags());
                 bm.SetImageUrl(bms.GetImageUrl());
                 bm.SetStatus(bms.GetStatus());
-                bm.SetContent("");
 
                 emit dataChanged(index(pos), index(pos));
                 break;
@@ -221,20 +217,6 @@ void BookmarksModel::UpdateTags(const QString& id, const QString& tags)
         if(bm.GetID() == id)
         {
             bm.SetTags(tags.split(',', QString::SkipEmptyParts));
-            emit dataChanged(index(i, 0), index(i, 0));
-            break;
-        }
-    }
-}
-
-void BookmarksModel::UpdateContent(const QString& id, const QString& content)
-{
-    for(int i = 0, size = m_Bookmarks.count(); i < size; ++i)
-    {
-        auto& bm = m_Bookmarks[i];
-        if(bm.GetID() == id)
-        {
-            bm.SetContent(content);
             emit dataChanged(index(i, 0), index(i, 0));
             break;
         }

@@ -39,10 +39,7 @@ Page {
         id: readability
         isBusy: hasContent
         onEntryChanged: {
-            if (entry !== currentBookmark.bookmarkContent) {
-                linksbagManager.updateContent(bookmarkId, entry);
-                linksbagManager.saveBookmarks();
-            }
+            linksbagManager.updateContent(bookmarkId, entry);
             entryText.text = generateCustomCss() + entry;
             hasContent = true;
         }
@@ -53,7 +50,7 @@ Page {
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
-    property bool hasContent: currentBookmark && currentBookmark.bookmarkContent !== "" ? true : false
+    property bool hasContent: linksbagManager.hasContent(bookmarkId)
 
     function generateCustomCss() {
         return  "<style>
@@ -70,11 +67,13 @@ Page {
             cover.image = currentBookmark.bookmarkImageUrl
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
+            console.log(hasContent)
+
             if (!hasContent) {
                 readability.bookmarkImage = currentBookmark.bookmarkImageUrl
                 readability.setArticle(currentBookmark.bookmarkUrl)
             } else {
-                readability.entry = currentBookmark.bookmarkContent
+                readability.entry = linksbagManager.getContent(bookmarkId)
                 readability.isBusy = false;
             }
         }
