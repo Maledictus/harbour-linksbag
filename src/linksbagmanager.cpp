@@ -189,14 +189,20 @@ void LinksBagManager::SetLogged(const bool logged)
     emit loggedChanged();
 }
 
+QString LinksBagManager::getThumbnailPath(const QString &id)
+{
+    QString path = thumbnailDirectory + id + ".jpg";
+    if (QFile(path).exists())
+        return path;
+    return "";
+}
+
 void LinksBagManager::getThumbnail(const QString &id)
 {
     // check if thumbnail for this article is available in cache
-    QString path = thumbnailDirectory + id + ".jpg";
-    if (QFile(path).exists()) {
-        emit thumbnailFound(id, path);
+    QString path = getThumbnailPath(id);
+    if (!path.isEmpty())
         return;
-    }
 
     // nope, we need actual URL to the file then
     const auto& bookmarks = m_BookmarksModel->GetBookmarks();

@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Silica.private 1.0
 import harbour.linksbag 1.0
 
 Page {
@@ -201,9 +202,9 @@ Page {
 
         delegate: ListItem {
             id: rootDelegateItem
-
             width: bookmarksView.width
-            contentHeight: contentItem.childrenRect.height
+            height: Theme.paddingLarge*4 + textColumn.childrenRect.height
+            contentHeight: height
 
             menu: ContextMenu {
                 MenuItem {
@@ -238,103 +239,91 @@ Page {
 
                 MenuItem {
                     text: qsTr ("Remove")
-                    onClicked: {
-                        remove()
-                    }
+                    onClicked: remorse.execute(rootDelegateItem, qsTr("Remove"), function() {
+                       linksbagManager.removeBookmark(bookmarkID)
+                    })
                 }
             }
 
-            Item {
-                anchors.fill: parent;
-                opacity: 0.3;
-                Image {
-                    id: thumbnailImage
-                    source: ""
-                    height: parent.height
-                    clip: true
-                    Component.onCompleted: linksbagManager.getThumbnail(bookmarkID)
-                    Connections {
-                        target: linksbagManager
-                        onThumbnailFound: if (id == bookmarkID) thumbnailImage.source = thumbnailPath
-                    }
-                }
-                OpacityRampEffect {
-                    slope: 1.0
-                    offset: 0.15
-                    sourceItem: thumbnailImage
-                    direction: OpacityRamp.BottomToTop
+            Image {
+                cache: true
+                asynchronous: true
+                id: thumbnailImage
+                anchors.fill: parent
+                source: linksbagManager.getThumbnailPath(bookmarkID)
+                fillMode: Image.PreserveAspectCrop
+                smooth: false
+                Connections {
+                    target: linksbagManager
+                    onThumbnailFound: if (id == bookmarkID) thumbnailImage.source = thumbnailPath
                 }
             }
 
-            Row {
-                spacing: Theme.paddingLarge
-                x: -Theme.horizontalPageMargin
+            GlassItem {
+                id: unreadIndicator
+                width: Theme.itemSizeExtraSmall
+                height: width
+                x: -(width/2)
+                y: Theme.paddingLarge+(width/4)
+                color: Theme.highlightColor
+                visible: !bookmarkRead
+            }
+            Column {
+                id: textColumn
+                x: Theme.itemSizeExtraSmall/2
                 y: Theme.paddingLarge*2
-                height: childrenRect.height + Theme.paddingLarge*2
-                width: bookmarksView.width
-                GlassItem {
-                    id: unreadIndicator
-                    width: Theme.itemSizeExtraSmall
-                    height: width
-                    x: -(width/2)
-                    color: Theme.highlightColor
-                    visible: !bookmarkRead
-                }
-                Column {
-                    width: parent.width - favoriteImage.width - 2*Theme.paddingLarge - unreadIndicator.width
+                property real margin: Theme.paddingMedium
+                width: parent.width - Theme.itemSizeExtraSmall - Theme.iconSizeMedium
 
-                    Label {
-                        width: parent.width
-                        font.family: Theme.fontFamilyHeading
-                        font.pixelSize:  Theme.fontSizeMedium
+                Repeater {
+                    id: textLines
+                    model: TextLayoutModel {
+                        id: textLayout
+                        width: textColumn.width - 2*(Theme.paddingMedium + Theme.paddingSmall)
+                        font.pixelSize: Theme.fontSizeMedium
                         wrapMode: Text.WordWrap
-                        elide: Text.ElideRight
-                        maximumLineCount: 4
                         text: bookmarkTitle
                     }
 
-                    Label {
-                        width: parent.width
-                        font.pixelSize:  Theme.fontSizeExtraSmall
-                        color: Theme.secondaryColor
-                        elide: Text.ElideRight
-                        text: {
-                            var matches = bookmarkUrl.toString()
-                                    .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                            return matches ? matches[1] : bookmarkUrl
-                        }
-                    }
-
-                    Row {
-                        width: parent.width
-                        clip: true
-                        Image {
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: "qrc:/images/icon-s-tag.png"
-                            visible: bookmarkTags != ""
+                    delegate: Item {
+                        width: Math.min(parent.width - 2*textColumn.margin, model.width + 2*Theme.paddingSmall)
+                        height: model.height
+                        Rectangle {
+                            width: parent.width
+                            y: 1
+                            height: parent.height - y
+                            radius: Theme.paddingSmall/2
+                            color: 'white'
                         }
                         Label {
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize:  Theme.fontSizeTiny
-                            font.italic: true
-                            elide: Text.ElideRight
-                            text: bookmarkTags
+                            x: Theme.paddingSmall
+                            font: textLayout.font
+                            wrapMode: Text.WordWrap
+                            maximumLineCount: 1
+                            text: model.text
+                            color: 'black'
                         }
                     }
                 }
-
-                IconButton {
-                    id: favoriteImage
-                    icon.source: "image://Theme/icon-m-favorite" + (bookmarkFavorite ? "-selected": "")
-                    onClicked: linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
+                Label {
+                    x: Theme.paddingSmall
+                    width: parent.width
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    color: 'white'
+                    elide: Text.ElideRight
+                    text: {
+                        var matches = bookmarkUrl.toString()
+                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                        return matches ? matches[1] : bookmarkUrl
+                    }
                 }
             }
 
-            function remove () {
-                remorse.execute(rootDelegateItem, qsTr("Remove"),
-                        function() {
-                            linksbagManager.removeBookmark(bookmarkID)
-                        })
+            IconButton {
+                y: Theme.paddingLarge*2
+                x: bookmarksView.width - width - Theme.horizontalPageMargin
+                icon.source: "image://Theme/icon-m-favorite" + (bookmarkFavorite ? "-selected": "")
+                onClicked: linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
             }
 
             RemorseItem { id: remorse }

@@ -97,6 +97,7 @@ public slots:
     void saveBookmarks();
     void refreshBookmarks();
     void getThumbnail(const QString& id);
+    QString getThumbnailPath(const QString &id);
     void removeBookmark(const QString& id);
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);

@@ -76,113 +76,113 @@
 <context>
     <name>BookmarksPage</name>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="48"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="49"/>
         <source>All</source>
         <translation>Alles</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="53"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="54"/>
         <source>Read</source>
         <translation>Gelezen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="58"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="59"/>
         <source>Unread</source>
         <translation>Ongelezen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="63"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="64"/>
         <source>Favorite</source>
         <translation>Favorieten</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="68"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="69"/>
         <source>Not downloaded</source>
         <translation>Niet gedownload</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="108"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="109"/>
         <source>Logout...</source>
         <translation>Afmelden…</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="125"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="127"/>
         <source>Bookmarks</source>
         <translation>Bladwijzers</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="137"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="139"/>
         <source>Search</source>
         <translation>Zoeken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="149"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="151"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
         <translation>Er zijn geen bladwijzers. Trek omlaag om te vernieuwen.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="156"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="158"/>
         <source>Logout</source>
         <translation>Afmelden</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="164"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="166"/>
         <source>Downloads</source>
         <translation>Downloads</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="171"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="173"/>
         <source>Hide search field</source>
         <translation>Zoekveld verbergen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="172"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="174"/>
         <source>Show search field</source>
         <translation>Zoekveld tonen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="182"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="184"/>
         <source>View: %1</source>
         <translation>Weergave: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="191"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="193"/>
         <source>Refresh</source>
         <translation>Vernieuwen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="210"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="212"/>
         <source>Copy url to clipboard</source>
         <translation>URL kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="213"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="215"/>
         <source>Url copied into clipboard</source>
         <translation>URL gekopieerd naar klembord</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="218"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="220"/>
         <source>Open in browser</source>
         <translation>Openen in browser</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="227"/>
         <source>Edit tags</source>
         <translation>Tags bewerken</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="237"/>
         <source>Mark as unread</source>
         <translation>Markeren als ongelezen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="237"/>
         <source>Mark as read</source>
         <translation>Markeren als gelezen</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="240"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="334"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="242"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="243"/>
         <source>Remove</source>
         <translation>Verwijderen</translation>
     </message>
@@ -294,22 +294,22 @@
 <context>
     <name>LoginPage</name>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="50"/>
+        <location filename="../qml/pages/LoginPage.qml" line="51"/>
         <source>Welcome to LinksBag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="58"/>
+        <location filename="../qml/pages/LoginPage.qml" line="59"/>
         <source>Before we begin, choose how you&apos;ll log into your GetPocket.com account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="63"/>
+        <location filename="../qml/pages/LoginPage.qml" line="64"/>
         <source>Login with Google</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="71"/>
+        <location filename="../qml/pages/LoginPage.qml" line="72"/>
         <source>Firefox/Regular account</source>
         <translation type="unfinished"></translation>
     </message>
