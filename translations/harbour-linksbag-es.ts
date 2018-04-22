@@ -101,83 +101,83 @@
         <translation>No descargado</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="119"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="120"/>
         <source>Bookmarks</source>
         <translation>Marcadores</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="131"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="132"/>
         <source>Search</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="143"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="144"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
         <translation>No hay marcadores. Desliza hacia abajo para actualizar.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="150"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="151"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="155"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="156"/>
         <source>Downloads</source>
         <translation>Descargas</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="162"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="163"/>
         <source>Hide search field</source>
         <translation>Ocultar campo de búsqueda</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="163"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="164"/>
         <source>Show search field</source>
         <translation>Mostrar campo de búsqueda</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="173"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="174"/>
         <source>View: %1</source>
         <translation>Mostrar: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="182"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="183"/>
         <source>Refresh</source>
         <translation>Actualizar</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="200"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="201"/>
         <source>Copy url to clipboard</source>
         <translation>Copiar url al portapapeles</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="203"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="204"/>
         <source>Url copied into clipboard</source>
         <translation>Url copiada al portapapeles</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="208"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="209"/>
         <source>Open in browser</source>
         <translation>Abrir en el navegador</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="215"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="216"/>
         <source>Edit tags</source>
         <translation>Editar etiquetas</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="226"/>
         <source>Mark as unread</source>
         <translation>Marcar como no leído</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="226"/>
         <source>Mark as read</source>
         <translation>Marcar como leído</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="230"/>
         <location filename="../qml/pages/BookmarksPage.qml" line="231"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="232"/>
         <source>Remove</source>
         <translation>Eliminar</translation>
     </message>
@@ -224,56 +224,56 @@
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="226"/>
-        <location filename="../src/getpocketapi.cpp" line="296"/>
+        <location filename="../src/getpocketapi.cpp" line="227"/>
+        <location filename="../src/getpocketapi.cpp" line="297"/>
         <source>General error</source>
         <translation>Error general</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="243"/>
-        <location filename="../src/getpocketapi.cpp" line="313"/>
+        <location filename="../src/getpocketapi.cpp" line="244"/>
+        <location filename="../src/getpocketapi.cpp" line="314"/>
         <source>Network error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="264"/>
-        <location filename="../src/getpocketapi.cpp" line="331"/>
+        <location filename="../src/getpocketapi.cpp" line="265"/>
+        <location filename="../src/getpocketapi.cpp" line="332"/>
         <source>Reply data is corrupted</source>
         <translation>Los datos de respuesta están corruptos</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="422"/>
+        <location filename="../src/getpocketapi.cpp" line="423"/>
         <source>Unable to remove bookamark</source>
         <translation>No es posible eliminar marcador</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="445"/>
-        <location filename="../src/getpocketapi.cpp" line="469"/>
+        <location filename="../src/getpocketapi.cpp" line="446"/>
+        <location filename="../src/getpocketapi.cpp" line="470"/>
         <source>Unable to mark bookamark as %1</source>
         <translation>No es posible marcar marcador como %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="446"/>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>favorite</source>
         <translation>favorito</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="446"/>
+        <location filename="../src/getpocketapi.cpp" line="447"/>
         <source>unfavorite</source>
         <translation>no favorito</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="470"/>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>read</source>
         <translation>leído</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="470"/>
+        <location filename="../src/getpocketapi.cpp" line="471"/>
         <source>unread</source>
         <translation>no leído</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="493"/>
+        <location filename="../src/getpocketapi.cpp" line="494"/>
         <source>Unable to update tags</source>
         <translation>No es posible actualizar etiquetas</translation>
     </message>
@@ -343,6 +343,7 @@
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="81"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="92"/>
         <source>Cache</source>
         <translation type="unfinished"></translation>
     </message>
@@ -367,17 +368,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="93"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="95"/>
+        <source>Force full refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="102"/>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="99"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="108"/>
         <source>Logout</source>
         <translation type="unfinished">Cerrar sesión</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="100"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="109"/>
         <source>Logging out</source>
         <translation type="unfinished"></translation>
     </message>
