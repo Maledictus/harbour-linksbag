@@ -41,6 +41,7 @@ Page {
             linksbagManager.updateContent(bookmarkId, entry);
             entryText.text = generateCustomCss() + entry;
             hasContent = true;
+            readability.item.isBusy = false;
         }
     }
 
@@ -72,6 +73,7 @@ Page {
                 readability.setArticle(currentBookmark.bookmarkUrl)
             } else {
                 entryText.text = generateCustomCss() + linksbagManager.getContent(bookmarkId)
+                readability.item.isBusy = false;
             }
 
             cover.image = currentBookmark.bookmarkCoverImage
@@ -325,7 +327,7 @@ Page {
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
         visible: true
-        running: linksbagManager.busy || readability.isBusy;
+        running: linksbagManager.busy || readability.item.isBusy;
     }
 }
 
