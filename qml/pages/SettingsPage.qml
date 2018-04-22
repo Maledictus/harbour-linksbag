@@ -78,6 +78,26 @@ Page {
                 }
             }
 
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Force full refresh")
+                onClicked: {
+                    applicationSettings.setValue("last_update", 0)
+                    linksbagManager.refreshBookmarks();
+                }
+            }
+            Label {
+                anchors {
+                    left: parent.left; right: parent.right; margins: Theme.horizontalPageMargin
+                }
+                height: paintedHeight + Theme.paddingSmall
+                color: Theme.secondaryColor
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeSmall
+
+                text: qsTr("In case something gone really, really wrong, this button will make app forget that it ever synced. Good luck.")
+            }
+
             SectionHeader { text: qsTr("Cache") }
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -88,9 +108,20 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Clear thumbnail cache")
                 onClicked: remorse.execute(qsTr("Clearing thumbnail cache"), function() { linksbagManager.resetThumbnailCache() } )
-            }
+            }            
 
             SectionHeader { text: qsTr("Account") }
+            Label {
+                anchors {
+                    left: parent.left; right: parent.right; margins: Theme.horizontalPageMargin
+                }
+                height: paintedHeight + Theme.paddingSmall
+                color: Theme.secondaryColor
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeSmall
+
+                text: qsTr("You're logged in as %1.").arg(applicationSettings.value("user_name"))
+            }
             ButtonLayout {
                 width: parent.width - 2* Theme.horizontalPageMargin
                 anchors.horizontalCenter: parent.horizontalCenter
