@@ -103,6 +103,7 @@ Page {
         anchors.centerIn: parent
         running: linksbagManager.busy
         visible: running
+        z: 2
     }
 
     SilicaListView {
@@ -180,9 +181,7 @@ Page {
 
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: {
-                    linksbagManager.refreshBookmarks()
-                }
+                onClicked: linksbagManager.refreshBookmarks()
             }
         }
 
@@ -263,6 +262,7 @@ Page {
                 // shamelessly borrowed from Jolla, sorry guys :(
                 id: wallpaperEffect
                 anchors.fill: parent
+                z: -1
 
                 visible: thumbnail.source != ""
                 property real dimmedOpacity: 0.4
@@ -336,36 +336,6 @@ Page {
                     text: bookmarkTitle
                 }
 
-                /*Repeater {
-                    id: textLines
-                    model: TextLayoutModel {
-                        id: textLayout
-                        width: textColumn.width - 2*(Theme.paddingMedium + Theme.paddingSmall)
-                        font.pixelSize: Theme.fontSizeMedium
-                        wrapMode: Text.WordWrap
-                        text: bookmarkTitle
-                    }
-
-                    delegate: Item {
-                        width: Math.min(parent.width - 2*textColumn.margin, model.width + 2*Theme.paddingSmall)
-                        height: model.height
-                        Rectangle {
-                            width: parent.width
-                            y: 1
-                            height: parent.height - y
-                            radius: Theme.paddingSmall/2
-                            color: 'white'
-                        }
-                        Label {
-                            x: Theme.paddingSmall
-                            font: textLayout.font
-                            wrapMode: Text.WordWrap
-                            maximumLineCount: 1
-                            text: model.text
-                            color: 'black'
-                        }
-                    }
-                }*/
                 Item {
                     width: Math.min(parent.width - 2*textColumn.margin, sourceLabel.paintedWidth + 2*Theme.paddingSmall)
                     height: sourceLabel.paintedHeight
@@ -389,6 +359,15 @@ Page {
                                     .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
                             return matches ? matches[1] : bookmarkUrl
                         }
+                    }
+                    Image {
+                        visible: bookmarkHasContent
+                        anchors {
+                            left: sourceLabel.right
+                            leftMargin: Theme.paddingLarge
+                            verticalCenter: sourceLabel.verticalCenter
+                        }
+                        source: "image://Theme/icon-s-cloud-download"
                     }
                 }
                 Item {
@@ -444,6 +423,8 @@ Page {
 
         VerticalScrollDecorator {}
     }
+
+
 
     Component.onCompleted: {
         // Sync on startup

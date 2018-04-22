@@ -327,6 +327,7 @@ Page {
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
         visible: true
+        z: 2
         running: linksbagManager.busy || readability.item.isBusy;
     }
 }
