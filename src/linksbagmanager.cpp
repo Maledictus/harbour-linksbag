@@ -166,6 +166,7 @@ void LinksBagManager::MakeConnections()
                         m_thumbnailDownloader->get(QNetworkRequest(url));
                     }
                 }
+                m_FilterProxyModel->invalidate();
                 m_FilterProxyModel->sort(0, Qt::DescendingOrder);
                 ApplicationSettings::Instance(this)->setValue("last_update", since);
             });
