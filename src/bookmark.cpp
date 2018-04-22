@@ -24,16 +24,10 @@ THE SOFTWARE.
 */
 
 #include "bookmark.h"
+#include "application.h"
 #include <QtDebug>
 #include <QDataStream>
-#include <QStandardPaths>
 #include <QFile>
-
-
-const QString thumbnailDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/thumbnails/";
-const QString articleCacheDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/articles/";
-const QString coverImagesDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/harbour-linksbag/covers/";
-
 
 namespace LinksBag
 {
@@ -91,7 +85,7 @@ QUrl Bookmark::GetImageUrl() const
 
 QUrl Bookmark::GetCoverImageUrl()
 {
-    QString cachedPath = coverImagesDirectory + m_ID + ".jpg";
+    QString cachedPath = Application::GetPath(Application::CoverCacheDirectory) + m_ID + ".jpg";
     if (QFile::exists(cachedPath)) {
         return cachedPath;
     } else return m_ImageUrl;
@@ -164,7 +158,7 @@ void Bookmark::SetStatus(Bookmark::Status status)
 
 QString Bookmark::GetThumbnail()
 {
-    QString path = thumbnailDirectory + m_ID + ".jpg";
+    QString path = Application::GetPath(Application::ThumbnailCacheDirectory) + m_ID + ".jpg";
     if (QFile(path).exists())
         return path;
     return "";
@@ -172,7 +166,7 @@ QString Bookmark::GetThumbnail()
 
 bool Bookmark::HasContent()
 {
-    return QFile::exists(articleCacheDirectory + m_ID + ".html");
+    return QFile::exists(Application::GetPath(Application::ArticleCacheDirectory) + m_ID + ".html");
 }
 
 QByteArray Bookmark::Serialize() const
@@ -244,9 +238,9 @@ QVariantMap Bookmark::ToMap() const
     map["bookmarkAddTime"] = m_AddTime;
     map["bookmarkUpdateTime"] = m_UpdateTime;
     map["bookmarkStatus"] = m_Status;
-    map["bookmarkHasContent"] = QFile::exists(articleCacheDirectory + m_ID + ".html");
+    map["bookmarkHasContent"] = QFile::exists(Application::GetPath(Application::ArticleCacheDirectory) + m_ID + ".html");
 
-    QString cachedPath = coverImagesDirectory + m_ID + ".jpg";
+    QString cachedPath = Application::GetPath(Application::CoverCacheDirectory) + m_ID + ".jpg";
     map["bookmarkCoverImage"] = QFile::exists(cachedPath) ? cachedPath : m_ImageUrl;
 
     return map;
