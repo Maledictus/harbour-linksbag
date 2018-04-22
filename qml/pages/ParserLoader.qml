@@ -30,9 +30,15 @@ Loader {
     property bool isBusy: false
     property string entry: ""
     property string bookmarkImage: ""
+    property string articleUrl: ""
 
     onBookmarkImageChanged: item.bookmarkImage = bookmarkImage
-    function setArticle(url) { loader.item.setArticle(url) }
+    function setArticle(url) {
+        if (status == Loader.Ready)
+            loader.item.setArticle(url)
+        else articleUrl = url
+    }
+    onLoaded: if (articleUrl) loader.item.setArticle(articleUrl)
 
     Connections {
         target: loader.item
