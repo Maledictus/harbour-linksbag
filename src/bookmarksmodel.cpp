@@ -69,8 +69,12 @@ QVariant BookmarksModel::data(const QModelIndex& index, int role) const
         return bookmark.GetUpdateTime();
     case BRStatus:
         return bookmark.GetStatus();
-    case BRContent:
-        return bookmark.GetContent();
+    case BRThumbnail:
+        return bookmark.GetThumbnail();
+    case BRHasContent:
+        return bookmark.HasContent();
+    case BRCoverImage:
+        return bookmark.GetCoverImageUrl();
     default:
         return QVariant();
     }
@@ -95,7 +99,9 @@ QHash<int, QByteArray> BookmarksModel::roleNames() const
     roles [BRAddTime] = "bookmarkAddTime";
     roles [BRUpdateTime] = "bookmarkUpdateTime";
     roles [BRStatus] = "bookmarkStatus";
-    roles [BRContent] = "bookmarkContent";
+    roles [BRThumbnail] = "bookmarkThumbnail";
+    roles [BRHasContent] = "bookmarkHasContent";
+    roles [BRCoverImage] = "bookmarkCoverImage";
 
     return roles;
 }
@@ -133,7 +139,7 @@ void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
                 [bms](decltype(m_Bookmarks.front()) bookmark)
                 {
                     return bms.GetID() == bookmark.GetID();
-                });
+                });        
         if (it != m_Bookmarks.end())
         {
             const int pos = std::distance(m_Bookmarks.begin(), it);
@@ -144,26 +150,23 @@ void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
                 break;
             case Bookmark::SArchived:
             {
-                Bookmark bm = m_Bookmarks[pos];
-                bm.SetIsRead(true);
+                it->SetIsRead(true);
 
                 emit dataChanged(index(pos), index(pos));
                 break;
             }
             default:
             {
-                Bookmark bm = m_Bookmarks[pos];
-                bm.SetUrl(bms.GetUrl());
-                bm.SetTitle(bms.GetTitle());
-                bm.SetDescription(bms.GetDescription());
-                bm.SetIsFavorite(bms.IsFavorite());
-                bm.SetIsRead(bms.IsRead());
-                bm.SetAddTime(bms.GetAddTime());
-                bm.SetUpdateTime(bms.GetUpdateTime());
-                bm.SetTags(bms.GetTags());
-                bm.SetImageUrl(bms.GetImageUrl());
-                bm.SetStatus(bms.GetStatus());
-                bm.SetContent("");
+                it->SetUrl(bms.GetUrl());
+                it->SetTitle(bms.GetTitle());
+                it->SetDescription(bms.GetDescription());
+                it->SetIsFavorite(bms.IsFavorite());
+                it->SetIsRead(bms.IsRead());
+                it->SetAddTime(bms.GetAddTime());
+                it->SetUpdateTime(bms.GetUpdateTime());
+                it->SetTags(bms.GetTags());
+                it->SetImageUrl(bms.GetImageUrl());
+                it->SetStatus(bms.GetStatus());
 
                 emit dataChanged(index(pos), index(pos));
                 break;
@@ -227,17 +230,17 @@ void BookmarksModel::UpdateTags(const QString& id, const QString& tags)
     }
 }
 
-void BookmarksModel::UpdateContent(const QString& id, const QString& content)
+void BookmarksModel::RefreshBookmark(const QString &id)
 {
-    for(int i = 0, size = m_Bookmarks.count(); i < size; ++i)
+    auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),
+            [id](decltype(m_Bookmarks.front()) bookmark)
+            {
+                return bookmark.GetID() == id;
+            });
+    if (it != m_Bookmarks.end())
     {
-        auto& bm = m_Bookmarks[i];
-        if(bm.GetID() == id)
-        {
-            bm.SetContent(content);
-            emit dataChanged(index(i, 0), index(i, 0));
-            break;
-        }
+        const int pos = std::distance(m_Bookmarks.begin(), it);
+        emit dataChanged(index(pos), index(pos));
     }
 }
 

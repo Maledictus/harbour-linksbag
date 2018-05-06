@@ -2,6 +2,7 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
+Copyright (c) 2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +27,30 @@ THE SOFTWARE.
 
 #include <memory>
 
+#include "src/bookmark.h"
 #include <QObject>
 #include <QVariantMap>
+#include <QMap>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
+#include <QThreadPool>
 
 namespace LinksBag
 {
 class BookmarksModel;
 class FilterProxyModel;
 class GetPocketApi;
+
+class DownloadedImageHandler: public QRunnable
+{
+public:
+    DownloadedImageHandler(QNetworkReply *reply, QString id, BookmarksModel* model = 0);
+    void run();
+private:
+    BookmarksModel* m_model;
+    QNetworkReply* m_reply;
+    const QString m_id;
+};
 
 class LinksBagManager : public QObject
 {
@@ -52,6 +69,9 @@ class LinksBagManager : public QObject
     BookmarksModel *m_BookmarksModel;
     FilterProxyModel *m_FilterProxyModel;
     FilterProxyModel *m_DownloadingModel;
+
+    QMap<QUrl, QString> m_thumbnailUrls;
+    QNetworkAccessManager *m_thumbnailDownloader;
 
     Q_PROPERTY(bool busy READ GetBusy NOTIFY busyChanged)
     Q_PROPERTY(bool logged READ GetLogged NOTIFY loggedChanged)
@@ -77,6 +97,9 @@ private:
     void SetBusy(const bool busy);
     void SetLogged(const bool logged);
 
+private slots:
+    void thumbnailReceived(QNetworkReply* pReply);
+
 public slots:
     void obtainRequestToken();
     void requestAccessToken();
@@ -90,9 +113,13 @@ public slots:
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);
     void updateTags(const QString& id, const QString& tags);
+
     void updateContent(const QString& id, const QString& content);
+    QString getContent(const QString& id);
 
     void resetAccount();
+    void resetThumbnailCache();
+    void resetArticleCache();
 
     void handleGotAuthAnswer(const QString& data);
 

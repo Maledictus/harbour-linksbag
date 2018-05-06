@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <QQmlContext>
 #include <QtDebug>
 #include <QtQml>
+#include <QStandardPaths>
 
 #include "authserver.h"
 #include "bookmarksmodel.h"
@@ -75,6 +76,25 @@ void Application::ShowUI()
         qDebug() << "Activating view";
         m_View->raise();
         m_View->requestActivate();
+    }
+}
+
+QString Application::GetPath(ApplicationDirectory subdirectory)
+{
+    QString cacheDirectory = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+    switch (subdirectory) {
+    case AppDataDirectory:
+        return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    case CacheDirectory:
+        return cacheDirectory;
+    case CoverCacheDirectory:
+        return cacheDirectory + "/covers/";
+    case ThumbnailCacheDirectory:
+        return cacheDirectory + "/thumbnails/";
+    case ArticleCacheDirectory:
+        return cacheDirectory + "/articles/";
+    default:
+        return "";
     }
 }
 

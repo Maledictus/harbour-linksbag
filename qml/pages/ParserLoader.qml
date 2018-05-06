@@ -1,7 +1,6 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
 Copyright (c) 2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,45 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-#pragma once
+import QtQuick 2.0
 
-#include <QObject>
 
-class QQuickView;
+Loader {
+    id: loader
+    property bool isBusy: false
+    property string entry: ""
+    property string bookmarkImage: ""
+    property string articleUrl: ""
 
-namespace LinksBag
-{
-class AuthServer;
+    onBookmarkImageChanged: item.bookmarkImage = bookmarkImage
+    function setArticle(url) {
+        if (status == Loader.Ready)
+            loader.item.setArticle(url)
+        else articleUrl = url
+    }
+    onLoaded: if (articleUrl) loader.item.setArticle(articleUrl)
 
-class Application : public QObject
-{
-    Q_OBJECT
-
-    static const int PORT = 45623;
-
-    QQuickView *m_View;
-    AuthServer *m_AuthServer;
-public:
-    explicit Application(QObject *parent = 0);
-
-    enum ApplicationDirectory
-    {
-        CacheDirectory,
-        AppDataDirectory,
-        CoverCacheDirectory,
-        ThumbnailCacheDirectory,
-        ArticleCacheDirectory
-    };
-    static QString GetPath(ApplicationDirectory subdirectory);
-private:
-    void ShowUI();
-
-private slots:
-    void handleAuthAnswerGot(const QString& data);
-    void handleLogged();
-
-public slots:
-    void start();
-    void handleAboutToQuit();
-};
-} // namespace LinksBag
+    Connections {
+        target: loader.item
+        onIsBusyChanged: loader.isBusy = loader.item.isBusy
+        onEntryChanged: loader.entry = loader.item.entry
+    }
+    Component.onCompleted: loader.source = Qt.resolvedUrl("components/" + applicationSettings.value("parser", "Mercury") + ".qml")
+}

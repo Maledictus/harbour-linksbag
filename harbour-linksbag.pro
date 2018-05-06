@@ -1,6 +1,6 @@
 TARGET = harbour-linksbag
 
-VERSION = 2.4
+VERSION = 2.5
 
 QT += webkit network
 
@@ -62,7 +62,10 @@ DISTFILES += qml/harbour-linksbag.qml \
     translations/harbour-linksbag-ru.ts \
     translations/harbour-linksbag-es.ts \
     translations/harbour-linksbag-sv.ts \
-    translations/harbour-linksbag-fr.ts
+    translations/harbour-linksbag-fr.ts \
+    translations/harbour-linksbag-pl.ts \
+    qml/pages/SettingsPage.qml \
+    qml/pages/ParserLoader.qml
 
 
 lupdate_only{
@@ -92,4 +95,5 @@ TRANSLATIONS += translations/harbour-linksbag.ts \
     translations/harbour-linksbag-es.ts \
     translations/harbour-linksbag-sv.ts \
     translations/harbour-linksbag-fr.ts \
+    translations/harbour-linksbag-pl.ts \
     translations/harbour-linksbag-nl.ts

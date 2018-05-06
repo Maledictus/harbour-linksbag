@@ -20,18 +20,18 @@
 <context>
     <name>BookmarkDownloadsPage</name>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="50"/>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="47"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
         <source>Downloading</source>
         <translation>Downloading</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="51"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
         <source>%1 remaining</source>
         <translation>%1 remaining</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="89"/>
+        <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
         <source>Queued</source>
         <translation>Queued</translation>
     </message>
@@ -76,113 +76,108 @@
 <context>
     <name>BookmarksPage</name>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="48"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="49"/>
         <source>All</source>
         <translation>All</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="53"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="54"/>
         <source>Read</source>
         <translation>Read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="58"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="59"/>
         <source>Unread</source>
         <translation>Unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="63"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="64"/>
         <source>Favorite</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="68"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="69"/>
         <source>Not downloaded</source>
         <translation>Not downloaded</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="108"/>
-        <source>Logout...</source>
-        <translation>Logout...</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="125"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="120"/>
         <source>Bookmarks</source>
         <translation>Bookmarks</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="137"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="132"/>
         <source>Search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="149"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="144"/>
         <source>There are no bookmarks. Pull down to refresh.</source>
         <translation>There are no bookmarks. Pull down to refresh.</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="156"/>
-        <source>Logout</source>
-        <translation>Logout</translation>
+        <location filename="../qml/pages/BookmarksPage.qml" line="151"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="164"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="156"/>
         <source>Downloads</source>
         <translation>Downloads</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="171"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="163"/>
         <source>Hide search field</source>
         <translation>Hide search field</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="172"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="164"/>
         <source>Show search field</source>
         <translation>Show search field</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="182"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="174"/>
         <source>View: %1</source>
         <translation>View: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="191"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="183"/>
         <source>Refresh</source>
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="210"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="201"/>
         <source>Copy url to clipboard</source>
         <translation>Copy url to clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="213"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="204"/>
         <source>Url copied into clipboard</source>
         <translation>Url copied into clipboard</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="218"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="209"/>
         <source>Open in browser</source>
         <translation>Open in browser</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="225"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="216"/>
         <source>Edit tags</source>
         <translation>Edit tags</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="226"/>
         <source>Mark as unread</source>
         <translation>Mark as unread</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="235"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="226"/>
         <source>Mark as read</source>
         <translation>Mark as read</translation>
     </message>
     <message>
-        <location filename="../qml/pages/BookmarksPage.qml" line="240"/>
-        <location filename="../qml/pages/BookmarksPage.qml" line="358"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="231"/>
+        <location filename="../qml/pages/BookmarksPage.qml" line="232"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -216,12 +211,12 @@
 <context>
     <name>LinksBag::Application</name>
     <message>
-        <location filename="../src/application.cpp" line="91"/>
+        <location filename="../src/application.cpp" line="111"/>
         <source>Authorized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="91"/>
+        <location filename="../src/application.cpp" line="111"/>
         <source>Not authorized</source>
         <translation type="unfinished"></translation>
     </message>
@@ -286,7 +281,7 @@
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="103"/>
+        <location filename="../src/linksbagmanager.cpp" line="127"/>
         <source>GetPocket error (%1): </source>
         <translation>Pocket service error (%1): </translation>
     </message>
@@ -294,21 +289,103 @@
 <context>
     <name>LoginPage</name>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="36"/>
-        <source>GetPocket/Google account</source>
-        <translation>GetPocket/Google account</translation>
+        <location filename="../qml/pages/LoginPage.qml" line="51"/>
+        <source>Welcome to LinksBag</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="44"/>
-        <source>GetPocket/Firefox account</source>
-        <translation>GetPocket/Firefox account</translation>
+        <location filename="../qml/pages/LoginPage.qml" line="59"/>
+        <source>Before we begin, choose how you&apos;ll log into your GetPocket.com account</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/LoginPage.qml" line="58"/>
-        <source>Application not authorized.
-Pull down to do it</source>
-        <translation>Application not authorized.
-Pull down to do it</translation>
+        <location filename="../qml/pages/LoginPage.qml" line="64"/>
+        <source>Login with Google</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/LoginPage.qml" line="72"/>
+        <source>Firefox/Regular account</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="43"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="46"/>
+        <source>Sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="49"/>
+        <source>Sync on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="52"/>
+        <source>App will try to sync with Pocket on startup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="64"/>
+        <source>Parser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="68"/>
+        <source>Mercury is faster and lighter on your device but if you want articles to be processed on your device, you can use Readability instead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="81"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="92"/>
+        <source>Cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="84"/>
+        <source>Remove saved articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="85"/>
+        <source>Removing saved articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="89"/>
+        <source>Clear thumbnail cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="90"/>
+        <source>Clearing thumbnail cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="95"/>
+        <source>Force full refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="102"/>
+        <source>Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="108"/>
+        <source>Logout</source>
+        <translation type="unfinished">Logout</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="109"/>
+        <source>Logging out</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
