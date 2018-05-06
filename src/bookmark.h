@@ -2,7 +2,6 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
-Copyright (c) 2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +37,7 @@ class Bookmark
     QUrl m_Url;
     QString m_Title;
     QString m_Description;
+    QString m_Content;
     QUrl m_ImageUrl;
     QStringList m_Tags;
     bool m_Favorite;
@@ -67,7 +67,6 @@ public:
     void SetTitle(const QString& title);
     QString GetDescription() const;
     void SetDescription(const QString& title);
-    QUrl GetCoverImageUrl();
     QUrl GetImageUrl() const;
     void SetImageUrl(const QUrl& url);
     QStringList GetTags() const;
@@ -83,8 +82,8 @@ public:
     Status GetStatus() const;
     void SetStatus(Status status);
 
-    bool HasContent();
-    QString GetThumbnail();
+    QString GetContent() const;
+    void SetContent(const QString& content);
 
     QByteArray Serialize() const;
     static Bookmark Deserialize(const QByteArray& data);

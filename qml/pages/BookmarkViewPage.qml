@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "."
+import "./components"
 
 Page {
     id: page
@@ -35,13 +35,16 @@ Page {
         onHighlightColorChanged: entryText.text = generateCustomCss() + readability.entry;
     }
 
-    ParserLoader {
+    Mercury {
         id: readability
+        isBusy: hasContent
         onEntryChanged: {
-            linksbagManager.updateContent(bookmarkId, entry);
+            if (entry !== currentBookmark.bookmarkContent) {
+                linksbagManager.updateContent(bookmarkId, entry);
+                linksbagManager.saveBookmarks();
+            }
             entryText.text = generateCustomCss() + entry;
             hasContent = true;
-            readability.item.isBusy = false;
         }
     }
 
@@ -50,7 +53,7 @@ Page {
 
     property bool bookmarkRead: false
     property bool bookmarkFavorite: false
-    property bool hasContent: false
+    property bool hasContent: currentBookmark && currentBookmark.bookmarkContent !== "" ? true : false
 
     function generateCustomCss() {
         return  "<style>
@@ -63,20 +66,17 @@ Page {
     onStatusChanged: {
         if (status == PageStatus.Active && linksbagManager.logged) {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
-            hasContent = currentBookmark.bookmarkHasContent
             cover.title = currentBookmark.bookmarkTitle
+            cover.image = currentBookmark.bookmarkImageUrl
             bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
             bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
-
             if (!hasContent) {
                 readability.bookmarkImage = currentBookmark.bookmarkImageUrl
                 readability.setArticle(currentBookmark.bookmarkUrl)
             } else {
-                entryText.text = generateCustomCss() + linksbagManager.getContent(bookmarkId)
-                readability.item.isBusy = false;
+                readability.entry = currentBookmark.bookmarkContent
+                readability.isBusy = false;
             }
-
-            cover.image = currentBookmark.bookmarkCoverImage
         }
     }
 
@@ -224,8 +224,6 @@ Page {
                 }
 
                 Image {
-                    asynchronous: true
-                    smooth: false
                     id: thumbnailImage
                     source: currentBookmark ?
                             currentBookmark.bookmarkImageUrl :
@@ -327,8 +325,7 @@ Page {
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
         visible: true
-        z: 2
-        running: linksbagManager.busy || readability.item.isBusy;
+        running: linksbagManager.busy || readability.isBusy;
     }
 }
 

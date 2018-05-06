@@ -27,12 +27,8 @@ THE SOFTWARE.
 
 #include <QDir>
 #include <QSettings>
-#include <QNetworkRequest>
-#include <QFile>
-#include <QByteArray>
-#include <QImage>
+#include <QStandardPaths>
 
-#include "application.h"
 #include "src/enumsproxy.h"
 #include "src/bookmarksmodel.h"
 #include "src/filterproxymodel.h"
@@ -41,19 +37,6 @@ THE SOFTWARE.
 
 namespace LinksBag
 {
-DownloadedImageHandler::DownloadedImageHandler(QNetworkReply *reply, QString id, BookmarksModel *model):
-    m_reply(reply), m_id(id), m_model(model) {}
-
-void DownloadedImageHandler::run()
-{
-    QImage downloadedImage = QImage::fromData(m_reply->readAll());
-    downloadedImage.save(Application::GetPath(Application::CoverCacheDirectory) + m_id + ".jpg");
-    downloadedImage.scaled(
-        720, 400, Qt::KeepAspectRatioByExpanding
-    ).copy(0, 0, 720, 400).save(Application::GetPath(Application::ThumbnailCacheDirectory) + m_id + ".jpg");
-    m_model->RefreshBookmark(m_id);
-}
-
 LinksBagManager::LinksBagManager(QObject *parent)
 : QObject(parent)
 , m_Api(new GetPocketApi(this))
@@ -62,19 +45,12 @@ LinksBagManager::LinksBagManager(QObject *parent)
 , m_BookmarksModel(new BookmarksModel(this))
 , m_FilterProxyModel(new FilterProxyModel(this))
 , m_DownloadingModel(new FilterProxyModel(this))
-, m_thumbnailDownloader(new QNetworkAccessManager(this))
 {
     MakeConnections();
-
-    QDir dir;
-    dir.mkpath(Application::GetPath(Application::ThumbnailCacheDirectory));
-    dir.mkpath(Application::GetPath(Application::ArticleCacheDirectory));
-    dir.mkpath(Application::GetPath(Application::CoverCacheDirectory));
 
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
     m_DownloadingModel->setSourceModel(m_BookmarksModel);
     m_DownloadingModel->filterBookmarks(LinksBag::FTUnsynced);
-    connect(m_thumbnailDownloader, &QNetworkAccessManager::finished, this, &LinksBagManager::thumbnailReceived);
 
     SetLogged(!ApplicationSettings::Instance(this)->value("access_token").isNull() &&
               !ApplicationSettings::Instance(this)->value("user_name").isNull());
@@ -152,21 +128,6 @@ void LinksBagManager::MakeConnections()
             [this](const Bookmarks_t& bookmarks, quint64 since)
             {
                 m_BookmarksModel->AddBookmarks(bookmarks);
-                saveBookmarks();
-                const auto& savedBookmarks = m_BookmarksModel->GetBookmarks();
-                for (int i=savedBookmarks.size()-1; i>=0; --i) {
-                    Bookmark b = savedBookmarks.at(i);
-                    QString path = Application::GetPath(Application::ThumbnailCacheDirectory) + b.GetID() + ".jpg";
-                    if (QFile(path).exists())
-                        continue;
-
-                    QUrl url = b.GetImageUrl();
-                    if (!url.isEmpty()) {
-                        m_thumbnailUrls[url] = b.GetID();
-                        m_thumbnailDownloader->get(QNetworkRequest(url));
-                    }
-                }
-                m_FilterProxyModel->invalidate();
                 m_FilterProxyModel->sort(0, Qt::DescendingOrder);
                 ApplicationSettings::Instance(this)->setValue("last_update", since);
             });
@@ -215,21 +176,13 @@ void LinksBagManager::SetLogged(const bool logged)
     emit loggedChanged();
 }
 
-void LinksBagManager::thumbnailReceived(QNetworkReply *pReply) {
-    if (pReply->error() == QNetworkReply::NoError) {
-        QString bookmarkId = m_thumbnailUrls.value(pReply->url(), "");
-        QThreadPool::globalInstance()->start(new DownloadedImageHandler(pReply, bookmarkId, m_BookmarksModel));
-    }
-    m_thumbnailUrls.remove(pReply->url());
-}
-
 void LinksBagManager::saveBookmarks()
 {
     const auto& bookmarks = m_BookmarksModel->GetBookmarks();
     if (bookmarks.isEmpty())
         return;
 
-    QSettings settings(Application::GetPath(Application::CacheDirectory) +
+    QSettings settings(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) +
             "/linksbag_cache", QSettings::IniFormat);
     settings.beginWriteArray("Bookmarks");
     for (int i = 0, size = bookmarks.size(); i < size; ++i)
@@ -275,7 +228,7 @@ void LinksBagManager::filterBookmarks(const QString &text)
 
 void LinksBagManager::loadBookmarksFromCache()
 {
-    QSettings settings(Application::GetPath(Application::CacheDirectory) +
+    QSettings settings(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) +
             "/linksbag_cache", QSettings::IniFormat);
     const int size = settings.beginReadArray("Bookmarks");
     Bookmarks_t bookmarks;
@@ -332,31 +285,7 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
 
 void LinksBagManager::updateContent(const QString& id, const QString& content)
 {
-    QFile file(Application::GetPath(Application::ArticleCacheDirectory) + id + ".html");
-    if (file.open(QIODevice::WriteOnly)) {
-        QTextStream stream(&file);
-        stream << content;
-    } else {
-        qDebug() << "Can't save file: " << file.errorString();
-    }
-    file.close();
-    m_BookmarksModel->RefreshBookmark(id);
-}
-
-QString LinksBagManager::getContent(const QString& id) {
-    QFile file(Application::GetPath(Application::ArticleCacheDirectory) + id + ".html");
-    if(!file.open(QIODevice::ReadOnly)) {
-        return "";
-    }
-
-    QTextStream in(&file);
-    QString content;
-
-    while(!in.atEnd()) {
-        content += in.readLine();
-    }
-    file.close();
-    return content;
+    m_BookmarksModel->UpdateContent(id, content);
 }
 
 void LinksBagManager::resetAccount()
@@ -369,45 +298,14 @@ void LinksBagManager::resetAccount()
 
     m_Api->ResetAccount();
 
-    QSettings settings(Application::GetPath(Application::CacheDirectory) +
+    QSettings settings(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) +
             "/linksbag_cache", QSettings::IniFormat);
     settings.remove("Bookmarks");
     settings.sync();
-    resetArticleCache();
-    resetThumbnailCache();
-
-    // fix logout
-    QDir webkitCache(Application::GetPath(Application::CacheDirectory) + "/.QtWebKit");
-    webkitCache.removeRecursively();
-    webkitCache = QDir(Application::GetPath(Application::AppDataDirectory) + "/.QtWebKit");
-    webkitCache.removeRecursively();
 
     m_BookmarksModel->Clear();
 
     SetLogged(false);
-}
-
-void LinksBagManager::resetArticleCache()
-{
-    // remove directory
-    QDir article(Application::GetPath(Application::ArticleCacheDirectory));
-    article.removeRecursively();
-
-    // recreate directory
-    article.mkpath(Application::GetPath(Application::ArticleCacheDirectory));
-}
-
-void LinksBagManager::resetThumbnailCache()
-{
-    // remove directories
-    QDir cache(Application::GetPath(Application::ThumbnailCacheDirectory));
-    cache.removeRecursively();
-    cache = QDir(Application::GetPath(Application::CoverCacheDirectory));
-    cache.removeRecursively();
-
-    // recreate directories
-    cache.mkpath(Application::GetPath(Application::ThumbnailCacheDirectory));
-    cache.mkpath(Application::GetPath(Application::CoverCacheDirectory));
 }
 
 void LinksBagManager::handleGotAuthAnswer(const QString& data)

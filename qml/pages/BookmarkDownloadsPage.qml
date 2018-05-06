@@ -25,16 +25,19 @@ THE SOFTWARE.
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.linksbag 1.0
-import "."
+import "./components"
 
 Page {
     property var bookmarksPage
     property var currentBookmarkId
     property var bookmarksToSync
 
-    ParserLoader {
+    Mercury {
         id: readability
-        onEntryChanged: linksbagManager.updateContent(currentBookmarkId, entry);
+        onEntryChanged: {
+            linksbagManager.updateContent(currentBookmarkId, entry);
+            linksbagManager.saveBookmarks();
+        }
     }
 
     SilicaListView {
@@ -52,10 +55,16 @@ Page {
             id: listitem
             width: listview.width
 
-            Component.onCompleted: if (index == 0) {
-               currentBookmarkId = bookmarkID;
-               readability.setArticle(bookmarkUrl)
-           }
+            Label {
+                visible: false
+                text: index
+                onTextChanged: {
+                    if (index == 0) {
+                        currentBookmarkId = bookmarkID;
+                        readability.setArticle(bookmarkUrl)
+                    }
+               }
+            }
 
             Label {
                  id: label

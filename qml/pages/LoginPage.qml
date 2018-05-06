@@ -2,7 +2,6 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
-Copyright (c) 2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -32,48 +31,35 @@ Page {
     SilicaFlickable {
         anchors.fill: parent
 
-        Column {
-            spacing: Theme.paddingLarge
-            width: parent.width
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                right: parent.right
-                leftMargin: Theme.horizontalPageMargin
-                rightMargin: Theme.horizontalPageMargin
-            }
-
-            Label {
-                width: parent.width
-                horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: Theme.fontSizeLarge
-                color: Theme.highlightColor
-                text: qsTr("Welcome to LinksBag")
-                wrapMode: Text.WordWrap
-            }
-            Label {
-                width: parent.width
-                font.pixelSize: Theme.fontSizeMedium
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.WordWrap
-                text: qsTr("Before we begin, choose how you'll log into your GetPocket.com account")
-            }
-
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Login with Google")
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("GetPocket/Google account")
                 enabled: authServerRunning
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("AuthorizationPage.qml"))
                 }
             }
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Firefox/Regular account")
+
+            MenuItem {
+                text: qsTr("GetPocket/Firefox account")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("WebAuthorizationPage.qml"))
                 }
             }
+        }
+
+        Label {
+            width: parent.width
+
+            anchors.centerIn: parent
+            anchors.leftMargin: Theme.horizontalPageMargin
+            anchors.rightMargin: Theme.horizontalPageMargin
+
+            text: qsTr("Application not authorized.\nPull down to do it")
+            color: Theme.highlightColor
+            font.pixelSize: Theme.fontSizeLarge
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 }

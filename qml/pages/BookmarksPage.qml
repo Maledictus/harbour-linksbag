@@ -25,7 +25,6 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-//import Sailfish.Silica.private 1.0
 import harbour.linksbag 1.0
 
 Page {
@@ -103,8 +102,14 @@ Page {
         anchors.centerIn: parent
         running: linksbagManager.busy
         visible: running
-        z: 2
     }
+
+    function resetAccount () {
+        resetAccountRemorse.execute(qsTr("Logout..."),
+                function() { linksbagManager.resetAccount() } )
+    }
+
+    RemorsePopup { id: resetAccountRemorse }
 
     SilicaListView {
         id: bookmarksView
@@ -148,8 +153,11 @@ Page {
             visible: !linksbagManager.busy
 
             MenuItem {
-                text: qsTr("Settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
+                text: qsTr("Logout")
+
+                onClicked: {
+                    bookmarksPage.resetAccount()
+                }
             }
 
             MenuItem {
@@ -181,7 +189,9 @@ Page {
 
             MenuItem {
                 text: qsTr("Refresh")
-                onClicked: linksbagManager.refreshBookmarks()
+                onClicked: {
+                    linksbagManager.refreshBookmarks()
+                }
             }
         }
 
@@ -191,8 +201,9 @@ Page {
 
         delegate: ListItem {
             id: rootDelegateItem
+
             width: bookmarksView.width
-            contentHeight: Theme.paddingLarge*4 + textColumn.childrenRect.height
+            contentHeight: contentItem.childrenRect.height
 
             menu: ContextMenu {
                 MenuItem {
@@ -227,89 +238,28 @@ Page {
 
                 MenuItem {
                     text: qsTr ("Remove")
-                    onClicked: remorse.execute(rootDelegateItem, qsTr("Remove"), function() {
-                       linksbagManager.removeBookmark(bookmarkID)
-                    })
+                    onClicked: {
+                        remove()
+                    }
                 }
             }
 
-            Image {
-                visible: false
-                id: thumbnail
-                cache: true
-                smooth: false
-                asynchronous: true
-                source: bookmarkThumbnail
-                onSourceChanged: {
-                    wallpaperEffect.wallpaperTexture = null
-                    wallpaperEffect.wallpaperTexture = thumbnail
-                }
-            }
-
-            Item {
-                id: glassTextureItem
-                visible: false
-                width: glassTextureImage.width
-                height: glassTextureImage.height
+            Rectangle {
+                anchors.fill: parent;
+                opacity: 0.3;
+                color: "transparent";
                 Image {
-                    id: glassTextureImage
-                    opacity: 0.1
-                    source: "image://theme/graphic-shader-texture"
+                    id: thumbnailImage
+                    source: bookmarkImageUrl
+                    anchors.fill: parent;
+                    fillMode: Image.PreserveAspectCrop
                 }
-            }
-
-            ShaderEffect {
-                // shamelessly borrowed from Jolla, sorry guys :(
-                id: wallpaperEffect
-                anchors.fill: parent
-                z: -1
-
-                visible: thumbnail.source != ""
-                property real dimmedOpacity: 0.4
-
-                // wallpaper orientation
-                readonly property size normalizedSize: Qt.size(1, rootDelegateItem.contentHeight/wallpaperTexture.sourceSize.height)
-                readonly property point offset: Qt.point((1 - normalizedSize.width) / 2, (1 - normalizedSize.height) / 2);
-                readonly property size dimensions: Qt.size(1, rootDelegateItem.contentHeight/wallpaperTexture.sourceSize.height)
-                // glass texture size
-                property size glassTextureSizeInv: Qt.size(1.0/(glassTextureImage.sourceSize.width),
-                                                           -1.0/(glassTextureImage.sourceSize.height))
-
-                property Image wallpaperTexture: thumbnail
-                property variant glassTexture: ShaderEffectSource {
-                    hideSource: true
-                    sourceItem: glassTextureItem
-                    wrapMode: ShaderEffectSource.Repeat
+                OpacityRampEffect {
+                    slope: 1.0
+                    offset: 0.15
+                    sourceItem: thumbnailImage
+                    direction: OpacityRamp.BottomToTop
                 }
-
-                vertexShader: "
-                   uniform highp vec2 dimensions;
-                   uniform highp vec2 offset;
-                   uniform highp mat4 qt_Matrix;
-                   attribute highp vec4 qt_Vertex;
-                   attribute highp vec2 qt_MultiTexCoord0;
-                   varying highp vec2 qt_TexCoord0;
-
-                   void main() {
-                      qt_TexCoord0 = qt_MultiTexCoord0 * dimensions + offset;
-                      gl_Position = qt_Matrix * qt_Vertex;
-                   }
-                "
-
-                fragmentShader: "
-                   uniform sampler2D wallpaperTexture;
-                   uniform sampler2D glassTexture;
-                   uniform highp vec2 glassTextureSizeInv;
-                   uniform lowp float dimmedOpacity;
-                   uniform lowp float qt_Opacity;
-                   varying highp vec2 qt_TexCoord0;
-
-                   void main() {
-                      lowp vec4 wp = texture2D(wallpaperTexture, qt_TexCoord0);
-                      lowp vec4 tx = texture2D(glassTexture, gl_FragCoord.xy * glassTextureSizeInv);
-                      gl_FragColor = gl_FragColor = vec4(dimmedOpacity*wp.rgb + tx.rgb, 1.0);
-                   }
-                "
             }
 
             GlassItem {
@@ -317,100 +267,98 @@ Page {
                 width: Theme.itemSizeExtraSmall
                 height: width
                 x: -(width/2)
-                y: Theme.paddingLarge+(width/4)
+                anchors.top: parent.top
                 color: Theme.highlightColor
                 visible: !bookmarkRead
             }
+
             Column {
-                id: textColumn
-                x: Theme.itemSizeExtraSmall/2
-                y: Theme.paddingLarge*2
-                property real margin: Theme.paddingMedium
-                width: parent.width - Theme.itemSizeExtraSmall - Theme.iconSizeMedium
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.horizontalPageMargin
+                anchors.right: favoriteImage.left
+                anchors.rightMargin: Theme.paddingMedium
+
+                Item { width: 1; height: Theme.paddingMedium; }
 
                 Label {
-                    color: Theme.primaryColor
-                    width: textColumn.width - 2*(Theme.paddingMedium + Theme.paddingSmall)
-                    font.pixelSize: Theme.fontSizeMedium
+                    id: titleLabel
+
+                    width: parent.width
+
+                    font.family: Theme.fontFamilyHeading
+                    font.pixelSize:  Theme.fontSizeMedium
                     wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
+                    maximumLineCount: 4
+
                     text: bookmarkTitle
                 }
 
-                Item {
-                    width: Math.min(parent.width - 2*textColumn.margin, sourceLabel.paintedWidth + 2*Theme.paddingSmall)
-                    height: sourceLabel.paintedHeight
-                    Rectangle {
-                        y: 1
-                        opacity: 0.7
-                        width: parent.width
-                        height: parent.height - y
-                        radius: Theme.paddingSmall/2
-                        color: 'black'
+                Label {
+                    id: urlLabel
+
+                    width: parent.width
+
+                    font.pixelSize:  Theme.fontSizeExtraSmall
+                    color: Theme.secondaryColor
+                    elide: Text.ElideRight
+
+                    text: {
+                        var matches = bookmarkUrl.toString()
+                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                        return matches ? matches[1] : bookmarkUrl
                     }
-                    Label {
-                        id: sourceLabel
-                        x: Theme.paddingSmall
-                        font.pixelSize: Theme.fontSizeExtraSmall
-                        color: 'white'
-                        elide: Text.ElideRight
-                        maximumLineCount: 1
-                        text: {
-                            var matches = bookmarkUrl.toString()
-                                    .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                            return matches ? matches[1] : bookmarkUrl
-                        }
-                    }
+                }
+
+                Row {
+                    width: parent.width
+
+                    clip: true
+
                     Image {
-                        visible: bookmarkHasContent
-                        anchors {
-                            left: sourceLabel.right
-                            leftMargin: Theme.paddingLarge
-                            verticalCenter: sourceLabel.verticalCenter
-                        }
-                        source: "image://Theme/icon-s-cloud-download"
+                        id: tagsIcon
+
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: "qrc:/images/icon-s-tag.png"
+
+                        visible: bookmarkTags != ""
+                    }
+
+                    Label {
+                        id: tagsLabel
+
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        font.pixelSize:  Theme.fontSizeTiny
+                        font.italic: true
+                        elide: Text.ElideRight
+
+                        text: bookmarkTags
                     }
                 }
-                Item {
-                    width: tagsRow.childrenRect.width + 2*Theme.paddingSmall
-                    height: tagsRow.childrenRect.height
-                    visible: bookmarkTags != ""
-                    Rectangle {
-                        y: 1
-                        radius: Theme.paddingSmall/2
-                        width: parent.width
-                        height: parent.height - 1
-                        opacity: 0.5
-                        color: 'black'
-                    }
-                    Row {
-                        x: Theme.paddingSmall
-                        id: tagsRow
-                        spacing: Theme.paddingSmall
-                        width: parent.width
-                        clip: true
 
-                        Image {
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: "qrc:/images/icon-s-tag.png"
-                            visible: bookmarkTags != ""
-                        }
-
-                        Label {
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize:  Theme.fontSizeTiny
-                            font.italic: true
-                            elide: Text.ElideRight
-                            text: bookmarkTags
-                        }
-                    }
-                }
+                Item { width: 1; height: Theme.paddingMedium; }
             }
 
             IconButton {
-                y: Theme.paddingLarge*2
-                x: bookmarksView.width - width - Theme.horizontalPageMargin
-                icon.source: "image://Theme/icon-m-favorite" + (bookmarkFavorite ? "-selected": "")
-                onClicked: linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
+                id: favoriteImage
+                anchors {
+                    right: parent.right;
+                    rightMargin: Theme.paddingMedium;
+                }
+                icon.source: bookmarkFavorite ?
+                    "image://Theme/icon-m-favorite-selected" :
+                    "image://Theme/icon-m-favorite"
+                onClicked: {
+                    linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
+                }
+            }
+
+            function remove () {
+                remorse.execute(rootDelegateItem, qsTr("Remove"),
+                        function() {
+                            linksbagManager.removeBookmark(bookmarkID)
+                        })
             }
 
             RemorseItem { id: remorse }
@@ -422,14 +370,5 @@ Page {
         }
 
         VerticalScrollDecorator {}
-    }
-
-
-
-    Component.onCompleted: {
-        // Sync on startup
-        if (applicationSettings.value("sync_on_startup", false)) {
-            linksbagManager.refreshBookmarks();
-        }
     }
 }

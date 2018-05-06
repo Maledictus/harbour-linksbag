@@ -2,7 +2,6 @@
 The MIT License (MIT)
 
 Copyright (c) 2014-2018 Oleg Linkin <maledictusdemagog@gmail.com>
-Copyright (c) 2018 Maciej Janiszewski <chleb@krojony.pl>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +24,6 @@ THE SOFTWARE.
 
 #include "filterproxymodel.h"
 #include "bookmarksmodel.h"
-
 
 namespace LinksBag
 {
@@ -61,7 +59,7 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& source
     else if (m_Filter == FTUnsynced)
     {
         result = !sourceModel()->data(index, BookmarksModel::BRRead).toBool() &&
-                !sourceModel()->data(index, BookmarksModel::BRHasContent).toBool();
+                sourceModel()->data(index, BookmarksModel::BRContent).toString() == "";
     }
 
     return result && (index.data(BookmarksModel::BRTitle).toString().contains(filterRegExp()) ||
