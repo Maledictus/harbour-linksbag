@@ -192,7 +192,7 @@ Page {
         delegate: ListItem {
             id: rootDelegateItem
             width: bookmarksView.width
-            contentHeight: Theme.paddingLarge*4 + textColumn.childrenRect.height
+            contentHeight: Math.max(textColumn.height, favoriteIcon.height)
 
             menu: ContextMenu {
                 MenuItem {
@@ -316,35 +316,48 @@ Page {
                 id: unreadIndicator
                 width: Theme.itemSizeExtraSmall
                 height: width
-                x: -(width/2)
-                y: Theme.paddingLarge+(width/4)
+                anchors.horizontalCenter: parent.left
+                y: titleLabel.y + Theme.paddingLarge - height/2
                 color: Theme.highlightColor
                 visible: !bookmarkRead
+                radius: 0.14
+                falloffRadius: 0.13
             }
+
             Column {
+                Item {
+                    width: parent.width
+                    height: applicationSettings.value("bookmarksViewItemSize", Theme.paddingMedium)
+                }
+
                 id: textColumn
-                x: Theme.itemSizeExtraSmall/2
-                y: Theme.paddingLarge*2
                 property real margin: Theme.paddingMedium
-                width: parent.width - Theme.itemSizeExtraSmall - Theme.iconSizeMedium
+                anchors {
+                    left: !bookmarkRead ? unreadIndicator.right : parent.left
+                    leftMargin:!bookmarkRead ? Theme.paddingMedium : Theme.horizontalPageMargin
+                    right: favoriteIcon.left
+                    rightMargin: Theme.paddingMedium
+                }
 
                 Label {
+                    id: titleLabel
                     color: Theme.primaryColor
-                    width: textColumn.width - 2*(Theme.paddingMedium + Theme.paddingSmall)
+                    width: parent.width
                     font.pixelSize: Theme.fontSizeMedium
                     wrapMode: Text.WordWrap
                     text: bookmarkTitle
                 }
 
                 Item {
-                    width: Math.min(parent.width - 2*textColumn.margin, sourceLabel.paintedWidth + 2*Theme.paddingSmall)
+                    width: Math.min(parent.width - 2 * textColumn.margin,
+                            sourceLabel.paintedWidth + 2 * Theme.paddingSmall)
                     height: sourceLabel.paintedHeight
                     Rectangle {
                         y: 1
                         opacity: 0.7
                         width: parent.width
                         height: parent.height - y
-                        radius: Theme.paddingSmall/2
+                        radius: Theme.paddingSmall / 2
                         color: 'black'
                     }
                     Label {
@@ -371,20 +384,21 @@ Page {
                     }
                 }
                 Item {
-                    width: tagsRow.childrenRect.width + 2*Theme.paddingSmall
+                    width: Math.min(parent.width - 2 * textColumn.margin,
+                            tagsRow.childrenRect.width + 2 * Theme.paddingSmall)
                     height: tagsRow.childrenRect.height
                     visible: bookmarkTags != ""
                     Rectangle {
                         y: 1
-                        radius: Theme.paddingSmall/2
+                        radius: Theme.paddingSmall / 2
                         width: parent.width
-                        height: parent.height - 1
+                        height: parent.height - y
                         opacity: 0.5
                         color: 'black'
                     }
                     Row {
-                        x: Theme.paddingSmall
                         id: tagsRow
+                        x: Theme.paddingSmall
                         spacing: Theme.paddingSmall
                         width: parent.width
                         clip: true
@@ -404,11 +418,22 @@ Page {
                         }
                     }
                 }
+
+                Item {
+                    width: parent.width
+                    height: applicationSettings.value("bookmarksViewItemSize", Theme.paddingMedium)
+                }
             }
 
             IconButton {
-                y: Theme.paddingLarge*2
-                x: bookmarksView.width - width - Theme.horizontalPageMargin
+                id: favoriteIcon
+                anchors {
+                    right: parent.right
+                    rightMargin: Theme.horizontalPageMargin
+                    verticalCenter: parent.verticalCenter
+                }
+                height: Theme.iconSizeMedium
+                width: Theme.iconSizeMedium
                 icon.source: "image://Theme/icon-m-favorite" + (bookmarkFavorite ? "-selected": "")
                 onClicked: linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
             }

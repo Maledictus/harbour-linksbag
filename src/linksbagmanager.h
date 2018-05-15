@@ -47,9 +47,9 @@ public:
     DownloadedImageHandler(QNetworkReply *reply, QString id, BookmarksModel* model = 0);
     void run();
 private:
-    BookmarksModel* m_model;
     QNetworkReply* m_reply;
     const QString m_id;
+    BookmarksModel* m_model;
 };
 
 class LinksBagManager : public QObject

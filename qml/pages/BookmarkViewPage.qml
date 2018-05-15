@@ -61,7 +61,7 @@ Page {
     }
 
     onStatusChanged: {
-        if (status == PageStatus.Active && linksbagManager.logged) {
+        if (status === PageStatus.Active && linksbagManager.logged) {
             currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
             hasContent = currentBookmark.bookmarkHasContent
             cover.title = currentBookmark.bookmarkTitle
@@ -211,7 +211,7 @@ Page {
                             target: header;
                             height: currentBookmark && currentBookmark.bookmarkImageUrl.length > 0 ?
                                     mainWindow.height*0.4 :
-                                    entryHeaderWrapper.childrenRect.height+Theme.paddingMedium
+                                    entryHeaderWrapper.height + Theme.paddingMedium
                         }
                     }
                 ]
@@ -310,7 +310,6 @@ Page {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.horizontalPageMargin
-
             }
             Item {
                 // additional padding at the bottom

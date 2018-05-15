@@ -43,6 +43,47 @@ Page {
                 title: qsTr("Settings")
             }
 
+            SectionHeader { text: qsTr("User interface") }
+
+            ComboBox {
+                id: itemSizeComboBox
+
+                property var fontSizeCategories: [Theme.paddingSmall, Theme.paddingMedium,
+                        Theme.paddingLarge, Theme.paddingLarge * 2]
+
+                function update() {
+                    applicationSettings.setValue("bookmarksViewItemSize", fontSizeCategories[currentIndex])
+                }
+
+                currentIndex: {
+                    for (var i = 0; i < fontSizeCategories.length; ++i) {
+                        if (applicationSettings("bookmarksViewItemSize",Theme.paddingMedium) === fontSizeCategories[i]) {
+                            return i
+                        }
+                    }
+                    console.log("Unsupported font size multiplier selected")
+                    return 0
+                }
+
+                label: qsTr("Item size")
+                menu: ContextMenu {
+                    onClosed: itemSizeComboBox.update()
+
+                    MenuItem {
+                        text: qsTr("Small")
+                    }
+                    MenuItem {
+                        text: qsTr("Medium")
+                    }
+                    MenuItem {
+                        text: qsTr("Large")
+                    }
+                    MenuItem {
+                        text: qsTr("Extra Large")
+                    }
+                }
+            }
+
             SectionHeader { text: qsTr("Sync") }
             TextSwitch {
                 property string key: "sync_on_startup"
@@ -108,7 +149,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Clear thumbnail cache")
                 onClicked: remorse.execute(qsTr("Clearing thumbnail cache"), function() { linksbagManager.resetThumbnailCache() } )
-            }            
+            }
 
             SectionHeader { text: qsTr("Account") }
             Label {
@@ -130,6 +171,11 @@ Page {
                     text: qsTr("Logout")
                     onClicked: remorse.execute(qsTr("Logging out"), function() { linksbagManager.resetAccount() } )
                 }
+            }
+
+            Item {
+                width: parent.width
+                height: Theme.paddingMedium
             }
         }
     }

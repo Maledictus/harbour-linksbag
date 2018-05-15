@@ -350,8 +350,6 @@ void GetPocketApi::handleLoadBookmarks()
         return;
     }
 
-    qDebug() << doc.toJson();
-
     QJsonObject rootObject = doc.object();
     const quint64 since = rootObject["since"].toDouble();
 
