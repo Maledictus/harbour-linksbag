@@ -1,10 +1,11 @@
 TARGET = harbour-linksbag
 
-VERSION = 2.5
+VERSION = 3.0
 
 QT += webkit network
 
 CONFIG += link_pkgconfig sailfishapp c++11 sailfishapp_i18n
+PKGCONFIG += mlite5
 
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
@@ -56,7 +57,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     harbour-linksbag.desktop \
     rpm/harbour-linksbag.changes \
     rpm/harbour-linksbag.changes.run.in \
-    rpm/harbour-linksbag.yaml \
+    rpm/harbour-linksbag.spec \
     translations/harbour-linksbag.ts \
     translations/harbour-linksbag-en.ts \
     translations/harbour-linksbag-ru.ts \

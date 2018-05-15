@@ -94,7 +94,7 @@ void GetPocketApi::LoadBookmarks(int lastUpdate)
 {
     QVariantMap params;
     params["consumer_key"] = m_ConsumerKey;
-    params["access_token"] = ApplicationSettings::Instance(this)->value("access_token");
+    params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
     params["state"] = "all";
     params["sort"] = "oldest";
     params["detailType"] = "complete";
@@ -115,7 +115,7 @@ void GetPocketApi::RemoveBookmark(const QString& id)
 {
     QVariantMap params;
     params["consumer_key"] = m_ConsumerKey;
-    params["access_token"] = ApplicationSettings::Instance(this)->value("access_token");
+    params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
     QVariantList actions;
     QVariantMap action;
     action["action"] = "delete";
@@ -140,7 +140,7 @@ void GetPocketApi::MarkBookmarkAsFavorite(const QString& id, bool favorite)
 {
     QVariantMap params;
     params["consumer_key"] = m_ConsumerKey;
-    params["access_token"] = ApplicationSettings::Instance(this)->value("access_token");
+    params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
     QVariantList actions;
     QVariantMap action;
     action["action"] = favorite ? "favorite" : "unfavorite";
@@ -165,7 +165,7 @@ void GetPocketApi::MarkBookmarkAsRead(const QString& id, bool read)
 {
     QVariantMap params;
     params["consumer_key"] = m_ConsumerKey;
-    params["access_token"] = ApplicationSettings::Instance(this)->value("access_token");
+    params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
     QVariantList actions;
     QVariantMap action;
     action["action"] = read ? "archive" : "readd";
@@ -190,7 +190,7 @@ void GetPocketApi::UpdateTags(const QString& id, const QString& tags)
 {
     QVariantMap params;
     params["consumer_key"] = m_ConsumerKey;
-    params["access_token"] = ApplicationSettings::Instance(this)->value("access_token");
+    params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
     QVariantList actions;
     QVariantMap action;
     action["action"] = "tags_replace";

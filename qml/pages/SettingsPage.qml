@@ -52,12 +52,12 @@ Page {
                         Theme.paddingLarge, Theme.paddingLarge * 2]
 
                 function update() {
-                    applicationSettings.setValue("bookmarksViewItemSize", fontSizeCategories[currentIndex])
+                    mainWindow.settings.bookmarksViewItemSize = fontSizeCategories[currentIndex]
                 }
 
                 currentIndex: {
                     for (var i = 0; i < fontSizeCategories.length; ++i) {
-                        if (applicationSettings("bookmarksViewItemSize",Theme.paddingMedium) === fontSizeCategories[i]) {
+                        if (mainWindow.settings.bookmarksViewItemSize === fontSizeCategories[i]) {
                             return i
                         }
                     }
@@ -86,10 +86,9 @@ Page {
 
             SectionHeader { text: qsTr("Sync") }
             TextSwitch {
-                property string key: "sync_on_startup"
                 text: qsTr("Sync on startup")
-                checked: applicationSettings.value(key, false)
-                onCheckedChanged: applicationSettings.setValue(key, checked)
+                checked: mainWindow.settings.syncOnStartup
+                onCheckedChanged: mainWindow.settings.syncOnStartup = checked
                 description: qsTr("App will try to sync with Pocket on startup.")
             }
             /*TextSwitch {
@@ -102,19 +101,32 @@ Page {
 
             ComboBox {
                 id: parserSelect
+
+                property var parsersCategories: ["mercury", "readability"]
+                function update() {
+                    mainWindow.settings.parser = parsersCategories[currentIndex]
+                }
+
                 label: qsTr("Parser")
-                value: applicationSettings.value("parser", "Mercury")
-                currentIndex: value == "Readability" ? 1 : 0 // ugly :/ FIXME
-                onValueChanged: applicationSettings.setValue("parser", value)
+                currentIndex: {
+                    for (var i = 0; i < parsersCategories.length; ++i) {
+                        if (mainWindow.settings.parser === parsersCategories[i]) {
+                            return i
+                        }
+                    }
+                    console.log("Unsupported font size multiplier selected")
+                    return 0
+                }
                 description: qsTr("Mercury is faster and lighter on your device but if you want articles to be processed on your device, you can use Readability instead.")
                 menu: ContextMenu {
+                    onClosed: parserSelect.update()
                     MenuItem {
                         text: "Mercury"
-                        onClicked: parserSelect.value = "Mercury"
+                        onClicked: mainWindow.settings.parser = "mercury"
                     }
                     MenuItem {
                         text: "Readability"
-                        onClicked: parserSelect.value = "Readability"
+                        onClicked: mainWindow.settings.parser = "readability"
                     }
                 }
             }
@@ -123,7 +135,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Force full refresh")
                 onClicked: {
-                    applicationSettings.setValue("last_update", 0)
+                    mainWindow.settings.lastUpdate = 0
                     linksbagManager.refreshBookmarks();
                 }
             }
@@ -161,7 +173,7 @@ Page {
                 wrapMode: Text.WordWrap
                 font.pixelSize: Theme.fontSizeSmall
 
-                text: qsTr("You're logged in as %1.").arg(applicationSettings.value("user_name"))
+                text: qsTr("You're logged in as %1.").arg(mainWindow.settings.userName)
             }
             ButtonLayout {
                 width: parent.width - 2* Theme.horizontalPageMargin

@@ -25,7 +25,8 @@ THE SOFTWARE.
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.linksbag 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
+import Nemo.Configuration 1.0
 
 import "cover"
 import "pages"
@@ -35,8 +36,9 @@ ApplicationWindow {
 
     cover: CoverPage { model: linksbagManager.filterModel }
 
-    property bool alreadyLogged: applicationSettings.value("access_token", "").length > 0 &&
-            applicationSettings.value("user_name", "").length > 0
+    property alias settings: settings
+
+    property bool alreadyLogged: settings.accessToken.length > 0 && settings.userName.length > 0
 
     _defaultPageOrientations: Orientation.Landscape | Orientation.Portrait
     initialPage: alreadyLogged ? bookmarksComponent : loginComponent
@@ -88,5 +90,20 @@ ApplicationWindow {
         id: bookmarksComponent
 
         BookmarksPage {}
+    }
+
+    ConfigurationGroup {
+        id: settings
+        path: "/apps/harbour-linksbag"
+
+        property bool settingsMigration: true
+        property bool syncOnStartup: false
+        property int lastUpdate: 0
+        property real bookmarksViewItemSize: Theme.paddingMedium
+        property string parser: "mercury"
+        property string bookmarksFilter: "unread"
+        property bool showSearchField: false
+        property string accessToken
+        property string userName
     }
 }

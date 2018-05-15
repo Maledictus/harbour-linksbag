@@ -38,7 +38,6 @@ Page {
         property bool firefoxAuth: false
         property bool getpocketAuth: true
 
-        experimental.userScripts: [ Qt.resolvedUrl("helpers/userscript.js") ]
         experimental.preferences.navigatorQtObjectEnabled: true
 
         onUrlChanged: {

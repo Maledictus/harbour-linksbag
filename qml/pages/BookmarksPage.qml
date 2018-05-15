@@ -25,14 +25,12 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-//import Sailfish.Silica.private 1.0
 import harbour.linksbag 1.0
 
 Page {
     id: bookmarksPage
 
-    property BookmarksFilter bookmarksFilter : getFilterByKey(applicationSettings
-            .value("bookmarks_filter", "unread"))
+    property BookmarksFilter bookmarksFilter : getFilterByKey(mainWindow.settings.bookmarksFilter)
 
     function getFilterByKey(key) {
         for (var i = 0; i < bookmarksFilters.length; ++i) {
@@ -95,7 +93,7 @@ Page {
         }
 
         cover.currentFilter = bookmarksFilter.name
-        applicationSettings.setValue("bookmarks_filter", bookmarksFilter.key)
+        mainWindow.settings.bookmarksFilter = bookmarksFilter.key
     }
 
     BusyIndicator {
@@ -111,7 +109,7 @@ Page {
 
         anchors.fill: parent
 
-        property bool showSearchField: (applicationSettings.value("show_search_field", true) == 'true')
+        property bool showSearchField: mainWindow.settings.showSearchField === true
 
         header: Column {
             id: headerColumn
@@ -165,8 +163,7 @@ Page {
 
                 onClicked: {
                     bookmarksView.showSearchField = !bookmarksView.showSearchField
-                    applicationSettings.setValue("show_search_field",
-                            bookmarksView.showSearchField)
+                    mainWindow.settings.showSearchField = bookmarksView.showSearchField
                 }
             }
 
@@ -327,7 +324,7 @@ Page {
             Column {
                 Item {
                     width: parent.width
-                    height: applicationSettings.value("bookmarksViewItemSize", Theme.paddingMedium)
+                    height: mainWindow.settings.bookmarksViewItemSize
                 }
 
                 id: textColumn
@@ -421,7 +418,7 @@ Page {
 
                 Item {
                     width: parent.width
-                    height: applicationSettings.value("bookmarksViewItemSize", Theme.paddingMedium)
+                    height: mainWindow.settings.bookmarksViewItemSize
                 }
             }
 
@@ -449,11 +446,9 @@ Page {
         VerticalScrollDecorator {}
     }
 
-
-
     Component.onCompleted: {
         // Sync on startup
-        if (applicationSettings.value("sync_on_startup", false)) {
+        if (mainWindow.settings.syncOnStartup) {
             linksbagManager.refreshBookmarks();
         }
     }

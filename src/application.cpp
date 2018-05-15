@@ -48,6 +48,25 @@ Application::Application(QObject *parent)
 {
     connect(m_AuthServer, &AuthServer::gotAuthAnswer,
             this, &Application::handleAuthAnswerGot);
+
+    const QString settingsPath = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
+            .filePath(QCoreApplication::applicationName()) + "/linksbag.conf";
+    const bool migrate = ApplicationSettings::Instance()->value("settingsMigration", true).toBool();
+    if (QFile(settingsPath).exists() && migrate) {
+        qDebug() << "Migrate settings from config to dconf";
+        QSettings settings (settingsPath, QSettings::IniFormat);
+        ApplicationSettings::Instance()->setValue("lastUpdate", settings.value("last_update", 0));
+        ApplicationSettings::Instance()->setValue("bookmarksFilter", settings.value("bookmarks_filter", "unread"));
+        ApplicationSettings::Instance()->setValue("showSearchField", settings.value("show_search_field", false));
+        ApplicationSettings::Instance()->setValue("accessToken", settings.value("access_token"));
+        ApplicationSettings::Instance()->setValue("userName",  settings.value("user_name"));
+        ApplicationSettings::Instance()->setValue("settingsMigration", false);
+        qDebug() << "Migrating of settings has finished";
+    }
+
+    if (migrate) {
+        QFile(settingsPath).remove();
+    }
 }
 
 void Application::ShowUI()
@@ -57,8 +76,6 @@ void Application::ShowUI()
         qDebug() << "Construct view";
         m_View = SailfishApp::createView();
         m_View->setTitle("LinksBag");
-        m_View->rootContext()->setContextProperty("applicationSettings",
-                ApplicationSettings::Instance(this));
         m_View->rootContext()->setContextProperty("linksbagManager",
                 LinksBagManager::Instance(this));
 
@@ -121,8 +138,9 @@ void Application::start()
     qmlRegisterUncreatableType<LinksBag::EnumsProxy>("harbour.linksbag", 1, 0,
             "LinksBag", "This exports otherwise unavailable \
                     LinksBag datatypes to QML");
+    qRegisterMetaType<QVector<int> >("QVector<int>");
 
-   ShowUI();
+    ShowUI();
 }
 
 void Application::handleAboutToQuit()

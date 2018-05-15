@@ -25,8 +25,9 @@ THE SOFTWARE.
 #pragma once
 
 #include <QObject>
-#include <QSettings>
 #include <QVariant>
+
+class MDConfGroup;
 
 namespace LinksBag
 {
@@ -34,7 +35,7 @@ class ApplicationSettings : public QObject
 {
     Q_OBJECT
 
-    QSettings m_Settings;
+    MDConfGroup *m_ApplicationGroup;
 
     ApplicationSettings(QObject *parent = 0);
 public:
@@ -47,5 +48,6 @@ public:
             const QVariant& def = QVariant()) const;
     Q_INVOKABLE void setValue(const QString& key, const QVariant& value);
     Q_INVOKABLE void remove(const QString& key);
+    Q_INVOKABLE void removeAll();
 };
 } // namespace LinksBag

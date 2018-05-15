@@ -47,11 +47,13 @@ DownloadedImageHandler::DownloadedImageHandler(QNetworkReply *reply, QString id,
 void DownloadedImageHandler::run()
 {
     QImage downloadedImage = QImage::fromData(m_reply->readAll());
-    downloadedImage.save(Application::GetPath(Application::CoverCacheDirectory) + m_id + ".jpg");
-    downloadedImage.scaled(
-        720, 400, Qt::KeepAspectRatioByExpanding
-    ).copy(0, 0, 720, 400).save(Application::GetPath(Application::ThumbnailCacheDirectory) + m_id + ".jpg");
-    m_model->RefreshBookmark(m_id);
+    if (!downloadedImage.isNull()) {
+        downloadedImage.save(Application::GetPath(Application::CoverCacheDirectory) + m_id + ".jpg");
+        downloadedImage.scaled(
+            720, 400, Qt::KeepAspectRatioByExpanding
+        ).copy(0, 0, 720, 400).save(Application::GetPath(Application::ThumbnailCacheDirectory) + m_id + ".jpg");
+        m_model->RefreshBookmark(m_id);
+    }
 }
 
 LinksBagManager::LinksBagManager(QObject *parent)
@@ -76,8 +78,8 @@ LinksBagManager::LinksBagManager(QObject *parent)
     m_DownloadingModel->filterBookmarks(LinksBag::FTUnsynced);
     connect(m_thumbnailDownloader, &QNetworkAccessManager::finished, this, &LinksBagManager::thumbnailReceived);
 
-    SetLogged(!ApplicationSettings::Instance(this)->value("access_token").isNull() &&
-              !ApplicationSettings::Instance(this)->value("user_name").isNull());
+    SetLogged(!ApplicationSettings::Instance(this)->value("accessToken").isNull() &&
+              !ApplicationSettings::Instance(this)->value("userName").isNull());
     if (m_IsLogged)
     {
         loadBookmarksFromCache();
@@ -140,9 +142,9 @@ void LinksBagManager::MakeConnections()
             [=](bool logged, const QString& accessToken, const QString& userName)
             {
                 ApplicationSettings::Instance(this)->
-                        setValue("access_token", accessToken);
+                        setValue("accessToken", accessToken);
                 ApplicationSettings::Instance(this)->
-                        setValue("user_name", userName);
+                        setValue("userName", userName);
                 SetLogged(logged);
             });
 
@@ -168,7 +170,7 @@ void LinksBagManager::MakeConnections()
                 }
                 m_FilterProxyModel->invalidate();
                 m_FilterProxyModel->sort(0, Qt::DescendingOrder);
-                ApplicationSettings::Instance(this)->setValue("last_update", since);
+                ApplicationSettings::Instance(this)->setValue("lastUpdate", since);
             });
 
     connect(m_Api.get(),
@@ -303,7 +305,7 @@ void LinksBagManager::refreshBookmarks()
 {
     SetBusy(true);
     m_Api->LoadBookmarks(ApplicationSettings::Instance(this)->
-            value("last_update", 0).toLongLong());
+            value("lastUpdate", 0).toLongLong());
 }
 
 void LinksBagManager::removeBookmark(const QString& id)
@@ -361,11 +363,11 @@ QString LinksBagManager::getContent(const QString& id) {
 
 void LinksBagManager::resetAccount()
 {
-    ApplicationSettings::Instance(this)->remove("access_token");
-    ApplicationSettings::Instance(this)->remove("user_name");
-    ApplicationSettings::Instance(this)->remove("last_update");
-    ApplicationSettings::Instance(this)->remove("bookmarks_filter");
-    ApplicationSettings::Instance(this)->remove("search_field_visibility");
+    ApplicationSettings::Instance(this)->remove("accessToken");
+    ApplicationSettings::Instance(this)->remove("userName");
+    ApplicationSettings::Instance(this)->remove("lastUpdate");
+    ApplicationSettings::Instance(this)->remove("showSearchField");
+    ApplicationSettings::Instance(this)->remove("bookmarksFilter");
 
     m_Api->ResetAccount();
 

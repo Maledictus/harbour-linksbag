@@ -45,5 +45,11 @@ Loader {
         onIsBusyChanged: loader.isBusy = loader.item.isBusy
         onEntryChanged: loader.entry = loader.item.entry
     }
-    Component.onCompleted: loader.source = Qt.resolvedUrl("components/" + applicationSettings.value("parser", "Mercury") + ".qml")
+    Component.onCompleted: {
+        var parserPage = "Mercury.qml"
+        if (mainWindow.settings.parser === "readability") {
+            parserPage = "Readability.qml"
+        }
+        loader.source = Qt.resolvedUrl("components/" + parserPage)
+    }
 }

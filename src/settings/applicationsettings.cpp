@@ -24,17 +24,13 @@ THE SOFTWARE.
 
 #include "applicationsettings.h"
 
-#include <QCoreApplication>
-#include <QDir>
-#include <QStandardPaths>
+#include <mlite5/MDConfGroup>
 
 namespace LinksBag
 {
 ApplicationSettings::ApplicationSettings(QObject *parent)
 : QObject(parent)
-, m_Settings(QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
-             .filePath(QCoreApplication::applicationName()) + "/linksbag.conf",
-        QSettings::IniFormat)
+, m_ApplicationGroup(new MDConfGroup("/apps/harbour-linksbag", this))
 {
 }
 
@@ -50,19 +46,28 @@ ApplicationSettings* ApplicationSettings::Instance(QObject *parent)
 
 QVariant ApplicationSettings::value(const QString& key, const QVariant& def) const
 {
-    return m_Settings.value(key, def);
+    return m_ApplicationGroup ? m_ApplicationGroup->value(key, def) : def;
 }
 
 void ApplicationSettings::setValue(const QString& key, const QVariant& value)
 {
-    m_Settings.setValue(key, value);
-    m_Settings.sync();
+    if (m_ApplicationGroup)
+    {
+        m_ApplicationGroup->setValue(key, value);
+    }
 }
 
 void ApplicationSettings::remove(const QString& key)
 {
-    m_Settings.remove(key);
-    m_Settings.sync();
+    setValue(key, QVariant());
+}
+
+void ApplicationSettings::removeAll()
+{
+    if (m_ApplicationGroup)
+    {
+        m_ApplicationGroup->clear();
+    }
 }
 } // namespace LinksBag
 
