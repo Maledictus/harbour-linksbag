@@ -392,7 +392,48 @@ void GetPocketApi::handleLoadBookmarks()
         bm.SetImageUrl(bookmarkObject["image"].toObject()["src"].toString());
         bm.SetStatus(static_cast<Bookmark::Status>(bookmarkObject["status"]
                 .toString().toInt()));
+        Bookmark::ContentType ct = Bookmark::CTNoType;
+        if (bookmarkObject.contains("is_article") && bookmarkObject["is_article"].toInt() == 1)
+        {
+            ct == Bookmark::CTArticle;
+        }
+        else if (bookmarkObject.contains("has_image") && bookmarkObject["has_image"].toInt() == 2)
+        {
+            ct = Bookmark::CTImage;
+        }
+        else if (bookmarkObject.contains("has_video") && bookmarkObject["has_video"].toInt() == 2)
+        {
+            ct = Bookmark::CTVideo;
+        }
+        bm.SetContentType(ct);
+        if (bookmarkObject.contains("images"))
+        {
+            const auto& imagesObject = bookmarkObject["images"].toObject();
+            QList<QUrl> images;
+            for(const auto& imageKey : imagesObject.keys())
+            {
+                QJsonObject imageObject = imagesObject[imageKey].toObject();
+                if (imageObject.contains("src"))
+                {
+                    images << QUrl(imagesObject["src"].toString());
+                }
+            }
+            bm.SetImages(images);
+        }
 
+        if (bookmarkObject.contains("videos"))
+        {
+            const auto& videosObject = bookmarkObject["videos"].toObject();
+            QList<QUrl> videos;
+            for(const auto& videoKey : videosObject.keys())
+            {
+                QJsonObject videoObject = videosObject[videoKey].toObject();
+                if (videoObject.contains("src"))
+                {
+                    videos << QUrl(videoObject["src"].toString());
+                }
+            }
+        }
         bookmarks << bm;
     }
 

@@ -44,6 +44,8 @@ class Bookmark
     bool m_Read;
     QDateTime m_AddTime;
     QDateTime m_UpdateTime;
+    QList<QUrl> m_Images;
+    QList<QUrl> m_Videos;
 
 public:
     enum Status
@@ -53,8 +55,17 @@ public:
         SDeleted
     };
 
+    enum ContentType
+    {
+        CTNoType,
+        CTArticle,
+        CTImage,
+        CTVideo
+    };
+
 private:
     Status m_Status;
+    ContentType m_ContentType;
 
 public:
     explicit Bookmark();
@@ -80,8 +91,14 @@ public:
     void SetAddTime(const QDateTime& dt);
     QDateTime GetUpdateTime() const;
     void SetUpdateTime(const QDateTime& dt);
+    QList<QUrl> GetImages() const;
+    void SetImages(const QList<QUrl>& urls);
+    QList<QUrl> GetVideos() const;
+    void SetVideos(const QList<QUrl>& urls);
     Status GetStatus() const;
     void SetStatus(Status status);
+    ContentType GetContentType() const;
+    void SetContentType(ContentType contentType);
 
     bool HasContent();
     QString GetThumbnail();

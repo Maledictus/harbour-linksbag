@@ -146,6 +146,26 @@ void Bookmark::SetUpdateTime(const QDateTime& dt)
     m_UpdateTime = dt;
 }
 
+QList<QUrl> Bookmark::GetImages() const
+{
+    return m_Images;
+}
+
+void Bookmark::SetImages(const QList<QUrl>& urls)
+{
+    m_Images = urls;
+}
+
+QList<QUrl> Bookmark::GetVideos() const
+{
+    return m_Videos;
+}
+
+void Bookmark::SetVideos(const QList<QUrl>& urls)
+{
+    m_Videos = urls;
+}
+
 Bookmark::Status Bookmark::GetStatus() const
 {
     return m_Status;
@@ -154,6 +174,16 @@ Bookmark::Status Bookmark::GetStatus() const
 void Bookmark::SetStatus(Bookmark::Status status)
 {
     m_Status = status;
+}
+
+Bookmark::ContentType Bookmark::GetContentType() const
+{
+    return m_ContentType;
+}
+
+void Bookmark::SetContentType(Bookmark::ContentType contentType)
+{
+    m_ContentType = contentType;
 }
 
 QString Bookmark::GetThumbnail()
@@ -171,7 +201,7 @@ bool Bookmark::HasContent()
 
 QByteArray Bookmark::Serialize() const
 {
-    quint16 ver = 3;
+    quint16 ver = 4;
     QByteArray result;
     {
         QDataStream ostr(&result, QIODevice::WriteOnly);
@@ -186,7 +216,10 @@ QByteArray Bookmark::Serialize() const
                 << m_Tags
                 << m_AddTime
                 << m_UpdateTime
-                << m_Status;
+                << m_Status
+                << m_ContentType
+                << m_Images
+                << m_Videos;
     }
 
     return result;
@@ -198,7 +231,7 @@ Bookmark Bookmark::Deserialize(const QByteArray& data)
     QDataStream in(data);
     in >> ver;
 
-    if(ver > 3)
+    if(ver > 4)
     {
         qWarning() << Q_FUNC_INFO
                 << "unknown version"
@@ -221,6 +254,15 @@ Bookmark Bookmark::Deserialize(const QByteArray& data)
             >> status;
     result.SetStatus(static_cast<Status>(status));
 
+    if (ver == 4)
+    {
+        int content = 0;
+        in >> content
+                >> result.m_Images
+                >> result.m_Videos;
+        result.SetContentType(static_cast<Bookmark::ContentType>(content));
+    }
+
     return result;
 }
 
@@ -242,6 +284,17 @@ QVariantMap Bookmark::ToMap() const
 
     QString cachedPath = Application::GetPath(Application::CoverCacheDirectory) + m_ID + ".jpg";
     map["bookmarkCoverImage"] = QFile::exists(cachedPath) ? cachedPath : m_ImageUrl;
+
+    map["bookmarkContentType"] = m_ContentType;
+    QVariantList images;
+    images.reserve(m_Images.size());
+    std::copy(m_Images.begin(), m_Images.end(), images.begin());
+    map["bookmarkImages"] = images;
+
+    QVariantList videos;
+    videos.reserve(m_Videos.size());
+    std::copy(m_Videos.begin(), m_Videos.end(), videos.begin());
+    map["bookmarkVideos"] = videos;
 
     return map;
 }
