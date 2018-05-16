@@ -395,7 +395,7 @@ void GetPocketApi::handleLoadBookmarks()
         Bookmark::ContentType ct = Bookmark::CTNoType;
         if (bookmarkObject.contains("is_article") && bookmarkObject["is_article"].toInt() == 1)
         {
-            ct == Bookmark::CTArticle;
+            ct = Bookmark::CTArticle;
         }
         else if (bookmarkObject.contains("has_image") && bookmarkObject["has_image"].toInt() == 2)
         {
