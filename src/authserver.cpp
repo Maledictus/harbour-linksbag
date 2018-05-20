@@ -75,7 +75,6 @@ void AuthServer::SendAnswer(const QString& answer)
                     "\r\n"
                     "<html><body><h1>" + answer + "</h1></body></html>\n"
                 << QDateTime::currentDateTime().toString() << "\n";
-        qDebug() << m_AuthSocket->readAll();
         m_AuthSocket->close();
     }
 }
