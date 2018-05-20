@@ -62,7 +62,7 @@ public:
 
     enum ContentType
     {
-        CTNoType,
+        CTNoType = 0,
         CTArticle,
         CTImage,
         CTVideo
@@ -71,6 +71,7 @@ public:
 private:
     Status m_Status;
     ContentType m_ContentType;
+    QString m_PublishedDate;
 
     Q_PROPERTY(QString id READ GetID NOTIFY idChanged)
     Q_PROPERTY(QUrl url READ GetUrl NOTIFY urlChanged)
@@ -88,6 +89,7 @@ private:
     Q_PROPERTY(ContentType contentTyp READ GetContentType NOTIFY contentTypeChanged)
     Q_PROPERTY(bool hasContent READ HasContent NOTIFY hasContentChanged)
     Q_PROPERTY(QUrl coverImage READ GetCoverImage NOTIFY coverImageChanged)
+    Q_PROPERTY(QString publishedDate READ GetPublishedDate WRITE SetPublishedDate NOTIFY publishedDateChanged)
 
 public:
     explicit Bookmark(QObject *parent = nullptr);
@@ -129,6 +131,9 @@ public:
     bool HasContent();
     QString GetThumbnail();
 
+    QString GetPublishedDate() const;
+    void SetPublishedDate(const QString& publishedDate);
+
     QByteArray Serialize() const;
     static std::shared_ptr<Bookmark> Deserialize(const QByteArray& data);
 
@@ -151,6 +156,7 @@ signals:
     void contentTypeChanged();
     void hasContentChanged();
     void coverImageChanged();
+    void publishedDateChanged();
 };
 
 typedef QList<std::shared_ptr<Bookmark>> Bookmarks_t;

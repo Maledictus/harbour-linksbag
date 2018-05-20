@@ -46,6 +46,7 @@ Page {
         }
         onDateChanged: {
             dateLabel.text = new Date(date).toLocaleString(Qt.locale(), Locale.ShortFormat)
+            currentBookmark.publishedDate = date
         }
     }
 
@@ -297,6 +298,8 @@ Page {
                             Text {
                                 id: dateText
                                 color: Theme.highlightColor
+                                text: new Date(currentBookmark.publishedDate)
+                                        .toLocaleString(Qt.locale(), Locale.ShortFormat)
                                 horizontalAlignment: Qt.AlignRight
                             }
                         }

@@ -269,9 +269,24 @@ bool Bookmark::HasContent()
     return QFile::exists(Application::GetPath(Application::ArticleCacheDirectory) + m_ID + ".html");
 }
 
+QString Bookmark::GetPublishedDate() const
+{
+    return m_PublishedDate;
+}
+
+void Bookmark::SetPublishedDate(const QString& publishedDate)
+{
+    if (m_PublishedDate == publishedDate) {
+        return;
+    }
+
+    m_PublishedDate = publishedDate;
+    emit publishedDateChanged();
+}
+
 QByteArray Bookmark::Serialize() const
 {
-    quint16 ver = 4;
+    quint16 ver = 5;
     QByteArray result;
     {
         QDataStream ostr(&result, QIODevice::WriteOnly);
@@ -289,7 +304,8 @@ QByteArray Bookmark::Serialize() const
                 << m_Status
                 << m_ContentType
                 << m_Images
-                << m_Videos;
+                << m_Videos
+                << m_PublishedDate;
     }
 
     return result;
@@ -302,7 +318,7 @@ std::shared_ptr<Bookmark> Bookmark::Deserialize(const QByteArray& data)
     in >> ver;
 
     auto result = std::make_shared<Bookmark>();
-    if(ver > 4)
+    if(ver > 5)
     {
         qWarning() << Q_FUNC_INFO
                 << "unknown version"
@@ -324,13 +340,18 @@ std::shared_ptr<Bookmark> Bookmark::Deserialize(const QByteArray& data)
             >> status;
     result->SetStatus(static_cast<Status>(status));
 
-    if (ver == 4)
+    if (ver >= 4)
     {
         int content = 0;
         in >> content
                 >> result->m_Images
                 >> result->m_Videos;
         result->SetContentType(static_cast<Bookmark::ContentType>(content));
+    }
+
+    if (ver >= 5)
+    {
+        in >> result->m_PublishedDate;
     }
 
     return result;
