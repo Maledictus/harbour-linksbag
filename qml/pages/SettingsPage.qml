@@ -136,6 +136,7 @@ Page {
                 text: qsTr("Force full refresh")
                 onClicked: {
                     mainWindow.settings.lastUpdate = 0
+                    mainWindow.settings.sync();
                     linksbagManager.refreshBookmarks();
                 }
             }
