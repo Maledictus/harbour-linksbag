@@ -23,6 +23,9 @@ THE SOFTWARE.
 */
 
 #include "getpocketapi.h"
+
+#include <memory>
+
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -365,9 +368,9 @@ void GetPocketApi::handleLoadBookmarks()
             continue;
         }
 
-        Bookmark bm;
-        bm.SetID(bookmarkObject["item_id"].toString());
-        bm.SetUrl(bookmarkObject["resolved_url"].toString());
+        auto bm = std::make_shared<Bookmark>();
+        bm->SetID(bookmarkObject["item_id"].toString());
+        bm->SetUrl(bookmarkObject["resolved_url"].toString());
         QString title = bookmarkObject["resolved_title"].toString();
         if(title.isEmpty())
         {
@@ -375,22 +378,22 @@ void GetPocketApi::handleLoadBookmarks()
         }
         if(title.isEmpty())
         {
-            title = bm.GetUrl().toString();
+            title = bm->GetUrl().toString();
         }
-        bm.SetTitle(title);
-        bm.SetDescription(bookmarkObject["excerpt"].toString());
-        bm.SetIsFavorite(bookmarkObject["favorite"].toString() != "0" ||
+        bm->SetTitle(title);
+        bm->SetDescription(bookmarkObject["excerpt"].toString());
+        bm->SetIsFavorite(bookmarkObject["favorite"].toString() != "0" ||
                 bookmarkObject["time_favorited"].toString() != "0");
-        bm.SetIsRead(bookmarkObject["read"].toString() == "1" ||
+        bm->SetIsRead(bookmarkObject["read"].toString() == "1" ||
                 bookmarkObject["time_read"].toString() != "0");
-        bm.SetAddTime(QDateTime::fromTime_t(bookmarkObject["time_added"]
+        bm->SetAddTime(QDateTime::fromTime_t(bookmarkObject["time_added"]
                 .toString().toLongLong()));
-        bm.SetUpdateTime(QDateTime::fromTime_t(bookmarkObject["time_updated"]
+        bm->SetUpdateTime(QDateTime::fromTime_t(bookmarkObject["time_updated"]
                 .toString().toLongLong()));
         const auto& tagsObject = bookmarkObject["tags"].toObject();
-        bm.SetTags(tagsObject.keys());
-        bm.SetImageUrl(bookmarkObject["image"].toObject()["src"].toString());
-        bm.SetStatus(static_cast<Bookmark::Status>(bookmarkObject["status"]
+        bm->SetTags(tagsObject.keys());
+        bm->SetImageUrl(bookmarkObject["image"].toObject()["src"].toString());
+        bm->SetStatus(static_cast<Bookmark::Status>(bookmarkObject["status"]
                 .toString().toInt()));
         Bookmark::ContentType ct = Bookmark::CTNoType;
         if (bookmarkObject.contains("is_article") && bookmarkObject["is_article"].toInt() == 1)
@@ -405,7 +408,7 @@ void GetPocketApi::handleLoadBookmarks()
         {
             ct = Bookmark::CTVideo;
         }
-        bm.SetContentType(ct);
+        bm->SetContentType(ct);
         if (bookmarkObject.contains("images"))
         {
             const auto& imagesObject = bookmarkObject["images"].toObject();
@@ -418,7 +421,7 @@ void GetPocketApi::handleLoadBookmarks()
                     images << QUrl(imagesObject["src"].toString());
                 }
             }
-            bm.SetImages(images);
+            bm->SetImages(images);
         }
 
         if (bookmarkObject.contains("videos"))

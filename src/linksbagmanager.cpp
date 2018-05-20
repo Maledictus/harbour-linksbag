@@ -108,6 +108,9 @@ bool LinksBagManager::GetLogged() const
 
 void LinksBagManager::MakeConnections()
 {
+    connect(this, &LinksBagManager::articlesCacheReset,
+            m_BookmarksModel, &BookmarksModel::handleArticlesCacheReset);
+
     connect(m_Api.get(),
             &GetPocketApi::requestFinished,
             this,
@@ -157,14 +160,15 @@ void LinksBagManager::MakeConnections()
                 saveBookmarks();
                 const auto& savedBookmarks = m_BookmarksModel->GetBookmarks();
                 for (int i=savedBookmarks.size()-1; i>=0; --i) {
-                    Bookmark b = savedBookmarks.at(i);
-                    QString path = Application::GetPath(Application::ThumbnailCacheDirectory) + b.GetID() + ".jpg";
+                    auto b = savedBookmarks.at(i);
+                    QString path = Application::GetPath(Application::ThumbnailCacheDirectory) +
+                            b->GetID() + ".jpg";
                     if (QFile(path).exists())
                         continue;
 
-                    QUrl url = b.GetImageUrl();
+                    QUrl url = b->GetImageUrl();
                     if (!url.isEmpty()) {
-                        m_thumbnailUrls[url] = b.GetID();
+                        m_thumbnailUrls[url] = b->GetID();
                         m_thumbnailDownloader->get(QNetworkRequest(url));
                     }
                 }
@@ -237,7 +241,7 @@ void LinksBagManager::saveBookmarks()
     for (int i = 0, size = bookmarks.size(); i < size; ++i)
     {
         settings.setArrayIndex(i);
-        settings.setValue("SerializedData", bookmarks.at(i).Serialize());
+        settings.setValue("SerializedData", bookmarks.at(i)->Serialize());
     }
     settings.endArray();
     settings.sync();
@@ -285,8 +289,8 @@ void LinksBagManager::loadBookmarksFromCache()
     {
         settings.setArrayIndex(i);
         QByteArray data = settings.value("SerializedData").toByteArray();
-        Bookmark bm = Bookmark::Deserialize(data);
-        if (!bm.IsValid())
+        auto bm = Bookmark::Deserialize(data);
+        if (!bm->IsValid())
         {
             qWarning() << Q_FUNC_INFO
                     << "unserializable entry"
@@ -397,6 +401,8 @@ void LinksBagManager::resetArticleCache()
 
     // recreate directory
     article.mkpath(Application::GetPath(Application::ArticleCacheDirectory));
+
+    emit articlesCacheReset();
 }
 
 void LinksBagManager::resetThumbnailCache()

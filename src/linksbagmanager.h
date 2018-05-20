@@ -137,5 +137,7 @@ signals:
 
     void error(const QString& msg, int type);
     void notify(const QString& msg);
+
+    void articlesCacheReset();
 };
 } // namespace LinskBag

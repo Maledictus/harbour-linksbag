@@ -31,6 +31,7 @@ Item {
     property bool isBusy: true
     property bool ignoreHeader: false;
     property string entry: ""
+    property string date: ""
     property string bookmarkImage: ""
 
     property string nextUrl: ""

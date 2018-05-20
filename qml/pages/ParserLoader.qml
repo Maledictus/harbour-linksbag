@@ -24,11 +24,11 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 
-
 Loader {
     id: loader
     property bool isBusy: false
     property string entry: ""
+    property string date: ""
     property string bookmarkImage: ""
     property string articleUrl: ""
 
@@ -44,6 +44,7 @@ Loader {
         target: loader.item
         onIsBusyChanged: loader.isBusy = loader.item.isBusy
         onEntryChanged: loader.entry = loader.item.entry
+        onDateChanged: loader.date = loader.item.date
     }
     Component.onCompleted: {
         var parserPage = "Mercury.qml"

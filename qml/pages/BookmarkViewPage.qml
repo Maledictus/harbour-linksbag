@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtQuick.Layouts 1.1
 import "."
 
 Page {
@@ -43,14 +44,17 @@ Page {
             hasContent = true;
             readability.item.isBusy = false;
         }
+        onDateChanged: {
+            dateLabel.text = new Date(date).toLocaleString(Qt.locale(), Locale.ShortFormat)
+        }
     }
 
     property string bookmarkId
     property variant currentBookmark
 
-    property bool bookmarkRead: false
-    property bool bookmarkFavorite: false
-    property bool hasContent: false
+    property bool bookmarkRead: currentBookmark && currentBookmark.read
+    property bool bookmarkFavorite: currentBookmark && currentBookmark.favorite
+    property bool hasContent: currentBookmark && currentBookmark.hasContent
 
     function generateCustomCss() {
         return  "<style>
@@ -62,21 +66,15 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active && linksbagManager.logged) {
-            currentBookmark = linksbagManager.bookmarksModel.getBookmark(bookmarkId)
-            hasContent = currentBookmark.bookmarkHasContent
-            cover.title = currentBookmark.bookmarkTitle
-            bookmarkRead = currentBookmark && currentBookmark.bookmarkRead
-            bookmarkFavorite = currentBookmark && currentBookmark.bookmarkFavorite
-
+            cover.title = currentBookmark !== null ? currentBookmark.title : ""
+            cover.image = currentBookmark.coverImage
             if (!hasContent) {
-                readability.bookmarkImage = currentBookmark.bookmarkImageUrl
-                readability.setArticle(currentBookmark.bookmarkUrl)
+                readability.bookmarkImage = currentBookmark.imageUrl
+                readability.setArticle(currentBookmark.url)
             } else {
                 entryText.text = generateCustomCss() + linksbagManager.getContent(bookmarkId)
                 readability.item.isBusy = false;
             }
-
-            cover.image = currentBookmark.bookmarkCoverImage
         }
     }
 
@@ -86,21 +84,15 @@ Page {
     Connections {
         target: linksbagManager
         onBookmarkReadStateChanged: {
-            if (bookmarkId !== id) {
-                return
+            if (bookmarkId === id) {
+                bookmarkRead = readState
             }
-
-            bookmarkRead = readState
-            currentBookmark.bookmarkRead = readState
         }
 
         onBookmarkFavoriteStateChanged: {
-            if (bookmarkId !== id) {
-                return
+            if (bookmarkId === id) {
+                bookmarkFavorite = favoriteState
             }
-
-            bookmarkFavorite = favoriteState
-            currentBookmark.bookmarkFavorite = favoriteState
         }
     }
 
@@ -122,10 +114,11 @@ Page {
                         qsTr("Mark as read")
 
                 onClicked: {
-                    linksbagManager.markAsRead(currentBookmark.bookmarkID,
-                            !currentBookmark.bookmarkRead)
-                    if (!bookmarkRead)
+                    linksbagManager.markAsRead(currentBookmark.id,
+                            !bookmarkRead)
+                    if (!bookmarkRead) {
                         pageStack.pop();
+                    }
                 }
             }
 
@@ -134,8 +127,8 @@ Page {
                         qsTr("Mark as unfavorite") :
                         qsTr("Mark as favorite")
                 onClicked: {
-                    linksbagManager.markAsFavorite(currentBookmark.bookmarkID,
-                            !currentBookmark.bookmarkFavorite)
+                    linksbagManager.markAsFavorite(currentBookmark.id,
+                            !bookmarkFavorite)
                 }
             }
          }
@@ -156,8 +149,8 @@ Page {
                         qsTr("Mark as read")
 
                 onClicked: {
-                    linksbagManager.markAsRead(currentBookmark.bookmarkID,
-                            !currentBookmark.bookmarkRead)
+                    linksbagManager.markAsRead(currentBookmark.id,
+                            !bookmarkRead)
                 }
             }
 
@@ -166,15 +159,15 @@ Page {
                         qsTr("Mark as unfavorite") :
                         qsTr("Mark as favorite")
                 onClicked: {
-                    linksbagManager.markAsFavorite(currentBookmark.bookmarkID,
-                            !currentBookmark.bookmarkFavorite)
+                    linksbagManager.markAsFavorite(currentBookmark.id,
+                            !bookmarkFavorite)
                 }
             }
 
             MenuItem {
                 text: qsTr("Open in browser")
                 onClicked: {
-                    Qt.openUrlExternally(encodeURI(currentBookmark.bookmarkUrl))
+                    Qt.openUrlExternally(encodeURI(currentBookmark.url))
                 }
             }
         }
@@ -209,7 +202,7 @@ Page {
                         name: "loaded"
                         PropertyChanges {
                             target: header;
-                            height: currentBookmark && currentBookmark.bookmarkImageUrl.length > 0 ?
+                            height: currentBookmark && currentBookmark.imageUrl.length > 0 ?
                                     mainWindow.height*0.4 :
                                     entryHeaderWrapper.height + Theme.paddingMedium
                         }
@@ -228,7 +221,7 @@ Page {
                     smooth: false
                     id: thumbnailImage
                     source: currentBookmark ?
-                            currentBookmark.bookmarkImageUrl :
+                            currentBookmark.imageUrl :
                             ""
                     anchors.fill: parent;
                     fillMode: Image.PreserveAspectCrop
@@ -254,7 +247,7 @@ Page {
                         horizontalAlignment: Qt.AlignCenter
                         font.pixelSize: Theme.fontSizeExtraLarge
                         text: currentBookmark ?
-                                  currentBookmark.bookmarkTitle :
+                                  currentBookmark.title :
                                   ""
                         anchors {
                             margins: Theme.paddingLarge;
@@ -265,28 +258,46 @@ Page {
                         }
                     }
 
-                    Item {
-                        id: sourceLabel
+                    RowLayout {
                         anchors {
-                            horizontalCenter: parent.horizontalCenter;
+                            left: parent.left
+                            right: parent.right
                             margins: Theme.paddingLarge
                         }
-                        width: sourceText.paintedWidth
-                        height: sourceText.paintedHeight + Theme.paddingSmall*6
-                        visible: sourceText.text !== ""
-                        Text {
-                            id: sourceText
-                            anchors.centerIn: parent
-                            color: Theme.highlightColor
-                            text: {
-                                if (currentBookmark) {
-                                    var matches = currentBookmark.bookmarkUrl.toString()
-                                            .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                                    return matches ? matches[1] : currentBookmark.bookmarkUrl
+                        Item {
+                            id: sourceLabel
+                            width: sourceText.paintedWidth
+                            height: sourceText.paintedHeight + Theme.paddingSmall*6
+                            visible: sourceText.text !== ""
+                            Layout.alignment: dateLabel.visible ? Qt.AlignLeft : Qt.AlignHCenter
+                            Text {
+                                id: sourceText
+                                color: Theme.highlightColor
+                                horizontalAlignment: dateLabel.visible ? Qt.AlignLeft : Qt.AlignHCenter
+                                text: {
+                                    if (currentBookmark) {
+                                        var matches = currentBookmark.url.toString()
+                                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
+                                        return matches ? matches[1] : currentBookmark.url
+                                    }
+                                    else {
+                                        return ""
+                                    }
                                 }
-                                else {
-                                    return ""
-                                }
+                            }
+                        }
+
+                        Item {
+                            id: dateLabel
+                            property alias text: dateText.text
+                            width: dateText.paintedWidth
+                            height: dateText.paintedHeight + Theme.paddingSmall*6
+                            visible: dateText.text !== ""
+                            Layout.alignment: Qt.AlignRight
+                            Text {
+                                id: dateText
+                                color: Theme.highlightColor
+                                horizontalAlignment: Qt.AlignRight
                             }
                         }
                     }

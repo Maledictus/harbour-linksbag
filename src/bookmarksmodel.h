@@ -25,7 +25,10 @@ THE SOFTWARE.
 
 #pragma once
 
+#include <memory>
+
 #include <QAbstractListModel>
+
 #include "bookmark.h"
 
 namespace LinksBag
@@ -52,7 +55,11 @@ public:
         BRStatus,
         BRThumbnail,
         BRCoverImage,
-        BRHasContent
+        BRHasContent,
+        BRImages,
+        BRVideos,
+        BRContentType,
+        BRBookmark
     };
 
     explicit BookmarksModel(QObject *parent = 0);
@@ -73,7 +80,7 @@ public:
     void RefreshBookmark(const QString& id);
 
     Bookmarks_t GetBookmarks() const;
-
-    Q_INVOKABLE QVariantMap getBookmark(const QString& id) const;
+public slots:
+    void handleArticlesCacheReset();
 };
 } // namespace LinksBag

@@ -31,8 +31,9 @@ THE SOFTWARE.
 
 namespace LinksBag
 {
-Bookmark::Bookmark()
-: m_Favorite(false)
+Bookmark::Bookmark(QObject *parent)
+: QObject(parent)
+, m_Favorite(false)
 , m_Read(false)
 , m_Status(Bookmark::SNoStatus)
 {
@@ -45,7 +46,10 @@ QString Bookmark::GetID() const
 
 void Bookmark::SetID(const QString &id)
 {
-    m_ID = id;
+    if (m_ID != id) {
+        m_ID = id;
+        emit idChanged();
+    }
 }
 
 QUrl Bookmark::GetUrl() const
@@ -53,9 +57,12 @@ QUrl Bookmark::GetUrl() const
     return m_Url;
 }
 
-void Bookmark::SetUrl(const QUrl &url)
+void Bookmark::SetUrl(const QUrl& url)
 {
-    m_Url = url;
+    if (m_Url != url) {
+        m_Url = url;
+        emit urlChanged();
+    }
 }
 
 QString Bookmark::GetTitle() const
@@ -65,7 +72,10 @@ QString Bookmark::GetTitle() const
 
 void Bookmark::SetTitle(const QString& title)
 {
-    m_Title = title;
+    if (m_Title != title) {
+        m_Title = title;
+        emit titleChanged();
+    }
 }
 
 QString Bookmark::GetDescription() const
@@ -75,7 +85,10 @@ QString Bookmark::GetDescription() const
 
 void Bookmark::SetDescription(const QString& desc)
 {
-    m_Description = desc;
+    if (m_Description != desc) {
+        m_Description = desc;
+        emit descriptionChanged();
+    }
 }
 
 QUrl Bookmark::GetImageUrl() const
@@ -93,7 +106,10 @@ QUrl Bookmark::GetCoverImageUrl()
 
 void Bookmark::SetImageUrl(const QUrl& url)
 {
-    m_ImageUrl = url;
+    if (m_ImageUrl != url) {
+        m_ImageUrl = url;
+        emit imageUrlChanged();
+    }
 }
 
 QStringList Bookmark::GetTags() const
@@ -101,9 +117,17 @@ QStringList Bookmark::GetTags() const
     return m_Tags;
 }
 
-void Bookmark::SetTags(const QStringList &tags)
+QString Bookmark::GetTagsString() const
 {
-    m_Tags = tags;
+    return m_Tags.join(",");
+}
+
+void Bookmark::SetTags(const QStringList& tags)
+{
+    if (m_Tags != tags) {
+        m_Tags = tags;
+        emit tagsChanged();
+    }
 }
 
 bool Bookmark::IsFavorite() const
@@ -113,7 +137,10 @@ bool Bookmark::IsFavorite() const
 
 void Bookmark::SetIsFavorite(bool favorite)
 {
-    m_Favorite = favorite;
+    if (m_Favorite != favorite) {
+        m_Favorite = favorite;
+        emit favoriteChanged();
+    }
 }
 
 bool Bookmark::IsRead() const
@@ -123,7 +150,10 @@ bool Bookmark::IsRead() const
 
 void Bookmark::SetIsRead(bool read)
 {
-    m_Read = read;
+    if (m_Read != read) {
+        m_Read = read;
+        emit readChanged();
+    }
 }
 
 QDateTime Bookmark::GetAddTime() const
@@ -133,7 +163,10 @@ QDateTime Bookmark::GetAddTime() const
 
 void Bookmark::SetAddTime(const QDateTime& dt)
 {
-    m_AddTime = dt;
+    if (m_AddTime != dt) {
+        m_AddTime = dt;
+        emit addTimeChanged();
+    }
 }
 
 QDateTime Bookmark::GetUpdateTime() const
@@ -143,7 +176,18 @@ QDateTime Bookmark::GetUpdateTime() const
 
 void Bookmark::SetUpdateTime(const QDateTime& dt)
 {
-    m_UpdateTime = dt;
+    if (m_UpdateTime != dt) {
+        m_UpdateTime = dt;
+        emit updateTimeChanged();
+    }
+}
+
+QVariantList Bookmark::GetImagesVar() const
+{
+    QVariantList result;
+    result.reserve(m_Images.size());
+    std::copy(m_Images.begin(), m_Images.end(), result.begin());
+    return result;
 }
 
 QList<QUrl> Bookmark::GetImages() const
@@ -153,7 +197,18 @@ QList<QUrl> Bookmark::GetImages() const
 
 void Bookmark::SetImages(const QList<QUrl>& urls)
 {
-    m_Images = urls;
+    if (m_Images != urls) {
+        m_Images = urls;
+        emit imagesChanged();
+    }
+}
+
+QVariantList Bookmark::GetVideosVar() const
+{
+    QVariantList result;
+    result.reserve(m_Videos.size());
+    std::copy(m_Videos.begin(), m_Videos.end(), result.begin());
+    return result;
 }
 
 QList<QUrl> Bookmark::GetVideos() const
@@ -163,7 +218,10 @@ QList<QUrl> Bookmark::GetVideos() const
 
 void Bookmark::SetVideos(const QList<QUrl>& urls)
 {
-    m_Videos = urls;
+    if (m_Videos != urls) {
+        m_Videos = urls;
+        emit videosChanged();
+    }
 }
 
 Bookmark::Status Bookmark::GetStatus() const
@@ -173,7 +231,10 @@ Bookmark::Status Bookmark::GetStatus() const
 
 void Bookmark::SetStatus(Bookmark::Status status)
 {
-    m_Status = status;
+    if (m_Status != status) {
+        m_Status = status;
+        emit statusChanged();
+    }
 }
 
 Bookmark::ContentType Bookmark::GetContentType() const
@@ -183,7 +244,16 @@ Bookmark::ContentType Bookmark::GetContentType() const
 
 void Bookmark::SetContentType(Bookmark::ContentType contentType)
 {
-    m_ContentType = contentType;
+    if (m_ContentType != contentType) {
+        m_ContentType = contentType;
+        emit contentTypeChanged();
+    }
+}
+
+QUrl Bookmark::GetCoverImage() const
+{
+    const auto cachedPath = Application::GetPath(Application::CoverCacheDirectory) + m_ID + ".jpg";
+    return QFile::exists(cachedPath) ? QUrl::fromLocalFile(cachedPath) : m_ImageUrl;
 }
 
 QString Bookmark::GetThumbnail()
@@ -225,78 +295,45 @@ QByteArray Bookmark::Serialize() const
     return result;
 }
 
-Bookmark Bookmark::Deserialize(const QByteArray& data)
+std::shared_ptr<Bookmark> Bookmark::Deserialize(const QByteArray& data)
 {
     quint16 ver = 0;
     QDataStream in(data);
     in >> ver;
 
+    auto result = std::make_shared<Bookmark>();
     if(ver > 4)
     {
         qWarning() << Q_FUNC_INFO
                 << "unknown version"
                 << ver;
-        return Bookmark();
+        return result;
     }
 
-    Bookmark result;
     int status = 0;
-    in >> result.m_ID
-            >> result.m_Url
-            >> result.m_Title
-            >> result.m_Description
-            >> result.m_ImageUrl
-            >> result.m_Favorite
-            >> result.m_Read
-            >> result.m_Tags
-            >> result.m_AddTime
-            >> result.m_UpdateTime
+    in >> result->m_ID
+            >> result->m_Url
+            >> result->m_Title
+            >> result->m_Description
+            >> result->m_ImageUrl
+            >> result->m_Favorite
+            >> result->m_Read
+            >> result->m_Tags
+            >> result->m_AddTime
+            >> result->m_UpdateTime
             >> status;
-    result.SetStatus(static_cast<Status>(status));
+    result->SetStatus(static_cast<Status>(status));
 
     if (ver == 4)
     {
         int content = 0;
         in >> content
-                >> result.m_Images
-                >> result.m_Videos;
-        result.SetContentType(static_cast<Bookmark::ContentType>(content));
+                >> result->m_Images
+                >> result->m_Videos;
+        result->SetContentType(static_cast<Bookmark::ContentType>(content));
     }
 
     return result;
-}
-
-QVariantMap Bookmark::ToMap() const
-{
-    QVariantMap map;
-    map["bookmarkID"] = m_ID;
-    map["bookmarkUrl"] = m_Url;
-    map["bookmarkTitle"] = m_Title;
-    map["bookmarkDescription"] = m_Description;
-    map["bookmarkImageUrl"] = m_ImageUrl;
-    map["bookmarkFavorite"] = m_Favorite;
-    map["bookmarkRead"] = m_Read;
-    map["bookmarkTags"] = m_Tags;
-    map["bookmarkAddTime"] = m_AddTime;
-    map["bookmarkUpdateTime"] = m_UpdateTime;
-    map["bookmarkStatus"] = m_Status;
-    map["bookmarkHasContent"] = QFile::exists(Application::GetPath(Application::ArticleCacheDirectory) + m_ID + ".html");
-
-    QString cachedPath = Application::GetPath(Application::CoverCacheDirectory) + m_ID + ".jpg";
-    map["bookmarkCoverImage"] = QFile::exists(cachedPath) ? cachedPath : m_ImageUrl;
-
-    map["bookmarkContentType"] = m_ContentType;
-    QVariantList images;
-    images.reserve(m_Images.size());
-    std::copy(m_Images.begin(), m_Images.end(), images.begin());
-    map["bookmarkImages"] = images;
-
-    QVariantList videos;
-    videos.reserve(m_Videos.size());
-    std::copy(m_Videos.begin(), m_Videos.end(), videos.begin());
-    map["bookmarkVideos"] = videos;
-
-    return map;
 }
 
 bool Bookmark::IsValid() const

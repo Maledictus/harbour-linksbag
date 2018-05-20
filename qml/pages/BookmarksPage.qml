@@ -265,9 +265,15 @@ Page {
                 property real dimmedOpacity: 0.4
 
                 // wallpaper orientation
-                readonly property size normalizedSize: Qt.size(1, rootDelegateItem.contentHeight/wallpaperTexture.sourceSize.height)
+                readonly property size normalizedSize: {
+                    var heightParam =  wallpaperTexture !== null ? wallpaperTexture.sourceSize.height : 1
+                    return Qt.size(1, rootDelegateItem.contentHeight/heightParam)
+                }
                 readonly property point offset: Qt.point((1 - normalizedSize.width) / 2, (1 - normalizedSize.height) / 2);
-                readonly property size dimensions: Qt.size(1, rootDelegateItem.contentHeight/wallpaperTexture.sourceSize.height)
+                readonly property size dimensions: {
+                    var heightParam =  wallpaperTexture !== null ? wallpaperTexture.sourceSize.height : 1
+                    return Qt.size(1, rootDelegateItem.contentHeight/heightParam)
+                }
                 // glass texture size
                 property size glassTextureSizeInv: Qt.size(1.0/(glassTextureImage.sourceSize.width),
                                                            -1.0/(glassTextureImage.sourceSize.height))
@@ -439,7 +445,7 @@ Page {
 
             onClicked: {
                 var page = pageStack.push(Qt.resolvedUrl("BookmarkViewPage.qml"),
-                        { bookmarkId: bookmarkID })
+                        { bookmarkId: bookmarkID, currentBookmark: bookmarkBookmark })
             }
         }
 
