@@ -396,15 +396,15 @@ void GetPocketApi::handleLoadBookmarks()
         bm->SetStatus(static_cast<Bookmark::Status>(bookmarkObject["status"]
                 .toString().toInt()));
         Bookmark::ContentType ct = Bookmark::CTNoType;
-        if (bookmarkObject.contains("is_article") && bookmarkObject["is_article"].toInt() == 1)
+        if (bookmarkObject.contains("is_article") && bookmarkObject["is_article"].toString().toInt() == 1)
         {
             ct = Bookmark::CTArticle;
         }
-        else if (bookmarkObject.contains("has_image") && bookmarkObject["has_image"].toInt() == 2)
+        else if (bookmarkObject.contains("has_image") && bookmarkObject["has_image"].toString().toInt() == 2)
         {
             ct = Bookmark::CTImage;
         }
-        else if (bookmarkObject.contains("has_video") && bookmarkObject["has_video"].toInt() == 2)
+        else if (bookmarkObject.contains("has_video") && bookmarkObject["has_video"].toString().toInt() == 2)
         {
             ct = Bookmark::CTVideo;
         }
