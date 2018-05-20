@@ -76,21 +76,9 @@ QVariant BookmarksModel::data(const QModelIndex& index, int role) const
     case BRCoverImage:
         return bookmark->GetCoverImageUrl();
     case BRImages:
-    {
-        const auto& images = bookmark->GetImages();
-        QVariantList result;
-        result.reserve(images.size());
-        std::copy(images.begin(), images.end(), result.begin());
-        return result;
-    }
+        return bookmark->GetImagesVar();
     case BRVideos:
-    {
-        const auto& videos = bookmark->GetVideos();
-        QVariantList result;
-        result.reserve(videos.size());
-        std::copy(videos.begin(), videos.end(), result.begin());
-        return result;
-    }
+        return bookmark->GetVideosVar();
     case BRContentType:
         return bookmark->GetContentType();
     case BRBookmark:

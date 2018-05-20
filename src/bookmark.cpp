@@ -185,8 +185,7 @@ void Bookmark::SetUpdateTime(const QDateTime& dt)
 QVariantList Bookmark::GetImagesVar() const
 {
     QVariantList result;
-    result.reserve(m_Images.size());
-    std::copy(m_Images.begin(), m_Images.end(), result.begin());
+    std::copy(m_Images.begin(), m_Images.end(), std::back_inserter(result));
     return result;
 }
 
@@ -206,8 +205,7 @@ void Bookmark::SetImages(const QList<QUrl>& urls)
 QVariantList Bookmark::GetVideosVar() const
 {
     QVariantList result;
-    result.reserve(m_Videos.size());
-    std::copy(m_Videos.begin(), m_Videos.end(), result.begin());
+    std::copy(m_Videos.begin(), m_Videos.end(), std::back_inserter(result));
     return result;
 }
 
