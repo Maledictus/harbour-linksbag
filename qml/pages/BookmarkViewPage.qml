@@ -44,7 +44,7 @@ Page {
             cover.title = currentBookmark !== null ? currentBookmark.title : ""
             cover.image = currentBookmark.coverImage
             var source
-            if (mainWindow.settings.useReaderModeOnly) {
+            if (!mainWindow.settings.useBestView) {
                 source = "./components/ArticleBookmarkView.qml"
             }
             else {

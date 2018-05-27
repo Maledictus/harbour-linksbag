@@ -105,6 +105,6 @@ ApplicationWindow {
         property bool showSearchField: false
         property string accessToken
         property string userName
-        property bool useReaderModeOnly: false
+        property bool useBestView: true
     }
 }

@@ -85,11 +85,11 @@ Page {
             }
 
             TextSwitch {
-                text: qsTr("Use reader mode always")
-                description: qsTr("Application will try to open all bookmarks using reader-mode backend")
-                checked: mainWindow.settings.useReaderModeOnly
+                text: qsTr("Use the best view")
+                description: qsTr("LinksBag automatically select the best view(article, web-page, image)")
+                checked: mainWindow.settings.useBestView
                 onCheckedChanged: {
-                    mainWindow.settings.useReaderModeOnly = checked
+                    mainWindow.settings.useBestView = checked
                 }
             }
 
