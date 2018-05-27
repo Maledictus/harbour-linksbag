@@ -27,8 +27,6 @@ THE SOFTWARE.
 
 #include <QObject>
 
-#include "bookmark.h"
-
 namespace LinksBag
 {
 enum ErrorType
@@ -39,7 +37,7 @@ enum ErrorType
 
 enum FilterType
 {
-    FTAll,
+    FTAll = 0,
     FTRead,
     FTUnread,
     FTFavorite,
@@ -52,7 +50,6 @@ class EnumsProxy : public QObject
 
     Q_ENUMS(ErrorTypeProxy)
     Q_ENUMS(FilterTypeProxy)
-    Q_ENUMS(ContentTypeProxy)
 
 public:
     enum ErrorTypeProxy
@@ -68,14 +65,6 @@ public:
         Unread = FTUnread,
         Favorite = FTFavorite,
         Unsynced = FTUnsynced
-    };
-
-    enum ContentTypeProxy
-    {
-        NoContentType = Bookmark::CTNoType,
-        ArticleContentType = Bookmark::CTArticle,
-        ImageContentType = Bookmark::CTImage,
-        VideoContentType = Bookmark::CTVideo
     };
 };
 }
