@@ -30,6 +30,7 @@ import harbour.linksbag 1.0
 Item {
     property bool bookmarkRead: bookmark ? bookmark.read : false
     property bool bookmarkFavorite: bookmark ? bookmark.favorite : false
+    property bool hasContent: bookmark ? bookmark.hasContent : false
     property string publishedDate
 
     Drawer {
@@ -68,9 +69,17 @@ Item {
                     fillMode: Image.PreserveAspectFit
                     cache: true
                     asynchronous: true
-                    sourceSize.width:  Screen.width;
+                    sourceSize.width: Screen.width;
                     smooth: false
-                    source: bookmark ? bookmark.url : ""
+                    source: !hasContent ? (bookmark ? bookmark.url : "") : linksbagManager.getContentUri(bookmark.id)
+
+                    onStatusChanged: {
+                        if (status === Image.Ready && !hasContent) {
+                            imagePreview.grabToImage(function(result) {
+                                linksbagManager.updateContent(bookmark.id, result.image)
+                            })
+                        }
+                    }
 
                     onScaleChanged: {
                         if ((width * scale) > imageFlickable.width) {
@@ -131,6 +140,13 @@ Item {
             PullDownMenu {
                 enabled: !busyIndicator.running
                 MenuItem {
+                    text: qsTr("Reload")
+                    onClicked: {
+                        imagePreview.source = bookmark ? bookmark.url : ""
+                    }
+                }
+
+                MenuItem {
                     text: bookmarkRead ?
                             qsTr("Mark as unread") :
                             qsTr("Mark as read")
@@ -162,7 +178,7 @@ Item {
         id: busyIndicator
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
-        running: imagePreview.status === Image.Loading || linksbagManager.busy
+        running: imagePreview.status === Image.Loading || (linksbagManager ? linksbagManager.busy : false)
         visible: running
     }
 }
