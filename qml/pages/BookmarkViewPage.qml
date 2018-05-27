@@ -26,56 +26,44 @@ THE SOFTWARE.
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.Layouts 1.1
+import harbour.linksbag 1.0
 import "."
 
 Page {
     id: page
 
-    Connections {
-        target: Theme
-        onHighlightColorChanged: entryText.text = generateCustomCss() + readability.entry;
-    }
-
-    ParserLoader {
-        id: readability
-        onEntryChanged: {
-            linksbagManager.updateContent(bookmarkId, entry);
-            entryText.text = generateCustomCss() + entry;
-            hasContent = true;
-            readability.item.isBusy = false;
-        }
-        onDateChanged: {
-            dateLabel.text = new Date(date).toLocaleString(Qt.locale(), Locale.ShortFormat)
-            currentBookmark.publishedDate = date
-        }
-    }
-
     property string bookmarkId
-    property variant currentBookmark
+    property var currentBookmark
 
     property bool bookmarkRead: currentBookmark && currentBookmark.read
     property bool bookmarkFavorite: currentBookmark && currentBookmark.favorite
     property bool hasContent: currentBookmark && currentBookmark.hasContent
 
-    function generateCustomCss() {
-        return  "<style>
-            a:link { color: " + Theme.highlightColor + "; }
-            img { margin: initial -" + Theme.horizontalPageMargin + "px; }
-            h1, h2, h3, h4, h5 { text-align: left; }
-        </style>";
-    }
-
     onStatusChanged: {
         if (status === PageStatus.Active && linksbagManager.logged) {
             cover.title = currentBookmark !== null ? currentBookmark.title : ""
             cover.image = currentBookmark.coverImage
-            if (!hasContent) {
-                readability.bookmarkImage = currentBookmark.imageUrl
-                readability.setArticle(currentBookmark.url)
-            } else {
-                entryText.text = generateCustomCss() + linksbagManager.getContent(bookmarkId)
-                readability.item.isBusy = false;
+            var source
+            if (mainWindow.settings.useReaderModeOnly) {
+                source = "./components/ArticleBookmarkView.qml"
             }
+            else {
+                switch (currentBookmark.contentType) {
+                case Bookmark.CTArticle:
+                    source = "./components/ArticleBookmarkView.qml"
+                    break
+                case Bookmark.CTImage:
+                    source = "./components/ImageBookmarkView.qml"
+                    break
+                case Bookmark.CTVideo:
+                case Bookmark.CTNoType:
+                default:
+                    source = "./components/DefaultBookmarkView.qml"
+                    break
+                }
+            }
+
+            viewLoader.source = source
         }
     }
 
@@ -86,262 +74,29 @@ Page {
         target: linksbagManager
         onBookmarkReadStateChanged: {
             if (bookmarkId === id) {
-                bookmarkRead = readState
+                viewLoader.item.bookmarkRead = readState
             }
         }
-
         onBookmarkFavoriteStateChanged: {
             if (bookmarkId === id) {
-                bookmarkFavorite = favoriteState
+                viewLoader.item.bookmarkFavorite = favoriteState
             }
         }
     }
 
-    SilicaFlickable {
-        id: pageView
-
+    Loader {
+        id: viewLoader
         anchors.fill: parent
+        active: bookmark && source !== ""
+        asynchronous: true
+        visible: status == Loader.Ready
 
-        contentWidth: width
-        contentHeight: column.height + Theme.paddingSmall
+        property var bookmark: currentBookmark
 
-        clip: true
-
-        PushUpMenu {
-            enabled: !busyIndicator.running
-            MenuItem {
-                text: bookmarkRead ?
-                        qsTr("Mark as unread") :
-                        qsTr("Mark as read")
-
-                onClicked: {
-                    linksbagManager.markAsRead(currentBookmark.id,
-                            !bookmarkRead)
-                    if (!bookmarkRead) {
-                        pageStack.pop();
-                    }
-                }
-            }
-
-            MenuItem {
-                text: bookmarkFavorite ?
-                        qsTr("Mark as unfavorite") :
-                        qsTr("Mark as favorite")
-                onClicked: {
-                    linksbagManager.markAsFavorite(currentBookmark.id,
-                            !bookmarkFavorite)
-                }
-            }
-         }
-
-        PullDownMenu {
-            enabled: !busyIndicator.running
-            MenuItem {
-                text: qsTr("Reload")
-                onClicked: {
-                    hasContent = false;
-                    readability.setArticle(currentBookmark.bookmarkUrl);
-                }
-            }
-
-            MenuItem {
-                text: bookmarkRead ?
-                        qsTr("Mark as unread") :
-                        qsTr("Mark as read")
-
-                onClicked: {
-                    linksbagManager.markAsRead(currentBookmark.id,
-                            !bookmarkRead)
-                }
-            }
-
-            MenuItem {
-                text: bookmarkFavorite ?
-                        qsTr("Mark as unfavorite") :
-                        qsTr("Mark as favorite")
-                onClicked: {
-                    linksbagManager.markAsFavorite(currentBookmark.id,
-                            !bookmarkFavorite)
-                }
-            }
-
-            MenuItem {
-                text: qsTr("Open in browser")
-                onClicked: {
-                    Qt.openUrlExternally(encodeURI(currentBookmark.url))
-                }
-            }
+        Connections {
+            target: viewLoader.item
+            onPublishedDateChanged: currentBookmark.publishedDate = viewLoader.item.publishedDate
         }
-
-        Column {
-            id: column
-
-            width: pageView.width
-
-            anchors.top: parent.top
-            anchors.topMargin: Theme.paddingSmall
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            Item {
-                id: header
-                state: !hasContent ? "loading" : "loaded"
-                anchors {
-                    left: parent.left;
-                    right: parent.right;
-                }
-
-                states: [
-                    State {
-                        name: "loading"
-                        PropertyChanges {
-                            target: header;
-                            height: mainWindow.height
-                        }
-                    },
-                    State {
-                        name: "loaded"
-                        PropertyChanges {
-                            target: header;
-                            height: currentBookmark && currentBookmark.imageUrl.length > 0 ?
-                                    mainWindow.height*0.4 :
-                                    entryHeaderWrapper.height + Theme.paddingMedium
-                        }
-                    }
-                ]
-
-                transitions: Transition {
-                    PropertyAnimation {
-                        properties: "height";
-                        easing.type: Easing.InOutQuad;
-                        duration: hasContent ? 0 : 300 }
-                }
-
-                Image {
-                    asynchronous: true
-                    smooth: false
-                    id: thumbnailImage
-                    source: currentBookmark ?
-                            currentBookmark.imageUrl :
-                            ""
-                    anchors.fill: parent;
-                    fillMode: Image.PreserveAspectCrop
-                }
-                OpacityRampEffect {
-                    slope: 1.0
-                    offset: 0
-                    sourceItem: thumbnailImage
-                    direction: OpacityRamp.TopToBottom
-                }
-
-                Column {
-                    id: entryHeaderWrapper
-                    anchors {
-                        bottom: parent.bottom;
-                        left: parent.left;
-                        right: parent.right;
-                    }
-                    Label {
-                        id: entryHeader
-                        width: parent.width
-                        wrapMode: Text.WordWrap
-                        horizontalAlignment: Qt.AlignCenter
-                        font.pixelSize: Theme.fontSizeExtraLarge
-                        text: currentBookmark ?
-                                  currentBookmark.title :
-                                  ""
-                        anchors {
-                            margins: Theme.paddingLarge;
-                            left: parent.left;
-                            leftMargin: Theme.horizontalPageMargin;
-                            right: parent.right;
-                            rightMargin: Theme.horizontalPageMargin;
-                        }
-                    }
-
-                    RowLayout {
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            margins: Theme.paddingLarge
-                        }
-                        Item {
-                            id: sourceLabel
-                            width: sourceText.paintedWidth
-                            height: sourceText.paintedHeight + Theme.paddingSmall*6
-                            visible: sourceText.text !== ""
-                            Layout.alignment: dateLabel.visible ? Qt.AlignLeft : Qt.AlignHCenter
-                            Text {
-                                id: sourceText
-                                color: Theme.highlightColor
-                                horizontalAlignment: dateLabel.visible ? Qt.AlignLeft : Qt.AlignHCenter
-                                text: {
-                                    if (currentBookmark) {
-                                        var matches = currentBookmark.url.toString()
-                                                .match(/^https?\:\/\/(?:www\.)?([^\/?#]+)(?:[\/?#]|$)/i);
-                                        return matches ? matches[1] : currentBookmark.url
-                                    }
-                                    else {
-                                        return ""
-                                    }
-                                }
-                            }
-                        }
-
-                        Item {
-                            id: dateLabel
-                            property alias text: dateText.text
-                            width: dateText.paintedWidth
-                            height: dateText.paintedHeight + Theme.paddingSmall*6
-                            visible: dateText.text !== ""
-                            Layout.alignment: Qt.AlignRight
-                            Text {
-                                id: dateText
-                                color: Theme.highlightColor
-                                text: new Date(currentBookmark.publishedDate)
-                                        .toLocaleString(Qt.locale(), Locale.ShortFormat)
-                                horizontalAlignment: Qt.AlignRight
-                            }
-                        }
-                    }
-                }
-            }
-
-            Item {
-                height: Theme.paddingMedium
-                width: parent.width
-            }
-
-            Label {
-                id: entryText
-                width: parent.width
-
-                wrapMode: Text.WordWrap
-                textFormat: Text.RichText
-                horizontalAlignment: Qt.AlignJustify
-
-                anchors.leftMargin: Theme.horizontalPageMargin
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.horizontalPageMargin
-            }
-            Item {
-                // additional padding at the bottom
-                height: Theme.paddingLarge*4
-                width: parent.width
-            }
-       }
-
-       VerticalScrollDecorator {}
-    }
-
-    BusyIndicator {
-        id: busyIndicator
-        size: BusyIndicatorSize.Large
-        anchors.centerIn: parent
-        visible: true
-        z: 2
-        running: linksbagManager.busy || readability.item.isBusy;
     }
 }
 
