@@ -36,6 +36,7 @@ Bookmark::Bookmark(QObject *parent)
 , m_Favorite(false)
 , m_Read(false)
 , m_Status(Bookmark::SNoStatus)
+, m_ContentType(Bookmark::CTNoType)
 {
 }
 
@@ -264,7 +265,8 @@ QString Bookmark::GetThumbnail()
 
 bool Bookmark::HasContent()
 {
-    return QFile::exists(Application::GetPath(Application::ArticleCacheDirectory) + m_ID + ".html");
+    return QFile::exists(Application::GetPath(Application::ArticleCacheDirectory) + m_ID + ".html") ||
+            QFile::exists(Application::GetPath(Application::ArticleCacheDirectory) + m_ID);
 }
 
 QString Bookmark::GetPublishedDate() const
@@ -344,6 +346,10 @@ std::shared_ptr<Bookmark> Bookmark::Deserialize(const QByteArray& data)
         in >> content
                 >> result->m_Images
                 >> result->m_Videos;
+        if (content < Bookmark::CTNoType || content > Bookmark::CTVideo)
+        {
+            content = 0;
+        }
         result->SetContentType(static_cast<Bookmark::ContentType>(content));
     }
 

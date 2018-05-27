@@ -245,6 +245,20 @@ void BookmarksModel::UpdateTags(const QString& id, const QString& tags)
     }
 }
 
+void BookmarksModel::UpdatePublishDate(const QString& id, const QString& date)
+{
+    for(int i = 0, size = m_Bookmarks.count(); i < size; ++i)
+    {
+        auto& bm = m_Bookmarks[i];
+        if(bm->GetID() == id)
+        {
+            bm->SetPublishedDate(date);
+            emit dataChanged(index(i, 0), index(i, 0));
+            break;
+        }
+    }
+}
+
 void BookmarksModel::RefreshBookmark(const QString& id)
 {
     auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),

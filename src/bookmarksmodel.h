@@ -76,6 +76,8 @@ public:
     void MarkBookmarkAsFavorite(const QString& id, bool favorite);
     void MarkBookmarkAsRead(const QString& id, bool read);
     void UpdateTags(const QString& id, const QString& tags);
+    void UpdatePublishDate(const QString& id, const QString& date);
+
 
     void RefreshBookmark(const QString& id);
 

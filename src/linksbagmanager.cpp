@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <QFile>
 #include <QByteArray>
 #include <QImage>
+#include <QBuffer>
 
 #include "application.h"
 #include "src/enumsproxy.h"
@@ -76,8 +77,8 @@ LinksBagManager::LinksBagManager(QObject *parent)
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
     m_DownloadingModel->setSourceModel(m_BookmarksModel);
     m_DownloadingModel->filterBookmarks(LinksBag::FTUnsynced);
-    connect(m_thumbnailDownloader, &QNetworkAccessManager::finished, this, &LinksBagManager::thumbnailReceived);
-
+    connect(m_thumbnailDownloader, &QNetworkAccessManager::finished,
+            this, &LinksBagManager::thumbnailReceived);
     SetLogged(!ApplicationSettings::Instance(this)->value("accessToken").isNull() &&
               !ApplicationSettings::Instance(this)->value("userName").isNull());
     if (m_IsLogged)
@@ -338,7 +339,7 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
 
 void LinksBagManager::updateContent(const QString& id, const QString& content)
 {
-    QFile file(Application::GetPath(Application::ArticleCacheDirectory) + id + ".html");
+    QFile file(Application::GetPath(Application::ArticleCacheDirectory) + id);
     if (file.open(QIODevice::WriteOnly)) {
         QTextStream stream(&file);
         stream << content;
@@ -349,8 +350,36 @@ void LinksBagManager::updateContent(const QString& id, const QString& content)
     m_BookmarksModel->RefreshBookmark(id);
 }
 
+void LinksBagManager::updateContent(const QString& id, const QImage& imageContent)
+{
+    imageContent.save(Application::GetPath(Application::ArticleCacheDirectory) + id,
+            "PNG");
+    m_BookmarksModel->RefreshBookmark(id);
+}
+
+void LinksBagManager::updatePublishDate(const QString& id, const QString& date)
+{
+    m_BookmarksModel->UpdatePublishDate(id, date);
+    m_BookmarksModel->RefreshBookmark(id);
+}
+
 QString LinksBagManager::getContent(const QString& id) {
-    QFile file(Application::GetPath(Application::ArticleCacheDirectory) + id + ".html");
+
+    QString filePath(Application::GetPath(Application::ArticleCacheDirectory) + id + ".html");
+    if (!QFile::exists(filePath))
+    {
+        filePath = Application::GetPath(Application::ArticleCacheDirectory) + id;
+        if (!QFile::exists(filePath))
+        {
+            filePath = "";
+        }
+    }
+
+    if (filePath.isEmpty()) {
+        return "";
+    }
+
+    QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly)) {
         return "";
     }
@@ -365,6 +394,11 @@ QString LinksBagManager::getContent(const QString& id) {
     return content;
 }
 
+QUrl LinksBagManager::getContentUri(const QString& id)
+{
+    return Application::GetPath(Application::ArticleCacheDirectory) + id;
+}
+
 void LinksBagManager::resetAccount()
 {
     ApplicationSettings::Instance(this)->remove("accessToken");
@@ -375,7 +409,7 @@ void LinksBagManager::resetAccount()
     ApplicationSettings::Instance(this)->remove("syncOnStartup");
     ApplicationSettings::Instance(this)->remove("bookmarksViewItemSize");
     ApplicationSettings::Instance(this)->remove("parser");
-    ApplicationSettings::Instance(this)->remove("useReaderModeOnly");
+    ApplicationSettings::Instance(this)->remove("useBestView");
 
     m_Api->ResetAccount();
 
@@ -429,4 +463,5 @@ void LinksBagManager::handleGotAuthAnswer(const QString& data)
         m_Api->RequestAccessToken();
     }
 }
+
 } // namespace LinskBag

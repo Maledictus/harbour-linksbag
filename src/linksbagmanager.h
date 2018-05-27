@@ -115,7 +115,10 @@ public slots:
     void updateTags(const QString& id, const QString& tags);
 
     void updateContent(const QString& id, const QString& content);
+    void updateContent(const QString& id, const QImage& imageContent);
+    void updatePublishDate(const QString& id, const QString& date);
     QString getContent(const QString& id);
+    QUrl getContentUri(const QString& id);
 
     void resetAccount();
     void resetThumbnailCache();
