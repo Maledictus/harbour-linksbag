@@ -372,6 +372,10 @@ void LinksBagManager::resetAccount()
     ApplicationSettings::Instance(this)->remove("lastUpdate");
     ApplicationSettings::Instance(this)->remove("showSearchField");
     ApplicationSettings::Instance(this)->remove("bookmarksFilter");
+    ApplicationSettings::Instance(this)->remove("syncOnStartup");
+    ApplicationSettings::Instance(this)->remove("bookmarksViewItemSize");
+    ApplicationSettings::Instance(this)->remove("parser");
+    ApplicationSettings::Instance(this)->remove("useReaderModeOnly");
 
     m_Api->ResetAccount();
 
