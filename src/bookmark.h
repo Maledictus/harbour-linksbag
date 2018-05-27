@@ -52,6 +52,7 @@ class Bookmark : public QObject
     QList<QUrl> m_Images;
     QList<QUrl> m_Videos;
 
+    Q_ENUMS(ContentType)
 public:
     enum Status
     {
@@ -86,7 +87,7 @@ private:
     Q_PROPERTY(QVariantList images READ GetImagesVar NOTIFY imagesChanged)
     Q_PROPERTY(QVariantList videos READ GetVideosVar NOTIFY videosChanged)
     Q_PROPERTY(Status status READ GetStatus NOTIFY statusChanged)
-    Q_PROPERTY(ContentType contentTyp READ GetContentType NOTIFY contentTypeChanged)
+    Q_PROPERTY(ContentType contentType READ GetContentType NOTIFY contentTypeChanged)
     Q_PROPERTY(bool hasContent READ HasContent NOTIFY hasContentChanged)
     Q_PROPERTY(QUrl coverImage READ GetCoverImage NOTIFY coverImageChanged)
     Q_PROPERTY(QString publishedDate READ GetPublishedDate WRITE SetPublishedDate NOTIFY publishedDateChanged)

@@ -135,12 +135,12 @@ void Application::start()
     qRegisterMetaType<FilterProxyModel*>("FilterProxyModel*");
     qRegisterMetaType<Bookmark*>("Bookmark*");
     qRegisterMetaType<QVector<int>>("QVector<int>");
+    qmlRegisterType<Bookmark>("harbour.linksbag", 1, 0, "Bookmark");
     qmlRegisterUncreatableType<LinksBagManager>("harbour.linksbag", 1, 0,
             "LinksBagManager", "LinksBagManager static uncreatable type");
     qmlRegisterUncreatableType<LinksBag::EnumsProxy>("harbour.linksbag", 1, 0,
             "LinksBag", "This exports otherwise unavailable \
                     LinksBag datatypes to QML");
-
     ShowUI();
 }
 
