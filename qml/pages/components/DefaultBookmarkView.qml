@@ -24,13 +24,29 @@ THE SOFTWARE.
 */
 
 import QtQuick 2.0
+import QtWebKit 3.0
 import Sailfish.Silica 1.0
 import harbour.linksbag 1.0
 
 Item {
     property bool bookmarkRead: bookmark ? bookmark.read : false
     property bool bookmarkFavorite: bookmark ? bookmark.favorite : false
+    property bool hasContent: bookmark ? bookmark.hasContent : false
     property string publishedDate
+    property string content
+
+    onContentChanged: {
+        linksbagManager.updateContent(bookmark.id, content)
+    }
+
+    Component.onCompleted: {
+        if (hasContent) {
+            webView.loadHtml(linksbagManager.getContent(bookmark.id))
+        }
+        else {
+            webView.url = bookmark.url
+        }
+    }
 
     SilicaWebView {
         id: webView
@@ -38,6 +54,14 @@ Item {
         anchors.fill: parent
 
         PullDownMenu {
+            MenuItem {
+                text: qsTr("Reload")
+                onClicked: {
+                    hasContent = false
+                    webView.url = bookmark.url
+                }
+            }
+
             MenuItem {
                 text: bookmarkRead ?
                         qsTr("Mark as unread") :
@@ -70,7 +94,18 @@ Item {
         experimental.preferences.javascriptEnabled: true
         experimental.preferences.navigatorQtObjectEnabled: true
 
-        url: bookmark ? bookmark.url : ""
+        onLoadingChanged: {
+            if (loadRequest.status === WebView.LoadSucceededStatus && !hasContent) {
+                getSource()
+            }
+        }
+    }
+
+    function getSource() {
+        var js = "document.documentElement.outerHTML"
+        webView.experimental.evaluateJavaScript(js, function(result){
+            content = result
+        })
     }
 
     BusyIndicator {
