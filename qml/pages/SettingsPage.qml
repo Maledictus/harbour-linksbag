@@ -84,6 +84,15 @@ Page {
                 }
             }
 
+            TextSwitch {
+                text: qsTr("Use reader mode always")
+                description: qsTr("Application will try to open all bookmarks using reader-mode backend")
+                checked: mainWindow.settings.useReaderModeOnly
+                onCheckedChanged: {
+                    mainWindow.settings.useReaderModeOnly = checked
+                }
+            }
+
             SectionHeader { text: qsTr("Sync") }
             TextSwitch {
                 text: qsTr("Sync on startup")
@@ -91,6 +100,7 @@ Page {
                 onCheckedChanged: mainWindow.settings.syncOnStartup = checked
                 description: qsTr("App will try to sync with Pocket on startup.")
             }
+
             /*TextSwitch {
                 // TODO: implement this
                 opacity: 0.5
