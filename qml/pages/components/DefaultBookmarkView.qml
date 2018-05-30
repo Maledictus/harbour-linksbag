@@ -31,21 +31,10 @@ import harbour.linksbag 1.0
 Item {
     property bool bookmarkRead: bookmark ? bookmark.read : false
     property bool bookmarkFavorite: bookmark ? bookmark.favorite : false
-    property bool hasContent: bookmark ? bookmark.hasContent : false
     property string publishedDate
-    property string content
-
-    onContentChanged: {
-        linksbagManager.updateContent(bookmark.id, content)
-    }
 
     Component.onCompleted: {
-        if (hasContent) {
-            webView.loadHtml(linksbagManager.getContent(bookmark.id))
-        }
-        else {
-            webView.url = bookmark.url
-        }
+        webView.url = bookmark.url
     }
 
     SilicaWebView {
@@ -57,8 +46,7 @@ Item {
             MenuItem {
                 text: qsTr("Reload")
                 onClicked: {
-                    hasContent = false
-                    webView.url = bookmark.url
+                    webView.reload()
                 }
             }
 
@@ -93,19 +81,6 @@ Item {
         experimental.preferences.notificationsEnabled: true
         experimental.preferences.javascriptEnabled: true
         experimental.preferences.navigatorQtObjectEnabled: true
-
-        onLoadingChanged: {
-            if (loadRequest.status === WebView.LoadSucceededStatus && !hasContent) {
-                getSource()
-            }
-        }
-    }
-
-    function getSource() {
-        var js = "document.documentElement.outerHTML"
-        webView.experimental.evaluateJavaScript(js, function(result){
-            content = result
-        })
     }
 
     BusyIndicator {
