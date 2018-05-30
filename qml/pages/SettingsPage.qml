@@ -149,6 +149,13 @@ Page {
                 }
             }
 
+            TextSwitch {
+                text: qsTr("Mobile browser")
+                checked: mainWindow.settings.mobileBrowser
+                onCheckedChanged: mainWindow.settings.mobileBrowser = checked
+                description: qsTr("Try to open mobile version of web pages")
+            }
+
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Force full refresh")

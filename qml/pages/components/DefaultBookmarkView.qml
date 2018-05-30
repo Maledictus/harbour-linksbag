@@ -81,6 +81,9 @@ Item {
         experimental.preferences.notificationsEnabled: true
         experimental.preferences.javascriptEnabled: true
         experimental.preferences.navigatorQtObjectEnabled: true
+        experimental.userAgent: mainWindow.settings.mobileBrowser ?
+            "Mozilla/5.0 (Maemo; Linux; U; Sailfish; Mobile; rv:38.0) Gecko/38.0 Firefox/38.0" :
+            ""
     }
 
     BusyIndicator {

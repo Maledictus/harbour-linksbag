@@ -38,6 +38,7 @@ Page {
         property bool firefoxAuth: false
         property bool getpocketAuth: true
 
+        experimental.userAgent: "Mozilla/5.0 (Maemo; Linux; U; Sailfish; Mobile; rv:38.0) Gecko/38.0 Firefox/38.0"
         experimental.preferences.navigatorQtObjectEnabled: true
 
         onUrlChanged: {

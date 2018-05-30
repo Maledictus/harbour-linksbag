@@ -107,5 +107,6 @@ ApplicationWindow {
         property string userName
         property bool useBestView: true
         property bool showContentType: true
+        property bool mobileBrowser: true
     }
 }
