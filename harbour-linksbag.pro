@@ -42,6 +42,8 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
     qml/pages/components/DefaultBookmarkView.qml \
+    qml/pages/components/IconContextMenu.qml \
+    qml/pages/components/IconMenuItem.qml \
     qml/pages/components/ImageBookmarkView.qml \
     qml/pages/components/Mercury.qml \
     qml/pages/components/Readability.qml \
@@ -78,6 +80,8 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
     qml/pages/components/DefaultBookmarkView.qml \
+    qml/pages/components/IconContextMenu.qml \
+    qml/pages/components/IconMenuItem.qml \
     qml/pages/components/ImageBookmarkView.qml \
     qml/pages/components/Mercury.qml \
     qml/pages/components/Readability.qml \

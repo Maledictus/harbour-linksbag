@@ -93,6 +93,14 @@ Page {
                 }
             }
 
+            TextSwitch {
+                text: qsTr("Show bookmark content type")
+                checked: mainWindow.settings.showContentType
+                onCheckedChanged: {
+                    mainWindow.settings.showContentType = checked
+                }
+            }
+
             SectionHeader { text: qsTr("Sync") }
             TextSwitch {
                 text: qsTr("Sync on startup")

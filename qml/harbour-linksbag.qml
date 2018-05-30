@@ -106,5 +106,6 @@ ApplicationWindow {
         property string accessToken
         property string userName
         property bool useBestView: true
+        property bool showContentType: true
     }
 }

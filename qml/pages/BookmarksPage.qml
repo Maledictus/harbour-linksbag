@@ -24,8 +24,10 @@ THE SOFTWARE.
 */
 
 import QtQuick 2.0
+import QtQuick.Layouts 1.1
 import Sailfish.Silica 1.0
 import harbour.linksbag 1.0
+import "./components"
 
 Page {
     id: bookmarksPage
@@ -189,27 +191,14 @@ Page {
         delegate: ListItem {
             id: rootDelegateItem
             width: bookmarksView.width
-            contentHeight: Math.max(textColumn.height, favoriteIcon.height)
+            contentHeight: Math.max(textColumn.height, typeIcon.height)
 
-            menu: ContextMenu {
-                MenuItem {
-                    text: qsTr("Copy url to clipboard")
+            menu: IconContextMenu {
+                IconMenuItem {
+                    text: qsTr("Tags")
+                    icon.source: "image://theme/icon-m-edit"
                     onClicked: {
-                        Clipboard.text = bookmarkUrl
-                        linksbagManager.notify(qsTr("Url copied into clipboard"))
-                    }
-                }
-
-                MenuItem {
-                    text: qsTr("Open in browser")
-                    onClicked: {
-                        Qt.openUrlExternally(encodeURI(bookmarkUrl))
-                    }
-                }
-
-                MenuItem {
-                    text: qsTr ("Edit tags")
-                    onClicked: {
+                        rootDelegateItem.hideMenu()
                         var dialog = pageStack.push("EditTagDialog.qml", { tags: bookmarkTags })
                         dialog.accepted.connect(function () {
                             linksbagManager.updateTags(bookmarkID, dialog.tags)
@@ -217,16 +206,46 @@ Page {
                     }
                 }
 
-                MenuItem {
-                    text: bookmarkRead ? qsTr("Mark as unread") : qsTr("Mark as read")
-                    onClicked: linksbagManager.markAsRead(bookmarkID, !bookmarkRead)
+                IconMenuItem {
+                    text: bookmarkRead ? qsTr("Unread") : qsTr("Read")
+                    icon.source: bookmarkRead ?
+                        "image://theme/icon-m-add" :
+                        "image://theme/icon-m-acknowledge"
+                    onClicked: {
+                        rootDelegateItem.hideMenu()
+                        linksbagManager.markAsRead(bookmarkID, !bookmarkRead)
+                    }
                 }
 
-                MenuItem {
-                    text: qsTr ("Remove")
-                    onClicked: remorse.execute(rootDelegateItem, qsTr("Remove"), function() {
-                       linksbagManager.removeBookmark(bookmarkID)
-                    })
+                IconMenuItem {
+                    text: bookmarkFavorite ? qsTr("Unfavorite") : qsTr("Favorite")
+                    icon.source: "image://Theme/icon-m-favorite" +
+                        (bookmarkFavorite ? "-selected": "")
+                    onClicked: {
+                        rootDelegateItem.hideMenu()
+                        linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
+                    }
+                }
+
+                IconMenuItem {
+                    text: qsTr("Remove")
+                    icon.source: "image://theme/icon-m-delete"
+                    onClicked: {
+                        rootDelegateItem.hideMenu()
+                        remorse.execute(rootDelegateItem, qsTr("Remove"), function() {
+                            linksbagManager.removeBookmark(bookmarkID)
+                        })
+                    }
+                }
+
+                IconMenuItem {
+                    text: qsTr("Copy url")
+                    icon.source: "image://theme/icon-m-clipboard"
+                    onClicked: {
+                        rootDelegateItem.hideMenu()
+                        Clipboard.text = bookmarkUrl
+                        linksbagManager.notify(qsTr("Url copied into clipboard"))
+                    }
                 }
             }
 
@@ -338,8 +357,8 @@ Page {
                 anchors {
                     left: !bookmarkRead ? unreadIndicator.right : parent.left
                     leftMargin:!bookmarkRead ? Theme.paddingMedium : Theme.horizontalPageMargin
-                    right: favoriteIcon.left
-                    rightMargin: Theme.paddingMedium
+                    right: typeIcon.visible ? typeIcon.left : parent.right
+                    rightMargin: typeIcon.visible ? Theme.paddingMedium : Theme.horizontalPageMargin
                 }
 
                 Label {
@@ -428,8 +447,9 @@ Page {
                 }
             }
 
-            IconButton {
-                id: favoriteIcon
+            Image {
+                id: typeIcon
+                visible: mainWindow.settings.showContentType
                 anchors {
                     right: parent.right
                     rightMargin: Theme.horizontalPageMargin
@@ -437,8 +457,16 @@ Page {
                 }
                 height: Theme.iconSizeMedium
                 width: Theme.iconSizeMedium
-                icon.source: "image://Theme/icon-m-favorite" + (bookmarkFavorite ? "-selected": "")
-                onClicked: linksbagManager.markAsFavorite(bookmarkID, !bookmarkFavorite)
+                source: {
+                    switch(bookmarkContentType) {
+                    case Bookmark.CTArticle: return "image://Theme/icon-m-document"
+                    case Bookmark.CTImage: return "image://Theme/icon-m-image"
+                    case Bookmark.CTVideo: return "image://Theme/icon-m-video"
+                    case Bookmark.CTNoType:
+                    default:
+                        return "image://Theme/icon-m-question"
+                    }
+                }
             }
 
             RemorseItem { id: remorse }
