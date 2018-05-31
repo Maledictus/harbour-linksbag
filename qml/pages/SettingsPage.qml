@@ -109,13 +109,53 @@ Page {
                 description: qsTr("App will try to sync with Pocket on startup.")
             }
 
-            /*TextSwitch {
-                // TODO: implement this
-                opacity: 0.5
-                automaticCheck: false
-                text: qsTr("Download articles automatically")
-                description: qsTr("Every new article will be saved for offline viewing automatically.")
-            }*/
+            ComboBox {
+                id: backgroundSyncComboBox
+
+                property var periodsCategories: [ -1, 3600, 43200, 86400 ]
+
+                function update() {
+                    mainWindow.settings.backgroundSyncPeriod = periodsCategories[currentIndex]
+                    mainWindow.settings.sync()
+                    linksbagManager.restartSyncTimer();
+                }
+
+                currentIndex: {
+                    for (var i = 0; i < periodsCategories.length; ++i) {
+                        if (mainWindow.settings.backgroundSyncPeriod === periodsCategories[i]) {
+                            return i
+                        }
+                    }
+                    console.log("Unsupported period selected")
+                    return 0
+                }
+
+                label: qsTr("Background synchronization")
+                menu: ContextMenu {
+                    onClosed: backgroundSyncComboBox.update()
+
+                    MenuItem {
+                        text: qsTr("Never")
+                    }
+                    MenuItem {
+                        text: qsTr("Every hour")
+                    }
+                    MenuItem {
+                        text: qsTr("Twice a day")
+                    }
+                    MenuItem {
+                        text: qsTr("Once a day")
+                    }
+                }
+            }
+
+//            TextSwitch {
+//                automaticCheck: false
+//                text: qsTr("Download articles automatically")
+//                description: qsTr("Every new article will be saved for offline viewing automatically.")
+//                checked: mainWindow.settings.syncOnStartup
+//                onCheckedChanged: mainWindow.settings.syncOnStartup = checked
+//            }
 
             ComboBox {
                 id: parserSelect

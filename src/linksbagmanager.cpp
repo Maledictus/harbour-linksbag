@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include <QFile>
 #include <QByteArray>
 #include <QImage>
-#include <QBuffer>
+#include <QTimer>
 
 #include "application.h"
 #include "src/enumsproxy.h"
@@ -66,6 +66,7 @@ LinksBagManager::LinksBagManager(QObject *parent)
 , m_FilterProxyModel(new FilterProxyModel(this))
 , m_DownloadingModel(new FilterProxyModel(this))
 , m_thumbnailDownloader(new QNetworkAccessManager(this))
+, m_SyncTimer(new QTimer(this))
 {
     MakeConnections();
 
@@ -85,6 +86,9 @@ LinksBagManager::LinksBagManager(QObject *parent)
     {
         loadBookmarksFromCache();
     }
+
+    connect(m_SyncTimer, &QTimer::timeout, this, &LinksBagManager::refreshBookmarks);
+    restartSyncTimer();
 }
 
 LinksBagManager* LinksBagManager::Instance(QObject *parent)
@@ -462,6 +466,23 @@ void LinksBagManager::handleGotAuthAnswer(const QString& data)
     {
         m_Api->RequestAccessToken();
     }
+}
+
+void LinksBagManager::restartSyncTimer()
+{
+    const int period = ApplicationSettings::Instance()->value("backgroundSyncPeriod", "-1").toInt();
+
+    if (period == -1) {
+        m_SyncTimer->stop();
+        return;
+    }
+
+    const qint64 lastSync = ApplicationSettings::Instance(this)->value("lastUpdate", 0).toLongLong();
+    if (QDateTime::currentDateTime().toTime_t() - lastSync > period) {
+        refreshBookmarks();
+    }
+
+    m_SyncTimer->start(period * 1000);
 }
 
 } // namespace LinskBag

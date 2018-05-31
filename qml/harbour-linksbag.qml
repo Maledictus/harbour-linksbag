@@ -108,5 +108,6 @@ ApplicationWindow {
         property bool useBestView: true
         property bool showContentType: true
         property bool mobileBrowser: true
+        property int backgroundSyncPeriod: -1
     }
 }

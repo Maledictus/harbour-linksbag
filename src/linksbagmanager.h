@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include <QNetworkAccessManager>
 #include <QThreadPool>
 
+class QTimer;
+
 namespace LinksBag
 {
 class BookmarksModel;
@@ -72,6 +74,7 @@ class LinksBagManager : public QObject
 
     QMap<QUrl, QString> m_thumbnailUrls;
     QNetworkAccessManager *m_thumbnailDownloader;
+    QTimer *m_SyncTimer;
 
     Q_PROPERTY(bool busy READ GetBusy NOTIFY busyChanged)
     Q_PROPERTY(bool logged READ GetLogged NOTIFY loggedChanged)
@@ -125,6 +128,8 @@ public slots:
     void resetArticleCache();
 
     void handleGotAuthAnswer(const QString& data);
+
+    void restartSyncTimer();
 
 signals:
     void busyChanged();
