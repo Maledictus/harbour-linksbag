@@ -152,11 +152,11 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("SettingsPage.qml"));
             }
 
-            MenuItem {
-                text: qsTr("Downloads")
-                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkDownloadsPage.qml"),
-                                { bookmarksPage : bookmarksPage });
-            }
+//            MenuItem {
+//                text: qsTr("Downloads")
+//                onClicked: pageStack.push(Qt.resolvedUrl("BookmarkDownloadsPage.qml"),
+//                                { bookmarksPage : bookmarksPage });
+//            }
 
             MenuItem {
                 text: bookmarksView.showSearchField ?
@@ -280,7 +280,7 @@ Page {
                 anchors.fill: parent
                 z: -1
 
-                visible: thumbnail.source != ""
+                visible: mainWindow.settings.showBackgroundImage ? thumbnail.source != "" : false
                 property real dimmedOpacity: 0.4
 
                 // wallpaper orientation

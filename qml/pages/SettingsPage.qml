@@ -43,6 +43,15 @@ Page {
                 title: qsTr("Settings")
             }
 
+            PullDownMenu {
+                MenuItem {
+                    text: qsTr("About")
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
+                    }
+                }
+            }
+
             SectionHeader { text: qsTr("User interface") }
 
             ComboBox {
@@ -98,6 +107,14 @@ Page {
                 checked: mainWindow.settings.showContentType
                 onCheckedChanged: {
                     mainWindow.settings.showContentType = checked
+                }
+            }
+
+            TextSwitch {
+                text: qsTr("Show background image")
+                checked: mainWindow.settings.showBackgroundImage
+                onCheckedChanged: {
+                    mainWindow.settings.showBackgroundImage = checked
                 }
             }
 
