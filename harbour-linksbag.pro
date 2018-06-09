@@ -40,6 +40,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/cover/ArticleCover.qml \
     qml/cover/ArticleListCover.qml \
     qml/cover/CoverPage.qml \
+    qml/pages/AboutPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
     qml/pages/components/DefaultBookmarkView.qml \
     qml/pages/components/IconContextMenu.qml \
@@ -47,19 +48,24 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/components/ImageBookmarkView.qml \
     qml/pages/components/Mercury.qml \
     qml/pages/components/Readability.qml \
+    qml/pages/components/ParticipantsDelegate.qml \
     qml/pages/helpers/readability.js \
     qml/pages/helpers/MessageListener.js \
     qml/pages/helpers/ReaderModeHandler.js \
+    qml/pages/models/DevelopersModel.qml \
+    qml/pages/models/TranslatorsModel.qml \
     qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarkDownloadsPage.qml \
     qml/pages/BookmarkViewPage.qml \
     qml/pages/BookmarksFilter.qml \
     qml/pages/BookmarksPage.qml \
+    qml/pages/DevelopersPage.qml \
     qml/pages/EditTagDialog.qml \
     qml/pages/FilterSelectorPage.qml \
     qml/pages/LoginPage.qml \
     qml/pages/ParserLoader.qml \
     qml/pages/SettingsPage.qml \
+    qml/pages/TranslatorsPage.qml \
     qml/pages/WebAuthorizationPage.qml \
     harbour-linksbag.desktop \
     rpm/harbour-linksbag.changes \
@@ -71,13 +77,15 @@ DISTFILES += qml/harbour-linksbag.qml \
     translations/harbour-linksbag-es.ts \
     translations/harbour-linksbag-sv.ts \
     translations/harbour-linksbag-fr.ts \
-    translations/harbour-linksbag-pl.ts
+    translations/harbour-linksbag-pl.ts \
+
 
 lupdate_only{
 SOURCES = qml/harbour-linksbag.qml \
     qml/cover/ArticleCover.qml \
     qml/cover/ArticleListCover.qml \
     qml/cover/CoverPage.qml \
+    qml/pages/AboutPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
     qml/pages/components/DefaultBookmarkView.qml \
     qml/pages/components/IconContextMenu.qml \
@@ -85,19 +93,24 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/pages/components/ImageBookmarkView.qml \
     qml/pages/components/Mercury.qml \
     qml/pages/components/Readability.qml \
+    qml/pages/components/ParticipantsDelegate.qml \
     qml/pages/helpers/readability.js \
     qml/pages/helpers/MessageListener.js \
     qml/pages/helpers/ReaderModeHandler.js \
+    qml/pages/models/DevelopersModel.qml \
+    qml/pages/models/TranslatorsModel.qml \
     qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarkDownloadsPage.qml \
     qml/pages/BookmarkViewPage.qml \
     qml/pages/BookmarksFilter.qml \
     qml/pages/BookmarksPage.qml \
+    qml/pages/DevelopersPage.qml \
     qml/pages/EditTagDialog.qml \
     qml/pages/FilterSelectorPage.qml \
     qml/pages/LoginPage.qml \
     qml/pages/ParserLoader.qml \
     qml/pages/SettingsPage.qml \
+    qml/pages/TranslatorsPage.qml \
     qml/pages/WebAuthorizationPage.qml
 }
 
