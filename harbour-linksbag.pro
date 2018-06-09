@@ -40,6 +40,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/cover/ArticleCover.qml \
     qml/cover/ArticleListCover.qml \
     qml/cover/CoverPage.qml \
+    qml/dialogs/EditTagDialog.qml \
     qml/dialogs/FilterBookmarksDialog.qml \
     qml/pages/AboutPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
@@ -60,7 +61,6 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/BookmarkViewPage.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/DevelopersPage.qml \
-    qml/pages/EditTagDialog.qml \
     qml/pages/LoginPage.qml \
     qml/pages/ParserLoader.qml \
     qml/pages/SettingsPage.qml \
@@ -76,13 +76,17 @@ DISTFILES += qml/harbour-linksbag.qml \
     translations/harbour-linksbag-es.ts \
     translations/harbour-linksbag-sv.ts \
     translations/harbour-linksbag-fr.ts \
-    translations/harbour-linksbag-pl.ts
+    translations/harbour-linksbag-pl.ts \
+    qml/pages/components/BookmarkRemorsePopup.qml \
+    qml/pages/MultiSelectionPage.qml \
+    qml/pages/components/BookmarkItem.qml
 
 
 lupdate_only{
 SOURCES = qml/harbour-linksbag.qml \
     qml/cover/ArticleCover.qml \
     qml/cover/ArticleListCover.qml \
+    qml/dialogs/EditTagDialog.qml \
     qml/dialogs/FilterBookmarksDialog.qml \
     qml/cover/CoverPage.qml \
     qml/pages/AboutPage.qml \
@@ -104,7 +108,6 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/pages/BookmarkViewPage.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/DevelopersPage.qml \
-    qml/pages/EditTagDialog.qml \
     qml/pages/LoginPage.qml \
     qml/pages/ParserLoader.qml \
     qml/pages/SettingsPage.qml \
