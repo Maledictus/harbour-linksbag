@@ -3,5 +3,6 @@
         <file alias="harbour-linksbag.png">images/harbour-linksbag.png</file>
         <file alias="icon-s-tag.png">images/icon-s-tag.png</file>
         <file alias="linksbag-cover">images/linksbag-cover.svg</file>
+        <file alias="icon-m-github">images/icon-m-github.png</file>
     </qresource>
 </RCC>
