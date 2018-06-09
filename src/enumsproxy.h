@@ -35,13 +35,20 @@ enum ErrorType
     ETGetPocket
 };
 
-enum FilterType
+enum BookmarksStatusFilter
 {
-    FTAll = 0,
-    FTRead,
-    FTUnread,
-    FTFavorite,
-    FTUnsynced
+    StatusAll = 0x01,
+    StatusRead = 0x02,
+    StatusUnread = 0x04,
+    StatusFavorite = 0x08
+};
+
+enum BookmarksContentTypeFilter
+{
+    ContentTypeAll = 0x01,
+    ContentTypeArticles = 0x02,
+    ContentTypeImages = 0x04,
+    ContentTypeVideos = 0x08
 };
 
 class EnumsProxy : public QObject
@@ -49,7 +56,8 @@ class EnumsProxy : public QObject
     Q_OBJECT
 
     Q_ENUMS(ErrorTypeProxy)
-    Q_ENUMS(FilterTypeProxy)
+    Q_ENUMS(BookmarksStatusFilterProxy)
+    Q_ENUMS(BookmarksContentTypeFilterProxy)
 
 public:
     enum ErrorTypeProxy
@@ -58,13 +66,20 @@ public:
         GetPockerError = ETGetPocket
     };
 
-    enum FilterTypeProxy
+    enum BookmarksStatusFilterProxy
     {
-        All = FTAll,
-        Read = FTRead,
-        Unread = FTUnread,
-        Favorite = FTFavorite,
-        Unsynced = FTUnsynced
+        AllStatus = StatusAll,
+        ReadStatus = StatusRead,
+        UnreadStatus = StatusUnread,
+        FavoriteStatus = StatusFavorite
+    };
+
+    enum BookmarksContentTypeFilterProxy
+    {
+        AllContentType = ContentTypeAll,
+        ArticlesContentType = ContentTypeArticles,
+        ImagesContentType = ContentTypeImages,
+        VideosContentType = ContentTypeVideos
     };
 };
 }

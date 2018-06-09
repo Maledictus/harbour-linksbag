@@ -32,72 +32,6 @@ import "./components"
 Page {
     id: bookmarksPage
 
-    property BookmarksFilter bookmarksFilter : getFilterByKey(mainWindow.settings.bookmarksFilter)
-
-    function getFilterByKey(key) {
-        for (var i = 0; i < bookmarksFilters.length; ++i) {
-            if (bookmarksFilters[i].key === key) {
-                return bookmarksFilters[i]
-            }
-        }
-
-        return allBookmarksFilter;
-    }
-
-    property BookmarksFilter allBookmarksFilter: BookmarksFilter {
-        key: "all"
-        name: qsTr("All")
-    }
-
-    property BookmarksFilter readBookmarksFilter: BookmarksFilter {
-        key: "read"
-        name: qsTr("Read")
-    }
-
-    property BookmarksFilter unreadBookmarksFilter: BookmarksFilter {
-        key: "unread"
-        name: qsTr("Unread")
-    }
-
-    property BookmarksFilter favoriteBookmarksFilter: BookmarksFilter {
-        key: "favorite"
-        name: qsTr("Favorite")
-    }
-
-    property BookmarksFilter unsyncedBookmarksFilter: BookmarksFilter {
-        key: "unsynced"
-        name: qsTr("Not downloaded")
-    }
-
-    property variant bookmarksFilters: [
-        allBookmarksFilter,
-        readBookmarksFilter,
-        unreadBookmarksFilter,
-        favoriteBookmarksFilter
-    ]
-
-    onBookmarksFilterChanged: {
-        if (bookmarksFilter.key == "all")
-        {
-            linksbagManager.filterModel.filterBookmarks(LinksBag.All)
-        }
-        else if (bookmarksFilter.key == "read")
-        {
-            linksbagManager.filterModel.filterBookmarks(LinksBag.Read)
-        }
-        else if (bookmarksFilter.key == "unread")
-        {
-            linksbagManager.filterModel.filterBookmarks(LinksBag.Unread)
-        }
-        else if (bookmarksFilter.key == "favorite")
-        {
-            linksbagManager.filterModel.filterBookmarks(LinksBag.Favorite)
-        }
-
-        cover.currentFilter = bookmarksFilter.name
-        mainWindow.settings.bookmarksFilter = bookmarksFilter.key
-    }
-
     BusyIndicator {
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent
@@ -116,9 +50,12 @@ Page {
         header: Column {
             id: headerColumn
             width: bookmarksView.width
+            property alias description: pageHeader.description
             PageHeader {
+                id: pageHeader
                 title: qsTr("Bookmarks")
-                description: qsTr(bookmarksFilter.name)
+                description: mainWindow.generateFilterTitle(mainWindow.settings.statusFilter,
+                    mainWindow.settings.contentTypeFilter)
             }
 
             SearchField {
@@ -170,11 +107,19 @@ Page {
             }
 
             MenuItem {
-                text: qsTr("View: %1").arg(bookmarksFilter.name)
+                text: qsTr("Filter")
 
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("FilterSelectorPage.qml"),
-                        { bookmarksPage : bookmarksPage });
+                    var dialog = pageStack.push(Qt.resolvedUrl("../dialogs/FilterBookmarksDialog.qml"))
+                    dialog.accepted.connect(function () {
+                        mainWindow.settings.statusFilter = dialog.statusFilter
+                        mainWindow.settings.contentTypeFilter = dialog.contentTypeFilter
+                        linksbagManager.filterModel.filterBookmarks(mainWindow.settings.statusFilter,
+                            mainWindow.settings.contentTypeFilter)
+                        linksbagManager.coverModel.filterBookmarks(mainWindow.settings.statusFilter, 0)
+                        bookmarksView.headerItem.description = mainWindow.generateFilterTitle(mainWindow.settings.statusFilter,
+                            mainWindow.settings.contentTypeFilter)
+                    })
                 }
             }
 
@@ -466,7 +411,7 @@ Page {
                     case Bookmark.CTVideo: return "image://Theme/icon-m-video"
                     case Bookmark.CTNoType:
                     default:
-                        return "image://Theme/icon-m-question"
+                        return "image://Theme/icon-m-region"
                     }
                 }
             }

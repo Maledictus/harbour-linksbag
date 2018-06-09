@@ -70,6 +70,7 @@ class LinksBagManager : public QObject
     bool m_Authorized;
     BookmarksModel *m_BookmarksModel;
     FilterProxyModel *m_FilterProxyModel;
+    FilterProxyModel *m_CoverModel;
     FilterProxyModel *m_DownloadingModel;
 
     QMap<QUrl, QString> m_thumbnailUrls;
@@ -82,6 +83,8 @@ class LinksBagManager : public QObject
             NOTIFY bookmarksModelChanged)
     Q_PROPERTY(FilterProxyModel* filterModel READ GetFilterModel
             NOTIFY filterModelChanged)
+    Q_PROPERTY(FilterProxyModel* coverModel READ GetCoverModel
+            NOTIFY coverModelChanged)
     Q_PROPERTY(FilterProxyModel* downloadingModel READ GetDownloadingModel
             NOTIFY downloadingModelChanged)
 
@@ -94,6 +97,7 @@ public:
     BookmarksModel* GetBookmarksModel() const;
     FilterProxyModel* GetFilterModel() const;
     FilterProxyModel* GetDownloadingModel() const;
+    FilterProxyModel* GetCoverModel() const;
 
 private:
     void MakeConnections();
@@ -139,6 +143,7 @@ signals:
     void bookmarksModelChanged();
     void filterModelChanged();
     void downloadingModelChanged();
+    void coverModelChanged();
 
     void bookmarkReadStateChanged(const QString& id, bool readState);
     void bookmarkFavoriteStateChanged(const QString& id, bool favoriteState);

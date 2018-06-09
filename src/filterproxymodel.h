@@ -34,7 +34,8 @@ class FilterProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
-    FilterType m_Filter;
+    BookmarksStatusFilter m_StatusFilter;
+    BookmarksContentTypeFilter m_ContentTypeFilter;
 
 public:
     explicit FilterProxyModel(QObject *parent = 0);
@@ -43,6 +44,6 @@ public:
     virtual bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 
 public slots:
-    void filterBookmarks(int type);
+    void filterBookmarks(int statusFilter, int contentTypeFilter);
 };
 } // namespace LinksBag

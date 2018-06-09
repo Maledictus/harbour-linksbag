@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "filterproxymodel.h"
 #include "bookmarksmodel.h"
 
-
 namespace LinksBag
 {
 FilterProxyModel::FilterProxyModel(QObject *parent)
@@ -42,26 +41,38 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& source
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
     bool result = false;
-    if (m_Filter == FTAll)
+    switch (m_StatusFilter)
     {
-        result = true;
-    }
-    else if (m_Filter == FTRead)
-    {
+    case StatusRead:
         result = sourceModel()->data(index, BookmarksModel::BRRead).toBool();
-    }
-    else if (m_Filter == FTUnread)
-    {
+        break;
+    case StatusUnread:
         result = !sourceModel()->data(index, BookmarksModel::BRRead).toBool();
-    }
-    else if (m_Filter == FTFavorite)
-    {
+        break;
+    case StatusFavorite:
         result = sourceModel()->data(index, BookmarksModel::BRFavorite).toBool();
+        break;
+    case StatusAll:
+    default:
+        result = true;
+        break;
     }
-    else if (m_Filter == FTUnsynced)
+
+    switch (m_ContentTypeFilter)
     {
-        result = !sourceModel()->data(index, BookmarksModel::BRRead).toBool() &&
-                !sourceModel()->data(index, BookmarksModel::BRHasContent).toBool();
+    case ContentTypeArticles:
+        result &= (sourceModel()->data(index, BookmarksModel::BRContentType).toInt() == Bookmark::CTArticle);
+        break;
+    case ContentTypeImages:
+        result &= (sourceModel()->data(index, BookmarksModel::BRContentType).toInt() == Bookmark::CTImage);
+        break;
+    case ContentTypeVideos:
+        result &= (sourceModel()->data(index, BookmarksModel::BRContentType).toInt() == Bookmark::CTVideo);
+        break;
+    case ContentTypeAll:
+    default:
+        result &= true;
+        break;
     }
 
     return result && (index.data(BookmarksModel::BRTitle).toString().contains(filterRegExp()) ||
@@ -78,22 +89,11 @@ bool FilterProxyModel::lessThan(const QModelIndex& left, const QModelIndex& righ
     return leftData.toDateTime() < rightData.toDateTime();
 }
 
-void FilterProxyModel::filterBookmarks(int type)
+void FilterProxyModel::filterBookmarks(int statusFilter,
+        int contentTypeFilter)
 {
-    FilterType filter;
-    if (type < 0 || type > FTUnsynced)
-    {
-        filter = FTAll;
-    }
-    else
-    {
-        filter = static_cast<FilterType>(type);
-    }
-
-    if (m_Filter != filter)
-    {
-        m_Filter = filter;
-        invalidateFilter();
-    }
+    m_StatusFilter = static_cast<BookmarksStatusFilter>(statusFilter);
+    m_ContentTypeFilter = static_cast<BookmarksContentTypeFilter>(contentTypeFilter);
+    invalidateFilter();
 }
 } // namespace LinksBag

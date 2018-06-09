@@ -56,7 +56,7 @@ Application::Application(QObject *parent)
         qDebug() << "Migrate settings from config to dconf";
         QSettings settings (settingsPath, QSettings::IniFormat);
         ApplicationSettings::Instance()->setValue("lastUpdate", settings.value("last_update", 0));
-        ApplicationSettings::Instance()->setValue("bookmarksFilter", settings.value("bookmarks_filter", "unread"));
+        ApplicationSettings::Instance()->setValue("statusFilter", settings.value("bookmarks_filter", "all"));
         ApplicationSettings::Instance()->setValue("showSearchField", settings.value("show_search_field", false));
         ApplicationSettings::Instance()->setValue("accessToken", settings.value("access_token"));
         ApplicationSettings::Instance()->setValue("userName",  settings.value("user_name"));

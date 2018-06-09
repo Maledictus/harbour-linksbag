@@ -29,7 +29,7 @@ Item {
     anchors.fill: parent
 
     property alias model: listView.model
-    property string filter: ""
+    property string filter: mainWindow.getStatusFilterString(mainWindow.settings.statusFilter)
 
     Label {
         id: coverHeaderCount

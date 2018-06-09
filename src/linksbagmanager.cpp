@@ -64,6 +64,7 @@ LinksBagManager::LinksBagManager(QObject *parent)
 , m_IsLogged(false)
 , m_BookmarksModel(new BookmarksModel(this))
 , m_FilterProxyModel(new FilterProxyModel(this))
+, m_CoverModel(new FilterProxyModel(this))
 , m_DownloadingModel(new FilterProxyModel(this))
 , m_thumbnailDownloader(new QNetworkAccessManager(this))
 , m_SyncTimer(new QTimer(this))
@@ -77,7 +78,13 @@ LinksBagManager::LinksBagManager(QObject *parent)
 
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
     m_DownloadingModel->setSourceModel(m_BookmarksModel);
-    m_DownloadingModel->filterBookmarks(LinksBag::FTUnsynced);
+    m_CoverModel->setSourceModel(m_BookmarksModel);
+    m_FilterProxyModel->filterBookmarks(ApplicationSettings::Instance()->value("statusFilter").toInt(),
+            ApplicationSettings::Instance()->value("contentTypeFilter").toInt());
+    m_CoverModel->filterBookmarks(ApplicationSettings::Instance()->value("statusFilter").toInt(),
+            ContentTypeAll);
+
+    //m_DownloadingModel->filterBookmarks(LinksBag::FTUnsynced);
     connect(m_thumbnailDownloader, &QNetworkAccessManager::finished,
             this, &LinksBagManager::thumbnailReceived);
     SetLogged(!ApplicationSettings::Instance(this)->value("accessToken").isNull() &&
@@ -267,6 +274,11 @@ FilterProxyModel* LinksBagManager::GetDownloadingModel() const
     return m_DownloadingModel;
 }
 
+FilterProxyModel *LinksBagManager::GetCoverModel() const
+{
+    return m_CoverModel;
+}
+
 void LinksBagManager::obtainRequestToken()
 {
     SetBusy(true);
@@ -405,15 +417,20 @@ QUrl LinksBagManager::getContentUri(const QString& id)
 
 void LinksBagManager::resetAccount()
 {
-    ApplicationSettings::Instance(this)->remove("accessToken");
-    ApplicationSettings::Instance(this)->remove("userName");
-    ApplicationSettings::Instance(this)->remove("lastUpdate");
-    ApplicationSettings::Instance(this)->remove("showSearchField");
-    ApplicationSettings::Instance(this)->remove("bookmarksFilter");
     ApplicationSettings::Instance(this)->remove("syncOnStartup");
+    ApplicationSettings::Instance(this)->remove("lastUpdate");
     ApplicationSettings::Instance(this)->remove("bookmarksViewItemSize");
     ApplicationSettings::Instance(this)->remove("parser");
+    ApplicationSettings::Instance(this)->remove("showSearchField");
+    ApplicationSettings::Instance(this)->remove("userName");
+    ApplicationSettings::Instance(this)->remove("accessToken");
     ApplicationSettings::Instance(this)->remove("useBestView");
+    ApplicationSettings::Instance(this)->remove("showContentType");
+    ApplicationSettings::Instance(this)->remove("mobileBrowser");
+    ApplicationSettings::Instance(this)->remove("backgroundSyncPeriod");
+    ApplicationSettings::Instance(this)->remove("showBackgroundImage");
+    ApplicationSettings::Instance(this)->remove("statusFilter");
+    ApplicationSettings::Instance(this)->remove("contentTypeFilter");
 
     m_Api->ResetAccount();
 

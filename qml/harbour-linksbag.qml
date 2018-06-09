@@ -34,7 +34,7 @@ import "pages"
 ApplicationWindow {
     id: mainWindow
 
-    cover: CoverPage { model: linksbagManager.filterModel }
+    cover: CoverPage { model: linksbagManager.coverModel }
 
     property alias settings: settings
 
@@ -101,7 +101,6 @@ ApplicationWindow {
         property int lastUpdate: 0
         property real bookmarksViewItemSize: Theme.paddingMedium
         property string parser: "mercury"
-        property string bookmarksFilter: "unread"
         property bool showSearchField: false
         property string accessToken
         property string userName
@@ -110,5 +109,52 @@ ApplicationWindow {
         property bool mobileBrowser: true
         property int backgroundSyncPeriod: -1
         property bool showBackgroundImage: true
+        property int statusFilter: LinksBag.AllStatus
+        property int contentTypeFilter: LinksBag.AllContentType
+    }
+
+    function generateFilterTitle(status, contentType) {
+        return qsTr("%1, %2").arg(getStatusFilterString(status))
+                .arg(getContenTypeFilterString(contentType))
+    }
+
+    function getStatusFilterString(statusFilter) {
+        var status = qsTr("All")
+        switch (statusFilter) {
+        case LinksBag.ReadStatus:
+            status = qsTr("Read")
+            break;
+        case LinksBag.UnreadStatus:
+            status = qsTr("Unread")
+            break;
+        case LinksBag.FavoriteStatus:
+            status = qsTr("Favorite")
+            break;
+        case LinksBag.AllStatus:
+        default:
+            status = qsTr("All")
+            break;
+        }
+        return status
+    }
+
+    function getContenTypeFilterString(contentTypeFilter) {
+        var contentType = qsTr("All")
+        switch (contentTypeFilter) {
+        case LinksBag.ArticlesContentType:
+            contentType = qsTr("Articles")
+            break;
+        case LinksBag.ImagesContentType:
+            contentType = qsTr("Images")
+            break;
+        case LinksBag.VideosContentType:
+            contentType = qsTr("Videos")
+            break;
+        case LinksBag.AllContentType:
+        default:
+            contentType = qsTr("All")
+            break;
+        }
+        return contentType
     }
 }
