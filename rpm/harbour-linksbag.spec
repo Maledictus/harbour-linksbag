@@ -61,13 +61,6 @@ desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
 
-%preun
-if [ $1 = 0 ] ; then
-    su - nemo -c "/usr/bin/dconf reset -f /apps/%{name}/"
-    rm -rf "/home/nemo/.cache/%{name}"
-    rm -rf "/home/nemo/.local/share/%{name}"
-fi
-
 %files
 %defattr(-,root,root,-)
 %{_bindir}
