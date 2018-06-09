@@ -356,9 +356,9 @@ Page {
                 property real margin: Theme.paddingMedium
                 anchors {
                     left: !bookmarkRead ? unreadIndicator.right : parent.left
-                    leftMargin:!bookmarkRead ? Theme.paddingMedium : Theme.horizontalPageMargin
+                    leftMargin:!bookmarkRead ? Theme.paddingSmall : Theme.horizontalPageMargin
                     right: typeIcon.visible ? typeIcon.left : parent.right
-                    rightMargin: typeIcon.visible ? Theme.paddingMedium : Theme.horizontalPageMargin
+                    rightMargin: typeIcon.visible ? Theme.paddingSmall : Theme.horizontalPageMargin
                 }
 
                 Label {
@@ -381,12 +381,13 @@ Page {
                         height: parent.height - y
                         radius: Theme.paddingSmall / 2
                         color: 'black'
+                        visible: mainWindow.settings.showBackgroundImage
                     }
                     Label {
                         id: sourceLabel
                         x: Theme.paddingSmall
                         font.pixelSize: Theme.fontSizeExtraSmall
-                        color: 'white'
+                        color: mainWindow.settings.showBackgroundImage ? 'white' : Theme.highlightColor
                         elide: Text.ElideRight
                         maximumLineCount: 1
                         text: {
@@ -417,6 +418,7 @@ Page {
                         height: parent.height - y
                         opacity: 0.5
                         color: 'black'
+                        visible: mainWindow.settings.showBackgroundImage
                     }
                     Row {
                         id: tagsRow

@@ -109,5 +109,6 @@ ApplicationWindow {
         property bool showContentType: true
         property bool mobileBrowser: true
         property int backgroundSyncPeriod: -1
+        property bool showBackgroundImage: true
     }
 }
