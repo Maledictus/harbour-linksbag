@@ -35,14 +35,13 @@ THE SOFTWARE.
 
 int main(int argc, char *argv [])
 {
-    //qInstallMessageHandler(DebugHandler::Write);
+    qInstallMessageHandler(DebugHandler::Write);
 
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     app->setApplicationDisplayName("LinksBag");
     app->setApplicationName("harbour-linksbag");
     app->setApplicationVersion(QString(APP_VERSION));
 
-    qDebug() << "====Application starting====" << app->applicationVersion();
     QScopedPointer<LinksBag::Application> application(new LinksBag::Application());
     QTimer::singleShot(1, application.data(), SLOT(start()));
 
@@ -52,8 +51,6 @@ int main(int argc, char *argv [])
             &LinksBag::Application::handleAboutToQuit);
 
     const int retVal = app->exec();
-
-    qDebug() << "====Application closing====";
 
     return retVal;
 }

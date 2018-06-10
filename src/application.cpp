@@ -53,7 +53,6 @@ Application::Application(QObject *parent)
             .filePath(QCoreApplication::applicationName()) + "/linksbag.conf";
     const bool migrate = ApplicationSettings::Instance()->value("settingsMigration", true).toBool();
     if (QFile(settingsPath).exists() && migrate) {
-        qDebug() << "Migrate settings from config to dconf";
         QSettings settings (settingsPath, QSettings::IniFormat);
         ApplicationSettings::Instance()->setValue("lastUpdate", settings.value("last_update", 0));
         ApplicationSettings::Instance()->setValue("statusFilter", settings.value("bookmarks_filter", "all"));
@@ -61,7 +60,6 @@ Application::Application(QObject *parent)
         ApplicationSettings::Instance()->setValue("accessToken", settings.value("access_token"));
         ApplicationSettings::Instance()->setValue("userName",  settings.value("user_name"));
         ApplicationSettings::Instance()->setValue("settingsMigration", false);
-        qDebug() << "Migrating of settings has finished";
     }
 
     if (migrate) {
@@ -73,7 +71,6 @@ void Application::ShowUI()
 {
     if (!m_View)
     {
-        qDebug() << "Construct view";
         m_View = SailfishApp::createView();
         m_View->setTitle("LinksBag");
         m_View->rootContext()->setContextProperty("linksbagManager",
@@ -90,7 +87,6 @@ void Application::ShowUI()
     }
     else
     {
-        qDebug() << "Activating view";
         m_View->raise();
         m_View->requestActivate();
     }

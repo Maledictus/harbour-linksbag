@@ -376,7 +376,7 @@ void LinksBagManager::updateContent(const QString& id, const QString& content)
         QTextStream stream(&file);
         stream << content;
     } else {
-        qDebug() << "Can't save file: " << file.errorString();
+        qWarning() << "Can't save file: " << file.errorString();
     }
     file.close();
     m_BookmarksModel->RefreshBookmark(id);

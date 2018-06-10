@@ -235,7 +235,7 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
     auto reply = qobject_cast<QNetworkReply*> (sender);
     if (!reply)
     {
-        qDebug() << "Invalid reply";
+        qWarning() << "Invalid reply";
         emit error(tr("General error"), 503, ETGeneral);
         ok = false;
         return doc;
@@ -251,7 +251,7 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
             reply->error() != m_MaintenanceError &&
             reply->error() != QNetworkReply::ContentOperationNotPermittedError)
     {
-        qDebug() << Q_FUNC_INFO << "There is network error: "
+        qWarning() << Q_FUNC_INFO << "There is network error: "
                 << reply->error() << reply->errorString();
         emit error(tr("Network error: %1").arg(reply->errorString()), reply->error(), ETGeneral);
         ok = false;
@@ -261,7 +261,7 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
     {
         const int errorCode = reply->rawHeader("X-Error-Code").toInt();
         const QString errorString = reply->rawHeader("X-Error");
-        qDebug() << Q_FUNC_INFO << "There is getpocket error: "
+        qWarning() << Q_FUNC_INFO << "There is getpocket error: "
                 << errorCode << errorString;
         emit error(errorString, errorCode, ETGetPocket);
         ok = false;
@@ -273,7 +273,7 @@ QJsonDocument GetPocketApi::PreparsingReply(QObject *sender, bool& ok)
     doc = QJsonDocument::fromJson(reply->readAll(), &err);
     if (err.error != QJsonParseError::NoError)
     {
-        qDebug() << "Unable to generate json from reply";
+        qWarning() << "Unable to generate json from reply";
         emit error(tr("Reply data is corrupted"), 503, ETGetPocket);
         return doc;
     }
@@ -290,7 +290,7 @@ void GetPocketApi::handleObtainRequestToken()
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
     {
-        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        qWarning() << Q_FUNC_INFO << "Failed preparsing reply phase";
         return;
     }
 
@@ -305,7 +305,7 @@ void GetPocketApi::handleRequestAccessToken()
     auto reply = qobject_cast<QNetworkReply*> (sender());
     if (!reply)
     {
-        qDebug() << "Invalid reply";
+        qWarning() << "Invalid reply";
         emit error(tr("General error"), 503, ETGeneral);
         return;
     }
@@ -321,7 +321,7 @@ void GetPocketApi::handleRequestAccessToken()
             reply->error() != m_MaintenanceError &&
             reply->error() != QNetworkReply::ContentOperationNotPermittedError)
     {
-        qDebug() << Q_FUNC_INFO << "There is network error: "
+        qWarning() << Q_FUNC_INFO << "There is network error: "
                 << reply->error() << reply->errorString();
         emit error(tr("Network error: %1").arg(reply->errorString()), reply->error(), ETGeneral);
     }
@@ -329,7 +329,7 @@ void GetPocketApi::handleRequestAccessToken()
     {
         const int errorCode = reply->rawHeader("X-Error-Code").toInt();
         const QString errorString = reply->rawHeader("X-Error");
-        qDebug() << Q_FUNC_INFO << "There is getpocket error: "
+        qWarning() << Q_FUNC_INFO << "There is getpocket error: "
                 << errorCode << errorString;
         emit error(errorString, errorCode, ETGetPocket);
         emit logged(result, QString(), QString());
@@ -340,7 +340,7 @@ void GetPocketApi::handleRequestAccessToken()
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll(), &err);
     if (err.error != QJsonParseError::NoError)
     {
-        qDebug() << "Unable to generate json from reply";
+        qWarning() << "Unable to generate json from reply";
         emit error(tr("Reply data is corrupted"), 503, ETGetPocket);
     }
 
@@ -358,7 +358,7 @@ void GetPocketApi::handleLoadBookmarks()
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
     {
-        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        qWarning() << Q_FUNC_INFO << "Failed preparsing reply phase";
         return;
     }
 
@@ -460,7 +460,7 @@ void GetPocketApi::handleRemoveBookmarks(const QStringList& ids)
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
     {
-        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        qWarning() << Q_FUNC_INFO << "Failed preparsing reply phase";
         return;
     }
 
@@ -483,7 +483,7 @@ void GetPocketApi::handleMarkBookmarksAsFavorite(const QStringList& ids, bool fa
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
     {
-        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        qWarning() << Q_FUNC_INFO << "Failed preparsing reply phase";
         return;
     }
 
@@ -507,7 +507,7 @@ void GetPocketApi::handleMarkBookmarksAsRead(const QStringList& ids, bool read)
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
     {
-        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        qWarning() << Q_FUNC_INFO << "Failed preparsing reply phase";
         return;
     }
 
@@ -531,7 +531,7 @@ void GetPocketApi::handleTagsUpdated(const QString& id, const QString& tags)
     QJsonDocument doc = PreparsingReply(sender(), ok);
     if (!ok)
     {
-        qDebug() << Q_FUNC_INFO << "Failed preparsing reply phase";
+        qWarning() << Q_FUNC_INFO << "Failed preparsing reply phase";
         return;
     }
 
