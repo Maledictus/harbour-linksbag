@@ -44,10 +44,13 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/dialogs/FilterBookmarksDialog.qml \
     qml/pages/AboutPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
+    qml/pages/components/BookmarkItem.qml \
+    qml/pages/components/BookmarkRemorsePopup.qml \
     qml/pages/components/DefaultBookmarkView.qml \
     qml/pages/components/IconContextMenu.qml \
     qml/pages/components/IconMenuItem.qml \
     qml/pages/components/ImageBookmarkView.qml \
+    qml/pages/components/ImageOverlay.qml \
     qml/pages/components/Mercury.qml \
     qml/pages/components/Readability.qml \
     qml/pages/components/ParticipantsDelegate.qml \
@@ -62,6 +65,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/DevelopersPage.qml \
     qml/pages/LoginPage.qml \
+    qml/pages/MultiSelectionPage.qml \
     qml/pages/ParserLoader.qml \
     qml/pages/SettingsPage.qml \
     qml/pages/TranslatorsPage.qml \
@@ -77,24 +81,24 @@ DISTFILES += qml/harbour-linksbag.qml \
     translations/harbour-linksbag-sv.ts \
     translations/harbour-linksbag-fr.ts \
     translations/harbour-linksbag-pl.ts \
-    qml/pages/components/BookmarkRemorsePopup.qml \
-    qml/pages/MultiSelectionPage.qml \
-    qml/pages/components/BookmarkItem.qml
 
 
 lupdate_only{
 SOURCES = qml/harbour-linksbag.qml \
     qml/cover/ArticleCover.qml \
     qml/cover/ArticleListCover.qml \
+    qml/cover/CoverPage.qml \
     qml/dialogs/EditTagDialog.qml \
     qml/dialogs/FilterBookmarksDialog.qml \
-    qml/cover/CoverPage.qml \
     qml/pages/AboutPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
+    qml/pages/components/BookmarkItem.qml \
+    qml/pages/components/BookmarkRemorsePopup.qml \
     qml/pages/components/DefaultBookmarkView.qml \
     qml/pages/components/IconContextMenu.qml \
     qml/pages/components/IconMenuItem.qml \
     qml/pages/components/ImageBookmarkView.qml \
+    qml/pages/components/ImageOverlay.qml \
     qml/pages/components/Mercury.qml \
     qml/pages/components/Readability.qml \
     qml/pages/components/ParticipantsDelegate.qml \
@@ -109,6 +113,7 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/pages/BookmarksPage.qml \
     qml/pages/DevelopersPage.qml \
     qml/pages/LoginPage.qml \
+    qml/pages/MultiSelectionPage.qml \
     qml/pages/ParserLoader.qml \
     qml/pages/SettingsPage.qml \
     qml/pages/TranslatorsPage.qml \
