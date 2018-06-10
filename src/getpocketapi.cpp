@@ -114,16 +114,47 @@ void GetPocketApi::LoadBookmarks(int lastUpdate)
             &GetPocketApi::handleLoadBookmarks);
 }
 
-void GetPocketApi::RemoveBookmark(const QString& id)
+void GetPocketApi::RemoveBookmarks(const QStringList& ids)
 {
     QVariantMap params;
     params["consumer_key"] = m_ConsumerKey;
     params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
     QVariantList actions;
-    QVariantMap action;
-    action["action"] = "delete";
-    action["item_id"] = id;
-    actions.append(action);
+    for (const auto& id : ids)
+    {
+        QVariantMap action;
+        action["action"] = "delete";
+        action["item_id"] = id;
+        actions.append(action);
+        params["actions"] = actions;
+    }
+
+    QJsonDocument doc(QJsonObject::fromVariantMap(params));
+
+    QNetworkReply *reply = m_NAM->post(CreateRequest("/send"),
+            doc.toJson());
+    connect(reply,
+            &QNetworkReply::finished,
+            this,
+            [this, ids]()
+            {
+                handleRemoveBookmarks(ids);
+            });
+}
+
+void GetPocketApi::MarkBookmarksAsFavorite(const QStringList& ids, bool favorite)
+{
+    QVariantMap params;
+    params["consumer_key"] = m_ConsumerKey;
+    params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
+    QVariantList actions;
+    for (const auto& id : ids)
+    {
+        QVariantMap action;
+        action["action"] = favorite ? "favorite" : "unfavorite";
+        action["item_id"] = id;
+        actions.append(action);
+    }
     params["actions"] = actions;
 
     QJsonDocument doc(QJsonObject::fromVariantMap(params));
@@ -133,47 +164,25 @@ void GetPocketApi::RemoveBookmark(const QString& id)
     connect(reply,
             &QNetworkReply::finished,
             this,
-            [=]()
+            [this, ids, favorite]()
             {
-                handleRemoveBookmark(id);
+                handleMarkBookmarksAsFavorite(ids, favorite);
             });
 }
 
-void GetPocketApi::MarkBookmarkAsFavorite(const QString& id, bool favorite)
+void GetPocketApi::MarkBookmarksAsRead(const QStringList& ids, bool read)
 {
     QVariantMap params;
     params["consumer_key"] = m_ConsumerKey;
     params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
     QVariantList actions;
-    QVariantMap action;
-    action["action"] = favorite ? "favorite" : "unfavorite";
-    action["item_id"] = id;
-    actions.append(action);
-    params["actions"] = actions;
-
-    QJsonDocument doc(QJsonObject::fromVariantMap(params));
-
-    QNetworkReply *reply = m_NAM->post(CreateRequest("/send"),
-            doc.toJson());
-    connect(reply,
-            &QNetworkReply::finished,
-            this,
-            [this, id, favorite]()
-            {
-                handleMarkBookmarkAsFavorite(id, favorite);
-            });
-}
-
-void GetPocketApi::MarkBookmarkAsRead(const QString& id, bool read)
-{
-    QVariantMap params;
-    params["consumer_key"] = m_ConsumerKey;
-    params["access_token"] = ApplicationSettings::Instance(this)->value("accessToken");
-    QVariantList actions;
-    QVariantMap action;
-    action["action"] = read ? "archive" : "readd";
-    action["item_id"] = id;
-    actions.append(action);
+    for (const auto& id : ids)
+    {
+        QVariantMap action;
+        action["action"] = read ? "archive" : "readd";
+        action["item_id"] = id;
+        actions.append(action);
+    }
     params ["actions"] = actions;
 
     QJsonDocument doc(QJsonObject::fromVariantMap(params));
@@ -183,9 +192,9 @@ void GetPocketApi::MarkBookmarkAsRead(const QString& id, bool read)
     connect(reply,
             &QNetworkReply::finished,
             this,
-            [this, id, read]()
+            [this, ids, read]()
             {
-                handleMarkBookmarkAsRead(id, read);
+                handleMarkBookmarksAsRead(ids, read);
             });
 }
 
@@ -443,7 +452,7 @@ void GetPocketApi::handleLoadBookmarks()
     emit gotBookmarks(bookmarks, since);
 }
 
-void GetPocketApi::handleRemoveBookmark(const QString& id)
+void GetPocketApi::handleRemoveBookmarks(const QStringList& ids)
 {
     emit requestFinished(true);
 
@@ -458,7 +467,7 @@ void GetPocketApi::handleRemoveBookmark(const QString& id)
     const auto& rootObject = doc.object();
     if(rootObject ["status"].toInt() == 1)
     {
-        emit bookmarkRemoved(id);
+        emit bookmarksRemoved(ids);
     }
     else
     {
@@ -466,7 +475,7 @@ void GetPocketApi::handleRemoveBookmark(const QString& id)
     }
 }
 
-void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite)
+void GetPocketApi::handleMarkBookmarksAsFavorite(const QStringList& ids, bool favorite)
 {
     emit requestFinished(true);
 
@@ -481,7 +490,7 @@ void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite
     const auto& rootObject = doc.object();
     if(rootObject ["status"].toInt() == 1)
     {
-        emit bookmarkMarkedAsFavorite(id, favorite);
+        emit bookmarksMarkedAsFavorite(ids, favorite);
     }
     else
     {
@@ -490,7 +499,7 @@ void GetPocketApi::handleMarkBookmarkAsFavorite(const QString& id, bool favorite
     }
 }
 
-void GetPocketApi::handleMarkBookmarkAsRead(const QString& id, bool read)
+void GetPocketApi::handleMarkBookmarksAsRead(const QStringList& ids, bool read)
 {
     emit requestFinished(true);
 
@@ -505,7 +514,7 @@ void GetPocketApi::handleMarkBookmarkAsRead(const QString& id, bool read)
     const auto& rootObject = doc.object();
     if(rootObject ["status"].toInt() == 1)
     {
-        emit bookmarkMarkedAsRead(id, read);
+        emit bookmarksMarkedAsRead(ids, read);
     }
     else
     {

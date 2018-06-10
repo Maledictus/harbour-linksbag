@@ -25,25 +25,45 @@ THE SOFTWARE.
 #pragma once
 
 #include <QSortFilterProxyModel>
+#include <QSet>
 
 #include "enumsproxy.h"
 
 namespace LinksBag
 {
+class BookmarksModel;
+
 class FilterProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
+    BookmarksModel *m_BookmarksModel;
     BookmarksStatusFilter m_StatusFilter;
     BookmarksContentTypeFilter m_ContentTypeFilter;
 
+    QList<int> m_UnreadSelectedBookmarksIds;
+    QList<int> m_UnfavoriteSelectedBookmarksIds;
+    Q_PROPERTY(bool unreadBookmarksSelected READ IsUnreadBookmarksSelected NOTIFY unreadBookmarksSelectedChanged)
+    Q_PROPERTY(bool unfavoriteBookmarksSelected READ IsUnfavoriteBookmarksSelected NOTIFY unfavoriteBookmarksSelectedChanged)
 public:
-    explicit FilterProxyModel(QObject *parent = 0);
+    explicit FilterProxyModel(BookmarksModel *bookmarksModel, QObject *parent = 0);
 
     virtual bool filterAcceptsRow (int sourceRow, const QModelIndex& sourceParent) const;
     virtual bool lessThan (const QModelIndex& left, const QModelIndex& right) const;
 
+    bool IsUnreadBookmarksSelected() const;
+    bool IsUnfavoriteBookmarksSelected() const;
+    Q_INVOKABLE QStringList selectedBookmarks() const;
 public slots:
     void filterBookmarks(int statusFilter, int contentTypeFilter);
+
+    void selectBookmark(int row);
+    void deselectBookmark(int row);
+    void selectAllBookmarks();
+    void deselectAllBookmarks();
+
+signals:
+    void unreadBookmarksSelectedChanged();
+    void unfavoriteBookmarksSelectedChanged();
 };
 } // namespace LinksBag

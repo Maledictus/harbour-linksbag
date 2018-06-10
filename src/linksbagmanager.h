@@ -117,8 +117,11 @@ public slots:
     void saveBookmarks();
     void refreshBookmarks();
     void removeBookmark(const QString& id);
+    void removeBookmarks(const QStringList& ids);
     void markAsFavorite(const QString& id, bool favorite);
     void markAsRead(const QString& id, bool read);
+    void markAsFavorite(const QStringList& ids, bool favorite);
+    void markAsRead(const QStringList& ids, bool read);
     void updateTags(const QString& id, const QString& tags);
 
     void updateContent(const QString& id, const QString& content);
@@ -144,9 +147,6 @@ signals:
     void filterModelChanged();
     void downloadingModelChanged();
     void coverModelChanged();
-
-    void bookmarkReadStateChanged(const QString& id, bool readState);
-    void bookmarkFavoriteStateChanged(const QString& id, bool favoriteState);
 
     void error(const QString& msg, int type);
     void notify(const QString& msg);

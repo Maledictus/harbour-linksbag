@@ -56,9 +56,9 @@ public:
     void RequestAccessToken();
 
     void LoadBookmarks(int lastUpdate);
-    void RemoveBookmark(const QString& id);
-    void MarkBookmarkAsFavorite(const QString& id, bool favorite);
-    void MarkBookmarkAsRead(const QString& id, bool read);
+    void RemoveBookmarks(const QStringList& ids);
+    void MarkBookmarksAsFavorite(const QStringList& ids, bool favorite);
+    void MarkBookmarksAsRead(const QStringList& ids, bool read);
     void UpdateTags(const QString& id, const QString& tags);
 
     void ResetAccount();
@@ -70,9 +70,9 @@ private slots:
     void handleRequestAccessToken();
 
     void handleLoadBookmarks();
-    void handleRemoveBookmark(const QString& id);
-    void handleMarkBookmarkAsFavorite(const QString& id, bool favorite);
-    void handleMarkBookmarkAsRead(const QString& id, bool read);
+    void handleRemoveBookmarks(const QStringList& ids);
+    void handleMarkBookmarksAsFavorite(const QStringList& id, bool favorite);
+    void handleMarkBookmarksAsRead(const QStringList& id, bool read);
     void handleTagsUpdated(const QString& id, const QString& tags);
 
 signals:
@@ -84,9 +84,9 @@ signals:
     void logged(bool logged, const QString& accessToken, const QString& userName);
 
     void gotBookmarks(const Bookmarks_t& bookmarks, quint64 since);
-    void bookmarkRemoved(const QString& id);
-    void bookmarkMarkedAsFavorite(const QString& id, bool favorite);
-    void bookmarkMarkedAsRead(const QString& id, bool read);
+    void bookmarksRemoved(const QStringList& ids);
+    void bookmarksMarkedAsFavorite(const QStringList& ids, bool favorite);
+    void bookmarksMarkedAsRead(const QStringList& ids, bool read);
     void tagsUpdated(const QString& id, const QString& tags);
 };
 } // namespace LinksBag

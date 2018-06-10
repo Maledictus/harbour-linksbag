@@ -26,10 +26,13 @@ THE SOFTWARE.
 #include "filterproxymodel.h"
 #include "bookmarksmodel.h"
 
+#include <QtDebug>
+
 namespace LinksBag
 {
-FilterProxyModel::FilterProxyModel(QObject *parent)
+FilterProxyModel::FilterProxyModel(BookmarksModel *bookmarksModel, QObject *parent)
 : QSortFilterProxyModel(parent)
+, m_BookmarksModel(bookmarksModel)
 {
     setDynamicSortFilter(true);
     setSortCaseSensitivity(Qt::CaseInsensitive);
@@ -83,10 +86,35 @@ bool FilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& source
 
 bool FilterProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
 {
-    QVariant leftData = sourceModel()->data(left, BookmarksModel::BRAddTime);
-    QVariant rightData = sourceModel()->data(right, BookmarksModel::BRAddTime);
+    const QVariant leftData = sourceModel()->data(left, BookmarksModel::BRAddTime);
+    const QVariant rightData = sourceModel()->data(right, BookmarksModel::BRAddTime);
+    const QVariant leftTitle = sourceModel()->data(left, BookmarksModel::BRTitle);
+    const QVariant rightTitle = sourceModel()->data(right, BookmarksModel::BRTitle);
 
-    return leftData.toDateTime() < rightData.toDateTime();
+    if (leftData.toDateTime() < rightData.toDateTime()) {
+        return true;
+    }
+    else if (leftData.toDateTime() == rightData.toDateTime()) {
+        return QString::localeAwareCompare(leftTitle.toString(), rightTitle.toString()) < 0;
+    }
+    else {
+        return false;
+    }
+}
+
+bool FilterProxyModel::IsUnreadBookmarksSelected() const
+{
+    return !m_UnreadSelectedBookmarksIds.isEmpty();
+}
+
+bool FilterProxyModel::IsUnfavoriteBookmarksSelected() const
+{
+    return !m_UnfavoriteSelectedBookmarksIds.isEmpty();
+}
+
+QStringList FilterProxyModel::selectedBookmarks() const
+{
+    return m_BookmarksModel->GetSelectedBookmarks();
 }
 
 void FilterProxyModel::filterBookmarks(int statusFilter,
@@ -95,5 +123,63 @@ void FilterProxyModel::filterBookmarks(int statusFilter,
     m_StatusFilter = static_cast<BookmarksStatusFilter>(statusFilter);
     m_ContentTypeFilter = static_cast<BookmarksContentTypeFilter>(contentTypeFilter);
     invalidateFilter();
+}
+
+void FilterProxyModel::selectBookmark(int row)
+{
+    const auto srcIdx = mapToSource(index(row, 0));
+    m_BookmarksModel->SelectBookmark(srcIdx);
+    const bool isRead = sourceModel()->data(srcIdx, BookmarksModel::BRRead).toBool();
+    const bool isFavorite = sourceModel()->data(srcIdx, BookmarksModel::BRFavorite).toBool();
+
+    if (m_UnreadSelectedBookmarksIds.isEmpty() && !isRead) {
+        m_UnreadSelectedBookmarksIds.append(row);
+        emit unreadBookmarksSelectedChanged();
+    }
+    else if (!isRead) {
+        m_UnreadSelectedBookmarksIds.append(row);
+    }
+
+    if (m_UnfavoriteSelectedBookmarksIds.isEmpty() && !isFavorite) {
+        m_UnfavoriteSelectedBookmarksIds.append(row);
+        emit unfavoriteBookmarksSelectedChanged();
+    }
+    else if (!isFavorite) {
+        m_UnfavoriteSelectedBookmarksIds.append(row);
+    }
+}
+
+void FilterProxyModel::deselectBookmark(int row)
+{
+    const auto srcIdx = mapToSource(index(row, 0));
+    m_BookmarksModel->DeselectBookmark(srcIdx);
+
+    if (m_UnreadSelectedBookmarksIds.contains(row)) {
+        m_UnreadSelectedBookmarksIds.removeOne(row);
+        if (m_UnreadSelectedBookmarksIds.isEmpty()) {
+            emit unreadBookmarksSelectedChanged();
+        }
+    }
+
+    if (m_UnfavoriteSelectedBookmarksIds.contains(row)) {
+        m_UnfavoriteSelectedBookmarksIds.removeOne(row);
+        if (m_UnfavoriteSelectedBookmarksIds.isEmpty()) {
+            emit unfavoriteBookmarksSelectedChanged();
+        }
+    }
+}
+
+void FilterProxyModel::selectAllBookmarks()
+{
+    //TODO
+}
+
+void FilterProxyModel::deselectAllBookmarks()
+{
+    m_BookmarksModel->DeselectAllBookmarks();
+    m_UnreadSelectedBookmarksIds.clear();
+    emit unreadBookmarksSelectedChanged();
+    m_UnfavoriteSelectedBookmarksIds.clear();
+    emit unfavoriteBookmarksSelectedChanged();
 }
 } // namespace LinksBag

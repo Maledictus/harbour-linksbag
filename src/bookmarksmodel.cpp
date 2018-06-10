@@ -83,6 +83,8 @@ QVariant BookmarksModel::data(const QModelIndex& index, int role) const
         return bookmark->GetContentType();
     case BRBookmark:
         return QVariant::fromValue(bookmark.get());
+    case BRSelected:
+        return m_SelectedBookmarksIds.contains(index.row());
     default:
         return QVariant();
     }
@@ -114,6 +116,7 @@ QHash<int, QByteArray> BookmarksModel::roleNames() const
     roles [BRVideos] = "bookmarkVideos";
     roles [BRContentType] = "bookmarkContentType";
     roles [BRBookmark] = "bookmarkBookmark";
+    roles [BRSelected] = "bookmarkSelected";
 
     return roles;
 }
@@ -125,19 +128,22 @@ void BookmarksModel::Clear()
     endResetModel();
 }
 
-void BookmarksModel::RemoveBookmark(const QString& id)
+void BookmarksModel::RemoveBookmarks(const QStringList& ids)
 {
-    auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),
-            [id](decltype(m_Bookmarks.front()) bookmark)
-            {
-                return id == bookmark->GetID();
-            });
-    if(it != m_Bookmarks.end())
+    for (const auto& id : ids)
     {
-        const int pos = std::distance(m_Bookmarks.begin(), it);
-        beginRemoveRows(QModelIndex(), pos, pos);
-        m_Bookmarks.removeAt(pos);
-        endRemoveRows();
+        auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),
+                [id](decltype(m_Bookmarks.front()) bookmark)
+                {
+                    return id == bookmark->GetID();
+                });
+        if(it != m_Bookmarks.end())
+        {
+            const int pos = std::distance(m_Bookmarks.begin(), it);
+            beginRemoveRows(QModelIndex(), pos, pos);
+            m_Bookmarks.removeAt(pos);
+            endRemoveRows();
+        }
     }
 }
 
@@ -158,7 +164,7 @@ void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
             switch(bms->GetStatus())
             {
             case Bookmark::SDeleted:
-                RemoveBookmark(bms->GetID());
+                RemoveBookmarks({ bms->GetID() });
                 break;
             case Bookmark::SArchived:
             {
@@ -203,30 +209,38 @@ void BookmarksModel::SetBookmarks(const Bookmarks_t& bookmarks)
     endResetModel();
 }
 
-void BookmarksModel::MarkBookmarkAsFavorite(const QString& id, bool favorite)
+void BookmarksModel::MarkBookmarksAsFavorite(const QStringList& ids, bool favorite)
 {
-    for(int i = 0, size = m_Bookmarks.count(); i < size; ++i)
+    for (const auto& id : ids)
     {
-        auto& bm = m_Bookmarks[i];
-        if(bm->GetID() == id)
+        auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),
+                [id](decltype(m_Bookmarks.front()) bookmark)
+                {
+                    return bookmark->GetID() == id;
+                });
+        if (it != m_Bookmarks.end())
         {
-            bm->SetIsFavorite(favorite);
-            emit dataChanged(index(i, 0), index(i, 0));
-            break;
+            const int pos = std::distance(m_Bookmarks.begin(), it);
+            (*it)->SetIsFavorite(favorite);
+            emit dataChanged(index(pos, 0), index(pos, 0));
         }
     }
 }
 
-void BookmarksModel::MarkBookmarkAsRead(const QString& id, bool read)
+void BookmarksModel::MarkBookmarksAsRead(const QStringList& ids, bool read)
 {
-    for(int i = 0, size = m_Bookmarks.count(); i < size; ++i)
+    for (const auto& id : ids)
     {
-        auto& bm = m_Bookmarks[i];
-        if(bm->GetID() == id)
+        auto it = std::find_if(m_Bookmarks.begin(), m_Bookmarks.end(),
+                [id](decltype(m_Bookmarks.front()) bookmark)
+                {
+                    return bookmark->GetID() == id;
+                });
+        if (it != m_Bookmarks.end())
         {
-            bm->SetIsRead(read);
-            emit dataChanged(index(i, 0), index(i, 0));
-            break;
+            const int pos = std::distance(m_Bookmarks.begin(), it);
+            (*it)->SetIsRead(read);
+            emit dataChanged(index(pos, 0), index(pos, 0));
         }
     }
 }
@@ -276,6 +290,48 @@ void BookmarksModel::RefreshBookmark(const QString& id)
 Bookmarks_t BookmarksModel::GetBookmarks() const
 {
     return m_Bookmarks;
+}
+
+void BookmarksModel::SelectBookmark(const QModelIndex& index)
+{
+    const int idx = index.row();
+    if (idx < 0 || idx >= m_Bookmarks.count()) {
+        return;
+    }
+
+    const auto bookmark = m_Bookmarks[idx];
+    if (!m_SelectedBookmarksIds.contains(idx)) {
+        m_SelectedBookmarksIds.insert(idx, bookmark->GetID());
+        dataChanged(index, index, { BRSelected });
+    }
+}
+
+void BookmarksModel::DeselectBookmark(const QModelIndex& index)
+{
+    const int idx = index.row();
+    if (idx < 0 || idx >= m_Bookmarks.count()) {
+        return;
+    }
+
+    if (m_SelectedBookmarksIds.contains(idx)) {
+        m_SelectedBookmarksIds.remove(idx);
+        dataChanged(index, index, { BRSelected });
+    }
+}
+
+void BookmarksModel::SelectAllBookmarks()
+{
+}
+
+void BookmarksModel::DeselectAllBookmarks()
+{
+    m_SelectedBookmarksIds.clear();
+    emit dataChanged(index(0), index(m_Bookmarks.count() - 1), { BRSelected });
+}
+
+QStringList BookmarksModel::GetSelectedBookmarks() const
+{
+    return m_SelectedBookmarksIds.values();
 }
 
 void BookmarksModel::handleArticlesCacheReset()

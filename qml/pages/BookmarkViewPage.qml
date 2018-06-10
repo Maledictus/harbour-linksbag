@@ -70,20 +70,6 @@ Page {
     Component.onCompleted: cover.articleLayout = true
     Component.onDestruction: cover.articleLayout = false
 
-    Connections {
-        target: linksbagManager
-        onBookmarkReadStateChanged: {
-            if (bookmarkId === id) {
-                viewLoader.item.bookmarkRead = readState
-            }
-        }
-        onBookmarkFavoriteStateChanged: {
-            if (bookmarkId === id) {
-                viewLoader.item.bookmarkFavorite = favoriteState
-            }
-        }
-    }
-
     Loader {
         id: viewLoader
         anchors.fill: parent

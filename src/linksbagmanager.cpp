@@ -63,9 +63,9 @@ LinksBagManager::LinksBagManager(QObject *parent)
 , m_IsBusy(false)
 , m_IsLogged(false)
 , m_BookmarksModel(new BookmarksModel(this))
-, m_FilterProxyModel(new FilterProxyModel(this))
-, m_CoverModel(new FilterProxyModel(this))
-, m_DownloadingModel(new FilterProxyModel(this))
+, m_FilterProxyModel(new FilterProxyModel(m_BookmarksModel, this))
+, m_CoverModel(new FilterProxyModel(m_BookmarksModel, this))
+, m_DownloadingModel(new FilterProxyModel(m_BookmarksModel, this))
 , m_thumbnailDownloader(new QNetworkAccessManager(this))
 , m_SyncTimer(new QTimer(this))
 {
@@ -190,27 +190,25 @@ void LinksBagManager::MakeConnections()
             });
 
     connect(m_Api.get(),
-            &GetPocketApi::bookmarkRemoved,
+            &GetPocketApi::bookmarksRemoved,
             this,
-            [this](const QString& id)
+            [this](const QStringList& ids)
             {
-                m_BookmarksModel->RemoveBookmark(id);
+                m_BookmarksModel->RemoveBookmarks(ids);
             });
 
     connect(m_Api.get(),
-            &GetPocketApi::bookmarkMarkedAsFavorite,
-            [this](const QString& id, bool favorite)
+            &GetPocketApi::bookmarksMarkedAsFavorite,
+            [this](const QStringList& ids, bool favorite)
             {
-                m_BookmarksModel->MarkBookmarkAsFavorite(id, favorite);
-                emit bookmarkFavoriteStateChanged(id, favorite);
+                m_BookmarksModel->MarkBookmarksAsFavorite(ids, favorite);
             });
 
     connect(m_Api.get(),
-            &GetPocketApi::bookmarkMarkedAsRead,
-            [this](const QString& id, bool read)
+            &GetPocketApi::bookmarksMarkedAsRead,
+            [this](const QStringList& ids, bool read)
             {
-                m_BookmarksModel->MarkBookmarkAsRead(id, read);
-                emit bookmarkReadStateChanged(id, read);
+                m_BookmarksModel->MarkBookmarksAsRead(ids, read);
             });
 
     connect(m_Api.get(),
@@ -332,19 +330,37 @@ void LinksBagManager::refreshBookmarks()
 void LinksBagManager::removeBookmark(const QString& id)
 {
     SetBusy(true);
-    m_Api->RemoveBookmark(id);
+    m_Api->RemoveBookmarks({ id });
+}
+
+void LinksBagManager::removeBookmarks(const QStringList& ids)
+{
+    SetBusy(true);
+    m_Api->RemoveBookmarks(ids);
 }
 
 void LinksBagManager::markAsFavorite(const QString& id, bool favorite)
 {
     SetBusy(true);
-    m_Api->MarkBookmarkAsFavorite(id, favorite);
+    m_Api->MarkBookmarksAsFavorite({ id }, favorite);
 }
 
 void LinksBagManager::markAsRead(const QString& id, bool read)
 {
     SetBusy(true);
-    m_Api->MarkBookmarkAsRead(id, read);
+    m_Api->MarkBookmarksAsRead({ id }, read);
+}
+
+void LinksBagManager::markAsFavorite(const QStringList& ids, bool favorite)
+{
+    SetBusy(true);
+    m_Api->MarkBookmarksAsFavorite(ids, favorite);
+}
+
+void LinksBagManager::markAsRead(const QStringList& ids, bool read)
+{
+    SetBusy(true);
+    m_Api->MarkBookmarksAsRead(ids, read);
 }
 
 void LinksBagManager::updateTags(const QString& id, const QString& tags)

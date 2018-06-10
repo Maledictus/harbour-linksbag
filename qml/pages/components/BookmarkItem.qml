@@ -31,14 +31,17 @@ import harbour.linksbag 1.0
 ListItem {
     id: bookmarkItem
 
+    enabled: model.bookmarkSelected ? !removeRemorse.visible : true
+
     property color labelColor: highlighted ? Theme.highlightColor : Theme.primaryColor
-    property color secondaryLabelColor: highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor
+    property color secondaryLabelColor: highlighted ? Theme.secondaryHighlightColor :
+            Theme.secondaryColor
     property bool selectMode: false
 
     width: parent.width
     contentHeight: Math.max(textColumn.height, typeIcon.height)
 
-    highlighted: menuOpen || down
+    highlighted: menuOpen || down || model.bookmarkSelected
 
     menu: IconContextMenu {
         IconMenuItem {
@@ -68,7 +71,7 @@ ListItem {
         IconMenuItem {
             text: model.bookmarkFavorite ? qsTr("Unfavorite") : qsTr("Favorite")
             icon.source: "image://Theme/icon-m-favorite" +
-                (model.bookmarkFavorite ? "-selected": "")
+                (!model.bookmarkFavorite ? "-selected": "")
             onClicked: {
                 bookmarkItem.closeMenu()
                 linksbagManager.markAsFavorite(model.bookmarkID, !model.bookmarkFavorite)

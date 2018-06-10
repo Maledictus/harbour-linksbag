@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include <memory>
 
 #include <QAbstractListModel>
+#include <QMap>
 
 #include "bookmark.h"
 
@@ -38,6 +39,7 @@ class BookmarksModel : public QAbstractListModel
     Q_OBJECT
 
     Bookmarks_t m_Bookmarks;
+    QMap<int, QString> m_SelectedBookmarksIds;
 
 public:
     enum BookmarkRoles
@@ -59,7 +61,8 @@ public:
         BRImages,
         BRVideos,
         BRContentType,
-        BRBookmark
+        BRBookmark,
+        BRSelected
     };
 
     explicit BookmarksModel(QObject *parent = 0);
@@ -72,16 +75,22 @@ public:
     void Clear();
     void AddBookmarks(const Bookmarks_t& bookmarks);
     void SetBookmarks(const Bookmarks_t& bookmarks);
-    void RemoveBookmark(const QString& id);
-    void MarkBookmarkAsFavorite(const QString& id, bool favorite);
-    void MarkBookmarkAsRead(const QString& id, bool read);
+    void RemoveBookmarks(const QStringList& ids);
+    void MarkBookmarksAsFavorite(const QStringList& ids, bool favorite);
+    void MarkBookmarksAsRead(const QStringList& ids, bool read);
     void UpdateTags(const QString& id, const QString& tags);
     void UpdatePublishDate(const QString& id, const QString& date);
-
 
     void RefreshBookmark(const QString& id);
 
     Bookmarks_t GetBookmarks() const;
+
+    void SelectBookmark(const QModelIndex& index);
+    void DeselectBookmark(const QModelIndex& index);
+    void SelectAllBookmarks();
+    void DeselectAllBookmarks();
+    QStringList GetSelectedBookmarks() const;
+
 public slots:
     void handleArticlesCacheReset();
 };
