@@ -65,7 +65,6 @@ LinksBagManager::LinksBagManager(QObject *parent)
 , m_BookmarksModel(new BookmarksModel(this))
 , m_FilterProxyModel(new FilterProxyModel(m_BookmarksModel, this))
 , m_CoverModel(new FilterProxyModel(m_BookmarksModel, this))
-, m_DownloadingModel(new FilterProxyModel(m_BookmarksModel, this))
 , m_thumbnailDownloader(new QNetworkAccessManager(this))
 , m_SyncTimer(new QTimer(this))
 {
@@ -77,14 +76,12 @@ LinksBagManager::LinksBagManager(QObject *parent)
     dir.mkpath(Application::GetPath(Application::CoverCacheDirectory));
 
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
-    m_DownloadingModel->setSourceModel(m_BookmarksModel);
     m_CoverModel->setSourceModel(m_BookmarksModel);
     m_FilterProxyModel->filterBookmarks(ApplicationSettings::Instance()->value("statusFilter").toInt(),
             ApplicationSettings::Instance()->value("contentTypeFilter").toInt());
     m_CoverModel->filterBookmarks(ApplicationSettings::Instance()->value("statusFilter").toInt(),
             ContentTypeAll);
 
-    //m_DownloadingModel->filterBookmarks(LinksBag::FTUnsynced);
     connect(m_thumbnailDownloader, &QNetworkAccessManager::finished,
             this, &LinksBagManager::thumbnailReceived);
     SetLogged(!ApplicationSettings::Instance(this)->value("accessToken").isNull() &&
@@ -265,11 +262,6 @@ BookmarksModel* LinksBagManager::GetBookmarksModel() const
 FilterProxyModel* LinksBagManager::GetFilterModel() const
 {
     return m_FilterProxyModel;
-}
-
-FilterProxyModel* LinksBagManager::GetDownloadingModel() const
-{
-    return m_DownloadingModel;
 }
 
 FilterProxyModel *LinksBagManager::GetCoverModel() const
@@ -516,6 +508,16 @@ void LinksBagManager::restartSyncTimer()
     }
 
     m_SyncTimer->start(period * 1000);
+}
+
+void LinksBagManager::onWifiOnlyDownloaderEnabled(bool enabled)
+{
+    //TODO
+}
+
+void LinksBagManager::onOnlyDownloaderEnabled(bool enabled)
+{
+    //TODO
 }
 
 } // namespace LinskBag

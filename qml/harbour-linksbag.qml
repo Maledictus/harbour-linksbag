@@ -104,13 +104,23 @@ ApplicationWindow {
         property bool showSearchField: false
         property string accessToken
         property string userName
-        property bool useBestView: true
+        property int readingView: LinksBag.WebView
         property bool showContentType: true
         property bool mobileBrowser: true
         property int backgroundSyncPeriod: -1
         property bool showBackgroundImage: true
         property int statusFilter: LinksBag.AllStatus
         property int contentTypeFilter: LinksBag.AllContentType
+        property bool wifiOnlyDownloader: true
+        property bool offlineDownloader: false
+
+        onWifiOnlyDownloaderChanged: {
+            linksbagManager.onWifiOnlyDownloaderEnabled(wifiOnlyDownloader);
+        }
+        onOfflineDownloaderChanged: {
+            linksbagManager.onOnlyDownloaderEnabled(offlineDownloader);
+        }
+
     }
 
     function generateFilterTitle(status, contentType) {

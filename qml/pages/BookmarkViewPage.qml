@@ -44,10 +44,18 @@ Page {
             cover.title = currentBookmark !== null ? currentBookmark.title : ""
             cover.image = currentBookmark.coverImage
             var source
-            if (!mainWindow.settings.useBestView) {
-                source = "./components/ArticleBookmarkView.qml"
-            }
-            else {
+            switch(mainWindow.settings.readingView) {
+            case LinksBag.ArticleView:
+                switch (currentBookmark.contentType) {
+                case Bookmark.CTImage:
+                    source = "./components/ImageBookmarkView.qml"
+                    break
+                default:
+                    source = "./components/ArticleBookmarkView.qml"
+                    break
+                }
+                break;
+            case LinksBag.BestView:
                 switch (currentBookmark.contentType) {
                 case Bookmark.CTArticle:
                     source = "./components/ArticleBookmarkView.qml"
@@ -61,6 +69,11 @@ Page {
                     source = "./components/DefaultBookmarkView.qml"
                     break
                 }
+                break;
+            case LinksBag.WebView:
+            default:
+                source = "./components/DefaultBookmarkView.qml"
+                break;
             }
 
             viewLoader.source = source

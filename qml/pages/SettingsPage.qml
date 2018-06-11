@@ -94,15 +94,6 @@ Page {
             }
 
             TextSwitch {
-                text: qsTr("Use the best view")
-                description: qsTr("LinksBag automatically select the best view(article, web-page, image)")
-                checked: mainWindow.settings.useBestView
-                onCheckedChanged: {
-                    mainWindow.settings.useBestView = checked
-                }
-            }
-
-            TextSwitch {
                 text: qsTr("Show bookmark content type")
                 checked: mainWindow.settings.showContentType
                 onCheckedChanged: {
@@ -119,12 +110,6 @@ Page {
             }
 
             SectionHeader { text: qsTr("Sync") }
-            TextSwitch {
-                text: qsTr("Sync on startup")
-                checked: mainWindow.settings.syncOnStartup
-                onCheckedChanged: mainWindow.settings.syncOnStartup = checked
-                description: qsTr("App will try to sync with Pocket on startup.")
-            }
 
             ComboBox {
                 id: backgroundSyncComboBox
@@ -166,51 +151,11 @@ Page {
                 }
             }
 
-//            TextSwitch {
-//                automaticCheck: false
-//                text: qsTr("Download articles automatically")
-//                description: qsTr("Every new article will be saved for offline viewing automatically.")
-//                checked: mainWindow.settings.syncOnStartup
-//                onCheckedChanged: mainWindow.settings.syncOnStartup = checked
-//            }
-
-            ComboBox {
-                id: parserSelect
-
-                property var parsersCategories: ["mercury", "readability"]
-                function update() {
-                    mainWindow.settings.parser = parsersCategories[currentIndex]
-                }
-
-                label: qsTr("Parser")
-                currentIndex: {
-                    for (var i = 0; i < parsersCategories.length; ++i) {
-                        if (mainWindow.settings.parser === parsersCategories[i]) {
-                            return i
-                        }
-                    }
-                    console.log("Unsupported font size multiplier selected")
-                    return 0
-                }
-                description: qsTr("Mercury is faster and lighter on your device but if you want articles to be processed on your device, you can use Readability instead.")
-                menu: ContextMenu {
-                    onClosed: parserSelect.update()
-                    MenuItem {
-                        text: "Mercury"
-                        onClicked: mainWindow.settings.parser = "mercury"
-                    }
-                    MenuItem {
-                        text: "Readability"
-                        onClicked: mainWindow.settings.parser = "readability"
-                    }
-                }
-            }
-
             TextSwitch {
-                text: qsTr("Mobile browser")
-                checked: mainWindow.settings.mobileBrowser
-                onCheckedChanged: mainWindow.settings.mobileBrowser = checked
-                description: qsTr("Try to open mobile version of web pages")
+                text: qsTr("Sync on startup")
+                checked: mainWindow.settings.syncOnStartup
+                onCheckedChanged: mainWindow.settings.syncOnStartup = checked
+                description: qsTr("App will try to sync with Pocket on startup.")
             }
 
             Button {
@@ -234,19 +179,146 @@ Page {
                 wrapMode: Text.WordWrap
                 font.pixelSize: Theme.fontSizeSmall
 
-                text: qsTr("In case something gone really, really wrong, this button will make app forget that it ever synced. Good luck.")
+                text: qsTr("In case something gone really, really wrong, this button will make " +
+                    "app forget that it ever synced. Good luck.")
+            }
+
+            SectionHeader { text: qsTr("Reading") }
+
+            ComboBox {
+                id: readingViewComboBox
+
+                property var readingViewCategories: [ LinksBag.BestView, LinksBag.WebView, LinksBag.ArticleView ]
+
+                function update() {
+                    mainWindow.settings.readingView = readingViewCategories[currentIndex]
+                    mainWindow.settings.sync()
+                }
+
+                currentIndex: {
+                    for (var i = 0; i < readingViewCategories.length; ++i) {
+                        if (mainWindow.settings.readingView === readingViewCategories[i]) {
+                            return i
+                        }
+                    }
+                    console.log("Unsupported reading view selected")
+                    return 0
+                }
+
+                label: qsTr("Reading view")
+                description: {
+                    switch(readingViewCategories[currentIndex]) {
+                    case LinksBag.BestView:
+                        return qsTr("LinksBag automatically select the best view(article, webview, image)");
+                    case LinksBag.ArticleView:
+                        return qsTr("All articles will be opened in articles(reader-mode) view");
+                    case LinksBag.WebView:
+                    default:
+                        return qsTr("All articles will be opened in embeded webview");
+                    }
+                }
+
+                menu: ContextMenu {
+                    onClosed: readingViewComboBox.update()
+
+                    MenuItem {
+                        text: qsTr("Best view")
+                    }
+                    MenuItem {
+                        text: qsTr("Web view")
+                    }
+                    MenuItem {
+                        text: qsTr("Article view")
+                    }
+                }
+            }
+
+            ComboBox {
+                id: parserSelect
+
+                property var parsersCategories: ["mercury", "readability"]
+                function update() {
+                    mainWindow.settings.parser = parsersCategories[currentIndex]
+                }
+
+                label: qsTr("Parser")
+                currentIndex: {
+                    for (var i = 0; i < parsersCategories.length; ++i) {
+                        if (mainWindow.settings.parser === parsersCategories[i]) {
+                            return i
+                        }
+                    }
+                    console.log("Unsupported font size multiplier selected")
+                    return 0
+                }
+                description: qsTr("Mercury is faster and lighter on your device but if you want " +
+                        "articles to be processed on your device, you can use Readability instead.")
+                menu: ContextMenu {
+                    onClosed: parserSelect.update()
+                    MenuItem {
+                        text: "Mercury"
+                        onClicked: mainWindow.settings.parser = "mercury"
+                    }
+                    MenuItem {
+                        text: "Readability"
+                        onClicked: mainWindow.settings.parser = "readability"
+                    }
+                }
+            }
+
+            TextSwitch {
+                text: qsTr("Mobile browser")
+                checked: mainWindow.settings.mobileBrowser
+                onCheckedChanged: mainWindow.settings.mobileBrowser = checked
+                description: qsTr("Try to open mobile version of web pages")
+            }
+
+            SectionHeader { text: qsTr("Offline reading") }
+
+            Label {
+                anchors {
+                    left: parent.left; right: parent.right; margins: Theme.horizontalPageMargin
+                }
+                height: paintedHeight + Theme.paddingSmall
+                color: Theme.primaryColor
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeSmall
+
+                text: qsTr("The best practice for offline reading - using it with ArticlesView reading mode")
+            }
+
+            TextSwitch {
+                text: qsTr("Download articles for offline reading")
+                checked: mainWindow.settings.offlineDownloader
+                onCheckedChanged: {
+                    mainWindow.settings.offlineDownloader = checked
+                    mainWindow.settings.sync()
+                }
+            }
+
+            //TODO show progress
+
+            TextSwitch {
+                text: qsTr("Download only using wifi")
+                checked: mainWindow.settings.wifiOnlyDownloader
+                onCheckedChanged: {
+                    mainWindow.settings.wifiOnlyDownloader = checked
+                    mainWindow.settings.sync()
+                }
             }
 
             SectionHeader { text: qsTr("Cache") }
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Remove saved articles")
-                onClicked: remorse.execute(qsTr("Removing saved articles"), function() { linksbagManager.resetArticleCache() } )
+                onClicked: remorse.execute(qsTr("Removing saved articles"), function()
+                    { linksbagManager.resetArticleCache() } )
             }
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Clear thumbnail cache")
-                onClicked: remorse.execute(qsTr("Clearing thumbnail cache"), function() { linksbagManager.resetThumbnailCache() } )
+                onClicked: remorse.execute(qsTr("Clearing thumbnail cache"), function()
+                    { linksbagManager.resetThumbnailCache() } )
             }
 
             SectionHeader { text: qsTr("Account") }
@@ -267,7 +339,8 @@ Page {
 
                 Button {
                     text: qsTr("Logout")
-                    onClicked: remorse.execute(qsTr("Logging out"), function() { linksbagManager.resetAccount() } )
+                    onClicked: remorse.execute(qsTr("Logging out"), function()
+                        { linksbagManager.resetAccount() } )
                 }
             }
 

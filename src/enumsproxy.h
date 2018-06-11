@@ -51,6 +51,13 @@ enum BookmarksContentTypeFilter
     ContentTypeVideos = 0x08
 };
 
+enum ReadingView
+{
+    RVBest = 0,
+    RVWeb,
+    RVArticle
+};
+
 class EnumsProxy : public QObject
 {
     Q_OBJECT
@@ -58,6 +65,7 @@ class EnumsProxy : public QObject
     Q_ENUMS(ErrorTypeProxy)
     Q_ENUMS(BookmarksStatusFilterProxy)
     Q_ENUMS(BookmarksContentTypeFilterProxy)
+    Q_ENUMS(ReadingViewProxy)
 
 public:
     enum ErrorTypeProxy
@@ -80,6 +88,13 @@ public:
         ArticlesContentType = ContentTypeArticles,
         ImagesContentType = ContentTypeImages,
         VideosContentType = ContentTypeVideos
+    };
+
+    enum ReadingViewProxy
+    {
+        BestView = RVBest,
+        WebView = RVWeb,
+        ArticleView = RVArticle
     };
 };
 }

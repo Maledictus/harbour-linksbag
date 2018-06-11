@@ -71,7 +71,6 @@ class LinksBagManager : public QObject
     BookmarksModel *m_BookmarksModel;
     FilterProxyModel *m_FilterProxyModel;
     FilterProxyModel *m_CoverModel;
-    FilterProxyModel *m_DownloadingModel;
 
     QMap<QUrl, QString> m_thumbnailUrls;
     QNetworkAccessManager *m_thumbnailDownloader;
@@ -85,8 +84,6 @@ class LinksBagManager : public QObject
             NOTIFY filterModelChanged)
     Q_PROPERTY(FilterProxyModel* coverModel READ GetCoverModel
             NOTIFY coverModelChanged)
-    Q_PROPERTY(FilterProxyModel* downloadingModel READ GetDownloadingModel
-            NOTIFY downloadingModelChanged)
 
     explicit LinksBagManager(QObject *parent = 0);
 public:
@@ -138,6 +135,8 @@ public slots:
 
     void restartSyncTimer();
 
+    void onWifiOnlyDownloaderEnabled(bool enabled);
+    void onOnlyDownloaderEnabled(bool enabled);
 signals:
     void busyChanged();
     void loggedChanged();
@@ -145,7 +144,6 @@ signals:
 
     void bookmarksModelChanged();
     void filterModelChanged();
-    void downloadingModelChanged();
     void coverModelChanged();
 
     void error(const QString& msg, int type);
