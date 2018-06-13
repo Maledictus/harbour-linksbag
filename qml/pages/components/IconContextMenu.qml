@@ -32,7 +32,7 @@ ContextMenu {
     Item {
         height: Theme.itemSizeMedium
         width: parent.width
-        RowLayout {
+        Row {
             id: container
 
             anchors {
@@ -42,8 +42,6 @@ ContextMenu {
                 right: parent.right
                 rightMargin: Theme.horizontalPageMargin
             }
-
-            spacing: Theme.paddingLarge
         }
     }
 }

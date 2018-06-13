@@ -88,7 +88,7 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
             }
 
-            RowLayout {
+            Row {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.horizontalPageMargin
@@ -97,27 +97,36 @@ Page {
                 }
                 spacing: Theme.paddingLarge
 
-                IconButton {
-                    icon.source: "qrc:/images/icon-m-github"
-                    icon.width: Theme.iconSizeLarge
-                    icon.height: Theme.iconSizeLarge
-                    Layout.alignment: Qt.AlignHCenter
-                    onClicked: {
-                        Qt.openUrlExternally("https://github.com/Maledictus/harbour-linksbag/issues/new")
+                Item {
+                    height: Theme.itemSizeMedium
+                    width: parent.width / 2
+                    IconButton {
+                        anchors.centerIn: parent
+                        icon.source: "qrc:/images/icon-m-github"
+                        icon.width: Theme.iconSizeLarge
+                        icon.height: Theme.iconSizeLarge
+                        onClicked: {
+                            Qt.openUrlExternally("https://github.com/Maledictus/harbour-linksbag/issues/new")
+                        }
                     }
                 }
 
-                IconButton {
-                    icon.source: "image://theme/icon-m-mail"
-                    icon.width: Theme.iconSizeLarge
-                    icon.height: Theme.iconSizeLarge
-                    Layout.alignment: Qt.AlignHCenter
-                    onClicked: {
-                        var subjectHeader = "[SailfishOS][LinksBag " + Qt.application.version + "] "
-                        var mailBodyHeader = "Yo man, "
-                        var email = "maledictusdemagog@gmail.com"
-                        Qt.openUrlExternally("mailto:" + email +"?subject=" + subjectHeader +
-                                "&body=" + mailBodyHeader)
+                Item {
+                    width: parent.width / 2
+                    height: Theme.itemSizeMedium
+                    IconButton {
+                        anchors.centerIn: parent
+                        icon.source: "image://theme/icon-m-mail"
+                        icon.width: Theme.iconSizeLarge
+                        icon.height: Theme.iconSizeLarge
+                        Layout.alignment: Qt.AlignHCenter
+                        onClicked: {
+                            var subjectHeader = "[SailfishOS][LinksBag " + Qt.application.version + "] "
+                            var mailBodyHeader = "Yo man, "
+                            var email = "maledictusdemagog@gmail.com"
+                            Qt.openUrlExternally("mailto:" + email +"?subject=" + subjectHeader +
+                                    "&body=" + mailBodyHeader)
+                        }
                     }
                 }
             }
@@ -194,5 +203,7 @@ Page {
                }
            }
         }
+
+        VerticalScrollDecorator{}
     }
 }

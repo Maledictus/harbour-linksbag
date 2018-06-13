@@ -202,7 +202,7 @@ Item {
                         }
                     }
 
-                    RowLayout {
+                    Row {
                         anchors {
                             left: parent.left
                             right: parent.right
@@ -210,13 +210,13 @@ Item {
                         }
                         Item {
                             id: sourceLabel
-                            width: sourceText.paintedWidth
+                            width: dateLabel.visible ? parent.width / 2 : parent.width
                             height: sourceText.paintedHeight + Theme.paddingSmall*6
                             visible: sourceText.text !== ""
-                            Layout.alignment: dateLabel.visible ? Qt.AlignLeft : Qt.AlignHCenter
                             Text {
                                 id: sourceText
                                 color: Theme.highlightColor
+                                width: parent.width
                                 horizontalAlignment: dateLabel.visible ? Qt.AlignLeft : Qt.AlignHCenter
                                 text: {
                                     if (bookmark) {
@@ -234,13 +234,13 @@ Item {
                         Item {
                             id: dateLabel
                             property alias text: dateText.text
-                            width: dateText.paintedWidth
+                            width: parent.width / 2
                             height: dateText.paintedHeight + Theme.paddingSmall*6
                             visible: dateText.text !== ""
-                            Layout.alignment: Qt.AlignRight
                             Text {
                                 id: dateText
                                 color: Theme.highlightColor
+                                width: parent.width
                                 text: new Date(publishedDate)
                                         .toLocaleString(Qt.locale(), Locale.ShortFormat)
                                 horizontalAlignment: Qt.AlignRight
