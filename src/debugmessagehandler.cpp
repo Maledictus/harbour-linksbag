@@ -70,7 +70,8 @@ void Write(QtMsgType type, const QMessageLogContext& ctx, const QString& msg)
     switch (type)
     {
     case QtDebugMsg:
-        return;
+        *ostr << "[D] ";
+        break;
     case QtWarningMsg:
         *ostr << "[W] ";
         break;
