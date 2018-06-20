@@ -288,6 +288,7 @@ Page {
             }
 
             TextSwitch {
+                id: offlineDownloaderSwitch
                 text: qsTr("Download articles for offline reading")
                 checked: mainWindow.settings.offlineDownloader
                 onCheckedChanged: {
@@ -300,7 +301,8 @@ Page {
 
             TextSwitch {
                 text: qsTr("Download only using wifi")
-                checked: mainWindow.settings.wifiOnlyDownloader
+                enabled: offlineDownloaderSwitch.checked
+                checked: offlineDownloaderSwitch.checked && mainWindow.settings.wifiOnlyDownloader
                 onCheckedChanged: {
                     mainWindow.settings.wifiOnlyDownloader = checked
                     mainWindow.settings.sync()
