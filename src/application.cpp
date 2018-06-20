@@ -51,15 +51,15 @@ Application::Application(QObject *parent)
 
     const QString settingsPath = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
             .filePath(QCoreApplication::applicationName()) + "/linksbag.conf";
-    const bool migrate = ApplicationSettings::Instance()->value("settingsMigration", true).toBool();
+    const bool migrate = ApplicationSettings::Instance(this)->value("settingsMigration", true).toBool();
     if (QFile(settingsPath).exists() && migrate) {
         QSettings settings (settingsPath, QSettings::IniFormat);
-        ApplicationSettings::Instance()->setValue("lastUpdate", settings.value("last_update", 0));
-        ApplicationSettings::Instance()->setValue("statusFilter", settings.value("bookmarks_filter", "all"));
-        ApplicationSettings::Instance()->setValue("showSearchField", settings.value("show_search_field", false));
-        ApplicationSettings::Instance()->setValue("accessToken", settings.value("access_token"));
-        ApplicationSettings::Instance()->setValue("userName",  settings.value("user_name"));
-        ApplicationSettings::Instance()->setValue("settingsMigration", false);
+        ApplicationSettings::Instance(this)->setValue("lastUpdate", settings.value("last_update", 0));
+        ApplicationSettings::Instance(this)->setValue("statusFilter", settings.value("bookmarks_filter", "all"));
+        ApplicationSettings::Instance(this)->setValue("showSearchField", settings.value("show_search_field", false));
+        ApplicationSettings::Instance(this)->setValue("accessToken", settings.value("access_token"));
+        ApplicationSettings::Instance(this)->setValue("userName",  settings.value("user_name"));
+        ApplicationSettings::Instance(this)->setValue("settingsMigration", false);
     }
 
     if (migrate) {
@@ -130,6 +130,7 @@ void Application::start()
     qRegisterMetaType<BookmarksModel*>("BookmarksModel*");
     qRegisterMetaType<FilterProxyModel*>("FilterProxyModel*");
     qRegisterMetaType<Bookmark*>("Bookmark*");
+    qRegisterMetaType<Bookmarks_t>("Bookmarks_t");
     qRegisterMetaType<QVector<int>>("QVector<int>");
     qmlRegisterType<Bookmark>("harbour.linksbag", 1, 0, "Bookmark");
     qmlRegisterUncreatableType<LinksBagManager>("harbour.linksbag", 1, 0,
@@ -142,6 +143,7 @@ void Application::start()
 
 void Application::handleAboutToQuit()
 {
+    LinksBagManager::Instance(this)->Stop();
     LinksBagManager::Instance(this)->saveBookmarks();
 }
 } // namespace LinksBag
