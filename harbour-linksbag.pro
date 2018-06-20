@@ -7,7 +7,7 @@ QT += webkit network
 CONFIG += link_pkgconfig sailfishapp c++11 sailfishapp_i18n
 PKGCONFIG += mlite5
 
-DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+DEFINES += APP_VERSION=\\\"$$VERSION\\\" QT_MESSAGELOGCONTEXT
 
 RESOURCES += $${TARGET}.qrc
 
@@ -16,23 +16,31 @@ SOURCES += src/main.cpp \
     src/authserver.cpp \
     src/bookmark.cpp \
     src/bookmarksmodel.cpp \
-    src/enumsproxy.cpp \
     src/debugmessagehandler.cpp \
+    src/downloadedcontenthandler.cpp \
+    src/downloadedimagehandler.cpp \
+    src/enumsproxy.cpp \
     src/filterproxymodel.cpp \
     src/getpocketapi.cpp \
     src/linksbagmanager.cpp \
-    src/settings/applicationsettings.cpp
+    src/offlinedownloader.cpp \
+    src/settings/applicationsettings.cpp \
 
-HEADERS += src/application.h \
-    src/authserver.h \
-    src/bookmark.h \
-    src/bookmarksmodel.h \
-    src/enumsproxy.h \
-    src/debugmessagehandler.h \
-    src/filterproxymodel.h \
-    src/getpocketapi.h \
-    src/linksbagmanager.h \
-    src/settings/applicationsettings.h
+
+HEADERS += src/application.cpp \
+    src/authserver.cpp \
+    src/bookmark.cpp \
+    src/bookmarksmodel.cpp \
+    src/debugmessagehandler.cpp \
+    src/downloadedcontenthandler.cpp \
+    src/downloadedimagehandler.cpp \
+    src/enumsproxy.cpp \
+    src/filterproxymodel.cpp \
+    src/getpocketapi.cpp \
+    src/linksbagmanager.cpp \
+    src/offlinedownloader.cpp \
+    src/settings/applicationsettings.cpp \
+
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 
