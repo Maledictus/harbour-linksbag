@@ -113,14 +113,6 @@ ApplicationWindow {
         property int contentTypeFilter: LinksBag.AllContentType
         property bool wifiOnlyDownloader: true
         property bool offlineDownloader: false
-
-        onWifiOnlyDownloaderChanged: {
-            linksbagManager.onWifiOnlyDownloaderEnabled(wifiOnlyDownloader);
-        }
-        onOfflineDownloaderChanged: {
-            linksbagManager.onOnlyDownloaderEnabled(offlineDownloader);
-        }
-
     }
 
     function generateFilterTitle(status, contentType) {
