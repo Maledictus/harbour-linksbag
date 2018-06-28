@@ -45,7 +45,7 @@ ListItem {
 
     menu: IconContextMenu {
         IconMenuItem {
-            width: parent.width / 5
+            width: parent.width / 6
             text: qsTr("Tags")
             icon.source: "image://theme/icon-m-edit"
             onClicked: {
@@ -59,7 +59,7 @@ ListItem {
         }
 
         IconMenuItem {
-            width: parent.width / 5
+            width: parent.width / 6
             text: model.bookmarkRead ? qsTr("Unread") : qsTr("Read")
             icon.source: model.bookmarkRead ?
                 "image://theme/icon-m-add" :
@@ -71,7 +71,7 @@ ListItem {
         }
 
         IconMenuItem {
-            width: parent.width / 5
+            width: parent.width / 6
             text: model.bookmarkFavorite ? qsTr("Unfavorite") : qsTr("Favorite")
             icon.source: "image://Theme/icon-m-favorite" +
                 (!model.bookmarkFavorite ? "-selected": "")
@@ -82,7 +82,7 @@ ListItem {
         }
 
         IconMenuItem {
-            width: parent.width / 5
+            width: parent.width / 6
             text: qsTr("Remove")
             icon.source: "image://theme/icon-m-delete"
             onClicked: {
@@ -94,13 +94,23 @@ ListItem {
         }
 
         IconMenuItem {
-            width: parent.width / 5
+            width: parent.width / 6
             text: qsTr("Copy url")
             icon.source: "image://theme/icon-m-clipboard"
             onClicked: {
                 bookmarkItem.closeMenu()
                 Clipboard.text = model.bookmarkUrl
                 linksbagManager.notify(qsTr("Url copied into clipboard"))
+            }
+        }
+
+        IconMenuItem {
+            width: parent.width / 6
+            text: qsTr("Browser")
+            icon.source: "image://theme/icon-m-region"
+            onClicked: {
+                bookmarkItem.closeMenu()
+                Qt.openUrlExternally(encodeURI(model.bookmarkUrl))
             }
         }
     }
