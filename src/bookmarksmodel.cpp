@@ -37,6 +37,11 @@ BookmarksModel::~BookmarksModel()
 {
 }
 
+int BookmarksModel::GetCount() const
+{
+    return rowCount();
+}
+
 QVariant BookmarksModel::data(const QModelIndex& index, int role) const
 {
     if(index.row() < 0 || index.row() > m_Bookmarks.count())
@@ -126,6 +131,7 @@ void BookmarksModel::Clear()
     beginResetModel();
     m_Bookmarks.clear();
     endResetModel();
+    emit countChanged();
 }
 
 void BookmarksModel::RemoveBookmarks(const QStringList& ids)
@@ -145,6 +151,7 @@ void BookmarksModel::RemoveBookmarks(const QStringList& ids)
             endRemoveRows();
         }
     }
+    emit countChanged();
 }
 
 void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
@@ -200,6 +207,7 @@ void BookmarksModel::AddBookmarks(const Bookmarks_t& bookmarks)
             endInsertRows();
         }
     }
+    emit countChanged();
 }
 
 void BookmarksModel::SetBookmarks(const Bookmarks_t& bookmarks)
@@ -207,6 +215,7 @@ void BookmarksModel::SetBookmarks(const Bookmarks_t& bookmarks)
     beginResetModel();
     m_Bookmarks = bookmarks;
     endResetModel();
+    emit countChanged();
 }
 
 void BookmarksModel::MarkBookmarksAsFavorite(const QStringList& ids, bool favorite)

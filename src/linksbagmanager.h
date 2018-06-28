@@ -77,6 +77,8 @@ class LinksBagManager : public QObject
             NOTIFY filterModelChanged)
     Q_PROPERTY(FilterProxyModel* coverModel READ GetCoverModel
             NOTIFY coverModelChanged)
+    Q_PROPERTY(int downloadedBookmarksCount READ GetDownloadedBookmarksCount
+            NOTIFY downloadedBookmarksCountChanged)
 
     explicit LinksBagManager(QObject *parent = 0);
 public:
@@ -88,6 +90,7 @@ public:
     FilterProxyModel* GetFilterModel() const;
     FilterProxyModel* GetDownloadingModel() const;
     FilterProxyModel* GetCoverModel() const;
+    int GetDownloadedBookmarksCount() const;
 
     void Stop();
 private:
@@ -152,5 +155,7 @@ signals:
 
     void offlineDownloaderEnabled(bool enabled);
     void wifiOnlyDownloaderEnabled(bool enabled);
+
+    void downloadedBookmarksCountChanged();
 };
 } // namespace LinskBag

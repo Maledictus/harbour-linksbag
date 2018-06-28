@@ -148,6 +148,14 @@ FilterProxyModel *LinksBagManager::GetCoverModel() const
     return m_CoverModel;
 }
 
+int LinksBagManager::GetDownloadedBookmarksCount() const
+{
+    auto bookmarks = m_BookmarksModel->GetBookmarks();
+    const int count = std::count_if(bookmarks.begin(), bookmarks.end(),
+            [](decltype(bookmarks.front()) bkm) { return bkm->HasContent(); });
+    return count;
+}
+
 void LinksBagManager::Stop()
 {
     m_OfflineDownloader->stop();
@@ -237,7 +245,6 @@ void LinksBagManager::MakeConnections()
             [this](const QStringList& ids)
             {
                 m_BookmarksModel->RemoveBookmarks(ids);
-
                 QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
                         Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
             });
@@ -297,11 +304,13 @@ void LinksBagManager::handleUpdateArticleContent(const QString& id, const QStrin
 {
     updatePublishDate(id, pubDate);
     updateContent(id, content);
+    emit downloadedBookmarksCountChanged();
 }
 
 void LinksBagManager::handleUpdateImageContent(const QString& id, const QImage& imageContent)
 {
     updateContent(id, imageContent);
+    emit downloadedBookmarksCountChanged();
 }
 
 void LinksBagManager::obtainRequestToken()
@@ -517,6 +526,7 @@ void LinksBagManager::resetArticleCache()
     article.mkpath(Application::GetPath(Application::ArticleCacheDirectory));
 
     emit articlesCacheReset();
+    emit downloadedBookmarksCountChanged();
 }
 
 void LinksBagManager::resetThumbnailCache()

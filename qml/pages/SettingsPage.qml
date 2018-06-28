@@ -250,14 +250,15 @@ Page {
             TextSwitch {
                 id: offlineDownloaderSwitch
                 text: qsTr("Download articles for offline reading")
+                description: qsTr("Downloaded: %1/%2")
+                    .arg(linksbagManager.downloadedBookmarksCount)
+                    .arg(linksbagManager.bookmarksModel.count)
                 checked: mainWindow.settings.offlineDownloader
                 onCheckedChanged: {
                     mainWindow.settings.offlineDownloader = checked
                     mainWindow.settings.sync()
                 }
             }
-
-            //TODO show progress
 
             TextSwitch {
                 text: qsTr("Download only using wifi")

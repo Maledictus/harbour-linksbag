@@ -41,6 +41,8 @@ class BookmarksModel : public QAbstractListModel
     Bookmarks_t m_Bookmarks;
     QMap<int, QString> m_SelectedBookmarksIds;
 
+    Q_PROPERTY(int count READ GetCount NOTIFY countChanged)
+
 public:
     enum BookmarkRoles
     {
@@ -68,6 +70,8 @@ public:
     explicit BookmarksModel(QObject *parent = 0);
     virtual ~BookmarksModel();
 
+    int GetCount() const;
+
     virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
     virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
     virtual QHash<int, QByteArray> roleNames() const;
@@ -93,5 +97,8 @@ public:
 
 public slots:
     void handleArticlesCacheReset();
+
+signals:
+    void countChanged();
 };
 } // namespace LinksBag
