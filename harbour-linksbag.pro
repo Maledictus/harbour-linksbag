@@ -1,6 +1,6 @@
 TARGET = harbour-linksbag
 
-VERSION = 3.0
+VERSION = 3.0.1
 
 QT += webkit network
 
@@ -27,19 +27,19 @@ SOURCES += src/main.cpp \
     src/settings/applicationsettings.cpp \
 
 
-HEADERS += src/application.cpp \
-    src/authserver.cpp \
-    src/bookmark.cpp \
-    src/bookmarksmodel.cpp \
-    src/debugmessagehandler.cpp \
-    src/downloadedcontenthandler.cpp \
-    src/downloadedimagehandler.cpp \
-    src/enumsproxy.cpp \
-    src/filterproxymodel.cpp \
-    src/getpocketapi.cpp \
-    src/linksbagmanager.cpp \
-    src/offlinedownloader.cpp \
-    src/settings/applicationsettings.cpp \
+HEADERS += src/application.h \
+    src/authserver.h \
+    src/bookmark.h \
+    src/bookmarksmodel.h \
+    src/debugmessagehandler.h \
+    src/downloadedcontenthandler.h \
+    src/downloadedimagehandler.h \
+    src/enumsproxy.h \
+    src/filterproxymodel.h \
+    src/getpocketapi.h \
+    src/linksbagmanager.h \
+    src/offlinedownloader.h \
+    src/settings/applicationsettings.h \
 
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
@@ -50,7 +50,6 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
     qml/dialogs/EditTagDialog.qml \
     qml/dialogs/FilterBookmarksDialog.qml \
-    qml/pages/AboutPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
     qml/pages/components/BookmarkItem.qml \
     qml/pages/components/BookmarkRemorsePopup.qml \
@@ -67,6 +66,7 @@ DISTFILES += qml/harbour-linksbag.qml \
     qml/pages/helpers/ReaderModeHandler.js \
     qml/pages/models/DevelopersModel.qml \
     qml/pages/models/TranslatorsModel.qml \
+    qml/pages/AboutPage.qml \
     qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarkDownloadsPage.qml \
     qml/pages/BookmarkViewPage.qml \
@@ -98,7 +98,6 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/cover/CoverPage.qml \
     qml/dialogs/EditTagDialog.qml \
     qml/dialogs/FilterBookmarksDialog.qml \
-    qml/pages/AboutPage.qml \
     qml/pages/components/ArticleBookmarkView.qml \
     qml/pages/components/BookmarkItem.qml \
     qml/pages/components/BookmarkRemorsePopup.qml \
@@ -115,6 +114,7 @@ SOURCES = qml/harbour-linksbag.qml \
     qml/pages/helpers/ReaderModeHandler.js \
     qml/pages/models/DevelopersModel.qml \
     qml/pages/models/TranslatorsModel.qml \
+    qml/pages/AboutPage.qml \
     qml/pages/AuthorizationPage.qml \
     qml/pages/BookmarkDownloadsPage.qml \
     qml/pages/BookmarkViewPage.qml \
