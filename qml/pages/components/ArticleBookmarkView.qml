@@ -120,6 +120,31 @@ Item {
             }
         }
 
+        PushUpMenu {
+            enabled: !busyIndicator.running
+            MenuItem {
+                text: bookmarkRead ?
+                        qsTr("Mark as unread") :
+                        qsTr("Mark as read")
+
+                onClicked: {
+                    linksbagManager.markAsRead(bookmark.id, !bookmarkRead)
+                    if (!bookmarkRead)
+                        mainWindow.pageStack.pop()
+                }
+            }
+
+            MenuItem {
+                text: bookmarkFavorite ?
+                        qsTr("Mark as unfavorite") :
+                        qsTr("Mark as favorite")
+                onClicked: {
+                    linksbagManager.markAsFavorite(currentBookmark.bookmarkID,
+                            !currentBookmark.bookmarkFavorite)
+                }
+            }
+        }
+
         Column {
             id: column
 
