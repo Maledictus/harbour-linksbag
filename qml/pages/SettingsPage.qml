@@ -111,46 +111,6 @@ Page {
 
             SectionHeader { text: qsTr("Sync") }
 
-            ComboBox {
-                id: backgroundSyncComboBox
-
-                property var periodsCategories: [ -1, 3600, 43200, 86400 ]
-
-                function update() {
-                    mainWindow.settings.backgroundSyncPeriod = periodsCategories[currentIndex]
-                    mainWindow.settings.sync()
-                    linksbagManager.restartSyncTimer();
-                }
-
-                currentIndex: {
-                    for (var i = 0; i < periodsCategories.length; ++i) {
-                        if (mainWindow.settings.backgroundSyncPeriod === periodsCategories[i]) {
-                            return i
-                        }
-                    }
-                    console.log("Unsupported period selected")
-                    return 0
-                }
-
-                label: qsTr("Background synchronization")
-                menu: ContextMenu {
-                    onClosed: backgroundSyncComboBox.update()
-
-                    MenuItem {
-                        text: qsTr("Never")
-                    }
-                    MenuItem {
-                        text: qsTr("Every hour")
-                    }
-                    MenuItem {
-                        text: qsTr("Twice a day")
-                    }
-                    MenuItem {
-                        text: qsTr("Once a day")
-                    }
-                }
-            }
-
             TextSwitch {
                 text: qsTr("Sync on startup")
                 checked: mainWindow.settings.syncOnStartup
