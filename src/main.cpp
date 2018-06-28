@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 
 #include <QGuiApplication>
+#include <QLoggingCategory>
 #include <QScopedPointer>
 #include <QTimer>
 
@@ -42,6 +43,8 @@ int main(int argc, char *argv [])
     app->setApplicationName("harbour-linksbag");
     app->setApplicationVersion(QString(APP_VERSION));
 
+    qDebug() << "==== Application started: " << app->applicationVersion() << " ==== ";
+
     QScopedPointer<LinksBag::Application> application(new LinksBag::Application());
     QTimer::singleShot(1, application.data(), SLOT(start()));
 
@@ -51,6 +54,8 @@ int main(int argc, char *argv [])
             &LinksBag::Application::handleAboutToQuit);
 
     const int retVal = app->exec();
+
+    qDebug() << "==== Application ended: ==== ";
 
     return retVal;
 }
