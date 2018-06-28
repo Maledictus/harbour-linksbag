@@ -5,6 +5,11 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Thu Jun 28 2018 Oleg Linkin <maledictusdemagog@gmail.com> 3.0.2
+- Close bookmark view page on mark as read in pushup menu
+- Add simple offline downloader progress
+- Update translations: RU, EN, ES
+
 * Thu Jun 28 2018 Oleg Linkin <maledictusdemagog@gmail.com> 3.0.1
 - Fix Firefox login
 
