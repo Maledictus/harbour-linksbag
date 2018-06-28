@@ -27,32 +27,22 @@ THE SOFTWARE.
 
 #include <memory>
 
-#include "src/bookmark.h"
 #include <QObject>
 #include <QVariantMap>
 #include <QMap>
-#include <QNetworkReply>
-#include <QNetworkAccessManager>
-#include <QThreadPool>
+#include <QUrl>
 
 class QTimer;
+class QThread;
+class QNetworkAccessManager;
+class QNetworkReply;
 
 namespace LinksBag
 {
 class BookmarksModel;
 class FilterProxyModel;
 class GetPocketApi;
-
-class DownloadedImageHandler: public QRunnable
-{
-public:
-    DownloadedImageHandler(QNetworkReply *reply, QString id, BookmarksModel* model = 0);
-    void run();
-private:
-    QNetworkReply* m_reply;
-    const QString m_id;
-    BookmarksModel* m_model;
-};
+class OfflineDownloader;
 
 class LinksBagManager : public QObject
 {
@@ -72,9 +62,12 @@ class LinksBagManager : public QObject
     FilterProxyModel *m_FilterProxyModel;
     FilterProxyModel *m_CoverModel;
 
-    QMap<QUrl, QString> m_thumbnailUrls;
-    QNetworkAccessManager *m_thumbnailDownloader;
+    QMap<QUrl, QString> m_ThumbnailUrls;
+    QNetworkAccessManager *m_ThumbnailDownloader;
     QTimer *m_SyncTimer;
+
+    OfflineDownloader *m_OfflineDownloader;
+    QThread *m_OfflineDownloaderThread;
 
     Q_PROPERTY(bool busy READ GetBusy NOTIFY busyChanged)
     Q_PROPERTY(bool logged READ GetLogged NOTIFY loggedChanged)
@@ -96,6 +89,7 @@ public:
     FilterProxyModel* GetDownloadingModel() const;
     FilterProxyModel* GetCoverModel() const;
 
+    void Stop();
 private:
     void MakeConnections();
     void SetBusy(const bool busy);
@@ -103,6 +97,9 @@ private:
 
 private slots:
     void thumbnailReceived(QNetworkReply* pReply);
+
+    void handleUpdateArticleContent(const QString& id, const QString& pubDate, const QString& content);
+    void handleUpdateImageContent(const QString& id, const QImage& imageContent);
 
 public slots:
     void obtainRequestToken();
@@ -124,8 +121,9 @@ public slots:
     void updateContent(const QString& id, const QString& content);
     void updateContent(const QString& id, const QImage& imageContent);
     void updatePublishDate(const QString& id, const QString& date);
-    QString getContent(const QString& id);
-    QUrl getContentUri(const QString& id);
+
+    Q_INVOKABLE QString getContent(const QString& id);
+    Q_INVOKABLE QUrl getContentUri(const QString& id);
 
     void resetAccount();
     void resetThumbnailCache();
@@ -135,8 +133,9 @@ public slots:
 
     void restartSyncTimer();
 
-    void onWifiOnlyDownloaderEnabled(bool enabled);
-    void onOnlyDownloaderEnabled(bool enabled);
+    void handleWifiOnlyDownloaderChanged(bool wifiOnly);
+    void handleOfflineyDownloaderChanged(bool offlineDownloader);
+
 signals:
     void busyChanged();
     void loggedChanged();
@@ -150,5 +149,8 @@ signals:
     void notify(const QString& msg);
 
     void articlesCacheReset();
+
+    void offlineDownloaderEnabled(bool enabled);
+    void wifiOnlyDownloaderEnabled(bool enabled);
 };
 } // namespace LinskBag

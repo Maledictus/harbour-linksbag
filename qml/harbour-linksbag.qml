@@ -111,8 +111,16 @@ ApplicationWindow {
         property bool showBackgroundImage: true
         property int statusFilter: LinksBag.AllStatus
         property int contentTypeFilter: LinksBag.AllContentType
-        property bool wifiOnlyDownloader: true
+        property bool wifiOnlyDownloader: false
         property bool offlineDownloader: false
+
+        onWifiOnlyDownloaderChanged: {
+            linksbagManager.handleWifiOnlyDownloaderChanged(wifiOnlyDownloader)
+        }
+
+        onOfflineDownloaderChanged: {
+            linksbagManager.handleOfflineyDownloaderChanged(offlineDownloader)
+        }
     }
 
     function generateFilterTitle(status, contentType) {

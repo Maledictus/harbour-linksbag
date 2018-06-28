@@ -27,36 +27,28 @@ THE SOFTWARE.
 
 #include <QDir>
 #include <QSettings>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QFile>
 #include <QByteArray>
 #include <QImage>
 #include <QTimer>
+#include <QThread>
+#include <QThreadPool>
 
+#include "settings/applicationsettings.h"
 #include "application.h"
-#include "src/enumsproxy.h"
-#include "src/bookmarksmodel.h"
-#include "src/filterproxymodel.h"
-#include "src/getpocketapi.h"
-#include "src/settings/applicationsettings.h"
+#include "bookmarksmodel.h"
+#include "downloadedcontenthandler.h"
+#include "downloadedimagehandler.h"
+#include "enumsproxy.h"
+#include "filterproxymodel.h"
+#include "getpocketapi.h"
+#include "offlinedownloader.h"
 
 namespace LinksBag
 {
-DownloadedImageHandler::DownloadedImageHandler(QNetworkReply *reply, QString id, BookmarksModel *model):
-    m_reply(reply), m_id(id), m_model(model) {}
-
-void DownloadedImageHandler::run()
-{
-    QImage downloadedImage = QImage::fromData(m_reply->readAll());
-    if (!downloadedImage.isNull()) {
-        downloadedImage.save(Application::GetPath(Application::CoverCacheDirectory) + m_id + ".jpg");
-        downloadedImage.scaled(
-            720, 400, Qt::KeepAspectRatioByExpanding
-        ).copy(0, 0, 720, 400).save(Application::GetPath(Application::ThumbnailCacheDirectory) + m_id + ".jpg");
-        m_model->RefreshBookmark(m_id);
-    }
-}
-
 LinksBagManager::LinksBagManager(QObject *parent)
 : QObject(parent)
 , m_Api(new GetPocketApi(this))
@@ -65,8 +57,10 @@ LinksBagManager::LinksBagManager(QObject *parent)
 , m_BookmarksModel(new BookmarksModel(this))
 , m_FilterProxyModel(new FilterProxyModel(m_BookmarksModel, this))
 , m_CoverModel(new FilterProxyModel(m_BookmarksModel, this))
-, m_thumbnailDownloader(new QNetworkAccessManager(this))
+, m_ThumbnailDownloader(new QNetworkAccessManager(this))
 , m_SyncTimer(new QTimer(this))
+, m_OfflineDownloader(new OfflineDownloader())
+, m_OfflineDownloaderThread(new QThread())
 {
     MakeConnections();
 
@@ -77,21 +71,45 @@ LinksBagManager::LinksBagManager(QObject *parent)
 
     m_FilterProxyModel->setSourceModel(m_BookmarksModel);
     m_CoverModel->setSourceModel(m_BookmarksModel);
-    m_FilterProxyModel->filterBookmarks(ApplicationSettings::Instance()->value("statusFilter").toInt(),
-            ApplicationSettings::Instance()->value("contentTypeFilter").toInt());
-    m_CoverModel->filterBookmarks(ApplicationSettings::Instance()->value("statusFilter").toInt(),
+
+    m_FilterProxyModel->filterBookmarks(ApplicationSettings::Instance(this)->value("statusFilter").toInt(),
+            ApplicationSettings::Instance(this)->value("contentTypeFilter").toInt());
+    m_CoverModel->filterBookmarks(ApplicationSettings::Instance(this)->value("statusFilter").toInt(),
             ContentTypeAll);
 
-    connect(m_thumbnailDownloader, &QNetworkAccessManager::finished,
+    connect(m_ThumbnailDownloader, &QNetworkAccessManager::finished,
             this, &LinksBagManager::thumbnailReceived);
+
+    m_OfflineDownloader->moveToThread(m_OfflineDownloaderThread);
+    connect(m_OfflineDownloader, &OfflineDownloader::updateArticleContent,
+            this, &LinksBagManager::handleUpdateArticleContent, Qt::QueuedConnection);
+    connect(m_OfflineDownloader, &OfflineDownloader::updateImageContent,
+            this, &LinksBagManager::handleUpdateImageContent, Qt::QueuedConnection);
+    connect(m_OfflineDownloaderThread, &QThread::started,
+            m_OfflineDownloader, &OfflineDownloader::start);
+    connect(m_OfflineDownloaderThread, &QThread::finished,
+            m_OfflineDownloaderThread, &QThread::deleteLater);
+    connect(this, &LinksBagManager::offlineDownloaderEnabled,
+            m_OfflineDownloader, &OfflineDownloader::handleOfflineDownloaderEnabled,
+            Qt::QueuedConnection);
+    connect(this, &LinksBagManager::wifiOnlyDownloaderEnabled,
+            m_OfflineDownloader, &OfflineDownloader::handleWifiOnlyDownloaderEnabled,
+            Qt::QueuedConnection);
+
+    connect(m_SyncTimer, &QTimer::timeout, this, &LinksBagManager::refreshBookmarks);
+
     SetLogged(!ApplicationSettings::Instance(this)->value("accessToken").isNull() &&
               !ApplicationSettings::Instance(this)->value("userName").isNull());
+
+    m_OfflineDownloaderThread->start();
+
     if (m_IsLogged)
     {
         loadBookmarksFromCache();
+        QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
+                Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
     }
 
-    connect(m_SyncTimer, &QTimer::timeout, this, &LinksBagManager::refreshBookmarks);
     restartSyncTimer();
 }
 
@@ -113,6 +131,29 @@ bool LinksBagManager::GetBusy() const
 bool LinksBagManager::GetLogged() const
 {
     return m_IsLogged;
+}
+
+BookmarksModel* LinksBagManager::GetBookmarksModel() const
+{
+    return m_BookmarksModel;
+}
+
+FilterProxyModel* LinksBagManager::GetFilterModel() const
+{
+    return m_FilterProxyModel;
+}
+
+FilterProxyModel *LinksBagManager::GetCoverModel() const
+{
+    return m_CoverModel;
+}
+
+void LinksBagManager::Stop()
+{
+    m_OfflineDownloader->stop();
+    m_OfflineDownloader->deleteLater();
+    m_OfflineDownloaderThread->quit();
+    m_OfflineDownloaderThread->wait();
 }
 
 void LinksBagManager::MakeConnections()
@@ -175,15 +216,19 @@ void LinksBagManager::MakeConnections()
                     if (QFile(path).exists())
                         continue;
 
-                    QUrl url = b->GetImageUrl();
-                    if (!url.isEmpty()) {
-                        m_thumbnailUrls[url] = b->GetID();
-                        m_thumbnailDownloader->get(QNetworkRequest(url));
+                    const QUrl url = b->GetImageUrl();
+                    if (!url.isEmpty())
+                    {
+                        m_ThumbnailUrls[url] = b->GetID();
+                        m_ThumbnailDownloader->get(QNetworkRequest(url));
                     }
                 }
                 m_FilterProxyModel->invalidate();
                 m_FilterProxyModel->sort(0, Qt::DescendingOrder);
                 ApplicationSettings::Instance(this)->setValue("lastUpdate", since);
+
+                QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
+                        Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
             });
 
     connect(m_Api.get(),
@@ -192,6 +237,9 @@ void LinksBagManager::MakeConnections()
             [this](const QStringList& ids)
             {
                 m_BookmarksModel->RemoveBookmarks(ids);
+
+                QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
+                        Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
             });
 
     connect(m_Api.get(),
@@ -228,45 +276,32 @@ void LinksBagManager::SetLogged(const bool logged)
     emit loggedChanged();
 }
 
-void LinksBagManager::thumbnailReceived(QNetworkReply *pReply) {
-    if (pReply->error() == QNetworkReply::NoError) {
-        QString bookmarkId = m_thumbnailUrls.value(pReply->url(), "");
-        QThreadPool::globalInstance()->start(new DownloadedImageHandler(pReply, bookmarkId, m_BookmarksModel));
-    }
-    m_thumbnailUrls.remove(pReply->url());
-}
-
-void LinksBagManager::saveBookmarks()
+void LinksBagManager::thumbnailReceived(QNetworkReply *pReply)
 {
-    const auto& bookmarks = m_BookmarksModel->GetBookmarks();
-    if (bookmarks.isEmpty())
-        return;
-
-    QSettings settings(Application::GetPath(Application::CacheDirectory) +
-            "/linksbag_cache", QSettings::IniFormat);
-    settings.beginWriteArray("Bookmarks");
-    for (int i = 0, size = bookmarks.size(); i < size; ++i)
+    if (!pReply)
     {
-        settings.setArrayIndex(i);
-        settings.setValue("SerializedData", bookmarks.at(i)->Serialize());
+        return;
     }
-    settings.endArray();
-    settings.sync();
+
+    if (pReply->error() == QNetworkReply::NoError)
+    {
+        QString bookmarkId = m_ThumbnailUrls.value(pReply->url(), "");
+        QThreadPool::globalInstance()->start(new DownloadedImageHandler(pReply,
+                bookmarkId, m_BookmarksModel));
+    }
+    m_ThumbnailUrls.remove(pReply->url());
 }
 
-BookmarksModel* LinksBagManager::GetBookmarksModel() const
+void LinksBagManager::handleUpdateArticleContent(const QString& id, const QString& pubDate,
+        const QString& content)
 {
-    return m_BookmarksModel;
+    updatePublishDate(id, pubDate);
+    updateContent(id, content);
 }
 
-FilterProxyModel* LinksBagManager::GetFilterModel() const
+void LinksBagManager::handleUpdateImageContent(const QString& id, const QImage& imageContent)
 {
-    return m_FilterProxyModel;
-}
-
-FilterProxyModel *LinksBagManager::GetCoverModel() const
-{
-    return m_CoverModel;
+    updateContent(id, imageContent);
 }
 
 void LinksBagManager::obtainRequestToken()
@@ -310,6 +345,24 @@ void LinksBagManager::loadBookmarksFromCache()
 
     m_BookmarksModel->SetBookmarks(bookmarks);
     m_FilterProxyModel->sort(0, Qt::DescendingOrder);
+}
+
+void LinksBagManager::saveBookmarks()
+{
+    const auto& bookmarks = m_BookmarksModel->GetBookmarks();
+    if (bookmarks.isEmpty())
+        return;
+
+    QSettings settings(Application::GetPath(Application::CacheDirectory) +
+            "/linksbag_cache", QSettings::IniFormat);
+    settings.beginWriteArray("Bookmarks");
+    for (int i = 0, size = bookmarks.size(); i < size; ++i)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("SerializedData", bookmarks.at(i)->Serialize());
+    }
+    settings.endArray();
+    settings.sync();
 }
 
 void LinksBagManager::refreshBookmarks()
@@ -363,28 +416,19 @@ void LinksBagManager::updateTags(const QString& id, const QString& tags)
 
 void LinksBagManager::updateContent(const QString& id, const QString& content)
 {
-    QFile file(Application::GetPath(Application::ArticleCacheDirectory) + id);
-    if (file.open(QIODevice::WriteOnly)) {
-        QTextStream stream(&file);
-        stream << content;
-    } else {
-        qWarning() << "Can't save file: " << file.errorString();
-    }
-    file.close();
-    m_BookmarksModel->RefreshBookmark(id);
+    QThreadPool::globalInstance()->start(new DownloadedContentHandler(id,
+            content, m_BookmarksModel));
 }
 
 void LinksBagManager::updateContent(const QString& id, const QImage& imageContent)
 {
-    imageContent.save(Application::GetPath(Application::ArticleCacheDirectory) + id,
-            "PNG");
-    m_BookmarksModel->RefreshBookmark(id);
+    QThreadPool::globalInstance()->start(new DownloadedContentHandler(id,
+            imageContent, m_BookmarksModel));
 }
 
 void LinksBagManager::updatePublishDate(const QString& id, const QString& date)
 {
     m_BookmarksModel->UpdatePublishDate(id, date);
-    m_BookmarksModel->RefreshBookmark(id);
 }
 
 QString LinksBagManager::getContent(const QString& id) {
@@ -399,19 +443,22 @@ QString LinksBagManager::getContent(const QString& id) {
         }
     }
 
-    if (filePath.isEmpty()) {
+    if (filePath.isEmpty())
+    {
         return "";
     }
 
     QFile file(filePath);
-    if(!file.open(QIODevice::ReadOnly)) {
+    if(!file.open(QIODevice::ReadOnly))
+    {
         return "";
     }
 
     QTextStream in(&file);
     QString content;
 
-    while(!in.atEnd()) {
+    while(!in.atEnd())
+    {
         content += in.readLine();
     }
     file.close();
@@ -495,29 +542,30 @@ void LinksBagManager::handleGotAuthAnswer(const QString& data)
 
 void LinksBagManager::restartSyncTimer()
 {
-    const int period = ApplicationSettings::Instance()->value("backgroundSyncPeriod", "-1").toInt();
+    const int period = ApplicationSettings::Instance(this)->value("backgroundSyncPeriod", "-1").toInt();
 
-    if (period == -1) {
+    if (period == -1)
+    {
         m_SyncTimer->stop();
         return;
     }
 
     const qint64 lastSync = ApplicationSettings::Instance(this)->value("lastUpdate", 0).toLongLong();
-    if (QDateTime::currentDateTime().toTime_t() - lastSync > period) {
+    if (QDateTime::currentDateTime().toTime_t() - lastSync > period)
+    {
         refreshBookmarks();
     }
 
     m_SyncTimer->start(period * 1000);
 }
 
-void LinksBagManager::onWifiOnlyDownloaderEnabled(bool enabled)
+void LinksBagManager::handleWifiOnlyDownloaderChanged(bool wifiOnly)
 {
-    //TODO
+    emit wifiOnlyDownloaderEnabled(wifiOnly);
 }
 
-void LinksBagManager::onOnlyDownloaderEnabled(bool enabled)
+void LinksBagManager::handleOfflineyDownloaderChanged(bool offlineDownloader)
 {
-    //TODO
+    emit offlineDownloaderEnabled(offlineDownloader);
 }
-
 } // namespace LinskBag
