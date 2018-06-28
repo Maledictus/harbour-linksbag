@@ -56,7 +56,6 @@ Page {
                 linksbagManager.requestAccessToken()
             }
         }
-        experimental.preferences.privateBrowsingEnabled: true
         experimental.onMessageReceived: {
             var data = null
             try {
