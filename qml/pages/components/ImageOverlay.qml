@@ -119,7 +119,24 @@ Item {
             }
         }
 
-        //TODO share button
+        IconButton {
+            id: clipboardButton
+            icon.source: "image://Theme/icon-m-clipboard"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                Clipboard.text = bookmarkUrl
+                linksbagManager.notify(qsTr("Url copied into clipboard"))
+            }
+        }
+
+        IconButton {
+            id: browserButton
+            icon.source: "image://Theme/icon-m-region"
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+                Qt.openUrlExternally(encodeURI(bookmarkUrl))
+            }
+        }
     }
 
     BusyIndicator {
