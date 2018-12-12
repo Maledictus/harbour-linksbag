@@ -1,6 +1,6 @@
 TARGET = harbour-linksbag
 
-VERSION = 3.0.3
+VERSION = 3.0.4
 
 QT += webkit network
 
@@ -42,7 +42,7 @@ HEADERS += src/application.h \
     src/settings/applicationsettings.h \
 
 
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172 256x256
 
 DISTFILES += qml/harbour-linksbag.qml \
     qml/cover/ArticleCover.qml \
@@ -135,4 +135,5 @@ TRANSLATIONS += translations/harbour-linksbag.ts \
     translations/harbour-linksbag-sv.ts \
     translations/harbour-linksbag-fr.ts \
     translations/harbour-linksbag-pl.ts \
-    translations/harbour-linksbag-nl.ts
+    translations/harbour-linksbag-nl.ts \
+    translations/harbour-linksbag-zh_CN.ts

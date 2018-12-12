@@ -89,7 +89,7 @@ ListModel {
         locale: "es"
         coordinators: [
             ListElement {
-                name: "Carmen Fernández B. "
+                name: "Carmen Fernández B."
                 link: "https://www.transifex.com/user/profile/carmenfdezb/"
             }
         ]
@@ -101,8 +101,20 @@ ListModel {
         locale: "sv"
         coordinators: [
             ListElement {
-                name: "Åke Engelbrektson "
+                name: "Åke Engelbrektson"
                 link: "https://www.transifex.com/user/profile/eson/"
+            }
+        ]
+        translators: []
+        reviewers: []
+    }
+
+    ListElement {
+        locale: "zh_CN"
+        coordinators: [
+            ListElement {
+                name: "rui kon"
+                link: "https://www.transifex.com/user/profile/Historyscholar/"
             }
         ]
         translators: []

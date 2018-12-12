@@ -5,6 +5,9 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Wed Dec 12 2018 Oleg Linkin <maledictusdemagog@gmail.com> 3.0.4
+- Add translation: CN
+
 * Thu Sep 04 2018 Oleg Linkin <maledictusdemagog@gmail.com> 3.0.3
 - Update translations: FR
 
