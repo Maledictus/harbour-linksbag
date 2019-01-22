@@ -43,6 +43,14 @@ ApplicationWindow {
     _defaultPageOrientations: Orientation.Landscape | Orientation.Portrait
     initialPage: alreadyLogged ? bookmarksComponent : loginComponent
 
+    property bool lightTheme: {
+        try {
+            if (Theme.colorScheme !== Theme.LightOnDark)
+                return true
+        } catch (e) {}
+        return false
+    }
+
 
     Notification {
         id: notification
