@@ -115,89 +115,24 @@ ListItem {
         }
     }
 
-    Image {
-        visible: false
-        id: thumbnail
-        cache: true
-        smooth: false
-        asynchronous: true
-        source: model.bookmarkThumbnail
-        onSourceChanged: {
-            wallpaperEffect.wallpaperTexture = null
-            wallpaperEffect.wallpaperTexture = thumbnail
-        }
-    }
-
-    Item {
-        id: glassTextureItem
-        visible: false
-        width: glassTextureImage.width
-        height: glassTextureImage.height
-        Image {
-            id: glassTextureImage
-            opacity: 0.1
-            source: "image://theme/graphic-shader-texture"
-        }
-    }
-
-    ShaderEffect {
-        // shamelessly borrowed from Jolla, sorry guys :(
-        id: wallpaperEffect
+    Rectangle {
+        visible: mainWindow.settings.showBackgroundImage && !selectMode ? model.bookmarkThumbnail != "" : false
+        color: mainWindow.lightTheme ? "#fff" : "#000"
         anchors.fill: parent
         z: -1
 
-        visible: mainWindow.settings.showBackgroundImage && !selectMode ? thumbnail.source != "" : false
-        property real dimmedOpacity: 0.4
-
-        // wallpaper orientation
-        readonly property size normalizedSize: {
-            var heightParam =  wallpaperTexture !== null ? wallpaperTexture.sourceSize.height : 1
-            return Qt.size(1, bookmarkItem.contentHeight/heightParam)
-        }
-        readonly property point offset: Qt.point((1 - normalizedSize.width) / 2, (1 - normalizedSize.height) / 2);
-        readonly property size dimensions: {
-            var heightParam =  wallpaperTexture !== null ? wallpaperTexture.sourceSize.height : 1
-            return Qt.size(1, bookmarkItem.contentHeight/heightParam)
-        }
-        // glass texture size
-        property size glassTextureSizeInv: Qt.size(1.0/(glassTextureImage.sourceSize.width),
-                                                   -1.0/(glassTextureImage.sourceSize.height))
-
-        property Image wallpaperTexture: thumbnail
-        property variant glassTexture: ShaderEffectSource {
-            hideSource: true
-            sourceItem: glassTextureItem
-            wrapMode: ShaderEffectSource.Repeat
+        Image {
+            id: backgroundImage
+            cache: true
+            smooth: false
+            asynchronous: true
+            source: model.bookmarkThumbnail
+            fillMode: Image.PreserveAspectCrop
+            anchors.fill: parent
+            visible: parent.visible
+            opacity: 0.4
         }
 
-        vertexShader: "
-           uniform highp vec2 dimensions;
-           uniform highp vec2 offset;
-           uniform highp mat4 qt_Matrix;
-           attribute highp vec4 qt_Vertex;
-           attribute highp vec2 qt_MultiTexCoord0;
-           varying highp vec2 qt_TexCoord0;
-
-           void main() {
-              qt_TexCoord0 = qt_MultiTexCoord0 * dimensions + offset;
-              gl_Position = qt_Matrix * qt_Vertex;
-           }
-        "
-
-        fragmentShader: "
-           uniform sampler2D wallpaperTexture;
-           uniform sampler2D glassTexture;
-           uniform highp vec2 glassTextureSizeInv;
-           uniform lowp float dimmedOpacity;
-           uniform lowp float qt_Opacity;
-           varying highp vec2 qt_TexCoord0;
-
-           void main() {
-              lowp vec4 wp = texture2D(wallpaperTexture, qt_TexCoord0);
-              lowp vec4 tx = texture2D(glassTexture, gl_FragCoord.xy * glassTextureSizeInv);
-              gl_FragColor = gl_FragColor = vec4(dimmedOpacity*wp.rgb + tx.rgb, 1.0);
-           }
-        "
     }
 
     GlassItem {
