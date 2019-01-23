@@ -755,45 +755,45 @@
 <context>
     <name>harbour-linksbag</name>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="127"/>
+        <location filename="../qml/harbour-linksbag.qml" line="135"/>
         <source>%1, %2</source>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="132"/>
-        <location filename="../qml/harbour-linksbag.qml" line="145"/>
-        <location filename="../qml/harbour-linksbag.qml" line="152"/>
-        <location filename="../qml/harbour-linksbag.qml" line="165"/>
+        <location filename="../qml/harbour-linksbag.qml" line="140"/>
+        <location filename="../qml/harbour-linksbag.qml" line="153"/>
+        <location filename="../qml/harbour-linksbag.qml" line="160"/>
+        <location filename="../qml/harbour-linksbag.qml" line="173"/>
         <source>All</source>
         <translation>全部</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="135"/>
+        <location filename="../qml/harbour-linksbag.qml" line="143"/>
         <source>Read</source>
         <translation>阅读</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="138"/>
+        <location filename="../qml/harbour-linksbag.qml" line="146"/>
         <source>Unread</source>
         <translation>未读</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="141"/>
+        <location filename="../qml/harbour-linksbag.qml" line="149"/>
         <source>Favorite</source>
         <translation>收藏</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="155"/>
+        <location filename="../qml/harbour-linksbag.qml" line="163"/>
         <source>Articles</source>
         <translation>文章</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="158"/>
+        <location filename="../qml/harbour-linksbag.qml" line="166"/>
         <source>Images</source>
         <translation>图片</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="161"/>
+        <location filename="../qml/harbour-linksbag.qml" line="169"/>
         <source>Videos</source>
         <translation>视频</translation>
     </message>

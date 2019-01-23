@@ -755,45 +755,45 @@
 <context>
     <name>harbour-linksbag</name>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="127"/>
+        <location filename="../qml/harbour-linksbag.qml" line="135"/>
         <source>%1, %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="132"/>
-        <location filename="../qml/harbour-linksbag.qml" line="145"/>
-        <location filename="../qml/harbour-linksbag.qml" line="152"/>
-        <location filename="../qml/harbour-linksbag.qml" line="165"/>
+        <location filename="../qml/harbour-linksbag.qml" line="140"/>
+        <location filename="../qml/harbour-linksbag.qml" line="153"/>
+        <location filename="../qml/harbour-linksbag.qml" line="160"/>
+        <location filename="../qml/harbour-linksbag.qml" line="173"/>
         <source>All</source>
         <translation type="unfinished">Wszystkie</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="135"/>
+        <location filename="../qml/harbour-linksbag.qml" line="143"/>
         <source>Read</source>
         <translation type="unfinished">Przeczytane</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="138"/>
+        <location filename="../qml/harbour-linksbag.qml" line="146"/>
         <source>Unread</source>
         <translation type="unfinished">Nieprzeczytane</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="141"/>
+        <location filename="../qml/harbour-linksbag.qml" line="149"/>
         <source>Favorite</source>
         <translation type="unfinished">Ulubione</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="155"/>
+        <location filename="../qml/harbour-linksbag.qml" line="163"/>
         <source>Articles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="158"/>
+        <location filename="../qml/harbour-linksbag.qml" line="166"/>
         <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="161"/>
+        <location filename="../qml/harbour-linksbag.qml" line="169"/>
         <source>Videos</source>
         <translation type="unfinished"></translation>
     </message>

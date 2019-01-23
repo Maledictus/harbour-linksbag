@@ -407,12 +407,12 @@
     <message>
         <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Authorized</translation>
     </message>
     <message>
         <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Not authorized</translation>
     </message>
 </context>
 <context>
@@ -427,7 +427,7 @@
         <location filename="../src/getpocketapi.cpp" line="256"/>
         <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Network error: %1</translation>
     </message>
     <message>
         <location filename="../src/getpocketapi.cpp" line="277"/>
@@ -755,45 +755,45 @@
 <context>
     <name>harbour-linksbag</name>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="127"/>
+        <location filename="../qml/harbour-linksbag.qml" line="135"/>
         <source>%1, %2</source>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="132"/>
-        <location filename="../qml/harbour-linksbag.qml" line="145"/>
-        <location filename="../qml/harbour-linksbag.qml" line="152"/>
-        <location filename="../qml/harbour-linksbag.qml" line="165"/>
+        <location filename="../qml/harbour-linksbag.qml" line="140"/>
+        <location filename="../qml/harbour-linksbag.qml" line="153"/>
+        <location filename="../qml/harbour-linksbag.qml" line="160"/>
+        <location filename="../qml/harbour-linksbag.qml" line="173"/>
         <source>All</source>
         <translation>All</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="135"/>
+        <location filename="../qml/harbour-linksbag.qml" line="143"/>
         <source>Read</source>
         <translation>Read</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="138"/>
+        <location filename="../qml/harbour-linksbag.qml" line="146"/>
         <source>Unread</source>
         <translation>Unread</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="141"/>
+        <location filename="../qml/harbour-linksbag.qml" line="149"/>
         <source>Favorite</source>
         <translation>Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="155"/>
+        <location filename="../qml/harbour-linksbag.qml" line="163"/>
         <source>Articles</source>
         <translation>Articles</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="158"/>
+        <location filename="../qml/harbour-linksbag.qml" line="166"/>
         <source>Images</source>
         <translation>Images</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="161"/>
+        <location filename="../qml/harbour-linksbag.qml" line="169"/>
         <source>Videos</source>
         <translation>Videos</translation>
     </message>

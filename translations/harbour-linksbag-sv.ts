@@ -6,67 +6,67 @@
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="43"/>
         <source>About LinksBag</source>
-        <translation type="unfinished"></translation>
+        <translation>Om LinksBag</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="71"/>
         <source>Unofficial native Pocket client for Sailfish OS</source>
-        <translation type="unfinished"></translation>
+        <translation>Inofficiell Pocket-klient för Sailfish OS</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="86"/>
         <source>Copyright &amp;#169; 2014-2018 Oleg Linkin</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright &amp;#169; 2014-2018 Oleg Linkin</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="135"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licens</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="151"/>
         <source>LinksBag is an open source software which is distributed under the terms of the&lt;br /&gt; &lt;a href=&apos;%0&apos;&gt;MIT License&lt;/a&gt;&lt;br /&gt;The source code is available at &lt;a href=&apos;%1&apos;&gt;GitHub&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>LinksBag är öppen källkod som distribueras under villkoren för&lt;br /&gt; &lt;a href=&apos;%0&apos;&gt;MIT License&lt;/a&gt;&lt;br /&gt;Källkoden finns tillgänglig på &lt;a href=&apos;%1&apos;&gt;GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="162"/>
         <source>Donate or Contribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Donera eller bidra</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="169"/>
         <source>WebMoney</source>
-        <translation type="unfinished"></translation>
+        <translation>WebMoney</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="174"/>
         <source>YandexMoney</source>
-        <translation type="unfinished"></translation>
+        <translation>YandexMoney</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="179"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="184"/>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Översättningar</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="190"/>
         <source>Gratitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Tacksamhet</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="196"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvecklare</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="201"/>
         <source>Translators</source>
-        <translation type="unfinished"></translation>
+        <translation>Översättare</translation>
     </message>
 </context>
 <context>
@@ -74,36 +74,36 @@
     <message>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="89"/>
         <source>Reload</source>
-        <translation type="unfinished">Uppdatera</translation>
+        <translation>Uppdatera</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="98"/>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="127"/>
         <source>Mark as unread</source>
-        <translation type="unfinished">Markera som oläst</translation>
+        <translation>Markera som oläst</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="99"/>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="128"/>
         <source>Mark as read</source>
-        <translation type="unfinished">Markera som läst</translation>
+        <translation>Markera som läst</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="108"/>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="139"/>
         <source>Mark as unfavorite</source>
-        <translation type="unfinished">Ta bort favoritmärkning</translation>
+        <translation>Ta bort favoritmarkering</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="109"/>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="140"/>
         <source>Mark as favorite</source>
-        <translation type="unfinished">Markera som favorit</translation>
+        <translation>Markera som favorit</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/ArticleBookmarkView.qml" line="116"/>
         <source>Open in browser</source>
-        <translation type="unfinished">Öppna i webbläsaren</translation>
+        <translation>Öppna i webbläsaren</translation>
     </message>
 </context>
 <context>
@@ -146,48 +146,48 @@
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="49"/>
         <source>Tags</source>
-        <translation type="unfinished">Taggar</translation>
+        <translation>Taggar</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="63"/>
         <source>Unread</source>
-        <translation type="unfinished">Oläst</translation>
+        <translation>Oläst</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="63"/>
         <source>Read</source>
-        <translation type="unfinished">Läst</translation>
+        <translation>Läst</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="75"/>
         <source>Unfavorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte favorit</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="75"/>
         <source>Favorite</source>
-        <translation type="unfinished">Favorit</translation>
+        <translation>Favorit</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="86"/>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="90"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="98"/>
         <source>Copy url</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera URL</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="103"/>
         <source>Url copied into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>URL kopierad till urklipp</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/BookmarkItem.qml" line="109"/>
         <source>Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Webbläsare</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
     <message>
         <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="33"/>
         <source>Deleting %1 bookmark(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tar bort %1 bokmärke(n)</translation>
     </message>
 </context>
 <context>
@@ -218,12 +218,12 @@
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="88"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="93"/>
         <source>Select bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj bokmärken</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="104"/>
@@ -238,7 +238,7 @@
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="114"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarksPage.qml" line="131"/>
@@ -251,36 +251,36 @@
     <message>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="46"/>
         <source>Reload</source>
-        <translation type="unfinished">Uppdatera</translation>
+        <translation>Uppdatera</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="54"/>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="83"/>
         <source>Mark as unread</source>
-        <translation type="unfinished">Markera som oläst</translation>
+        <translation>Markera som oläst</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="55"/>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="84"/>
         <source>Mark as read</source>
-        <translation type="unfinished">Markera som läst</translation>
+        <translation>Markera som läst</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="64"/>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="95"/>
         <source>Mark as unfavorite</source>
-        <translation type="unfinished">Ta bort favoritmärkning</translation>
+        <translation>Ta bort favoritmarkering</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="65"/>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="96"/>
         <source>Mark as favorite</source>
-        <translation type="unfinished">Markera som favorit</translation>
+        <translation>Markera som favorit</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/DefaultBookmarkView.qml" line="72"/>
         <source>Open in browser</source>
-        <translation type="unfinished">Öppna i webbläsaren</translation>
+        <translation>Öppna i webbläsaren</translation>
     </message>
 </context>
 <context>
@@ -288,7 +288,7 @@
     <message>
         <location filename="../qml/pages/models/DevelopersModel.qml" line="29"/>
         <source>Developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvecklare</translation>
     </message>
 </context>
 <context>
@@ -296,12 +296,12 @@
     <message>
         <location filename="../qml/pages/DevelopersPage.qml" line="14"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <location filename="../qml/pages/DevelopersPage.qml" line="19"/>
         <source>Source Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Källkod</translation>
     </message>
 </context>
 <context>
@@ -327,58 +327,58 @@
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="39"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="40"/>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="63"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="68"/>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="107"/>
         <source>All</source>
-        <translation type="unfinished">Alla</translation>
+        <translation>Alla</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="71"/>
         <source>Read</source>
-        <translation type="unfinished">Läst</translation>
+        <translation>Läst</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="74"/>
         <source>Unread</source>
-        <translation type="unfinished">Oläst</translation>
+        <translation>Oläst</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="77"/>
         <source>Favorite</source>
-        <translation type="unfinished">Favorit</translation>
+        <translation>Favorit</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="102"/>
         <source>Content type</source>
-        <translation type="unfinished"></translation>
+        <translation>Innehållstyp</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="110"/>
         <source>Articles</source>
-        <translation type="unfinished"></translation>
+        <translation>Artiklar</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="113"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder</translation>
     </message>
     <message>
         <location filename="../qml/dialogs/FilterBookmarksDialog.qml" line="116"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Filmer</translation>
     </message>
 </context>
 <context>
@@ -386,12 +386,12 @@
     <message>
         <location filename="../qml/pages/components/ImageBookmarkView.qml" line="282"/>
         <source>Oops, can&apos;t display the image</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoppsan, kan inte visa bilden</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/ImageBookmarkView.qml" line="299"/>
         <source>Deleting</source>
-        <translation type="unfinished"></translation>
+        <translation>Tar bort</translation>
     </message>
 </context>
 <context>
@@ -399,7 +399,7 @@
     <message>
         <location filename="../qml/pages/components/ImageOverlay.qml" line="128"/>
         <source>Url copied into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>URL kopierad till urklipp</translation>
     </message>
 </context>
 <context>
@@ -485,22 +485,22 @@
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="51"/>
         <source>Welcome to LinksBag</source>
-        <translation type="unfinished"></translation>
+        <translation>Välkommen till LinksBag</translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="59"/>
         <source>Before we begin, choose how you&apos;ll log into your GetPocket.com account</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj hur du loggar in till ditt konto på GetPocket.com, innan vi startar.</translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="64"/>
         <source>Login with Google</source>
-        <translation type="unfinished"></translation>
+        <translation>Logga in med Google</translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="72"/>
         <source>Firefox/Regular account</source>
-        <translation type="unfinished"></translation>
+        <translation>Firefox/Reguljärt konto</translation>
     </message>
 </context>
 <context>
@@ -508,12 +508,12 @@
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
         <source>Selected %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Markerat %1</translation>
     </message>
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="74"/>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Markerat</translation>
     </message>
 </context>
 <context>
@@ -521,212 +521,212 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="43"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="48"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="55"/>
         <source>User interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Användargränsnitt</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="77"/>
         <source>Item size</source>
-        <translation type="unfinished"></translation>
+        <translation>Objektstorlek</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="82"/>
         <source>Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Liten</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="85"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Medium</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="88"/>
         <source>Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Stor</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="91"/>
         <source>Extra Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra stor</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="168"/>
         <source>Reading view</source>
-        <translation type="unfinished"></translation>
+        <translation>Läsvy</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="174"/>
         <source>All articles will be opened in articles(reader-mode) view</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla artiklar öppnas i artikelvy (läsläge)</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="185"/>
         <source>Best view</source>
-        <translation type="unfinished"></translation>
+        <translation>Bäst vy</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="188"/>
         <source>Web view</source>
-        <translation type="unfinished"></translation>
+        <translation>Webbvy</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="191"/>
         <source>Article view</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikelvy</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="97"/>
         <source>Show bookmark content type</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa bokmärkes innehållstyp</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="105"/>
         <source>Show background image</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="112"/>
         <source>Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Synkronisering</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="115"/>
         <source>Sync on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Synka vid programstart</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="118"/>
         <source>App will try to sync with Pocket on startup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Appen försöker synka med Pocket vid uppstart</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="146"/>
         <source>Reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Läsning</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="172"/>
         <source>LinksBag automatically select the best view(article, webview, image)</source>
-        <translation type="unfinished"></translation>
+        <translation>LinksBag väljer automatiskt den bästa vyn (artikel, webbvy, bild)</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="177"/>
         <source>All articles will be opened in embeded webview</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla artiklar öppnas i inbäddad webbvy</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="204"/>
         <source>Parser</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolk</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="214"/>
         <source>Mercury is faster and lighter on your device but if you want articles to be processed on your device, you can use Readability instead.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mercury är snabbare och ljusare på din enhet, men om du vill att artiklar bearbetas på din enhet, kan du använda Readability istället.</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="230"/>
         <source>Mobile browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Mobil webbläsare</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="233"/>
         <source>Try to open mobile version of web pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Försök öppna mobilversionen av webbsidor</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="142"/>
         <source>In case something gone really, really wrong, this button will make app forget that it ever synced. Good luck.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ifall något går fullständigt fel, ser den här knappen till så att appen glömmer att den någonsin synkat något. Lycka till!</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="236"/>
         <source>Offline reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Offline-läsning</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="247"/>
         <source>The best practice for offline reading - using it with ArticlesView reading mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Bästa praxis för offline läsning - Använd den i artikelvy</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="252"/>
         <source>Download articles for offline reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladda ner artiklar för offline-läsning</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="253"/>
         <source>Downloaded: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nerladdat: %1/%2</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="264"/>
         <source>Download only using wifi</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladda bara ner över WiFi</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="273"/>
         <source>Cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="276"/>
         <source>Remove saved articles</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort sparade artiklar</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="277"/>
         <source>Removing saved articles</source>
-        <translation type="unfinished"></translation>
+        <translation>Tar bort sparade artiklar</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="282"/>
         <source>Clear thumbnail cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Rensa miniatyr-cacheminnet</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="283"/>
         <source>Clearing thumbnail cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Rensar miniatyr-cacheminnet</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="123"/>
         <source>Force full refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Framtvinga fullständig uppdatering</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="125"/>
         <source>Reloading bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppdaterar bokmärken</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="287"/>
         <source>Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Konto</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="297"/>
         <source>You&apos;re logged in as %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du är inloggad som %1.</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="304"/>
         <source>Logout</source>
-        <translation type="unfinished">Logga ut</translation>
+        <translation>Logga ut</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="305"/>
         <source>Logging out</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggar ut</translation>
     </message>
 </context>
 <context>
@@ -734,68 +734,68 @@
     <message>
         <location filename="../qml/pages/TranslatorsPage.qml" line="14"/>
         <source>Translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Översättningar</translation>
     </message>
     <message>
         <location filename="../qml/pages/TranslatorsPage.qml" line="52"/>
         <source>Coordinators</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatorer</translation>
     </message>
     <message>
         <location filename="../qml/pages/TranslatorsPage.qml" line="57"/>
         <source>Translators</source>
-        <translation type="unfinished"></translation>
+        <translation>Översättare</translation>
     </message>
     <message>
         <location filename="../qml/pages/TranslatorsPage.qml" line="62"/>
         <source>Reviewers</source>
-        <translation type="unfinished"></translation>
+        <translation>Granskare</translation>
     </message>
 </context>
 <context>
     <name>harbour-linksbag</name>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="127"/>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/harbour-linksbag.qml" line="132"/>
-        <location filename="../qml/harbour-linksbag.qml" line="145"/>
-        <location filename="../qml/harbour-linksbag.qml" line="152"/>
-        <location filename="../qml/harbour-linksbag.qml" line="165"/>
-        <source>All</source>
-        <translation type="unfinished">Alla</translation>
-    </message>
-    <message>
         <location filename="../qml/harbour-linksbag.qml" line="135"/>
+        <source>%1, %2</source>
+        <translation>%1, %2</translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-linksbag.qml" line="140"/>
+        <location filename="../qml/harbour-linksbag.qml" line="153"/>
+        <location filename="../qml/harbour-linksbag.qml" line="160"/>
+        <location filename="../qml/harbour-linksbag.qml" line="173"/>
+        <source>All</source>
+        <translation>Alla</translation>
+    </message>
+    <message>
+        <location filename="../qml/harbour-linksbag.qml" line="143"/>
         <source>Read</source>
-        <translation type="unfinished">Läst</translation>
+        <translation>Läst</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="138"/>
+        <location filename="../qml/harbour-linksbag.qml" line="146"/>
         <source>Unread</source>
-        <translation type="unfinished">Oläst</translation>
+        <translation>Oläst</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="141"/>
+        <location filename="../qml/harbour-linksbag.qml" line="149"/>
         <source>Favorite</source>
-        <translation type="unfinished">Favorit</translation>
+        <translation>Favorit</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="155"/>
+        <location filename="../qml/harbour-linksbag.qml" line="163"/>
         <source>Articles</source>
-        <translation type="unfinished"></translation>
+        <translation>Artiklar</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="158"/>
+        <location filename="../qml/harbour-linksbag.qml" line="166"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="161"/>
+        <location filename="../qml/harbour-linksbag.qml" line="169"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Filmer</translation>
     </message>
 </context>
 </TS>
