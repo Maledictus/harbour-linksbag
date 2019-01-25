@@ -26,7 +26,7 @@
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="151"/>
         <source>LinksBag is an open source software which is distributed under the terms of the&lt;br /&gt; &lt;a href=&apos;%0&apos;&gt;MIT License&lt;/a&gt;&lt;br /&gt;The source code is available at &lt;a href=&apos;%1&apos;&gt;GitHub&lt;/a&gt;</source>
-        <translation>LinksBag 是一个开源软件, 根据&lt;br /&gt;&lt;a href=&apos;%0&apos;&gt;MIT License&lt;/a&gt;&lt;br /&gt;的条款分发。源代码可在&lt;a href=&apos;%1&apos;&gt;GitHub&lt;/a&gt;获取</translation>
+        <translation>LinksBag 是一个开源软件, 根据&lt;br /&gt;&lt;a href=&apos;%0&apos;&gt;MIT License&lt;/a&gt;&lt;br /&gt;的条款分发。源代码可在&lt;a href=&apos;%1&apos;&gt;GitHub&lt;/a&gt;获取。</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="162"/>
@@ -133,7 +133,7 @@
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
         <source>%1 remaining</source>
-        <translation>剩余%1</translation>
+        <translation>剩余% 1</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
@@ -386,7 +386,7 @@
     <message>
         <location filename="../qml/pages/components/ImageBookmarkView.qml" line="282"/>
         <source>Oops, can&apos;t display the image</source>
-        <translation>出错，不能显示图片</translation>
+        <translation>出错，不能显示图片。</translation>
     </message>
     <message>
         <location filename="../qml/pages/components/ImageBookmarkView.qml" line="299"/>
@@ -407,12 +407,12 @@
     <message>
         <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation type="unfinished"></translation>
+        <translation>已授权</translation>
     </message>
     <message>
         <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation type="unfinished"></translation>
+        <translation>未授权</translation>
     </message>
 </context>
 <context>
@@ -427,7 +427,7 @@
         <location filename="../src/getpocketapi.cpp" line="256"/>
         <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>网络错误: %1</translation>
     </message>
     <message>
         <location filename="../src/getpocketapi.cpp" line="277"/>
@@ -508,7 +508,7 @@
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
         <source>Selected %1</source>
-        <translation>已选择%1</translation>
+        <translation>已选择% 1</translation>
     </message>
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="74"/>
@@ -616,7 +616,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="172"/>
         <source>LinksBag automatically select the best view(article, webview, image)</source>
-        <translation>LinksBag 自动选择最佳视图 (文章、网页、图像)</translation>
+        <translation> LinksBag 自动选择最佳视图 (文章、网页、图像)</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="177"/>

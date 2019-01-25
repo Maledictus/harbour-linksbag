@@ -1,6 +1,6 @@
 TARGET = harbour-linksbag
 
-VERSION = 3.1.0
+VERSION = 3.1.1
 
 QT += webkit network
 

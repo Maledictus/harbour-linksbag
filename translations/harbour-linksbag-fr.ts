@@ -16,7 +16,7 @@
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="86"/>
         <source>Copyright &amp;#169; 2014-2018 Oleg Linkin</source>
-        <translation>Copyright &amp;#169; 2014-2018 Oleg Linkin</translation>
+        <translation>Copyright &amp;#169; 2014-2019 Oleg Linkin</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="135"/>
@@ -407,12 +407,12 @@
     <message>
         <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorisé</translation>
     </message>
     <message>
         <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation type="unfinished"></translation>
+        <translation>Non autorisé</translation>
     </message>
 </context>
 <context>
@@ -427,7 +427,7 @@
         <location filename="../src/getpocketapi.cpp" line="256"/>
         <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur réseau : %1</translation>
     </message>
     <message>
         <location filename="../src/getpocketapi.cpp" line="277"/>
