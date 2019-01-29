@@ -132,8 +132,12 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
+        <source>%L1 remaining</source>
+        <translation>%L1 осталось</translation>
+    </message>
+    <message>
         <source>%1 remaining</source>
-        <translation>%1 осталось</translation>
+        <translation type="vanished">%1 осталось</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
@@ -193,9 +197,17 @@
 <context>
     <name>BookmarkRemorsePopup</name>
     <message>
-        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="33"/>
         <source>Deleting %1 bookmark(s)</source>
-        <translation>Удаление %1 закладок(ки)</translation>
+        <translation type="vanished">Удаление %1 закладок(ки)</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="34"/>
+        <source>Deleting %Ln bookmark(s)</source>
+        <translation>
+            <numerusform>Удаление %Ln закладки</numerusform>
+            <numerusform>Удаление %Ln закладок</numerusform>
+            <numerusform>Удаление %Ln закладок</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -405,79 +417,62 @@
 <context>
     <name>LinksBag::Application</name>
     <message>
-        <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation>Авторизовано</translation>
+        <translation type="vanished">Авторизовано</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation>Не авторизовано</translation>
+        <translation type="vanished">Не авторизовано</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="239"/>
-        <location filename="../src/getpocketapi.cpp" line="309"/>
         <source>General error</source>
-        <translation>Ошибка</translation>
+        <translation type="vanished">Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="256"/>
-        <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation>Ошибка сети: %1</translation>
+        <translation type="vanished">Ошибка сети: %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="277"/>
-        <location filename="../src/getpocketapi.cpp" line="344"/>
         <source>Reply data is corrupted</source>
-        <translation>Данные в ответе повреждены</translation>
+        <translation type="vanished">Данные в ответе повреждены</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="474"/>
         <source>Unable to remove bookamark</source>
-        <translation>Не удалось удалить закладку</translation>
+        <translation type="vanished">Не удалось удалить закладку</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="497"/>
-        <location filename="../src/getpocketapi.cpp" line="521"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation>Не удалось отметить закладку как %1</translation>
+        <translation type="vanished">Не удалось отметить закладку как %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>favorite</source>
-        <translation>избранную</translation>
+        <translation type="vanished">избранную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>unfavorite</source>
-        <translation>не избранную</translation>
+        <translation type="vanished">не избранную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>read</source>
-        <translation>прочитанную</translation>
+        <translation type="vanished">прочитанную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>unread</source>
-        <translation>непрочитанную</translation>
+        <translation type="vanished">непрочитанную</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="545"/>
         <source>Unable to update tags</source>
-        <translation>Неудалось обновить метки</translation>
+        <translation type="vanished">Неудалось обновить метки</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="190"/>
         <source>GetPocket error (%1): </source>
-        <translation>Ошибка сервиса Pocket (%1): </translation>
+        <translation type="vanished">Ошибка сервиса Pocket (%1): </translation>
     </message>
 </context>
 <context>
@@ -506,9 +501,13 @@
 <context>
     <name>MultiSelectionPage</name>
     <message>
-        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
         <source>Selected %1</source>
-        <translation>Выбрано %1</translation>
+        <translation type="vanished">Выбрано %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
+        <source>Selected %L1</source>
+        <translation>Выбрано %L1</translation>
     </message>
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="74"/>
@@ -664,9 +663,8 @@
         <translation>Загружать закладки для чтения в оффлайне</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
         <source>Downloaded: %1/%2</source>
-        <translation>Загружено: %1/%2</translation>
+        <translation type="vanished">Загружено: %1/%2</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="264"/>
@@ -707,6 +705,11 @@
         <location filename="../qml/pages/SettingsPage.qml" line="125"/>
         <source>Reloading bookmarks</source>
         <translation>Перезагрузить закладки</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
+        <source>Downloaded: %L1/%L2</source>
+        <translation>Загружено: %L1/%L2</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="287"/>

@@ -132,8 +132,12 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
+        <source>%L1 remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 remaining</source>
-        <translation>剩余% 1</translation>
+        <translation type="vanished">剩余% 1</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
@@ -193,9 +197,15 @@
 <context>
     <name>BookmarkRemorsePopup</name>
     <message>
-        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="33"/>
         <source>Deleting %1 bookmark(s)</source>
-        <translation>正在删除%1的书签</translation>
+        <translation type="vanished">正在删除%1的书签</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="34"/>
+        <source>Deleting %Ln bookmark(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -405,79 +415,62 @@
 <context>
     <name>LinksBag::Application</name>
     <message>
-        <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation>已授权</translation>
+        <translation type="vanished">已授权</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation>未授权</translation>
+        <translation type="vanished">未授权</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="239"/>
-        <location filename="../src/getpocketapi.cpp" line="309"/>
         <source>General error</source>
-        <translation>常规错误</translation>
+        <translation type="vanished">常规错误</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="256"/>
-        <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation>网络错误: %1</translation>
+        <translation type="vanished">网络错误: %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="277"/>
-        <location filename="../src/getpocketapi.cpp" line="344"/>
         <source>Reply data is corrupted</source>
-        <translation>答复数据已损坏</translation>
+        <translation type="vanished">答复数据已损坏</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="474"/>
         <source>Unable to remove bookamark</source>
-        <translation>移除书签失败</translation>
+        <translation type="vanished">移除书签失败</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="497"/>
-        <location filename="../src/getpocketapi.cpp" line="521"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation>无法标记书签% 1</translation>
+        <translation type="vanished">无法标记书签% 1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>favorite</source>
-        <translation>收藏</translation>
+        <translation type="vanished">收藏</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>unfavorite</source>
-        <translation>取消收藏</translation>
+        <translation type="vanished">取消收藏</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>read</source>
-        <translation>阅读</translation>
+        <translation type="vanished">阅读</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>unread</source>
-        <translation>未读</translation>
+        <translation type="vanished">未读</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="545"/>
         <source>Unable to update tags</source>
-        <translation>无法更新标签</translation>
+        <translation type="vanished">无法更新标签</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="190"/>
         <source>GetPocket error (%1): </source>
-        <translation>Pocket 服务错误 (%1): </translation>
+        <translation type="vanished">Pocket 服务错误 (%1): </translation>
     </message>
 </context>
 <context>
@@ -506,9 +499,13 @@
 <context>
     <name>MultiSelectionPage</name>
     <message>
-        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
         <source>Selected %1</source>
-        <translation>已选择% 1</translation>
+        <translation type="vanished">已选择% 1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
+        <source>Selected %L1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="74"/>
@@ -664,9 +661,8 @@
         <translation>为离线阅读下载文章</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
         <source>Downloaded: %1/%2</source>
-        <translation>已下载: %1/%2</translation>
+        <translation type="vanished">已下载: %1/%2</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="264"/>
@@ -707,6 +703,11 @@
         <location filename="../qml/pages/SettingsPage.qml" line="125"/>
         <source>Reloading bookmarks</source>
         <translation>读取书签</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
+        <source>Downloaded: %L1/%L2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="287"/>

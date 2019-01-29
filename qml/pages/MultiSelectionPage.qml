@@ -70,7 +70,7 @@ Page {
 
         header: PageHeader {
             title: selectionCount ?
-                qsTr("Selected %1").arg(selectionCount) :
+                qsTr("Selected %L1").arg(selectionCount) :
                 qsTr("Selected")
         }
 

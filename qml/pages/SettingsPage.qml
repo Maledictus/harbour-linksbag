@@ -250,7 +250,7 @@ Page {
             TextSwitch {
                 id: offlineDownloaderSwitch
                 text: qsTr("Download articles for offline reading")
-                description: qsTr("Downloaded: %1/%2")
+                description: qsTr("Downloaded: %L1/%L2")
                     .arg(linksbagManager.downloadedBookmarksCount)
                     .arg(linksbagManager.bookmarksModel.count)
                 checked: mainWindow.settings.offlineDownloader

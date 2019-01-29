@@ -132,8 +132,12 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
+        <source>%L1 remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 remaining</source>
-        <translation>%1 återstår</translation>
+        <translation type="vanished">%1 återstår</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
@@ -193,9 +197,16 @@
 <context>
     <name>BookmarkRemorsePopup</name>
     <message>
-        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="33"/>
         <source>Deleting %1 bookmark(s)</source>
-        <translation>Tar bort %1 bokmärke(n)</translation>
+        <translation type="vanished">Tar bort %1 bokmärke(n)</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="34"/>
+        <source>Deleting %Ln bookmark(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -403,81 +414,49 @@
     </message>
 </context>
 <context>
-    <name>LinksBag::Application</name>
-    <message>
-        <location filename="../src/application.cpp" line="124"/>
-        <source>Authorized</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/application.cpp" line="124"/>
-        <source>Not authorized</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="239"/>
-        <location filename="../src/getpocketapi.cpp" line="309"/>
         <source>General error</source>
-        <translation>Allmänt fel</translation>
+        <translation type="vanished">Allmänt fel</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="256"/>
-        <location filename="../src/getpocketapi.cpp" line="326"/>
-        <source>Network error: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/getpocketapi.cpp" line="277"/>
-        <location filename="../src/getpocketapi.cpp" line="344"/>
         <source>Reply data is corrupted</source>
-        <translation>Svarsdata är skadad</translation>
+        <translation type="vanished">Svarsdata är skadad</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="474"/>
         <source>Unable to remove bookamark</source>
-        <translation>Kan inte ta bort bokmärke</translation>
+        <translation type="vanished">Kan inte ta bort bokmärke</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="497"/>
-        <location filename="../src/getpocketapi.cpp" line="521"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation>Kan inte markera bokmärke som %1</translation>
+        <translation type="vanished">Kan inte markera bokmärke som %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>favorite</source>
-        <translation>favorit</translation>
+        <translation type="vanished">favorit</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>unfavorite</source>
-        <translation>inte favorit</translation>
+        <translation type="vanished">inte favorit</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>read</source>
-        <translation>läst</translation>
+        <translation type="vanished">läst</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>unread</source>
-        <translation>oläst</translation>
+        <translation type="vanished">oläst</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="545"/>
         <source>Unable to update tags</source>
-        <translation>Kan inte uppdatera taggar</translation>
+        <translation type="vanished">Kan inte uppdatera taggar</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="190"/>
         <source>GetPocket error (%1): </source>
-        <translation>GetPocket-fel (%1): </translation>
+        <translation type="vanished">GetPocket-fel (%1): </translation>
     </message>
 </context>
 <context>
@@ -506,9 +485,13 @@
 <context>
     <name>MultiSelectionPage</name>
     <message>
-        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
         <source>Selected %1</source>
-        <translation>Markerat %1</translation>
+        <translation type="vanished">Markerat %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
+        <source>Selected %L1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="74"/>
@@ -664,9 +647,8 @@
         <translation>Ladda ner artiklar för offline-läsning</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
         <source>Downloaded: %1/%2</source>
-        <translation>Nerladdat: %1/%2</translation>
+        <translation type="vanished">Nerladdat: %1/%2</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="264"/>
@@ -707,6 +689,11 @@
         <location filename="../qml/pages/SettingsPage.qml" line="125"/>
         <source>Reloading bookmarks</source>
         <translation>Uppdaterar bokmärken</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
+        <source>Downloaded: %L1/%L2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="287"/>

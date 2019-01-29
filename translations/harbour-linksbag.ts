@@ -132,8 +132,8 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
-        <source>%1 remaining</source>
-        <translation></translation>
+        <source>%L1 remaining</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
@@ -192,10 +192,13 @@
 </context>
 <context>
     <name>BookmarkRemorsePopup</name>
-    <message>
-        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="33"/>
-        <source>Deleting %1 bookmark(s)</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="34"/>
+        <source>Deleting %Ln bookmark(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -403,81 +406,49 @@
     </message>
 </context>
 <context>
-    <name>LinksBag::Application</name>
-    <message>
-        <location filename="../src/application.cpp" line="124"/>
-        <source>Authorized</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/application.cpp" line="124"/>
-        <source>Not authorized</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="239"/>
-        <location filename="../src/getpocketapi.cpp" line="309"/>
         <source>General error</source>
-        <translation>General error</translation>
+        <translation type="vanished">General error</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="256"/>
-        <location filename="../src/getpocketapi.cpp" line="326"/>
-        <source>Network error: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/getpocketapi.cpp" line="277"/>
-        <location filename="../src/getpocketapi.cpp" line="344"/>
         <source>Reply data is corrupted</source>
-        <translation>Reply data is corrupted</translation>
+        <translation type="vanished">Reply data is corrupted</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="474"/>
         <source>Unable to remove bookamark</source>
-        <translation>Unable to remove bookamark</translation>
+        <translation type="vanished">Unable to remove bookamark</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="497"/>
-        <location filename="../src/getpocketapi.cpp" line="521"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation>Unable to mark bookamark as %1</translation>
+        <translation type="vanished">Unable to mark bookamark as %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>favorite</source>
-        <translation>favorite</translation>
+        <translation type="vanished">favorite</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>unfavorite</source>
-        <translation>unfavorite</translation>
+        <translation type="vanished">unfavorite</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>read</source>
-        <translation>read</translation>
+        <translation type="vanished">read</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>unread</source>
-        <translation>unread</translation>
+        <translation type="vanished">unread</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="545"/>
         <source>Unable to update tags</source>
-        <translation>Unable to update tags</translation>
+        <translation type="vanished">Unable to update tags</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="190"/>
         <source>GetPocket error (%1): </source>
-        <translation>Pocket service error (%1): </translation>
+        <translation type="vanished">Pocket service error (%1): </translation>
     </message>
 </context>
 <context>
@@ -507,7 +478,7 @@
     <name>MultiSelectionPage</name>
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
-        <source>Selected %1</source>
+        <source>Selected %L1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -664,11 +635,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
-        <source>Downloaded: %1/%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/pages/SettingsPage.qml" line="264"/>
         <source>Download only using wifi</source>
         <translation type="unfinished"></translation>
@@ -706,6 +672,11 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="125"/>
         <source>Reloading bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
+        <source>Downloaded: %L1/%L2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
