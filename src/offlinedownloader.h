@@ -53,8 +53,10 @@ class OfflineDownloader : public QObject
     QPointer<QNetworkReply> m_CurrentReply;
     bool m_OfflineDownloader;
     bool m_WifiOnlyDownloader;
+    bool m_UnreadOnlyDownloader;
     bool m_IsOnline;
     bool m_IsWifi;
+    int m_QueueSize;
 
 public:
     static QString MercuryApiKey;
@@ -62,6 +64,7 @@ public:
     explicit OfflineDownloader();
     ~OfflineDownloader();
 
+    int GetBookmarkCount();
     Q_INVOKABLE void SetBookmarks(const Bookmarks_t& bookmarks);
 
 private:
@@ -74,6 +77,7 @@ public slots:
 
     void handleWifiOnlyDownloaderEnabled(bool wifiOnly);
     void handleOfflineDownloaderEnabled(bool offlineDownloader);
+    void handleUnreadOnlyDownloaderEnabled(bool unreadOnly);
 
 private slots:
     void handleOnlineStateChanged(bool isOnline);
@@ -86,6 +90,8 @@ private slots:
     void updateWifiState();
 
 signals:
+    void queueNeedsRefresh();
+    void updateBookmarkCount();
     void updateArticleContent(const QString& id, const QString& pubDate, const QString& content);
     void updateImageContent(const QString& id, const QImage& imageContent);
 };

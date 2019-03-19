@@ -120,7 +120,12 @@ ApplicationWindow {
         property int statusFilter: LinksBag.AllStatus
         property int contentTypeFilter: LinksBag.AllContentType
         property bool wifiOnlyDownloader: false
+        property bool unreadOnlyDownloader: false
         property bool offlineDownloader: false
+
+        onUnreadOnlyDownloaderChanged: {
+            linksbagManager.handleUnreadOnlyDownloaderChanged(unreadOnlyDownloader)
+        }
 
         onWifiOnlyDownloaderChanged: {
             linksbagManager.handleWifiOnlyDownloaderChanged(wifiOnlyDownloader)

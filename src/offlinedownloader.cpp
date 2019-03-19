@@ -46,6 +46,7 @@ QString OfflineDownloader::MercuryApiKey = "kmEINFMf17L8zYYZlrOzsfL6XaNXCMqd2gx7
 OfflineDownloader::OfflineDownloader()
 : m_OfflineDownloader(ApplicationSettings::Instance(this)->value("offlineDownloader", false).toBool())
 , m_WifiOnlyDownloader(ApplicationSettings::Instance(this)->value("wifiOnlyDownloader", false).toBool())
+, m_UnreadOnlyDownloader(ApplicationSettings::Instance(this)->value("unreadOnlyDownloader", false).toBool())
 , m_IsOnline(false)
 , m_IsWifi(false)
 {
@@ -57,9 +58,22 @@ OfflineDownloader::~OfflineDownloader()
     m_NCM->deleteLater();
 }
 
+int OfflineDownloader::GetBookmarkCount()
+{
+    return m_QueueSize;
+}
+
 void OfflineDownloader::SetBookmarks(const Bookmarks_t& bookmarks)
 {
     Bookmarks_t tempBookmarks = bookmarks;
+
+    if (m_UnreadOnlyDownloader) {
+        tempBookmarks.erase(std::remove_if(tempBookmarks.begin(), tempBookmarks.end(),
+                [](decltype(tempBookmarks.front()) bkmrk) { return bkmrk->IsRead(); }),
+                tempBookmarks.end());
+    }
+    m_QueueSize = tempBookmarks.count();
+
     tempBookmarks.erase(std::remove_if(tempBookmarks.begin(), tempBookmarks.end(),
             [](decltype(tempBookmarks.front()) bkmrk) { return bkmrk->HasContent(); }),
             tempBookmarks.end());
@@ -67,6 +81,7 @@ void OfflineDownloader::SetBookmarks(const Bookmarks_t& bookmarks)
     m_Mutex.lock();
     m_Bookmarks = tempBookmarks;
     m_Mutex.unlock();
+    emit updateBookmarkCount();
 
     DownloadNextBookmark();
 }
@@ -283,5 +298,12 @@ void OfflineDownloader::handleOfflineDownloaderEnabled(bool offlineDownloader)
             DownloadNextBookmark();
         }
     }
+}
+
+void OfflineDownloader::handleUnreadOnlyDownloaderEnabled(bool unreadOnly)
+{
+    m_UnreadOnlyDownloader = unreadOnly;
+    emit queueNeedsRefresh();
+    DownloadNextBookmark();
 }
 } // namespace LinksBag

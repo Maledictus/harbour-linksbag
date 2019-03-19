@@ -81,6 +81,10 @@ LinksBagManager::LinksBagManager(QObject *parent)
             this, &LinksBagManager::thumbnailReceived);
 
     m_OfflineDownloader->moveToThread(m_OfflineDownloaderThread);
+    connect(m_OfflineDownloader, &OfflineDownloader::queueNeedsRefresh,
+            this, &LinksBagManager::updateOfflineDownloaderQueue, Qt::QueuedConnection);
+    connect(m_OfflineDownloader, &OfflineDownloader::updateBookmarkCount,
+            this, &LinksBagManager::handleUpdateBookmarkCount, Qt::QueuedConnection);
     connect(m_OfflineDownloader, &OfflineDownloader::updateArticleContent,
             this, &LinksBagManager::handleUpdateArticleContent, Qt::QueuedConnection);
     connect(m_OfflineDownloader, &OfflineDownloader::updateImageContent,
@@ -95,6 +99,9 @@ LinksBagManager::LinksBagManager(QObject *parent)
     connect(this, &LinksBagManager::wifiOnlyDownloaderEnabled,
             m_OfflineDownloader, &OfflineDownloader::handleWifiOnlyDownloaderEnabled,
             Qt::QueuedConnection);
+    connect(this, &LinksBagManager::unreadOnlyDownloaderEnabled,
+            m_OfflineDownloader, &OfflineDownloader::handleUnreadOnlyDownloaderEnabled,
+            Qt::QueuedConnection);
 
     connect(m_SyncTimer, &QTimer::timeout, this, &LinksBagManager::refreshBookmarks);
 
@@ -106,8 +113,7 @@ LinksBagManager::LinksBagManager(QObject *parent)
     if (m_IsLogged)
     {
         loadBookmarksFromCache();
-        QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
-                Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
+        updateOfflineDownloaderQueue();
     }
 
     restartSyncTimer();
@@ -146,6 +152,11 @@ FilterProxyModel* LinksBagManager::GetFilterModel() const
 FilterProxyModel *LinksBagManager::GetCoverModel() const
 {
     return m_CoverModel;
+}
+
+int LinksBagManager::GetDownloaderQueueSize() const
+{
+    return m_OfflineDownloaderQueueSize;
 }
 
 int LinksBagManager::GetDownloadedBookmarksCount() const
@@ -234,9 +245,7 @@ void LinksBagManager::MakeConnections()
                 m_FilterProxyModel->invalidate();
                 m_FilterProxyModel->sort(0, Qt::DescendingOrder);
                 ApplicationSettings::Instance(this)->setValue("lastUpdate", since);
-
-                QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
-                        Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
+                updateOfflineDownloaderQueue();
             });
 
     connect(m_Api.get(),
@@ -245,8 +254,7 @@ void LinksBagManager::MakeConnections()
             [this](const QStringList& ids)
             {
                 m_BookmarksModel->RemoveBookmarks(ids);
-                QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
-                        Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
+                updateOfflineDownloaderQueue();
             });
 
     connect(m_Api.get(),
@@ -297,6 +305,12 @@ void LinksBagManager::thumbnailReceived(QNetworkReply *pReply)
                 bookmarkId, m_BookmarksModel));
     }
     m_ThumbnailUrls.remove(pReply->url());
+}
+
+void LinksBagManager::handleUpdateBookmarkCount()
+{
+    m_OfflineDownloaderQueueSize = m_OfflineDownloader->GetBookmarkCount();
+    emit downloaderQueueSizeChanged();
 }
 
 void LinksBagManager::handleUpdateArticleContent(const QString& id, const QString& pubDate,
@@ -379,6 +393,12 @@ void LinksBagManager::refreshBookmarks()
     SetBusy(true);
     m_Api->LoadBookmarks(ApplicationSettings::Instance(this)->
             value("lastUpdate", 0).toLongLong());
+}
+
+void LinksBagManager::updateOfflineDownloaderQueue()
+{
+    QMetaObject::invokeMethod(m_OfflineDownloader, "SetBookmarks", Qt::QueuedConnection,
+            Q_ARG(Bookmarks_t, m_BookmarksModel->GetBookmarks()));
 }
 
 void LinksBagManager::removeBookmark(const QString& id)
@@ -567,6 +587,11 @@ void LinksBagManager::restartSyncTimer()
     }
 
     m_SyncTimer->start(period * 1000);
+}
+
+void LinksBagManager::handleUnreadOnlyDownloaderChanged(bool unreadOnly)
+{
+    emit unreadOnlyDownloaderEnabled(unreadOnly);
 }
 
 void LinksBagManager::handleWifiOnlyDownloaderChanged(bool wifiOnly)

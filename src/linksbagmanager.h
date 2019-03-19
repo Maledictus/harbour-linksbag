@@ -68,6 +68,7 @@ class LinksBagManager : public QObject
 
     OfflineDownloader *m_OfflineDownloader;
     QThread *m_OfflineDownloaderThread;
+    int m_OfflineDownloaderQueueSize;
 
     Q_PROPERTY(bool busy READ GetBusy NOTIFY busyChanged)
     Q_PROPERTY(bool logged READ GetLogged NOTIFY loggedChanged)
@@ -79,6 +80,8 @@ class LinksBagManager : public QObject
             NOTIFY coverModelChanged)
     Q_PROPERTY(int downloadedBookmarksCount READ GetDownloadedBookmarksCount
             NOTIFY downloadedBookmarksCountChanged)
+    Q_PROPERTY(int downloaderQueueSize READ GetDownloaderQueueSize
+            NOTIFY downloaderQueueSizeChanged)
 
     explicit LinksBagManager(QObject *parent = 0);
 public:
@@ -91,6 +94,7 @@ public:
     FilterProxyModel* GetDownloadingModel() const;
     FilterProxyModel* GetCoverModel() const;
     int GetDownloadedBookmarksCount() const;
+    int GetDownloaderQueueSize() const;
 
     void Stop();
 private:
@@ -101,6 +105,7 @@ private:
 private slots:
     void thumbnailReceived(QNetworkReply* pReply);
 
+    void handleUpdateBookmarkCount();
     void handleUpdateArticleContent(const QString& id, const QString& pubDate, const QString& content);
     void handleUpdateImageContent(const QString& id, const QImage& imageContent);
 
@@ -111,6 +116,7 @@ public slots:
     void filterBookmarks(const QString& text);
 
     void loadBookmarksFromCache();
+    void updateOfflineDownloaderQueue();
     void saveBookmarks();
     void refreshBookmarks();
     void removeBookmark(const QString& id);
@@ -136,6 +142,7 @@ public slots:
 
     void restartSyncTimer();
 
+    void handleUnreadOnlyDownloaderChanged(bool unreadOnly);
     void handleWifiOnlyDownloaderChanged(bool wifiOnly);
     void handleOfflineyDownloaderChanged(bool offlineDownloader);
 
@@ -155,7 +162,9 @@ signals:
 
     void offlineDownloaderEnabled(bool enabled);
     void wifiOnlyDownloaderEnabled(bool enabled);
+    void unreadOnlyDownloaderEnabled(bool enabled);
 
     void downloadedBookmarksCountChanged();
+    void downloaderQueueSizeChanged();
 };
 } // namespace LinskBag

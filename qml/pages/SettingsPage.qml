@@ -252,7 +252,7 @@ Page {
                 text: qsTr("Download articles for offline reading")
                 description: qsTr("Downloaded: %L1/%L2")
                     .arg(linksbagManager.downloadedBookmarksCount)
-                    .arg(linksbagManager.bookmarksModel.count)
+                    .arg(linksbagManager.downloaderQueueSize)
                 checked: mainWindow.settings.offlineDownloader
                 onCheckedChanged: {
                     mainWindow.settings.offlineDownloader = checked
@@ -266,6 +266,16 @@ Page {
                 checked: offlineDownloaderSwitch.checked && mainWindow.settings.wifiOnlyDownloader
                 onCheckedChanged: {
                     mainWindow.settings.wifiOnlyDownloader = checked
+                    mainWindow.settings.sync()
+                }
+            }
+
+            TextSwitch {
+                text: qsTr("Download only unread")
+                enabled: offlineDownloaderSwitch.checked
+                checked: offlineDownloaderSwitch.checked && mainWindow.settings.unreadOnlyDownloader
+                onCheckedChanged: {
+                    mainWindow.settings.unreadOnlyDownloader = checked
                     mainWindow.settings.sync()
                 }
             }
