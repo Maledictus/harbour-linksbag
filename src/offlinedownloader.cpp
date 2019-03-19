@@ -42,6 +42,7 @@ THE SOFTWARE.
 namespace LinksBag
 {
 QString OfflineDownloader::MercuryApiKey = "kmEINFMf17L8zYYZlrOzsfL6XaNXCMqd2gx7JxTT";
+QString OfflineDownloader::MercuryApiUrl = "https://g5q08g5xqk.execute-api.us-east-1.amazonaws.com/prod/parser";
 
 OfflineDownloader::OfflineDownloader()
 : m_OfflineDownloader(ApplicationSettings::Instance(this)->value("offlineDownloader", false).toBool())
@@ -110,7 +111,7 @@ namespace
 {
 QNetworkRequest CreateRequest(const QString& downloadingUrl)
 {
-    QNetworkRequest request(QUrl("https://mercury.postlight.com/parser?url=" +
+    QNetworkRequest request(QUrl(OfflineDownloader::MercuryApiUrl + "?url=" +
             downloadingUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     request.setRawHeader("x-api-key", OfflineDownloader::MercuryApiKey.toUtf8());

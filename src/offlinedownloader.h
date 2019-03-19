@@ -58,6 +58,7 @@ class OfflineDownloader : public QObject
 
 public:
     static QString MercuryApiKey;
+    static QString MercuryApiUrl;
 
     explicit OfflineDownloader();
     ~OfflineDownloader();
