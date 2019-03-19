@@ -16,7 +16,7 @@
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="86"/>
         <source>Copyright &amp;#169; 2014-2018 Oleg Linkin</source>
-        <translation>Copyright &amp;#169; 2014-2018 Oleg Linkin</translation>
+        <translation>Copyright &amp;#169; 2014-2019 Oleg Linkin</translation>
     </message>
     <message>
         <location filename="../qml/pages/AboutPage.qml" line="135"/>
@@ -132,8 +132,12 @@
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="48"/>
+        <source>%L1 remaining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 remaining</source>
-        <translation>%1 restant(s)</translation>
+        <translation type="vanished">%1 restant(s)</translation>
     </message>
     <message>
         <location filename="../qml/pages/BookmarkDownloadsPage.qml" line="80"/>
@@ -193,9 +197,16 @@
 <context>
     <name>BookmarkRemorsePopup</name>
     <message>
-        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="33"/>
         <source>Deleting %1 bookmark(s)</source>
-        <translation>Supression de %1 marque-page(s)</translation>
+        <translation type="vanished">Supression de %1 marque-page(s)</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/pages/components/BookmarkRemorsePopup.qml" line="34"/>
+        <source>Deleting %Ln bookmark(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -405,79 +416,62 @@
 <context>
     <name>LinksBag::Application</name>
     <message>
-        <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Autorisé</translation>
     </message>
     <message>
-        <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Non autorisé</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="239"/>
-        <location filename="../src/getpocketapi.cpp" line="309"/>
         <source>General error</source>
-        <translation>Erreur générale</translation>
+        <translation type="vanished">Erreur générale</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="256"/>
-        <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Erreur réseau : %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="277"/>
-        <location filename="../src/getpocketapi.cpp" line="344"/>
         <source>Reply data is corrupted</source>
-        <translation>Les données sont corrompues</translation>
+        <translation type="vanished">Les données sont corrompues</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="474"/>
         <source>Unable to remove bookamark</source>
-        <translation>Impossible de supprimer le marque-page</translation>
+        <translation type="vanished">Impossible de supprimer le marque-page</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="497"/>
-        <location filename="../src/getpocketapi.cpp" line="521"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation>Impossible de définir le marque-page comme %1</translation>
+        <translation type="vanished">Impossible de définir le marque-page comme %1</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>favorite</source>
-        <translation>favori</translation>
+        <translation type="vanished">favori</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>unfavorite</source>
-        <translation>non favori</translation>
+        <translation type="vanished">non favori</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>read</source>
-        <translation>vu</translation>
+        <translation type="vanished">vu</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>unread</source>
-        <translation>non vu</translation>
+        <translation type="vanished">non vu</translation>
     </message>
     <message>
-        <location filename="../src/getpocketapi.cpp" line="545"/>
         <source>Unable to update tags</source>
-        <translation>Impossible de mettre à jour les labels</translation>
+        <translation type="vanished">Impossible de mettre à jour les labels</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
-        <location filename="../src/linksbagmanager.cpp" line="190"/>
         <source>GetPocket error (%1): </source>
-        <translation>Erreur serveur Pocket (%1) :</translation>
+        <translation type="vanished">Erreur serveur Pocket (%1) :</translation>
     </message>
 </context>
 <context>
@@ -506,9 +500,13 @@
 <context>
     <name>MultiSelectionPage</name>
     <message>
-        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
         <source>Selected %1</source>
-        <translation>%1 sélectionné(s)</translation>
+        <translation type="vanished">%1 sélectionné(s)</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MultiSelectionPage.qml" line="73"/>
+        <source>Selected %L1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/MultiSelectionPage.qml" line="74"/>
@@ -664,9 +662,8 @@
         <translation>Pré-télécharger les articles</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
         <source>Downloaded: %1/%2</source>
-        <translation>Pré-téléchargés : %1/%2</translation>
+        <translation type="vanished">Pré-téléchargés : %1/%2</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="264"/>
@@ -707,6 +704,11 @@
         <location filename="../qml/pages/SettingsPage.qml" line="125"/>
         <source>Reloading bookmarks</source>
         <translation>Réinitialisation</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="253"/>
+        <source>Downloaded: %L1/%L2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="287"/>
@@ -755,45 +757,45 @@
 <context>
     <name>harbour-linksbag</name>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="127"/>
+        <location filename="../qml/harbour-linksbag.qml" line="135"/>
         <source>%1, %2</source>
         <translation>%1, %2</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="132"/>
-        <location filename="../qml/harbour-linksbag.qml" line="145"/>
-        <location filename="../qml/harbour-linksbag.qml" line="152"/>
-        <location filename="../qml/harbour-linksbag.qml" line="165"/>
+        <location filename="../qml/harbour-linksbag.qml" line="140"/>
+        <location filename="../qml/harbour-linksbag.qml" line="153"/>
+        <location filename="../qml/harbour-linksbag.qml" line="160"/>
+        <location filename="../qml/harbour-linksbag.qml" line="173"/>
         <source>All</source>
         <translation>Tout</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="135"/>
+        <location filename="../qml/harbour-linksbag.qml" line="143"/>
         <source>Read</source>
         <translation>Vu</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="138"/>
+        <location filename="../qml/harbour-linksbag.qml" line="146"/>
         <source>Unread</source>
         <translation>Non vu</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="141"/>
+        <location filename="../qml/harbour-linksbag.qml" line="149"/>
         <source>Favorite</source>
         <translation>Favori</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="155"/>
+        <location filename="../qml/harbour-linksbag.qml" line="163"/>
         <source>Articles</source>
         <translation>Article</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="158"/>
+        <location filename="../qml/harbour-linksbag.qml" line="166"/>
         <source>Images</source>
         <translation>Image</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="161"/>
+        <location filename="../qml/harbour-linksbag.qml" line="169"/>
         <source>Videos</source>
         <translation>Vidéo</translation>
     </message>

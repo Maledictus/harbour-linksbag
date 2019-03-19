@@ -45,7 +45,7 @@ Page {
 
         header: PageHeader {
             title: qsTr("Downloading")
-            description: qsTr("%1 remaining").arg(listview.count)
+            description: qsTr("%L1 remaining").arg(listview.count)
         }
 
         delegate: ListItem {

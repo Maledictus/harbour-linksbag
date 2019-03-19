@@ -30,7 +30,8 @@ RemorsePopup {
     property var selectionModel
 
     function deleteSelectedBookmarks() {
-        execute(qsTr("Deleting %1 bookmark(s)").arg(deleteCount), function()
+        var n = deleteCount
+        execute(qsTr("Deleting %Ln bookmark(s)", "", n), function()
         {
             linksbagManager.removeBookmarks(selectionModel.selectedBookmarks())
             selectionModel.deselectAllBookmarks()
