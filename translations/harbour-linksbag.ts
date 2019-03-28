@@ -640,27 +640,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="273"/>
-        <source>Cache</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="276"/>
-        <source>Remove saved articles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="277"/>
-        <source>Removing saved articles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="282"/>
-        <source>Clear thumbnail cache</source>
+        <location filename="../qml/pages/SettingsPage.qml" line="274"/>
+        <source>Download only unread</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="283"/>
+        <source>Cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="286"/>
+        <source>Remove saved articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="287"/>
+        <source>Removing saved articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="292"/>
+        <source>Clear thumbnail cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SettingsPage.qml" line="293"/>
         <source>Clearing thumbnail cache</source>
         <translation type="unfinished"></translation>
     </message>
@@ -680,22 +685,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="287"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="297"/>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="297"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="307"/>
         <source>You&apos;re logged in as %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="304"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="314"/>
         <source>Logout</source>
         <translation type="unfinished">Logout</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SettingsPage.qml" line="305"/>
+        <location filename="../qml/pages/SettingsPage.qml" line="315"/>
         <source>Logging out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -726,45 +731,45 @@
 <context>
     <name>harbour-linksbag</name>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="135"/>
+        <location filename="../qml/harbour-linksbag.qml" line="140"/>
         <source>%1, %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="140"/>
-        <location filename="../qml/harbour-linksbag.qml" line="153"/>
-        <location filename="../qml/harbour-linksbag.qml" line="160"/>
-        <location filename="../qml/harbour-linksbag.qml" line="173"/>
+        <location filename="../qml/harbour-linksbag.qml" line="145"/>
+        <location filename="../qml/harbour-linksbag.qml" line="158"/>
+        <location filename="../qml/harbour-linksbag.qml" line="165"/>
+        <location filename="../qml/harbour-linksbag.qml" line="178"/>
         <source>All</source>
         <translation type="unfinished">All</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="143"/>
+        <location filename="../qml/harbour-linksbag.qml" line="148"/>
         <source>Read</source>
         <translation type="unfinished">Read</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="146"/>
+        <location filename="../qml/harbour-linksbag.qml" line="151"/>
         <source>Unread</source>
         <translation type="unfinished">Unread</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="149"/>
+        <location filename="../qml/harbour-linksbag.qml" line="154"/>
         <source>Favorite</source>
         <translation type="unfinished">Favorite</translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="163"/>
+        <location filename="../qml/harbour-linksbag.qml" line="168"/>
         <source>Articles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="166"/>
+        <location filename="../qml/harbour-linksbag.qml" line="171"/>
         <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/harbour-linksbag.qml" line="169"/>
+        <location filename="../qml/harbour-linksbag.qml" line="174"/>
         <source>Videos</source>
         <translation type="unfinished"></translation>
     </message>
