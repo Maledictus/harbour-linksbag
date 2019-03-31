@@ -409,62 +409,79 @@
 <context>
     <name>LinksBag::Application</name>
     <message>
+        <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation type="vanished">Авторизовано</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation type="vanished">Не авторизовано</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="239"/>
+        <location filename="../src/getpocketapi.cpp" line="309"/>
         <source>General error</source>
-        <translation type="vanished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="256"/>
+        <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation type="vanished">Ошибка сети: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="277"/>
+        <location filename="../src/getpocketapi.cpp" line="344"/>
         <source>Reply data is corrupted</source>
-        <translation type="vanished">Данные в ответе повреждены</translation>
+        <translation>Данные в ответе повреждены</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="474"/>
         <source>Unable to remove bookamark</source>
-        <translation type="vanished">Не удалось удалить закладку</translation>
+        <translation>Не удалось удалить закладку</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="497"/>
+        <location filename="../src/getpocketapi.cpp" line="521"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation type="vanished">Не удалось отметить закладку как %1</translation>
+        <translation>Не удалось отметить закладку как %1</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>favorite</source>
-        <translation type="vanished">избранную</translation>
+        <translation>избранную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>unfavorite</source>
-        <translation type="vanished">не избранную</translation>
+        <translation>не избранную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>read</source>
-        <translation type="vanished">прочитанную</translation>
+        <translation>прочитанную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>unread</source>
-        <translation type="vanished">непрочитанную</translation>
+        <translation>непрочитанную</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="545"/>
         <source>Unable to update tags</source>
-        <translation type="vanished">Неудалось обновить метки</translation>
+        <translation>Неудалось обновить метки</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
+        <location filename="../src/linksbagmanager.cpp" line="201"/>
         <source>GetPocket error (%1): </source>
-        <translation type="vanished">Ошибка сервиса Pocket (%1): </translation>
+        <translation>Ошибка сервиса Pocket (%1): </translation>
     </message>
 </context>
 <context>
@@ -658,7 +675,7 @@
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="274"/>
         <source>Download only unread</source>
-        <translation type="unfinished"></translation>
+        <translation>Загружать только непрочитанные</translation>
     </message>
     <message>
         <location filename="../qml/pages/SettingsPage.qml" line="283"/>

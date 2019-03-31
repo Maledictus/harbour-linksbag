@@ -409,62 +409,79 @@
 <context>
     <name>LinksBag::Application</name>
     <message>
+        <location filename="../src/application.cpp" line="124"/>
         <source>Authorized</source>
-        <translation type="vanished">Zalogowano</translation>
+        <translation>Zalogowano</translation>
     </message>
     <message>
+        <location filename="../src/application.cpp" line="124"/>
         <source>Not authorized</source>
-        <translation type="vanished">Nie zalogowano</translation>
+        <translation>Nie zalogowano</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::GetPocketApi</name>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="239"/>
+        <location filename="../src/getpocketapi.cpp" line="309"/>
         <source>General error</source>
-        <translation type="vanished">General error</translation>
+        <translation>General error</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="256"/>
+        <location filename="../src/getpocketapi.cpp" line="326"/>
         <source>Network error: %1</source>
-        <translation type="vanished">Błąd sieci: %1</translation>
+        <translation>Błąd sieci: %1</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="277"/>
+        <location filename="../src/getpocketapi.cpp" line="344"/>
         <source>Reply data is corrupted</source>
-        <translation type="vanished">Reply data is corrupted</translation>
+        <translation>Reply data is corrupted</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="474"/>
         <source>Unable to remove bookamark</source>
-        <translation type="vanished">Nie udało się usunąć zakładki</translation>
+        <translation>Nie udało się usunąć zakładki</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="497"/>
+        <location filename="../src/getpocketapi.cpp" line="521"/>
         <source>Unable to mark bookamark as %1</source>
-        <translation type="vanished">Nie udało się oznaczyć zakładki jako %1</translation>
+        <translation>Nie udało się oznaczyć zakładki jako %1</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>favorite</source>
-        <translation type="vanished">ulubionej</translation>
+        <translation>ulubionej</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="498"/>
         <source>unfavorite</source>
-        <translation type="vanished">nie ulubionej</translation>
+        <translation>nie ulubionej</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>read</source>
-        <translation type="vanished">odczytanej</translation>
+        <translation>odczytanej</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="522"/>
         <source>unread</source>
-        <translation type="vanished">nieodczytanej</translation>
+        <translation>nieodczytanej</translation>
     </message>
     <message>
+        <location filename="../src/getpocketapi.cpp" line="545"/>
         <source>Unable to update tags</source>
-        <translation type="vanished">Wystąpił błąd przy zapisywaniu tagów</translation>
+        <translation>Wystąpił błąd przy zapisywaniu tagów</translation>
     </message>
 </context>
 <context>
     <name>LinksBag::LinksBagManager</name>
     <message>
+        <location filename="../src/linksbagmanager.cpp" line="201"/>
         <source>GetPocket error (%1): </source>
-        <translation type="vanished">Pocket service error (%1): </translation>
+        <translation>Pocket service error (%1): </translation>
     </message>
 </context>
 <context>
