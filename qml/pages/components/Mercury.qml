@@ -60,7 +60,7 @@ Item {
             }
         }
 
-        doc.open("GET", "https://mercury.postlight.com/parser?url=" + encodeURIComponent(url));
+        doc.open("GET", "https://g5q08g5xqk.execute-api.us-east-1.amazonaws.com/prod/parser?url=" + encodeURIComponent(url));
         doc.setRequestHeader("Content-Type", "application/json");
         doc.setRequestHeader("x-api-key", "kmEINFMf17L8zYYZlrOzsfL6XaNXCMqd2gx7JxTT");
         doc.send();
