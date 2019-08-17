@@ -1,13 +1,13 @@
 TARGET = harbour-linksbag
 
-VERSION = 3.2.0
+VERSION = 3.2.1
 
 QT += webkit network
 
 CONFIG += link_pkgconfig sailfishapp c++11 sailfishapp_i18n
 PKGCONFIG += mlite5
 
-DEFINES += APP_VERSION=\\\"$$VERSION\\\" QT_MESSAGELOGCONTEXT
+DEFINES += APP_VERSION=\\\"$$VERSION\\\" QT_MESSAGELOGCONTEXT CONSUMER_KEY=\\\"$$CONSUMER_KEY\\\"
 
 RESOURCES += $${TARGET}.qrc
 

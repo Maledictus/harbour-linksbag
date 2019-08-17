@@ -40,7 +40,7 @@ namespace LinksBag
 {
 GetPocketApi::GetPocketApi(QObject *parent)
 : QObject(parent)
-, m_ConsumerKey("36050-db8157de51cbb0c5f72edc33")
+, m_ConsumerKey(CONSUMER_KEY)
 , m_NAM(new QNetworkAccessManager(this))
 {
 }

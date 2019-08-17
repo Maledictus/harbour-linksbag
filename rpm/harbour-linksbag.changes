@@ -5,6 +5,9 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Sat Aug 17 2019 Oleg Linkin <maledictusdemagog@gmail.com> 3.2.1
+- Move apikeys to .qmake.conf
+
 * Sun Mar 31 2019 Oleg Linkin <maledictusdemagog@gmail.com> 3.2.0
 - Add option to download only unread articles
 - Move to private hosted mercury server
