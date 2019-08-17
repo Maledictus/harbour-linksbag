@@ -18,3 +18,4 @@ Makefile
 *.user
 *.list
 linksbag
+.qmake.conf
