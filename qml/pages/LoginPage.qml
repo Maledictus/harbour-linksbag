@@ -56,22 +56,15 @@ Page {
                 font.pixelSize: Theme.fontSizeMedium
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.WordWrap
-                text: qsTr("Before we begin, choose how you'll log into your GetPocket.com account")
+                text: qsTr("Before we begin, please log into your GetPocket.com account")
             }
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Login with Google")
+                text: qsTr("Login")
                 enabled: authServerRunning
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("AuthorizationPage.qml"))
-                }
-            }
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Firefox/Regular account")
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("WebAuthorizationPage.qml"))
                 }
             }
         }
