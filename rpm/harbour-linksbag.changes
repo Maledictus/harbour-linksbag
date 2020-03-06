@@ -5,6 +5,10 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+
+* Sat Mar 07 2020 Oleg Linkin <maledictusdemagog@gmail.com> 3.2.2
+- Remove possibility to login via WebView
+
 * Sat Aug 17 2019 Oleg Linkin <maledictusdemagog@gmail.com> 3.2.1
 - Move apikeys to .qmake.conf
 
