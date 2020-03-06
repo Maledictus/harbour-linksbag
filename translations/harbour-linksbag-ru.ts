@@ -493,18 +493,13 @@
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="59"/>
-        <source>Before we begin, choose how you&apos;ll log into your GetPocket.com account</source>
-        <translation>Перед тем, как мы начнем, выберите способ авторизации в учетной записи GetPocket.com</translation>
+        <source>Before we begin, please log into your GetPocket.com account</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="64"/>
-        <source>Login with Google</source>
-        <translation>Через Google</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/LoginPage.qml" line="72"/>
-        <source>Firefox/Regular account</source>
-        <translation>Через Firefox/GetPocket</translation>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

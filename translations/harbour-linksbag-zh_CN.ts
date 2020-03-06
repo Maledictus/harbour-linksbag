@@ -491,18 +491,13 @@
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="59"/>
-        <source>Before we begin, choose how you&apos;ll log into your GetPocket.com account</source>
-        <translation>在我们开始之前, 请选择你将如何登录你的  GetPocket.com 帐户</translation>
+        <source>Before we begin, please log into your GetPocket.com account</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/pages/LoginPage.qml" line="64"/>
-        <source>Login with Google</source>
-        <translation>用 Google账号登录</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/LoginPage.qml" line="72"/>
-        <source>Firefox/Regular account</source>
-        <translation>Firefox/Regular 账号</translation>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
